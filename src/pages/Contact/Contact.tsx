@@ -1,17 +1,17 @@
-import { Banner, FormInput, Header, PackageField, Title } from "@/components";
+import {
+  Banner,
+  DesignTemplate,
+  Footer,
+  FormInput,
+  Header,
+  PackageField,
+  Title,
+} from "@/components";
 import { Button, Col, Radio, RadioChangeEvent, Row, Select } from "antd";
 import { useState } from "react";
 
 const Contact = () => {
-  const [formValues, setFormValues] = useState({
-    fullname: "",
-    phone: "",
-    email: "",
-    address: "",
-    koiPondArea: "",
-    koiPondDepth: "",
-  });
-  const fields = [
+  const [fields, setFields] = useState([
     {
       label: "Fullname",
       placeholder: "Enter your fullname",
@@ -42,11 +42,11 @@ const Contact = () => {
       placeholder: "Enter Koi pond construction depth",
       value: "",
     },
-  ];
+  ]);
   const optionPackage = [
-    "basic package",
-    "standard package",
-    "premium package",
+    "Basic package",
+    "Standard package",
+    "Premium package",
   ];
   const dataPackage = [
     {
@@ -82,6 +82,11 @@ const Contact = () => {
   const handleChangePackage = (value: string) => {
     console.log(`Selected package: ${value}`);
   };
+  const handleChangeValue = (e, index) => {
+    const newFields = [...fields];
+    newFields[index].value = e.target.value;
+    setFields(newFields);
+  };
 
   return (
     <div>
@@ -96,6 +101,7 @@ const Contact = () => {
               label={field.label}
               placeholder={field.placeholder}
               value={field.value}
+              onChange={(e) => handleChangeValue(e, index)}
             />
           ))}
 
@@ -104,7 +110,7 @@ const Contact = () => {
             <Select
               size="large"
               style={{ width: "100%" }}
-              defaultValue="basic package"
+              defaultValue="Basic package"
               onChange={handleChangePackage}
               options={optionPackage.map((pkg) => ({ label: pkg, value: pkg }))}
             />
@@ -120,18 +126,37 @@ const Contact = () => {
               <Radio value="Use template design">Use template design</Radio>
               <Radio value="Design a new layout">Design a new layout</Radio>
             </Radio.Group>
+            {design === "Design a new layout" ? (
+              <></>
+            ) : (
+              <Row className="flex flex-row justify-between my-5">
+                <DesignTemplate />
+                <DesignTemplate />
+                <DesignTemplate />
+              </Row>
+            )}
           </div>
 
           <Title name="NOTE" />
           <FormInput
             label="Special request"
             placeholder="Enter your opinion"
-            value="note"
+            value=""
           />
 
-          <Button> Send Request</Button>
+          <div className="flex flex-row justify-between">
+            <Title name="TOTAL PRICE" />
+            <Title name="200.000.000VND" />
+          </div>
+
+          <div className="flex justify-end my-5">
+            <Button type="primary" size="large">
+              Send Request
+            </Button>
+          </div>
         </Col>
       </Row>
+      <Footer />
     </div>
   );
 };

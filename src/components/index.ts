@@ -5,6 +5,8 @@ import Title from "./Title";
 import Banner from "./Banner";
 import FormInput from "./FormInput";
 import PackageField from "./PackageField";
+import DesignTemplate from "./DesignTemplate";
+import Footer from "./Footer";
 export {
   Header,
   NavLinkCustom,
@@ -13,4 +15,6 @@ export {
   Banner,
   FormInput,
   PackageField,
+  DesignTemplate,
+  Footer,
 };

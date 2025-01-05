@@ -1,5 +1,5 @@
 import { useRoutes } from "react-router-dom";
-import { Contact, Home, Login, Register } from "@/pages";
+import { Contact, Login, Register } from "@/pages";
 import HomeLayout from "@/layouts";
 
 const Routers = () => {

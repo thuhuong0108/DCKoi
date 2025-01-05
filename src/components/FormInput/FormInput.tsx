@@ -3,7 +3,7 @@ type InputPros = {
   label: string;
   placeholder: string;
   value: string;
-  handleChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 const FormInput = (pros: InputPros) => {
   return (
@@ -13,6 +13,7 @@ const FormInput = (pros: InputPros) => {
         label={pros.label}
         value={pros.value}
         placeholder={pros.placeholder}
+        onChange={pros.onChange}
         size="large"
       />
     </div>
