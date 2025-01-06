@@ -39,29 +39,29 @@ const Home = () => {
 
       {/* Why choose DCKoi */}
       <div className="">
-      <div className="flex gap-5 max-md:flex-col">
-        <div className="flex flex-col w-[30%] max-md:ml-0 max-md:w-full">
-          <div className="flex flex-col mt-9 text-2xl font-semibold tracking-tight text-center items-center text-indigo-800 max-md:mt-10">
-            <img
-              loading="lazy"
-              src={ImgHand}
-              alt="hand image"
-              className="object-cover w-2/3"
-            />
-            <div className="self-center mt-11 max-md:mt-10">
-              Why choose DCKoi?
+        <div className="flex gap-5 max-md:flex-col">
+          <div className="flex flex-col w-[30%] max-md:ml-0 max-md:w-full">
+            <div className="flex flex-col mt-9 text-2xl font-semibold tracking-tight text-center items-center text-indigo-800 max-md:mt-10">
+              <img
+                loading="lazy"
+                src={ImgHand}
+                alt="hand image"
+                className="object-cover w-2/3"
+              />
+              <div className="self-center mt-11 max-md:mt-10">
+                Why choose DCKoi?
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-col ml-5 w-[70%] max-md:ml-0 max-md:w-full">
+            <div className="flex flex-col w-full max-md:mt-10 max-md:max-w-full">
+              {/* Features */}
+              {features.map((feature, index) => (
+                <FeatureCard {...feature} />
+              ))}
             </div>
           </div>
         </div>
-        <div className="flex flex-col ml-5 w-[70%] max-md:ml-0 max-md:w-full">
-          <div className="flex flex-col w-full max-md:mt-10 max-md:max-w-full">
-            {/* Features */}
-            {features.map((feature, index) => (
-              <FeatureCard {...feature} />
-            ))}
-          </div>
-        </div>
-      </div>
       </div>
     </div>
   );
