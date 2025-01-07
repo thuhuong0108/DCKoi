@@ -1,5 +1,6 @@
-import Header from "./Header";
-import NavLinkCustom from "./NavLinkCustom";
 import FeatureCard from "./FeatureCard";
+import Header from "./Header";
+import KoiCard from "./KoiCard";
+import NavLinkCustom from "./NavLinkCustom";
 
-export {Header, NavLinkCustom, FeatureCard}
+export { FeatureCard, Header, KoiCard, NavLinkCustom };

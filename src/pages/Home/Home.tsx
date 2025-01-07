@@ -1,6 +1,8 @@
 import ImgBanner from "@/assets/images/banner.png";
 import ImgHand from "@/assets/images/hand.png";
-import { FeatureCard, NavLinkCustom } from "@/components";
+import ImgKoiPond from "@/assets/images/koipond.png";
+import { FeatureCard, KoiCard, NavLinkCustom } from "@/components";
+import { NavLink } from "react-router-dom";
 
 const features = [
   {
@@ -20,6 +22,77 @@ const features = [
   }
 ];
 
+const pricingTableData = {
+  headers: ["", "Basic", "Standard", "Premium"],
+  plans: [
+    {
+      feature: "Koi pond 8 to 10m³",
+      basic: "10.000.000 đ/m³",
+      standard: "12.000.000 đ/m³",
+      premium: "15.000.000 đ/m³",
+    },
+    {
+      feature: "Koi pond 10 to 20m³",
+      basic: "9.500.000 đ/m³",
+      standard: "11.000.000 đ/m³",
+      premium: "14.000.000 đ/m³",
+    },
+    {
+      feature: "Koi pond 20 to 50m³",
+      basic: "8.500.000 đ/m³",
+      standard: "10.000.000 đ/m³",
+      premium: "12.500.000 đ/m³",
+    },
+    {
+      feature: "Koi pond 50 to 100m³",
+      basic: "7.800.000 đ/m³",
+      standard: "9.000.000 đ/m³",
+      premium: "11.500.000 đ/m³",
+    },
+    {
+      feature: "Koi pond from 100m³",
+      basic: "7.100.000 đ/m³",
+      standard: "8.000.000 đ/m³",
+      premium: "9.500.000 đ/m³",
+    },
+    {
+      feature: "Free design",
+      basic: "✔️",
+      standard: "✔️",
+      premium: "✔️",
+    },
+    {
+      feature: "Oil-repellent waterproofing",
+      basic: "✔️",
+      standard: "50 Pages",
+      premium: "50 Pages",
+    },
+    {
+      feature: "Pump",
+      basic: "Taiwan",
+      standard: "Japanese push flow pump",
+      premium: "All Japanese pumps",
+    },
+    {
+      feature: "Smell flowers and basic shrubs",
+      basic: "✔️",
+      standard: "✔️",
+      premium: "✔️",
+    },
+    {
+      feature: "Floating LED spotlight",
+      basic: "",
+      standard: "✔️",
+      premium: "✔️",
+    },
+    {
+      feature: "Decorative Buddhist pine",
+      basic: "",
+      standard: "",
+      premium: "✔️",
+    },
+  ],
+};
 const Home = () => {
   return (
     <div className="space-y-6">
@@ -37,8 +110,8 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Why choose DCKoi */}
-      <div className="">
+      <div className="mx-48">
+        {/* Why choose DCKoi */}
         <div className="flex gap-5 max-md:flex-col">
           <div className="flex flex-col w-[30%] max-md:ml-0 max-md:w-full">
             <div className="flex flex-col mt-9 text-2xl font-semibold tracking-tight text-center items-center text-indigo-800 max-md:mt-10">
@@ -57,11 +130,64 @@ const Home = () => {
             <div className="flex flex-col w-full max-md:mt-10 max-md:max-w-full">
               {/* Features */}
               {features.map((feature, index) => (
-                <FeatureCard {...feature} />
+                <FeatureCard key={index} {...feature} />
               ))}
             </div>
           </div>
         </div>
+
+        {/* Price List */}
+        <div className="mt-12 mb-4 flex justify-center">
+          <h2 className="text-indigo-800 font-bold text-2xl">Our design and construction packages</h2>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="table-auto w-full border-collapse border border-gray-300 text-sm text-center">
+            {/* Table Header */}
+            <thead className="bg-white">
+              <tr>
+                {pricingTableData.headers.map((header, index) => (
+                  <th
+                    key={index}
+                    className="border border-gray-300 px-6 py-3 text-gray-800"
+                  >
+                    <div className="flex flex-col space-y-2">
+                      <span className="text-2xl font-bold">{header}</span>
+                      {index !== 0 && (
+                        <NavLink to="/contact" className="text-white bg-indigo-600 py-3 rounded-3xl">Getting started</NavLink>
+                      )}
+                    </div>
+                  </th>
+                ))}
+              </tr>
+            </thead>
+
+            {/* Table Body */}
+            <tbody>
+              {pricingTableData.plans.map((plan, rowIndex) => (
+                <tr key={rowIndex} className="hover:bg-gray-50">
+                  <td className="border border-gray-300 px-5 py-4 font-bold">
+                    {plan.feature}
+                  </td>
+                  <td className="border border-gray-300 px-5 py-4 font-semibold">
+                    {plan.basic || "-"}
+                  </td>
+                  <td className="border border-gray-300 px-5 py-4 font-semibold">
+                    {plan.standard || "-"}
+                  </td>
+                  <td className="border border-gray-300 px-5 py-4 font-semibold">
+                    {plan.premium || "-"}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Beautiful Koi pond models */}
+        <div className="mt-12 mb-4 flex justify-center">
+          <h2 className="text-indigo-800 font-bold text-2xl">Beautiful Koi pond models</h2>
+        </div>
+        
       </div>
     </div>
   );

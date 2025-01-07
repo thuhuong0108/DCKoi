@@ -9,7 +9,7 @@ const FeatureCard = ({ color, title, description }: FeatureCardProps) => {
         <div className="flex flex-wrap gap-3.5">
             <div className={`flex shrink-0 self-start ${color} h-[145px] w-[7px]`}/>
             <div className="flex flex-col grow shrink-0 basis-0 w-fit max-md:max-w-full">
-                <div className={`flex justify-between items-center text-2xl font-medium tracking-tight ${color.replace('bg-', 'text-')} min-h-[33px]`}>
+                <div className="flex justify-between items-center text-2xl font-medium tracking-tight min-h-[33px]">
                     <div className="self-stretch my-auto h-[33px] min-w-[240px] w-[670px] max-md:max-w-full">
                         {title}
                     </div>
