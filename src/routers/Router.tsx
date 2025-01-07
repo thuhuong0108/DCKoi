@@ -9,6 +9,8 @@ const Routers = () => {
     { path: "/login", element: <Login /> },
     { path: "/register", element: <Register /> },
     { path: "/admin", element: <LayoutAdmin Page={ConsultationPage} /> },
+    { path: "/admin/consultation", element: <LayoutAdmin Page={ConsultationPage} /> },
+    { path: "/admin/consultation/sss", element: <LayoutAdmin Page={ConsultationPage} /> },
   ]);
   return <div>{element}</div>;
 };
