@@ -6,7 +6,7 @@ interface KoiCardProps {
 
 const KoiCard = ({ image, title, description }: KoiCardProps) => {
     return (
-        <div className="flex flex-col grow shrink self-stretch my-auto w-60 min-w-[240px]">
+        <div className="flex flex-col grow shrink self-stretch my-auto w-full">
             <img
                 loading="lazy"
                 src={image}

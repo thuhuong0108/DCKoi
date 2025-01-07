@@ -4,16 +4,19 @@ import "./index.css";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
-import { store } from "./redux/store/store";
 import { ToastContainer } from "react-toastify";
+import store from "./redux/store/store";
+import { SocketProvider } from "./contexts/SocketProvider";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
-        <App />
-        <ToastContainer />
-      </BrowserRouter>
+      <SocketProvider>
+        <BrowserRouter>
+          <App />
+          <ToastContainer />
+        </BrowserRouter>
+      </SocketProvider>
     </Provider>
   </StrictMode>
 );

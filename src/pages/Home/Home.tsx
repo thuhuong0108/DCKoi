@@ -2,6 +2,7 @@ import ImgBanner from "@/assets/images/banner.png";
 import ImgHand from "@/assets/images/hand.png";
 import ImgKoiPond from "@/assets/images/koipond.png";
 import { FeatureCard, KoiCard, NavLinkCustom } from "@/components";
+import { Col, Row } from "antd";
 import { NavLink } from "react-router-dom";
 
 const features = [
@@ -93,6 +94,50 @@ const pricingTableData = {
     },
   ],
 };
+
+const koiPondData = [
+  {
+    image: ImgKoiPond,
+    title: "Garden Koi fish pond",
+    description: "Utilize the front yard space to make the Koi fish pond a focal point for the house. The perfect ..."
+  },
+  {
+    image: ImgKoiPond,
+    title: "Garden Koi fish pond",
+    description: "Utilize the front yard space to make the Koi fish pond a focal point for the house. The perfect ..."
+  },
+  {
+    image: ImgKoiPond,
+    title: "Garden Koi fish pond",
+    description: "Utilize the front yard space to make the Koi fish pond a focal point for the house. The perfect ..."
+  },
+  {
+    image: ImgKoiPond,
+    title: "Garden Koi fish pond",
+    description: "Utilize the front yard space to make the Koi fish pond a focal point for the house. The perfect ..."
+  },
+  {
+    image: ImgKoiPond,
+    title: "Garden Koi fish pond",
+    description: "Utilize the front yard space to make the Koi fish pond a focal point for the house. The perfect ..."
+  },
+  {
+    image: ImgKoiPond,
+    title: "Garden Koi fish pond",
+    description: "Utilize the front yard space to make the Koi fish pond a focal point for the house. The perfect ..."
+  },
+  {
+    image: ImgKoiPond,
+    title: "Garden Koi fish pond",
+    description: "Utilize the front yard space to make the Koi fish pond a focal point for the house. The perfect ..."
+  },
+  {
+    image: ImgKoiPond,
+    title: "Garden Koi fish pond",
+    description: "Utilize the front yard space to make the Koi fish pond a focal point for the house. The perfect ..."
+  },
+]
+
 const Home = () => {
   return (
     <div className="space-y-6">
@@ -187,7 +232,13 @@ const Home = () => {
         <div className="mt-12 mb-4 flex justify-center">
           <h2 className="text-indigo-800 font-bold text-2xl">Beautiful Koi pond models</h2>
         </div>
-        
+          <Row gutter={[16, 24]}>
+            {koiPondData.map((koiPond, index) => (
+              <Col span={6}>
+                <KoiCard key={index} {...koiPond} />
+              </Col>
+            ))}
+          </Row>
       </div>
     </div>
   );

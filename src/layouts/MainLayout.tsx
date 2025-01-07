@@ -1,4 +1,4 @@
-import { Header } from "@/components"
+import { Footer, Header } from "@/components"
 import { ReactElement } from "react"
 
 interface LayoutProps {
@@ -10,6 +10,7 @@ const MainLayout = ({ Pages }: LayoutProps) => {
     <div>
       <Header />
       <Pages />
+      <Footer />
     </div>
   )
 }
