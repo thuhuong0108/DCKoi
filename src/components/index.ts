@@ -7,6 +7,8 @@ import FormInput from "./FormInput";
 import PackageField from "./PackageField";
 import DesignTemplate from "./DesignTemplate";
 import Footer from "./Footer";
+
+import Sidebar from "./Sidebar";
 export {
   Header,
   NavLinkCustom,
@@ -17,4 +19,5 @@ export {
   PackageField,
   DesignTemplate,
   Footer,
+  Sidebar,
 };

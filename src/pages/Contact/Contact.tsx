@@ -1,9 +1,7 @@
 import {
   Banner,
   DesignTemplate,
-  Footer,
   FormInput,
-  Header,
   PackageField,
   Title,
 } from "@/components";
@@ -90,7 +88,6 @@ const Contact = () => {
 
   return (
     <div>
-      <Header />
       <Banner />
       <Row className="p-5">
         <Col span={16} offset={4}>
@@ -156,7 +153,6 @@ const Contact = () => {
           </div>
         </Col>
       </Row>
-      <Footer />
     </div>
   );
 };
