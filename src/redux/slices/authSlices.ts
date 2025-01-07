@@ -1,53 +1,39 @@
+// slice of state auth
 import { createSlice } from "@reduxjs/toolkit";
-import { toast } from "react-toastify";
+import { RootState } from "../store/store";
 
-const initialStateLogin = {
-  username: "",
-  password: "",
+const initialState = {
+  isAuthenticated: false,
+  userId: null,
+  role: null,
 };
-const loginSlice = createSlice({
-  name: "login",
-  initialState: initialStateLogin,
+
+export const authSlice = createSlice({
+  name: "auth",
+  initialState: initialState,
   reducers: {
-    loginSuccess: () => {
-      toast.success("Wellcome");
+    login: (state, payload) => {
+      state.userId = payload.payload.user_id;
+      state.role = payload.payload.scope;
+      state.isAuthenticated = true;
     },
-    loginFaild: () => {
-      toast("Username and password is not correct");
-    },
-    loginError: () => {
-      console.log("System error");
+    logout: (state) => {
+      state.userId = null;
+      state.isAuthenticated = false;
     },
   },
 });
 
-const initialStateRegister = {
-  username: "",
-  password: "",
-  email: "",
-  phone: "",
-};
-const registerSlice = createSlice({
-  name: "register",
-  initialState: initialStateRegister,
-  reducers: {
-    registerSuccess: () => {
-      toast("Register success");
-    },
-    registerFaild: () => {
-      toast("Username is exist");
-    },
-    registerError: () => {
-      console.log("System error");
-    },
-  },
-});
+// selectors
+export const selectIsAuthenticated = (state: RootState) =>
+  state.auth.isAuthenticated;
 
-export const { loginSuccess, loginFaild, loginError } = loginSlice.actions;
-export const { registerSuccess, registerFaild, registerError } =
-  registerSlice.actions;
+export const selectUserId = (state: RootState) => state.auth.userId;
 
-export default {
-  login: loginSlice.reducer,
-  register: registerSlice.reducer,
-};
+export const selectRole = (state: RootState) => state.auth.role;
+
+// actions
+export const authActions = authSlice.actions;
+
+// reducer
+export default authSlice.reducer;
