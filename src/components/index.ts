@@ -8,7 +8,7 @@ import PackageField from "./PackageField";
 import DesignTemplate from "./DesignTemplate";
 import Footer from "./Footer";
 export * from "./Sidebar";
-
+export * from "./ui"
 export {
   Header,
   NavLinkCustom,

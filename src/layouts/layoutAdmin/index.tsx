@@ -29,7 +29,7 @@ interface MenuItemProps {
   target?: string;
   children: React.ReactNode;
   icon?: React.ReactNode;
-  end ?: boolean;
+  end?: boolean;
 }
 
 const LayoutAdmin: React.FC<IndexProps> = ({ Page }) => {
@@ -38,7 +38,7 @@ const LayoutAdmin: React.FC<IndexProps> = ({ Page }) => {
       link: "/admin",
       children: "Dashboard",
       icon: <DashboardSharp />,
-      end : true,
+      end: true,
     },
     {
       link: "/admin/consultation",
@@ -62,27 +62,31 @@ const LayoutAdmin: React.FC<IndexProps> = ({ Page }) => {
   ];
 
   return (
-    <Sidebar
-      width={"270px"}
-      userName="Hoang Thi Thu Huong"
-      userimg=""
-      designation="Admin"
-    >
-      <Logo ref={null}>
-        {" "}
-        <img src="/logo.png" alt="logo" />
-      </Logo>
-      <Menu subHeading="Home">
-        {homeMenu.map((item, index) => (
-          <MenuItem
-            link={item.link}
-            children={item.children}
-            icon={item.icon}
-            end={item.end}
-          />
-        ))}
-      </Menu>
-    </Sidebar>
+    <div className="flex">
+      <Sidebar
+        width={"270px"}
+        userName="Hoang Thi Thu Huong"
+        userimg=""
+        designation="Admin"
+      >
+        <Logo ref={null}>
+          {" "}
+          <img src="/logo.png" alt="logo" />
+        </Logo>
+        <Menu subHeading="Home">
+          {homeMenu.map((item, index) => (
+            <MenuItem
+              link={item.link}
+              children={item.children}
+              icon={item.icon}
+              end={item.end}
+            />
+          ))}
+        </Menu>
+      </Sidebar>
+
+      <Page />
+    </div>
   );
 };
 
