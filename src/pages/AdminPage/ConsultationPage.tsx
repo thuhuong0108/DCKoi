@@ -1,4 +1,4 @@
-import { Button } from "@/components";
+import { Button, CardComponent } from "@/components";
 import { useState } from "react";
 
 const ConsultationPage = () => {
@@ -15,7 +15,10 @@ const ConsultationPage = () => {
       <label>aaaaaa</label>
       <label>aaaaaa</label>
 
-      <Button onClick={setTimeDemoLoading} title="Click Me" loading={loading} />
+    
+      <button className="btn">Click</button>
+      <CardComponent children={  <Button onClick={setTimeDemoLoading} title="Click Me" loading={loading}   primary  />}  padding="sm"/>
+     
     </div>
   );
 };
