@@ -10,5 +10,6 @@ export const Card = CardContainer
 export { setFixLoading } from './Loading'
 export const Loading = LoadingContainer
 export * from "./Confirmbox"
+export * from "./Table"
 
 
