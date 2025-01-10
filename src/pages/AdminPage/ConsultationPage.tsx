@@ -1,4 +1,4 @@
-import { Button, CardComponent } from "@/components";
+import { Button, Card ,confirmAlert} from "@/components";
 import { useState } from "react";
 
 const ConsultationPage = () => {
@@ -9,15 +9,30 @@ const ConsultationPage = () => {
       setLoading(false);
     }, 1000);
   };
+  const handleClick = () => {
+    confirmAlert({
+      title: "Confirm to submit",
+      message: "Are you sure to do this.",
+      yes : () => {
+        setTimeDemoLoading();
+      },
+      no : () => {
+        console.log("No");
+      }
+      
+    });
+  }
+
+    
   return (
     <div className="flex flex-col">
       <label>aaaaaa</label>
       <label>aaaaaa</label>
       <label>aaaaaa</label>
 
-    
-      <button className="btn">Click</button>
-      <CardComponent children={  <Button onClick={setTimeDemoLoading} title="Click Me" loading={loading}   primary  />}  padding="sm"/>
+ 
+      <Card children={  <Button onClick={handleClick} title="Click Me" loading={loading}   primary  />}  padding="sm"/>
+
      
     </div>
   );
