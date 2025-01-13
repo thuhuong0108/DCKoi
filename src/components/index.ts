@@ -8,6 +8,7 @@ import FormInput from "./FormInput";
 import PackageField from "./PackageField";
 import DesignTemplate from "./DesignTemplate";
 import Footer from "./Footer";
+import InputField from "./FieldCustom";
 export {
   Header,
   NavLinkCustom,
@@ -18,5 +19,6 @@ export {
   PackageField,
   DesignTemplate,
   Footer,
-  KoiCard
+  KoiCard,
+  InputField
 };
