@@ -1,5 +1,5 @@
-import { Footer, Header } from "@/components"
-import { ReactElement } from "react"
+import { Footer, Header } from "@/components";
+import { ReactElement } from "react";
 
 interface LayoutProps {
   Pages: () => ReactElement;
@@ -12,7 +12,7 @@ const MainLayout = ({ Pages }: LayoutProps) => {
       <Pages />
       <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default MainLayout
+export default MainLayout;

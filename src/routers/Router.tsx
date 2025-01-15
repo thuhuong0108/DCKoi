@@ -1,6 +1,6 @@
 import { useRoutes } from "react-router-dom";
-import { Contact, Home, Login, Register } from "@/pages";
-import MainLayout from "@/layouts";
+import { ConsultationPage, Contact, Home, Login, Register, TestUi } from "@/pages";
+import { LayoutAdmin, MainLayout } from "@/layouts";
 
 const Routers = () => {
   const element = useRoutes([
@@ -8,6 +8,10 @@ const Routers = () => {
     { path: "/contact", element: <MainLayout Pages={Contact} /> },
     { path: "/login", element: <Login /> },
     { path: "/register", element: <Register /> },
+    { path: "/admin", element: <LayoutAdmin Page={ConsultationPage} /> },
+    { path: "/admin/consultation", element: <LayoutAdmin Page={ConsultationPage} /> },
+    { path: "/admin/consultation/sss", element: <LayoutAdmin Page={ConsultationPage} /> },
+    { path: "/admin/test", element: <LayoutAdmin Page={TestUi} /> },
   ]);
   return <div>{element}</div>;
 };
