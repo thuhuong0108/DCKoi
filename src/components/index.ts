@@ -9,6 +9,7 @@ import PackageField from "./PackageField";
 import DesignTemplate from "./DesignTemplate";
 import Footer from "./Footer";
 import InputField from "./FieldCustom";
+import Consultationcard from "./ConsultationCard";
 export * from "./Sidebar";
 export * from "./ui";
 
@@ -24,4 +25,5 @@ export {
   Footer,
   InputField,
   KoiCard,
+  Consultationcard,
 };

@@ -4,3 +4,8 @@ export const validateDemo = yup.object().shape({
     email: yup.string().email().required(),
     password: yup.string().min(6).required(),
 });
+export interface ParseResult {
+	data: object | null;
+	error: object | null;
+	errorArr: Record<string, string>
+}

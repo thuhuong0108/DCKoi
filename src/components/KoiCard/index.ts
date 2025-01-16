@@ -1,3 +1,2 @@
 import KoiCard from "./KoiCard";
-
-export default KoiCard
+export default KoiCard;

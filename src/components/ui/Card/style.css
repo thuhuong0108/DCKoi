@@ -9,7 +9,7 @@
 }
 
 .card.inner {
-  @apply border border-yellow-400;
+  @apply border border-blue-400;
 }
 
 .card.hoverable {
@@ -36,11 +36,11 @@
 
 /* Sub-components */
 .card-header {
-  @apply p-1;
+  @apply p-2;
 }
 
 .card-body {
-  @apply px-1 py-6;
+  @apply px-1 py-5;
 }
 
 .card-footer {
