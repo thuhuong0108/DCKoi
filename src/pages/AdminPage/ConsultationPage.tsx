@@ -10,9 +10,18 @@ import {
   Scrollbar,
   Switch,
   Timeline,
+  Logo,
+  Menu,
 } from "@/components";
-import { PlusCircleFilled, PlusCircleOutlined } from "@ant-design/icons";
+import { PlusCircleOutlined } from "@ant-design/icons";
+
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
+import ArticleIcon from "@mui/icons-material/Article";
+import { Row } from "antd";
 import { useEffect, useState } from "react";
+import { MenuItem } from "@mui/material";
+import { Label } from "@mui/icons-material";
 
 const ConsultationPage = () => {
   const [loading, setLoading] = useState(false);
@@ -88,21 +97,152 @@ const ConsultationPage = () => {
   };
   return (
     <div className="flex flex-col">
-      <label>aaaaaa</label>
-      <label>aaaaaa</label>
-      <label>aaaaaa</label>
+      <Row>
+        <Button info onClick={handleClick} title="aaaaa" loading={loading} />
+        <Button primary onClick={handleClick} title="aaaaa" loading={loading} />
+        <Button danger onClick={handleClick} title="aaaaa" loading={loading} />
+      </Row>
 
       <Card
         children={
-          <Button
-            onClick={handleClick}
-            title="Click Me"
-            loading={loading}
-            primary
-          />
+          <div>
+            <img src="/logo.png" alt="logo" />
+            <Button
+              onClick={handleClick}
+              title="Click Me"
+              loading={loading}
+              primary
+            />
+          </div>
         }
         padding="sm"
       />
+      <Row>
+        <Card
+          className="shadow-inner-top p-4 w-[500px] m-2"
+          padding="sm"
+          bordered={true}
+          inner={true}
+          hoverable={true}
+        >
+          <Card.Header className="custom-header">
+            <label className="text-xl font-weight-bold">Hoang Xuan Viet</label>
+          </Card.Header>
+          <Card.Body className="custom-body">
+            <div className="p-2 flex flex-row justify-between items-center text-gray-400 border-b-2 ">
+              <label>Wed, December 11, 2024</label>
+              <label>11:00 AM</label>
+            </div>
+            <div className="p-2 flex flex-row justify-start items-center">
+              <LocalPhoneIcon className="mr-2 " />
+              <label className="text-black">0123 456 789</label>
+            </div>
+
+            <div className="p-2 flex flex-row justify-start items-center">
+              <LocationOnIcon className="mr-2 " />
+              <label className="text-black">
+                10/5, 106 Street, Tang Nhon Phu A Ward, Thu Duc City
+              </label>
+            </div>
+            <div className="p-2 flex flex-row justify-start items-center">
+              <ArticleIcon className="mr-2 " />
+              <label className="text-black">Construction</label>
+            </div>
+          </Card.Body>
+          <Card.Footer className="custom-footer flex flex-row justify-between">
+            <Button
+              info
+              onClick={handleClick}
+              title="Detail"
+              loading={loading}
+              className="w-[220px]"
+            />
+            <Button
+              danger
+              onClick={handleClick}
+              title="Add staff"
+              loading={loading}
+              className="w-[220px] uppercase"
+            />
+          </Card.Footer>
+        </Card>
+
+        <Card
+          className="shadow-inner-top p-4 w-[500px] m-2"
+          padding="sm"
+          bordered={true}
+          inner={true}
+          hoverable={true}
+        >
+          <Card.Header className="custom-header">
+            <button>Click me!</button>
+          </Card.Header>
+          <Card.Body className="custom-body">
+            <p>This is some content inside the card body.</p>
+          </Card.Body>
+          <Card.Footer className="custom-footer">
+            <Button
+              info
+              onClick={handleClick}
+              title="Detail"
+              loading={loading}
+              className="w-[200px]"
+            />
+            <Button
+              danger
+              onClick={handleClick}
+              title="Add staff"
+              loading={loading}
+              className="w-[200px]"
+            />
+          </Card.Footer>
+        </Card>
+
+        <Card
+          className="shadow-inner-top p-4 w-[500px] m-2"
+          padding="sm"
+          bordered={true}
+          inner={true}
+          hoverable={true}
+        >
+          <Card.Header className="custom-header">
+            <label>Hoang Xuan Viet</label>
+          </Card.Header>
+          <Card.Body className="custom-body">
+            <div className="p-2 flex flex-row justify-start items-center">
+              <LocalPhoneIcon className="mr-2 " />
+              <label className="text-gray-500">0123 456 789</label>
+            </div>
+
+            <div className="p-2 flex flex-row justify-start items-center">
+              <LocationOnIcon className="mr-2 " />
+              <label className="text-gray-500">
+                10/5, 106 Street, Tang Nhon Phu A Ward, Thu Duc City
+              </label>
+            </div>
+            <div className="p-2 flex flex-row justify-start items-center">
+              <ArticleIcon className="mr-2 " />
+              <label className="text-gray-500">Construction</label>
+            </div>
+          </Card.Body>
+          <Card.Footer className="custom-footer">
+            <Button
+              info
+              onClick={handleClick}
+              title="Detail"
+              loading={loading}
+              className="w-[200px]"
+            />
+            <Button
+              danger
+              onClick={handleClick}
+              title="Add staff"
+              loading={loading}
+              className="w-[200px]"
+            />
+          </Card.Footer>
+        </Card>
+      </Row>
 
       {/* <Dialog.Root open={visible} onOpenChange={setVisible}>
         <Dialog.Trigger>
@@ -147,18 +287,18 @@ const ConsultationPage = () => {
         }
         content={
           <>
-            <Button title="Click Me" onClick={handleClick} primary />
+            <Button title="Add" onClick={handleClick} primary />
           </>
         }
       />
 
-      <Switch
+      {/* <Switch
         className="shrink-0"
         checked={projectSetting}
         onChange={() => setProjectSetting(!projectSetting)}
-      />
+      /> */}
 
-      <Timeline
+      {/* <Timeline
         month={1}
         year={2025}
         items={tasks}
@@ -168,7 +308,7 @@ const ConsultationPage = () => {
         {(item) => (
           <div className="p-2 text-white bg-blue-500 rounded">{item.title}</div>
         )}
-      </Timeline>
+      </Timeline> */}
     </div>
   );
 };

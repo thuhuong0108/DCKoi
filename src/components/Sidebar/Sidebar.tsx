@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Box } from "@mui/material";
 import { useTheme } from "@mui/material";
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Profile } from "./UserProfile";
 
 type SidebarProps = {
@@ -59,7 +59,7 @@ export const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
         },
         secondary: {
           main: themeSecondaryColor,
-          contrastText: '#fff',
+          contrastText: "#fff",
         },
       },
     });
@@ -75,13 +75,19 @@ export const Sidebar = React.forwardRef<HTMLDivElement, SidebarProps>(
           sx={{
             width: toggleWidth,
             flexShrink: 0,
-            fontFamily: 'inherit',
+            fontFamily: "inherit",
             color: textColor,
           }}
         >
           <Box sx={{ width: toggleWidth }}>
             <SidebarContext.Provider
-              value={{ textColor, isCollapse, width, collapsewidth, themeColor }}
+              value={{
+                textColor,
+                isCollapse,
+                width,
+                collapsewidth,
+                themeColor,
+              }}
             >
               {children}
             </SidebarContext.Provider>
