@@ -4,4 +4,4 @@ import Register from "./Register";
 import Contact from "./Contact/Contact";
 import ConsultationPage from "./AdminPage/ConsultationPage";
 import TestUi from "./TestUi";
-export { Home, Login, Register, Contact, ConsultationPage , TestUi};
+export { Home, Login, Register, Contact, ConsultationPage, TestUi };
