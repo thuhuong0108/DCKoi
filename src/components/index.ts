@@ -7,6 +7,7 @@ import FormInput from "./FormInput";
 import PackageField from "./PackageField";
 import DesignTemplate from "./DesignTemplate";
 import Footer from "./Footer";
+import ServiceCard from "./ServiceCard";
 export * from "./Sidebar";
 export * from "./ui"
 
@@ -21,5 +22,5 @@ export {
   PackageField,
   DesignTemplate,
   Footer,
-  
+  ServiceCard
 };

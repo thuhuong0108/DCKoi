@@ -32,7 +32,7 @@ const Footer = () => {
       </Col>
 
       <Col span={5} className="flex flex-col justify-end mx-5 pr-5">
-        <Title name="Our Sevice"></Title>
+        <Title name="Our Service"></Title>
 
         {services.map((city, index) => (
           <div key={index} className="p-2 border-b-2 ">
