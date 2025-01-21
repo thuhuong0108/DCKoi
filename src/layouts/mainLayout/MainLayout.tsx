@@ -7,9 +7,11 @@ interface LayoutProps {
 
 const MainLayout = ({ Pages }: LayoutProps) => {
   return (
-    <div>
+    <div className="flex flex-col min-h-screen">
       <Header />
-      <Pages />
+      <div className="flex-grow">
+        <Pages />
+      </div>
       <Footer />
     </div>
   );

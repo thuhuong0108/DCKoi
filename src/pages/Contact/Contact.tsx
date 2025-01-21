@@ -88,7 +88,7 @@ const Contact = () => {
 
   return (
     <div>
-      <Banner />
+      <Banner title="Contact us"/>
       <Row className="p-5">
         <Col span={16} offset={4}>
           <Title name="BASE INFORMATON" />

@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom";
+
 interface ServiceCardProps {
     title: string,
     image: string,
@@ -26,12 +28,14 @@ const ServiceCard = ({ title, image, isRegular, serviceFeatures }: ServiceCardPr
                         </div>
                     ))}
                 </div>
-                <button
-                    className="self-center px-14 py-2 mt-20 max-w-full text-lg font-semibold leading-loose text-white bg-indigo-600 hover:bg-indigo-800 transition-all duration-300 rounded-xl w-[264px] max-md:px-5 max-md:mt-10"
-                    aria-label={`Book ${isRegular ? 'regular' : 'irregular'} maintenance service`}
-                >
-                    Đặt dịch vụ
-                </button>
+                <NavLink to="bookService">
+                    <button
+                        className="self-center px-14 py-2 mt-20 max-w-full text-lg font-semibold leading-loose text-white bg-indigo-600 hover:bg-indigo-800 transition-all duration-300 rounded-xl w-[264px] max-md:px-5 max-md:mt-10"
+                        aria-label={`Book ${isRegular ? 'regular' : 'irregular'} maintenance service`}
+                    >
+                        Đặt dịch vụ
+                    </button>
+                </NavLink>
             </div>
         </div>
     )

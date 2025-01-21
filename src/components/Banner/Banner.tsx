@@ -1,5 +1,10 @@
 import ImgBanner from "@/assets/images/banner.png";
-const Banner = () => {
+
+interface BannerProps {
+  title: string
+}
+
+const Banner = ({ title }: BannerProps) => {
   return (
     <div className="relative">
       <img
@@ -9,7 +14,7 @@ const Banner = () => {
       />
       <div className="absolute top-0 bottom-0 left-0 right-0 flex items-center justify-center">
         <div className="text-center space-y-4">
-          <p className="text-white font-semibold text-3xl">Contact us</p>
+          <p className="text-white font-semibold text-3xl">{title}</p>
         </div>
       </div>
     </div>
