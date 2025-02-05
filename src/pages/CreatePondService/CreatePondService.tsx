@@ -1,6 +1,8 @@
 import { Banner, Title } from '@/components'
 import useForm from '@/hooks/useForm';
+import { InboxOutlined } from '@ant-design/icons';
 import { Button, Col, Form, Input, Row } from 'antd'
+import Dragger from 'antd/es/upload/Dragger';
 
 interface PondInfoProps {
     fullName: string,
@@ -8,7 +10,8 @@ interface PondInfoProps {
     email: string,
     address: string,
     area: number,
-    depth: number
+    depth: number,
+    note?: string
 };
 
 const initialValues: PondInfoProps = {
@@ -17,7 +20,8 @@ const initialValues: PondInfoProps = {
     email: "",
     address: "",
     area: 0,
-    depth: 0
+    depth: 0,
+    note: ""
 };
 
 const handleSubmit = (values: PondInfoProps) => {
@@ -46,6 +50,7 @@ const CreatePondService = () => {
                         >
                             <Input
                                 placeholder="Nhập họ và tên"
+                                className="p-3 text-lg"
                                 {...regField("fullName")}
                             />
                         </Form.Item>
@@ -58,6 +63,7 @@ const CreatePondService = () => {
                         >
                             <Input
                                 placeholder="Nhập số điện thoại"
+                                className="p-3 text-lg"
                                 {...regField("phoneNumber")}
                             />
                         </Form.Item>
@@ -70,6 +76,7 @@ const CreatePondService = () => {
                         >
                             <Input
                                 placeholder="Nhập địa chỉ email"
+                                className="p-3 text-lg"
                                 {...regField("email")}
                             />
                         </Form.Item>
@@ -82,47 +89,84 @@ const CreatePondService = () => {
                         >
                             <Input
                                 placeholder="Nhập địa chỉ"
+                                className="p-3 text-lg"
                                 {...regField("address")}
                             />
                         </Form.Item>
 
-                        {/* Area */}
-                        <Form.Item
-                            label="Diện tích (m²)"
-                            validateStatus={regField("area").error ? "error" : ""}
-                            help={regField("area").error}
-                        >
-                            <Input
-                                type="number"
-                                placeholder="Nhập diện tích hồ"
-                                {...regField("area")}
-                            />
-                        </Form.Item>
+                        <div className="flex gap-6">
+                            {/* Area */}
+                            <div className="flex-flex-col w-1/2">
+                                <Form.Item
+                                    label="Estimated area of ​​koi pond to be built"
+                                    validateStatus={regField("area").error ? "error" : ""}
+                                    help={regField("area").error}
+                                >
+                                    <Input
+                                        type="number"
+                                        className="p-3 text-lg"
+                                        {...regField("area")}
+                                    />
+                                </Form.Item>
+                            </div>
 
-                        {/* Depth */}
+                            {/* Depth */}
+                            <div className="flex flex-col w-1/2">
+                                <Form.Item
+                                    label="Koi pond construction depth"
+                                    validateStatus={regField("depth").error ? "error" : ""}
+                                    help={regField("depth").error}
+                                >
+                                    <Input
+                                        type="number"
+                                        className="p-3 text-lg"
+                                        {...regField("depth")}
+                                    />
+                                </Form.Item>
+                            </div>
+                        </div>
+
+                        <Title name="DETAILS TECHNICAL DRAWING" />
+                        <div className="my-4">
+                            <Dragger listType="picture">
+                                <p className="ant-upload-drag-icon">
+                                    <InboxOutlined />
+                                </p>
+                                <p className="ant-upload-text">Drag your file(s) or <span className="text-blue-800 hover:underline">browse</span></p>
+                                <p className="ant-upload-hint">
+                                    Max 10 MB files are allowed
+                                </p>
+                            </Dragger>
+                        </div>
+
+                        <Title name="NOTE" />
+
+                        {/* Note */}
                         <Form.Item
-                            label="Độ sâu (m)"
-                            validateStatus={regField("depth").error ? "error" : ""}
-                            help={regField("depth").error}
+                            label="Special request"
+                            validateStatus={regField("note").error ? "error" : ""}
+                            help={regField("note").error}
                         >
                             <Input
-                                type="number"
-                                placeholder="Nhập độ sâu của hồ"
-                                {...regField("depth")}
+                                className="p-3 text-lg"
+                                {...regField("note")}
                             />
                         </Form.Item>
 
                         {/* Submit Button */}
-                        <Form.Item>
-                            <Button
-                                type="primary"
-                                htmlType="submit"
-                                disabled={loading}
-                                block
-                            >
-                                {loading ? "Đang xử lý..." : "Cập nhật thông tin"}
-                            </Button>
-                        </Form.Item>
+                        <div className="flex justify-end">
+                            <Form.Item>
+                                <Button
+                                    type="primary"
+                                    htmlType="submit"
+                                    className="px-8 py-5 text-lg"
+                                    disabled={loading}
+                                    block
+                                >
+                                    {loading ? "Sending..." : "SEND REQUEST"}
+                                </Button>
+                            </Form.Item>
+                        </div>
                     </Form>
                 </Col>
             </Row>
