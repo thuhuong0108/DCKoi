@@ -1,8 +1,10 @@
 import { Banner, Title } from '@/components'
 import useForm from '@/hooks/useForm';
 import { InboxOutlined } from '@ant-design/icons';
-import { Button, Col, Form, Input, Row } from 'antd'
+import { Button, Col, Form, Input, Row, UploadFile, UploadProps } from 'antd'
 import Dragger from 'antd/es/upload/Dragger';
+import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 interface PondInfoProps {
     fullName: string,
@@ -29,6 +31,32 @@ const handleSubmit = (values: PondInfoProps) => {
 }
 
 const CreatePondService = () => {
+    const [fileList, setFileList] = useState<UploadFile[]>([]);
+
+    const uploadProps: UploadProps = {
+        listType: "picture",
+        accept: "image/*",
+        fileList,
+        beforeUpload: (file) => {
+            const isImage = file.type.startsWith("image/");
+            if (!isImage) {
+                toast.error("Only image files are allowed!");
+                return false;
+            }
+
+            const isLimit = file.size / 1024 / 1024 < 10;
+            if (!isLimit) {
+                toast.error("File must be smaller than 10MB!");
+                return false;
+            }
+            setFileList([...fileList, file]);
+            return false;
+        },
+        onRemove: (file) => {
+            setFileList(fileList.filter((item) => item.uid !== file.uid));
+        }
+    }
+
     const { loading, regField, regHandleSubmit } = useForm({
         values: initialValues,
         onSubmit: (values: PondInfoProps) => handleSubmit(values)
@@ -47,6 +75,7 @@ const CreatePondService = () => {
                             label="Họ và tên"
                             validateStatus={regField("fullName").error ? "error" : ""}
                             help={regField("fullName").error}
+                            className="mt-2"
                         >
                             <Input
                                 placeholder="Nhập họ và tên"
@@ -128,7 +157,7 @@ const CreatePondService = () => {
 
                         <Title name="DETAILS TECHNICAL DRAWING" />
                         <div className="my-4">
-                            <Dragger listType="picture">
+                            <Dragger {...uploadProps}>
                                 <p className="ant-upload-drag-icon">
                                     <InboxOutlined />
                                 </p>
@@ -146,6 +175,7 @@ const CreatePondService = () => {
                             label="Special request"
                             validateStatus={regField("note").error ? "error" : ""}
                             help={regField("note").error}
+                            className="mt-2"
                         >
                             <Input
                                 className="p-3 text-lg"
