@@ -64,6 +64,10 @@
   @apply hover:bg-blue-200 active:bg-blue-500;
 }
 
+.btn.btn-success {
+  @apply bg-emerald-600 text-white;
+  @apply hover:bg-emerald-400 active:bg-emerald-600;
+}
 .btn.btn-ghost {
   @apply bg-transparent border-transparent;
 }
@@ -84,4 +88,7 @@
 }
 .btn.btn-danger[disabled] {
   @apply bg-red-400/70 border-red-300 opacity-90;
+}
+.btn.btn-success[disabled] {
+  @apply bg-emerald-400/70 border-emerald-300 opacity-90;
 }

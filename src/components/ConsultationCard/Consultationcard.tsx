@@ -5,6 +5,7 @@ import { Button } from "../ui";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import ArticleIcon from "@mui/icons-material/Article";
+import { useNavigate } from "react-router-dom";
 
 interface ConsultationProp {
   fullname: string;
@@ -24,12 +25,17 @@ const Consultationcard = ({
   basepackage,
   status,
 }: ConsultationProp) => {
-  const handleClick = () => {
+  const navigate = useNavigate();
+
+  const handleDetail = () => {
+    navigate("/admin/detail-consultation");
+  };
+  const handleAddStaff = () => {
     console.log("data: ", status);
   };
   return (
     <Card
-      className="shadow-inner-top p-4 w-[370px] m-2"
+      className="shadow-innerTop p-4 w-[370px] m-2"
       padding="sm"
       bordered={true}
       inner={true}
@@ -76,13 +82,13 @@ const Consultationcard = ({
       <Card.Footer className="custom-footer flex flex-row justify-between">
         <Button
           info
-          onClick={handleClick}
+          onClick={handleDetail}
           title="Detail"
           className="w-[165px]"
         />
         <Button
           danger
-          onClick={handleClick}
+          onClick={handleAddStaff}
           title="Add staff"
           className="w-[165px] uppercase"
         />

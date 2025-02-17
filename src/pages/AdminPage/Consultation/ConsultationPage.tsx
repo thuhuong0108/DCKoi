@@ -70,11 +70,9 @@ const ConsultationPage = () => {
       status: "pending",
     },
   ];
-  // const handSearch= () => {
 
-  // }
   return (
-    <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 h-full">
+    <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 min-h-full w-screen">
       <Title name="Consultations" />
       <Row className="flex flex-row justify-end my-6 gap-3">
         <Col>

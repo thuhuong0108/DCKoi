@@ -77,7 +77,6 @@ const LayoutAdmin: React.FC<IndexProps> = ({ Page }) => {
           ))}
         </Menu>
       </Sidebar>
-
       <Page />
     </div>
   );

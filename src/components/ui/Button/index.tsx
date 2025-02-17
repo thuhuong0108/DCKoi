@@ -18,6 +18,7 @@ interface IButtonProps {
   title?: string;
   primary?: boolean;
   info?: boolean;
+  success?: boolean;
   danger?: boolean;
   ghost?: boolean;
   warn?: boolean;
@@ -41,6 +42,7 @@ const Button = ({
   title,
   primary,
   info,
+  success,
   danger,
   warn,
   ghost,
@@ -59,6 +61,7 @@ const Button = ({
     ghost && "btn-ghost",
     primary && "btn-primary",
     info && "btn-info",
+    success && "btn-success",
     danger && "btn-danger",
     warn && "btn-warning",
     block && "block",

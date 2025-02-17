@@ -13,7 +13,7 @@
 }
 
 .modal-close {
-  @apply bg-white dark:bg-gray-800;
+  @apply bg-white dark:bg-red-700;
 }
 
 .modal-content {
@@ -45,7 +45,7 @@
 }
 
 .modal-title {
-  @apply text-xl font-bold pb-4;
+  @apply text-xl font-bold pb-4 text-blue-700;
 }
 
 .modal-desc {

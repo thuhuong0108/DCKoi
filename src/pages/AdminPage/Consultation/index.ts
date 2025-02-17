@@ -1,2 +1,2 @@
-import ConsultationPage from "./Consultation/ConsultationPage";
+import ConsultationPage from "./ConsultationPage";
 export default ConsultationPage;
