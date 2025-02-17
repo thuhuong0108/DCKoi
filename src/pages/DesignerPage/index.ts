@@ -1,3 +1,4 @@
-import DesignerPage from "./DesignerPage";
+import AddDesignPage from "./AddDesignPage";
+import DesignerHomepage from "./DesignerHomepage";
 
-export default DesignerPage
+export default { DesignerHomepage, AddDesignPage }

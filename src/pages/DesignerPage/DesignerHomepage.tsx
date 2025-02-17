@@ -13,7 +13,7 @@ const designData = {
     phone: "0123 456 789",
 }
 
-const DesignerPage = () => {
+const DesignerHomepage = () => {
     const [sortOrder, setSortOrder] = useState<string>("newest");
 
     return (
@@ -23,8 +23,9 @@ const DesignerPage = () => {
                 <div className="flex space-x-6">
                     <Input size="large" placeholder="Search" prefix={<Search />} className="bg-gray-100" />
                     <Select
+                        prefix="Sort by:"
                         defaultValue={sortOrder}
-                        value={`Sort by: ${sortOrder === "newest" ? "Newest" : "Oldest"}`}
+                        value={sortOrder}
                         options={[
                             { value: "newest", label: "Newest" },
                             { value: "oldest", label: "Oldest" },
@@ -43,11 +44,11 @@ const DesignerPage = () => {
                 </Row>
             </div>
 
-             <div className="flex justify-end">
-                <Pagination count={50} color="primary" shape="rounded"/>
-             </div>
+            <div className="flex justify-end">
+                <Pagination count={50} color="primary" shape="rounded" />
+            </div>
         </div>
     )
 }
 
-export default DesignerPage
+export default DesignerHomepage
