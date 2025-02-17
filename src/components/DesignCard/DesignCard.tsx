@@ -4,6 +4,19 @@ import { Card, Col, Dropdown, MenuProps } from "antd";
 
 const { Meta } = Card;
 
+export interface DesignCardData {
+    projectId: string,
+    address: string,
+    dimensions: string,
+    color: string,
+    name: string,
+    phone: string
+};
+
+interface DesignCardProps {
+    props: DesignCardData
+}
+
 const items: MenuProps['items'] = [
     {
         key: "1",
@@ -19,7 +32,7 @@ const items: MenuProps['items'] = [
     },
 ]
 
-const DesignCard = () => {
+const DesignCard = ({ props }: DesignCardProps) => {
     return (
         <Col span={8}>
             <Card
@@ -30,25 +43,25 @@ const DesignCard = () => {
                 <Meta description={
                     <div className="space-y-3">
                         <div className="flex justify-between">
-                            <h1 className="font-bold text-xl text-black">DS123456789</h1>
+                            <h1 className="font-bold text-xl text-black">{props.projectId}</h1>
                             <Dropdown menu={{ items }} placement="bottomRight" trigger={['click']}>
                                 <MoreVertOutlined />
                             </Dropdown>
                         </div>
                         <div className="flex items-center text-black">
                             <LocationOnOutlined />
-                            <p className="font-semibold text-lg">Thu Duc City</p>
+                            <p className="font-semibold text-lg">{props.address}</p>
                         </div>
 
                         {/* Pond Info */}
                         <div className="flex justify-stretch text-black">
                             <div className="flex items-center w-full">
                                 <DesignServices />
-                                <p className="text-lg font-semibold">3 x 4 x 1.2</p>
+                                <p className="text-lg font-semibold">{props.dimensions}</p>
                             </div>
                             <div className="flex items-center w-full">
                                 <ColorLens />
-                                <p className="text-lg font-semibold">Blue, Black</p>
+                                <p className="text-lg font-semibold">{props.color}</p>
                             </div>
                         </div>
 
@@ -59,9 +72,9 @@ const DesignCard = () => {
                         <div className="flex items-center justify-between">
                             <div className="flex items-center space-x-2">
                                 <img src="https://bootstrapdemos.adminmart.com/modernize/dist/assets/images/profile/user-1.jpg" alt="avatar" width={45} className="rounded-3xl" />
-                                <p className="font-semibold text-black text-lg">Hoàng Xuân Việt</p>
+                                <p className="font-semibold text-black text-lg">{props.name}</p>
                             </div>
-                            <p className="text-lg font-bold text-red-500">0123 456 789</p>
+                            <p className="text-lg font-bold text-red-500">{props.phone}</p>
                         </div>
                     </div>
                 } />

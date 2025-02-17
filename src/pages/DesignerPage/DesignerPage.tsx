@@ -4,6 +4,15 @@ import { Pagination } from "@mui/material";
 import { Input, Row, Select } from "antd";
 import { useState } from "react";
 
+const designData = {
+    projectId: "DS123456789",
+    address: "Thu Duc City",
+    dimensions: "3 x 4 x 1.2",
+    color: "Blue, Black",
+    name: "Hoàng Xuân Việt",
+    phone: "0123 456 789",
+}
+
 const DesignerPage = () => {
     const [sortOrder, setSortOrder] = useState<string>("newest");
 
@@ -28,9 +37,9 @@ const DesignerPage = () => {
             {/* Design Product Card */}
             <div className="">
                 <Row>
-                    <DesignCard />
-                    <DesignCard />
-                    <DesignCard />
+                    <DesignCard props={designData} />
+                    <DesignCard props={designData} />
+                    <DesignCard props={designData} />
                 </Row>
             </div>
 
