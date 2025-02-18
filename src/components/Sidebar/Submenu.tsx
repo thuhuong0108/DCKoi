@@ -53,7 +53,9 @@ export const Submenu = React.forwardRef<HTMLDivElement, SubmenuProps>(
         color: open ? "#fff" : customizer.textColor,
       },
       "&:hover": {
-        backgroundColor: open ? customizer.themeColor : customizer.themeColor + 20,
+        backgroundColor: open
+          ? customizer.themeColor
+          : customizer.themeColor + 20,
         color: open ? "#fff" : customizer.themeColor,
         ".MuiListItemIcon-root": {
           color: open ? "#fff" : customizer.themeColor,
@@ -73,14 +75,21 @@ export const Submenu = React.forwardRef<HTMLDivElement, SubmenuProps>(
 
     return (
       <Box ref={ref}>
-        <ListItemStyled onClick={handleClick} sx={{ display: "flex", gap: "15px" }}>
+        <ListItemStyled
+          onClick={handleClick}
+          sx={{ display: "flex", gap: "15px" }}
+        >
           <ListIConStyled style={{ minWidth: "0px" }}>
             {icon ? icon : <CircleOutlined />}
           </ListIConStyled>
           {!customizer.isCollapse && (
             <>
               <ListItemText sx={{ my: 0 }}>
-                <Typography fontSize={textFontSize} sx={{ lineHeight: "1" }} variant="caption">
+                <Typography
+                  fontSize={textFontSize}
+                  sx={{ lineHeight: "1" }}
+                  variant="caption"
+                >
                   {title}
                 </Typography>
               </ListItemText>

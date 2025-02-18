@@ -1,12 +1,4 @@
-import {
-  SidebarContext,
-  Sidebar,
-  Menu,
-  MenuItem,
-  Submenu,
-  Profile,
-  Logo,
-} from "@/components/Sidebar";
+import { Sidebar, Menu, MenuItem, Logo } from "@/components/Sidebar";
 import {
   AttachMoneySharp,
   BuildSharp,
@@ -76,6 +68,7 @@ const LayoutAdmin: React.FC<IndexProps> = ({ Page }) => {
         <Menu subHeading="Home">
           {homeMenu.map((item, index) => (
             <MenuItem
+              key={index}
               link={item.link}
               children={item.children}
               icon={item.icon}
@@ -84,7 +77,6 @@ const LayoutAdmin: React.FC<IndexProps> = ({ Page }) => {
           ))}
         </Menu>
       </Sidebar>
-
       <Page />
     </div>
   );

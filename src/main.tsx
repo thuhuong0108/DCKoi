@@ -2,21 +2,26 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App";
-import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import store from "./redux/store/store";
-import { SocketProvider } from "./contexts/SocketProvider";
+import { ConnectedRouter } from "connected-react-router";
+import { history } from "./utils/history";
+import { BrowserRouter } from "react-router-dom";
+import { NavigationProvider } from "./contexts/NavigationContext";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Provider store={store}>
-      <SocketProvider>
-        <BrowserRouter>
+      {/* <SocketProvider> */}
+      <BrowserRouter>
+        <NavigationProvider>
+          {/* <ConnectedRouter history={history}> */}
           <App />
-          <ToastContainer />
-        </BrowserRouter>
-      </SocketProvider>
+        </NavigationProvider>
+      </BrowserRouter>
+      {/* </ConnectedRouter> */}
+      {/* </SocketProvider> */}
     </Provider>
   </StrictMode>
 );

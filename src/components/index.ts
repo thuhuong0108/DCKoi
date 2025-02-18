@@ -7,10 +7,12 @@ import FormInput from "./FormInput";
 import PackageField from "./PackageField";
 import DesignTemplate from "./DesignTemplate";
 import Footer from "./Footer";
+import InputField from "./FieldCustom";
+import Consultationcard from "./ConsultationCard";
+import PackgeCard from "./PackageCard";
 import ServiceCard from "./ServiceCard";
 export * from "./Sidebar";
-export * from "./ui"
-
+export * from "./ui";
 
 export {
   Header,
@@ -22,5 +24,9 @@ export {
   PackageField,
   DesignTemplate,
   Footer,
-  ServiceCard
+  InputField,
+  // KoiCard,
+  Consultationcard,
+  PackgeCard,
+  ServiceCard,
 };

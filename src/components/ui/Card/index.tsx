@@ -1,75 +1,62 @@
-import { ReactNode } from 'react'
-import './style.css'
+import { ReactNode } from "react";
+import "./style.css";
 
 interface CardProps {
-  children: ReactNode
-  className?: string
-  padding?: 'none' | 'sm' | 'base' | 'lg'
-  bordered?: boolean
-  hoverable?: boolean
+  children: ReactNode;
+  className?: string;
+  padding?: "none" | "sm" | "base" | "lg";
+  bordered?: boolean;
+  inner?: boolean;
+  hoverable?: boolean;
 }
 
-export default function Card({ 
-  children, 
-  className = '',
-  padding = 'base',
+export default function Card({
+  children,
+  className = "",
+  padding = "base",
   bordered = true,
-  hoverable = false
+  inner = false,
+  hoverable = false,
 }: CardProps) {
   const classes = [
-    'card',
+    "card",
     `p-${padding}`,
-    bordered ? 'bordered' : '',
-    hoverable ? 'hoverable' : '',
-    className
-  ].filter(Boolean)
+    bordered ? "bordered" : "",
+    inner ? "inner" : "",
+    hoverable ? "hoverable" : "",
+    className,
+  ].filter(Boolean);
 
-  return (
-    <div className={classes.join(' ')}>
-      {children}
-    </div>
-  )
+  return <div className={classes.join(" ")}>{children}</div>;
 }
 
 // Sub-components for better organization
-Card.Header = function CardHeader({ 
-  children, 
-  className = '' 
-}: { 
-  children: ReactNode
-  className?: string 
+Card.Header = function CardHeader({
+  children,
+  className = "",
+}: {
+  children: ReactNode;
+  className?: string;
 }) {
-  return (
-    <div className={`card-header ${className}`}>
-      {children}
-    </div>
-  )
-}
+  return <div className={`card-header ${className}`}>{children}</div>;
+};
 
-Card.Body = function CardBody({ 
-  children, 
-  className = '' 
-}: { 
-  children: ReactNode
-  className?: string 
+Card.Body = function CardBody({
+  children,
+  className = "",
+}: {
+  children: ReactNode;
+  className?: string;
 }) {
-  return (
-    <div className={`card-body ${className}`}>
-      {children}
-    </div>
-  )
-}
+  return <div className={`card-body ${className}`}>{children}</div>;
+};
 
-Card.Footer = function CardFooter({ 
-  children, 
-  className = '' 
-}: { 
-  children: ReactNode
-  className?: string 
+Card.Footer = function CardFooter({
+  children,
+  className = "",
+}: {
+  children: ReactNode;
+  className?: string;
 }) {
-  return (
-    <div className={`card-footer ${className}`}>
-      {children}
-    </div>
-  )
-}
+  return <div className={`card-footer ${className}`}>{children}</div>;
+};

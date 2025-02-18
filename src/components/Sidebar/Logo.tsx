@@ -16,25 +16,24 @@ export const Logo = React.forwardRef<HTMLAnchorElement, LogoProps>(
 
     const LogoStyled = styled(Link)(() => ({
       whiteSpace: "nowrap",
-      overflow: customizer.isCollapse ? 'hidden' : 'visible',
-      WebkitLineClamp: '1',
-      fontSize: '2rem',
-      padding: '15px 22px',
-      textOverflow: 'ellipsis',
+      overflow: customizer.isCollapse ? "hidden" : "visible",
+      WebkitLineClamp: "1",
+      fontSize: "2rem",
+      padding: "15px 22px",
+      textOverflow: "ellipsis",
     }));
 
     return (
       <LogoStyled ref={ref}>
         {img === "" ? (
-          <Typography variant="body1">
-            {children}
-          </Typography>
+          <Typography variant="body1">{children}</Typography>
         ) : (
           <Box
             component="img"
             sx={{
               display: "flex",
               alignItems: "center",
+              width: "200px",
             }}
             src={img}
           />
