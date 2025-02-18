@@ -26,6 +26,11 @@ function* loginWorker(action: PayloadAction<LoginPayload>) {
   }
 }
 
+function* logoutWorker() {
+    yield put(authActions.logout());
+    localStorage.removeItem("token");
+}
+
 function* loginWatcher() {
   while (true) {
     const action = yield take(authActions.login);
@@ -33,6 +38,14 @@ function* loginWatcher() {
   }
 }
 
+function* logoutWatcher() {
+  while (true) {
+    yield take(authActions.logout);
+    yield fork(logoutWorker);
+  }
+}
+
 export function* authSaga() {
   yield fork(loginWatcher);
+  yield fork(logoutWatcher);
 }

@@ -4,6 +4,10 @@ const endPoint = {
   auth: {
     login: "/auth/signin",
   },
+  packageItem: {
+    getPagingPackageItem: "/packageitems",
+  }
+
 };
 
 export { baseURL, endPoint, socketURL };
