@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { socketURL } from "@/utils/endPoint";
 import { useSelector } from "react-redux";
 import io, { Socket } from "socket.io-client";
-import { selectUserId } from "@/redux/slices/authSlices";
+import { selectUserId } from "@/redux/slices/auth/authSlices";
 
 // Tạo context cho socket
 const SocketContext = createContext<Socket | null>(null);

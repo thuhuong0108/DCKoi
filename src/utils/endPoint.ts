@@ -1,8 +1,8 @@
-const baseURL = "http://34.81.244.146:8080";
+const baseURL = "http://localhost:5113/api";
 const socketURL = "http://34.81.244.146:3333";
 const endPoint = {
   auth: {
-    login: "/api/v1/auth/login",
+    login: "/auth/signin",
   },
 };
 

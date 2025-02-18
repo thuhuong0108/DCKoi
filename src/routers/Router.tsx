@@ -1,4 +1,4 @@
-import { useRoutes } from "react-router-dom";
+import { useLocation, useRoutes } from "react-router-dom";
 import {
   ConsultationPage,
   Contact,
@@ -17,6 +17,7 @@ import {
 } from "@/pages/AdminPage";
 
 const Routers = () => {
+  const location = useLocation();
   const element = useRoutes([
     { path: "/", element: <MainLayout Pages={Home} /> },
     { path: "/contact", element: <MainLayout Pages={Contact} /> },
@@ -49,6 +50,7 @@ const Routers = () => {
     },
     { path: "/admin/test", element: <LayoutAdmin Page={TestUi} /> },
   ]);
+  console.log("Current Route:", location.pathname);
   return <div>{element}</div>;
 };
 
