@@ -1,6 +1,5 @@
 import FeatureCard from "./FeatureCard";
 import Header from "./Header";
-import KoiCard from "./KoiCard";
 import NavLinkCustom from "./NavLinkCustom";
 import Title from "./Title";
 import Banner from "./Banner";
@@ -11,6 +10,7 @@ import Footer from "./Footer";
 import InputField from "./FieldCustom";
 import Consultationcard from "./ConsultationCard";
 import PackgeCard from "./PackageCard";
+import ServiceCard from "./ServiceCard";
 export * from "./Sidebar";
 export * from "./ui";
 
@@ -25,7 +25,8 @@ export {
   DesignTemplate,
   Footer,
   InputField,
-  KoiCard,
+  // KoiCard,
   Consultationcard,
   PackgeCard,
+  ServiceCard,
 };
