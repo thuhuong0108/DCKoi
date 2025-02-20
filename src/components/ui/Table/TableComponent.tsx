@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { TableProps } from "./types";
 import { formatDate, isDateString, trimText } from "@/utils/helpers";
 import PaginationComponent from "./PaginationComponent";
-import { Pagination } from "antd";
+import { Pagination } from "@mui/material";
 function TableComponent<T>({
   columns,
   data,
@@ -344,10 +344,13 @@ function TableComponent<T>({
       {enablePagination && page !== undefined && setPage && (
         <div>
           <Pagination
-            total={calculatedTotalPages}
-            showSizeChanger
-            showQuickJumper
-            showTotal={(total) => `Total ${total} items`}
+            count={calculatedTotalPages}
+            page={page}
+            onChange={(_, value) => setPage(value)}
+            size="small"
+            color="primary"
+            showFirstButton
+            showLastButton
           />
         </div>
       )}
