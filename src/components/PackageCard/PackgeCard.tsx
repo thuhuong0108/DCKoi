@@ -1,9 +1,11 @@
 import React from "react";
 import Card from "../ui/Card";
+
 interface PackagePros {
   name: string;
   onClick: (name: string) => void;
 }
+
 const PackgeCard: React.FC<PackagePros> = ({ name, onClick }) => {
   return (
     <div onClick={() => onClick(name)}>

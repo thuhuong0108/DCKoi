@@ -3,7 +3,6 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store/store";
 import { User } from "@/models/User";
 
-
 export interface LoginPayload {
   email: string;
   password: string;
@@ -24,7 +23,7 @@ export const authSlice = createSlice({
   name: "auth",
   initialState: initialState,
   reducers: {
-    login (state, action: PayloadAction<LoginPayload>) {
+    login(state, action: PayloadAction<LoginPayload>) {
       state.loading = true;
     },
     loginSuccess(state, action: PayloadAction<User>) {

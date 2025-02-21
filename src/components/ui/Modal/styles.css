@@ -13,7 +13,7 @@
 }
 
 .modal-close {
-  @apply bg-white dark:bg-red-700;
+  @apply bg-white;
 }
 
 .modal-content {

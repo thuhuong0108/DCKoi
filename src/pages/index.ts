@@ -5,10 +5,11 @@ import Contact from "./Contact/Contact";
 import {
   ConsultationPage,
   DetailConsultation,
-  PackagePage,
   ManagementTransaction,
   ManagementUser,
+  PackagePage,
   PackageItem,
+  ManagementPackage,
 } from "./AdminPage";
 import TestUi from "./TestUi";
 export {
@@ -17,10 +18,11 @@ export {
   Register,
   Contact,
   ConsultationPage,
-  PackagePage,
   TestUi,
   DetailConsultation,
   ManagementTransaction,
   ManagementUser,
+  PackagePage,
   PackageItem,
+  ManagementPackage,
 };

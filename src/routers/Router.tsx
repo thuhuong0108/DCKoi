@@ -14,6 +14,7 @@ import {
   DetailConsultation,
   PackagePage,
   PackageItem,
+  ManagementPackage,
 } from "@/pages/AdminPage";
 
 const Routers = () => {
@@ -33,11 +34,15 @@ const Routers = () => {
       element: <LayoutAdmin Page={ConsultationPage} />,
     },
     {
-      path: "/admin/packages",
+      path: "/admin/management-packages",
+      element: <LayoutAdmin Page={ManagementPackage} />,
+    },
+    {
+      path: "/admin/management-packages/packages",
       element: <LayoutAdmin Page={PackagePage} />,
     },
     {
-      path: "/admin/packages/package-items",
+      path: "/admin/management-packages/package-items",
       element: <LayoutAdmin Page={PackageItem} />,
     },
     {

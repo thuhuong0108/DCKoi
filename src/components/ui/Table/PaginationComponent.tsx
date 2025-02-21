@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { PaginationComponentProps } from "./types";
+import { Pagination } from "antd";
 
 const PaginationComponent: React.FC<PaginationComponentProps> = ({
-  page,
-  setPage,
   totalPages,
+  itemsPerPage,
   disableDefaultStyles = false,
   customClassNames = {},
   enableDarkMode = true,
@@ -44,41 +44,14 @@ const PaginationComponent: React.FC<PaginationComponentProps> = ({
           : "flex justify-center items-center mt-4"
       }
     >
-      <button
-        disabled={page === 1}
-        onClick={() => setPage(1)}
-        className={page === 1 ? disabledButtonClassName : baseButtonClassName}
-      >
-        First
-      </button>
-      <button
-        disabled={page === 1}
-        onClick={() => setPage(page - 1)}
-        className={page === 1 ? disabledButtonClassName : baseButtonClassName}
-      >
-        Previous
-      </button>
-      <span className={pageInfoClassName}>
-        Page <strong>{page}</strong> of <strong>{totalPages}</strong>
-      </span>
-      <button
-        disabled={page === totalPages}
-        onClick={() => setPage(page + 1)}
-        className={
-          page === totalPages ? disabledButtonClassName : baseButtonClassName
+      <Pagination
+        total={totalPages}
+        showSizeChanger
+        showQuickJumper
+        showTotal={(totalItem) =>
+          `Tổng ${itemsPerPage} / ${totalItem} hạng mục`
         }
-      >
-        Next
-      </button>
-      <button
-        disabled={page === totalPages}
-        onClick={() => setPage(totalPages)}
-        className={
-          page === totalPages ? disabledButtonClassName : baseButtonClassName
-        }
-      >
-        Last
-      </button>
+      />
     </div>
   );
 };

@@ -65,11 +65,11 @@ const ActionDropdown = <T,>({
   const baseTdClassName = (i: number) =>
     i % 2 === 0
       ? isDarkMode
-        ? "relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3 bg-blue-200 text-gray-300"
+        ? "relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3 bg-blue-100 text-gray-300"
         : "relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3 bg-white text-gray-700"
       : isDarkMode
-      ? "relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3 bg-blue-100 text-gray-300"
-      : "relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3 bg-blue-100 text-gray-700";
+      ? "relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3 bg-blue-50 text-gray-300"
+      : "relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3 bg-blue-50 text-gray-700";
   const tdClassName = disableDefaultStyles
     ? customClassNames.actionTd || ""
     : `${baseTdClassName(index)} ${customClassNames.actionTd || ""}`;

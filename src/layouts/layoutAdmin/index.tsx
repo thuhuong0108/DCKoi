@@ -46,7 +46,7 @@ const LayoutAdmin: React.FC<IndexProps> = ({ Page }) => {
     { link: "/admin/staff", children: "Staff", icon: <PeopleSharp /> },
     { link: "/admin/users", children: "Users", icon: <PersonSharp /> },
     {
-      link: "/admin/packages",
+      link: "/admin/management-packages",
       children: "Packages",
       icon: <CardGiftcardSharp />,
     },

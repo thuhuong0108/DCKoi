@@ -24,7 +24,7 @@ function TableComponent<T>({
   enablePagination = false,
   page = 1,
   setPage,
-  itemsPerPage = 10,
+  itemsPerPage = 0,
   totalPages,
   sortableProps = [],
   formatValue,
@@ -110,15 +110,15 @@ function TableComponent<T>({
   const baseTableClassName = !disableDefaultStyles
     ? `w-full divide-y ${
         enableDarkMode && isDarkMode
-          ? "bg-blue-200 text-gray-200 divide-gray-200"
+          ? "bg-blue-100 text-gray-200 divide-gray-200"
           : "bg-white text-gray-900 divide-gray-200"
       }`
     : "";
   const baseTheadClassName =
     !disableDefaultStyles && enableDarkMode
       ? isDarkMode
-        ? "bg-blue-500 text-white"
-        : "bg-blue-50 text-gray-500"
+        ? "bg-white text-black"
+        : "bg-gray-50 text-gray-500"
       : "";
   const baseTbodyClassName = !disableDefaultStyles
     ? `divide-y ${
@@ -129,11 +129,11 @@ function TableComponent<T>({
     !disableDefaultStyles
       ? index % 2 === 0
         ? isDarkMode
-          ? "bg-blue-200"
-          : "bg-blue-100"
+          ? "bg-blue-100"
+          : "bg-blue-50"
         : isDarkMode
-        ? "bg-blue-100"
-        : "bg-blue-100"
+        ? "bg-blue-50"
+        : "bg-blue-50"
       : "";
   const baseTdClassName = !disableDefaultStyles
     ? isDarkMode
@@ -151,7 +151,7 @@ function TableComponent<T>({
     : `${baseTbodyClassName} ${customClassNames.tbody || ""}`;
   const thClassName = disableDefaultStyles
     ? customClassNames.th || ""
-    : `px-2 py-2 sm:px-4 sm:py-4 text-left text-xs font-medium uppercase tracking-wider ${
+    : `px-2 py-2 sm:px-4 sm:py-4 text-left text-xs font-large uppercase tracking-wider ${
         customClassNames.th || ""
       }`;
   const trClassName = (index: number) =>
@@ -261,7 +261,7 @@ function TableComponent<T>({
                           ))}
                           {!isExpanded && (value as any[]).length > 5 && (
                             <span
-                              className="inline-block bg-blue-200 text-gray-600 px-2 py-1 rounded-full text-xs cursor-pointer"
+                              className="inline-block bg-blue-100 text-gray-600 px-2 py-1 rounded-full text-xs cursor-pointer"
                               onClick={(e) => {
                                 e.stopPropagation();
                                 setExpandedCells((prev) => ({
@@ -282,7 +282,7 @@ function TableComponent<T>({
                       displayValue = (
                         <Link to={value}>
                           <span
-                            className="text-blue-500 hover:underline"
+                            className="text-blue-100 hover:underline"
                             onClick={(e) => e.stopPropagation()}
                           >
                             {isExpanded ? value : trimText(value, 30)}
@@ -343,11 +343,12 @@ function TableComponent<T>({
       </div>
       {enablePagination && page !== undefined && setPage && (
         <div>
-          <Pagination
-            total={calculatedTotalPages}
-            showSizeChanger
-            showQuickJumper
-            showTotal={(total) => `Total ${total} items`}
+          <PaginationComponent
+            page={page}
+            setPage={setPage}
+            totalPages={calculatedTotalPages}
+            itemsPerPage={itemsPerPage}
+            totalItems={sortedData.length}
           />
         </div>
       )}
