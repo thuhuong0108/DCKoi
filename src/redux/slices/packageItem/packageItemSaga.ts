@@ -1,12 +1,16 @@
-import { loginApi } from "@/api/auth";
-import { messageError } from "@/components";
+import { messageError, messageSuccess } from "@/components";
 import { PayloadAction } from "@reduxjs/toolkit";
-import { push } from "connected-react-router";
-import { call, fork, put, take } from "redux-saga/effects";
-import {} from "./packageItemSlices";
-import { getPagingPackageItem } from "@/api/packageItem";
+import { call, fork, put, select, take } from "redux-saga/effects";
+import { PackageItemState } from "./packageItemSlices";
+import {
+  getPagingPackageItem,
+  createPackageItem,
+  updatePackageItem,
+  deletePackageItem,
+} from "@/api/packageItem";
 import { packageItemActions } from "./packageItemSlices";
 import { Filter } from "@/models/Common";
+import { PackageItemType } from "@/models";
 
 function* fetchItemWorker(action: PayloadAction<Filter>) {
   try {
@@ -24,6 +28,83 @@ function* fetchItemWorker(action: PayloadAction<Filter>) {
   }
 }
 
+// create
+function* createItemWorker(action: PayloadAction<PackageItemType>) {
+  try {
+    console.log(action.payload);
+    const data = yield call(createPackageItem, action.payload);
+
+    if (data.isSuccess) {
+      messageSuccess(data.message);
+      const packageItemsState: PackageItemState = yield select(
+        (state) => state.packageItem
+      );
+
+      yield put(
+        packageItemActions.fetchPackageItems({
+          pageNumber: packageItemsState.packageItems.pageNumber,
+          pageSize: packageItemsState.packageItems.pageSize,
+        })
+      );
+    } else {
+      messageError(data.message);
+    }
+  } catch (error) {
+    messageError("Hệ thống đang bị lỗi");
+    console.log(error);
+  }
+}
+
+//update
+function* updateItemWorker(action: PayloadAction<PackageItemType>) {
+  try {
+    const data = yield call(updatePackageItem, action.payload);
+    if (data.isSuccess) {
+      messageSuccess(data.message);
+      const packageItemsState: PackageItemState = yield select(
+        (state) => state.packageItem
+      );
+
+      yield put(
+        packageItemActions.fetchPackageItems({
+          pageNumber: packageItemsState.packageItems.pageNumber,
+          pageSize: packageItemsState.packageItems.pageSize,
+        })
+      );
+    } else {
+      messageError(data.message);
+    }
+  } catch (error) {
+    messageError("Hệ thống đang bị lỗi");
+    console.log(error);
+  }
+}
+
+//delete
+function* deleteItemWorker(action: PayloadAction<string>) {
+  try {
+    const data = yield call(deletePackageItem, action.payload);
+    if (data.isSuccess) {
+      messageSuccess(data.message);
+      const packageItemsState: PackageItemState = yield select(
+        (state) => state.packageItem
+      );
+
+      yield put(
+        packageItemActions.fetchPackageItems({
+          pageNumber: packageItemsState.packageItems.pageNumber,
+          pageSize: packageItemsState.packageItems.pageSize,
+        })
+      );
+    } else {
+      messageError(data.message);
+    }
+  } catch (error) {
+    messageError("Hệ thống đang bị lỗi");
+    console.log(error);
+  }
+}
+
 function* fetchItemWatcher() {
   while (true) {
     const action = yield take(packageItemActions.fetchPackageItems);
@@ -31,6 +112,30 @@ function* fetchItemWatcher() {
   }
 }
 
+function* createItemWatcher() {
+  while (true) {
+    const action = yield take(packageItemActions.createPackageItem);
+    yield fork(createItemWorker, action);
+  }
+}
+
+function* updateItemWatcher() {
+  while (true) {
+    const action = yield take(packageItemActions.updatePackageItem);
+    yield fork(updateItemWorker, action);
+  }
+}
+
+function* deleteItemWatcher() {
+  while (true) {
+    const action = yield take(packageItemActions.deletePackageItem);
+    yield fork(deleteItemWorker, action);
+  }
+}
+
 export function* packageItemSaga() {
   yield fork(fetchItemWatcher);
+  yield fork(createItemWatcher);
+  yield fork(updateItemWatcher);
+  yield fork(deleteItemWatcher);
 }

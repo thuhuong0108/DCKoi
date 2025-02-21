@@ -5,7 +5,11 @@ const endPoint = {
     login: "/auth/signin",
   },
   packageItem: {
+    createPackageItem: "/packageitems",
     getPagingPackageItem: "/packageitems",
+    getPackageItem: (id: string) => `/packageitems/${id}`,
+    updatePackageItem: (id: string) => `/packageitems/${id}`,
+    deletePackageItem: (id: string) => `/packageitems/${id}`,
   },
 };
 
