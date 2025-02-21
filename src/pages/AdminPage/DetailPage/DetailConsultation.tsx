@@ -15,7 +15,7 @@ interface Product {
   createdAt: string;
 }
 
-const DetailConsultation: React.FC = () => {
+const DetailConsultation = () => {
   const [loading, setLoading] = useState(false);
   const setTimeDemoLoading = () => {
     setLoading(true);

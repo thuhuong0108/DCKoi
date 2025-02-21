@@ -16,13 +16,14 @@ import {
   PackageItem,
   ManagementPackage,
 } from "@/pages/AdminPage";
+import RootLayout from "@/layouts/RootLayout";
 
 const Routers = () => {
   const location = useLocation();
   const element = useRoutes([
     { path: "/", element: <MainLayout Pages={Home} /> },
     { path: "/contact", element: <MainLayout Pages={Contact} /> },
-    { path: "/login", element: <Login /> },
+    { path: "/login", element: <RootLayout Pages={Login} /> },
     { path: "/register", element: <Register /> },
     { path: "/admin", element: <LayoutAdmin Page={ConsultationPage} /> },
     {

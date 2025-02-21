@@ -8,35 +8,31 @@ import Button from "@/components/ui/Button";
 import Modal from "@/components/ui/Modal";
 import { FormControl, Input, InputAdornment, TextField } from "@mui/material";
 import { Col, Row } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
-import { PackageItemType } from "@/models";
+import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
+import {
+  packageItemActions,
+  selectPackageItems,
+} from "@/redux/slices/packageItem/packageItemSlices";
+import { PackageItem } from "@/models/PackageItem";
+interface Item {
+  id: number;
+  name: string;
+}
 
 const PackageItem = () => {
-  const [loading, setLoading] = useState(false);
-  const setTimeDemoLoading = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      messageSuccess("Time demo loading completed.");
-    }, 1000);
-  };
+  const dispatch = useAppDispatch();
+  const isLoading = useAppSelector((state) => state.packageItem.loading);
 
-  const [items, setItems] = useState<PackageItemType[]>([
-    { id: 1, name: "Đào hồ" },
-    { id: 2, name: "Lắp đường ống" },
-    { id: 3, name: "Cuốn thép" },
-    { id: 4, name: "Đào hồ" },
-    { id: 5, name: "Lắp đường ống" },
-    { id: 6, name: "Cuốn thép" },
-    { id: 1, name: "Đào hồ" },
-    { id: 2, name: "Lắp đường ống" },
-    { id: 3, name: "Cuốn thép" },
-    { id: 4, name: "Đào hồ" },
-  ]);
+  const items = useAppSelector(selectPackageItems);
+  console.log("Items:", items.totalPages);
 
-  const [page, setPage] = useState(1);
-  const itemsPerPage = items.length < 10 ? items.length : 10;
+  useEffect(() => {
+    dispatch(
+      packageItemActions.fetchPackageItems({ pageNumber: 1, pageSize: 10 })
+    );
+  }, []);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [selectedItem, setSelectedItem] = useState<PackageItemType | null>(
@@ -44,57 +40,15 @@ const PackageItem = () => {
   );
 
   const [search, setSearch] = useState("");
-  const [filteredItems, setFilteredItems] = useState(items);
 
-  const handleSearch = (event) => {
-    const term = event.target.value;
-    setSearch(term);
-
-    const filtered = items.filter((item) =>
-      item.name.toLowerCase().includes(term.toLowerCase())
-    );
-    setFilteredItems(filtered);
-  };
-
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(event.target.value);
-  };
-
-  const handleEdit = (item: PackageItemType) => {
-    setSelectedItem(item);
-    setInputValue(item.name);
-    setIsModalOpen(true);
+  const handleEdit = (item: PackageItem) => {
     console.log("Edit item:", item);
     setIsModalOpen(true);
   };
 
-  const handleDelete = (item: PackageItemType) => {
-    confirmAlert({
-      title: "Xác nhận xóa hạng mục",
-      message: "Bạn có chắc chắn muốn xóa hạng mục ?",
-      yes: () => {
-        setItems(items.filter((p) => p.id !== item.id));
-      },
-      no: () => {
-        console.log("Không");
-      },
-    });
-  };
+  const handleDelete = (item: PackageItem) => {};
 
-  const handleSave = () => {
-    if (selectedItem) {
-      const updatedItems = items.map((item) =>
-        item.id === selectedItem.id ? { ...item, name: inputValue } : item
-      );
-      setItems(updatedItems);
-    } else {
-      const newItem = { id: items.length + 1, name: inputValue };
-      setItems([...items, newItem]);
-    }
-    setIsModalOpen(false);
-    setSelectedItem(null);
-    setInputValue("");
-  };
+  const handleSave = () => {};
 
   return (
     <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 w-full h-full">
@@ -102,10 +56,10 @@ const PackageItem = () => {
       <Row className="flex flex-row justify-between items-center my-3">
         <Col>
           <Button
-            block
-            onClick={() => setIsModalOpen(true)}
-            title="Thêm mới hạng mục"
-            className="w-[auto] uppercase mt-2"
+            danger
+            // onClick={() => setIsModalOpen(true)}
+            title="Add new item"
+            className="w-[165px] uppercase mt-3"
           />
         </Col>
         <Col>
@@ -114,7 +68,6 @@ const PackageItem = () => {
               id="standard-adornment-amount"
               placeholder="Tìm kiếm ..."
               value={search}
-              onChange={handleSearch}
               startAdornment={
                 <InputAdornment position="start">
                   <SearchIcon />
@@ -125,19 +78,26 @@ const PackageItem = () => {
         </Col>
       </Row>
 
-      <TableComponent<PackageItemType>
-        columns={["STT", "Hạng mục công việc"]}
-        data={filteredItems}
-        props={["id", "name"]}
+      <TableComponent<PackageItem>
+        columns={["name"]}
+        data={items.data}
+        props={["name"]}
         actions={true}
         actionTexts={["Sửa", "Xóa"]}
         actionFunctions={[handleEdit, handleDelete]}
-        loading={false}
+        loading={isLoading}
         enablePagination={true}
-        page={page}
-        setPage={setPage}
-        itemsPerPage={itemsPerPage}
-        totalPages={Math.ceil(filteredItems.length)}
+        page={items.pageNumber}
+        setPage={(page) => {
+          dispatch(
+            packageItemActions.fetchPackageItems({
+              pageNumber: page,
+              pageSize: 10,
+            })
+          );
+        }}
+        itemsPerPage={items.pageSize}
+        totalPages={items.totalPages}
       />
 
       <Modal
@@ -152,7 +112,6 @@ const PackageItem = () => {
               required
               label="Tên hạng mục công việc"
               value={inputValue}
-              onChange={handleInputChange}
             />
             <div className="flex justify-end">
               <Button

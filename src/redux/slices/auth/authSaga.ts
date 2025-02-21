@@ -11,10 +11,9 @@ function* loginWorker(action: PayloadAction<LoginPayload>) {
     const data = yield call(loginApi, action.payload);
     if (data.isSuccess) {
       // set to local storage
+
       localStorage.setItem("token", data.data.token);
       yield put(authActions.loginSuccess(data));
-        yield put(push("/"));
-     
     } else {
       messageError(data.message);
       yield put(authActions.loginFailed());
@@ -26,6 +25,11 @@ function* loginWorker(action: PayloadAction<LoginPayload>) {
   }
 }
 
+function* logoutWorker() {
+  yield put(authActions.logout());
+  localStorage.removeItem("token");
+}
+
 function* loginWatcher() {
   while (true) {
     const action = yield take(authActions.login);
@@ -33,6 +37,14 @@ function* loginWatcher() {
   }
 }
 
+function* logoutWatcher() {
+  while (true) {
+    yield take(authActions.logout);
+    yield fork(logoutWorker);
+  }
+}
+
 export function* authSaga() {
   yield fork(loginWatcher);
+  yield fork(logoutWatcher);
 }

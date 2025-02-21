@@ -1,4 +1,4 @@
-import { ApiResultWithData } from "@/models/ApiResult";
+import { ApiResultWithData } from "@/models/Response/ApiResult";
 import { User } from "@/models/User";
 import { LoginPayload } from "@/redux/slices/auth/authSlices";
 import { endPoint } from "@/utils/endPoint";

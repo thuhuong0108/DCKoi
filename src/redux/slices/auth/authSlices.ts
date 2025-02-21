@@ -2,6 +2,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store/store";
 import { User } from "@/models/User";
+import { RoleUser } from "@/models/enums/roleUser";
 
 export interface LoginPayload {
   email: string;
@@ -11,12 +12,14 @@ export interface AuthState {
   isAuthenticated: boolean;
   loading: boolean;
   currentUser?: User;
+  role: RoleUser;
 }
 
 const initialState: AuthState = {
   isAuthenticated: false,
   loading: false,
   currentUser: undefined,
+  role: RoleUser.GUEST,
 };
 
 export const authSlice = createSlice({
@@ -28,7 +31,8 @@ export const authSlice = createSlice({
     },
     loginSuccess(state, action: PayloadAction<User>) {
       state.isAuthenticated = true;
-      state.currentUser = action.payload;
+      state.currentUser = action.payload.data.user;
+      state.role = action.payload.data.role;
       state.loading = false;
     },
     loginFailed(state) {
