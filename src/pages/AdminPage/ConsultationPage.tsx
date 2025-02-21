@@ -7,6 +7,7 @@ import {
   Modal,
   TableComponent,
   messageSuccess,
+  messageWarning,
   Scrollbar,
   Switch,
   Timeline,
@@ -20,7 +21,7 @@ const ConsultationPage = () => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      messageSuccess("Time demo loading completed.");
+      messageWarning("Time demo loading completed.");
     }, 1000);
   };
   const handleClick = () => {
@@ -113,7 +114,11 @@ const ConsultationPage = () => {
         </Dialog.Trigger>
         <Dialog.Portal>
           <Dialog.Content size="lg">
-            <TableComponent<User>
+            
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog.Root> */}
+      <TableComponent<User>
               loading={loading}
               columns={columns}
               data={data}
@@ -127,9 +132,6 @@ const ConsultationPage = () => {
               page={page}
               itemsPerPage={20}
             />
-          </Dialog.Content>
-        </Dialog.Portal>
-      </Dialog.Root> */}
 
       <Modal
         visible={visible}

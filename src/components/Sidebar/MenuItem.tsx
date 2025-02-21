@@ -15,7 +15,14 @@ type MenuItemProps = {
   icon?: React.ReactNode;
   link?: string;
   badge?: boolean;
-  badgeColor?: "default" | "primary" | "secondary" | "error" | "info" | "success" | "warning";
+  badgeColor?:
+    | "default"
+    | "primary"
+    | "secondary"
+    | "error"
+    | "info"
+    | "success"
+    | "warning";
   badgeContent?: string;
   textFontSize?: string;
   borderRadius?: string;
@@ -45,11 +52,9 @@ export const MenuItem = React.forwardRef<HTMLAnchorElement, MenuItemProps>(
   ) => {
     const customizer = React.useContext(SidebarContext);
     const theme = useTheme();
-  
 
-   
     const resolvedPath = useResolvedPath(link);
-    
+
     const match = useMatch({ path: resolvedPath.pathname, end });
 
     const isActive = !!match;
@@ -57,8 +62,8 @@ export const MenuItem = React.forwardRef<HTMLAnchorElement, MenuItemProps>(
     const ListItemStyled = styled(ListItemButton)(() => ({
       whiteSpace: "nowrap",
       marginBottom: "2px",
-      padding: "10px 12px",
-      textAlign: theme.direction === 'ltr' ? 'left' : 'right',
+      padding: "10px 25px",
+      textAlign: theme.direction === "ltr" ? "left" : "right",
       borderRadius: borderRadius,
       color: customizer.textColor,
       cursor: disabled ? "default" : "pointer",
@@ -73,12 +78,12 @@ export const MenuItem = React.forwardRef<HTMLAnchorElement, MenuItemProps>(
           color: customizer.themeColor,
         },
       },
-      '&.Mui-selected': {
-        color: 'white',
+      "&.Mui-selected": {
+        color: "white",
         backgroundColor: customizer.themeColor,
-        '&:hover': {
+        "&:hover": {
           backgroundColor: customizer.themeColor,
-          color: 'white',
+          color: "white",
         },
         ".MuiListItemIcon-root": {
           color: "#fff",

@@ -25,8 +25,8 @@ const PaginationComponent: React.FC<PaginationComponentProps> = ({
     ? customClassNames.button || ""
     : `px-3 py-1 mx-1 rounded-md ${
         isDarkMode
-          ? "bg-gray-800 text-white hover:bg-gray-700"
-          : "bg-gray-200 text-gray-800 hover:bg-gray-300"
+          ? "bg-indigo-800 text-white hover:bg-indigo-700"
+          : "bg-indigo-200 text-indigo-800 hover:bg-indigo-300"
       }`;
   const disabledButtonClassName = disableDefaultStyles
     ? customClassNames.buttonDisabled || ""
@@ -34,7 +34,7 @@ const PaginationComponent: React.FC<PaginationComponentProps> = ({
   const pageInfoClassName = disableDefaultStyles
     ? customClassNames.pageInfo || ""
     : `px-3 py-1 mx-1 text-sm ${
-        isDarkMode ? "text-gray-300" : "text-gray-700"
+        isDarkMode ? "text-indigo-300" : "text-indigo-700"
       }`;
   return (
     <div

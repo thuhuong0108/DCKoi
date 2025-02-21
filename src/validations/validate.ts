@@ -9,3 +9,9 @@ export interface ParseResult {
 	error: object | null;
 	errorArr: Record<string, string>
 }
+
+
+export const validateLogin =  yup.object().shape({
+    email: yup.string().email().required(),
+    password: yup.string().required(),
+});

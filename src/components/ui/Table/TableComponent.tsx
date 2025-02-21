@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import NoContentComponent from "./NoContentComponent";
 import TableSkeleton from "./TableSkeleton";
@@ -7,6 +6,7 @@ import { Link } from "react-router-dom";
 import { TableProps } from "./types";
 import { formatDate, isDateString, trimText } from "@/utils/helpers";
 import PaginationComponent from "./PaginationComponent";
+import { Pagination } from "@mui/material";
 function TableComponent<T>({
   columns,
   data,
@@ -93,7 +93,7 @@ function TableComponent<T>({
     });
   }
   let paginatedData = sortedData;
-  let calculatedTotalPages =
+  const calculatedTotalPages =
     totalPages ?? Math.ceil(sortedData.length / itemsPerPage);
   if (enablePagination) {
     if (totalPages !== undefined) {
@@ -110,34 +110,34 @@ function TableComponent<T>({
   const baseTableClassName = !disableDefaultStyles
     ? `w-full divide-y ${
         enableDarkMode && isDarkMode
-          ? "bg-gray-900 text-gray-200 divide-gray-700"
+          ? "bg-blue-200 text-gray-200 divide-gray-200"
           : "bg-white text-gray-900 divide-gray-200"
       }`
     : "";
   const baseTheadClassName =
     !disableDefaultStyles && enableDarkMode
       ? isDarkMode
-        ? "bg-gray-700 text-gray-300"
-        : "bg-gray-50 text-gray-500"
+        ? "bg-blue-500 text-white"
+        : "bg-blue-50 text-gray-500"
       : "";
   const baseTbodyClassName = !disableDefaultStyles
     ? `divide-y ${
-        enableDarkMode && isDarkMode ? "divide-gray-700" : "divide-gray-200"
+        enableDarkMode && isDarkMode ? "divide-gray-100" : "divide-gray-200"
       }`
     : "";
   const baseTrClassName = (index: number) =>
     !disableDefaultStyles
       ? index % 2 === 0
         ? isDarkMode
-          ? "bg-gray-800"
-          : "bg-white"
+          ? "bg-blue-200"
+          : "bg-blue-100"
         : isDarkMode
-        ? "bg-gray-700"
-        : "bg-gray-100"
+        ? "bg-blue-100"
+        : "bg-blue-100"
       : "";
   const baseTdClassName = !disableDefaultStyles
     ? isDarkMode
-      ? "text-gray-300"
+      ? "text-black"
       : "text-gray-700"
     : "";
   const tableClassName = disableDefaultStyles
@@ -151,7 +151,7 @@ function TableComponent<T>({
     : `${baseTbodyClassName} ${customClassNames.tbody || ""}`;
   const thClassName = disableDefaultStyles
     ? customClassNames.th || ""
-    : `px-2 py-2 sm:px-4 sm:py-2 text-left text-xs font-medium uppercase tracking-wider ${
+    : `px-2 py-2 sm:px-4 sm:py-4 text-left text-xs font-medium uppercase tracking-wider ${
         customClassNames.th || ""
       }`;
   const trClassName = (index: number) =>
@@ -178,7 +178,7 @@ function TableComponent<T>({
   });
   return (
     <>
-      <div style={{ overflowX: "auto" }} className="pb-6">
+      <div style={{ overflowX: "auto" }} className="pb-6 my-5">
         <table className={tableClassName} style={{ margin: 0, padding: 0 }}>
           <thead className={theadClassName}>
             <tr>
@@ -261,7 +261,7 @@ function TableComponent<T>({
                           ))}
                           {!isExpanded && (value as any[]).length > 5 && (
                             <span
-                              className="inline-block bg-gray-200 text-gray-600 px-2 py-1 rounded-full text-xs cursor-pointer"
+                              className="inline-block bg-blue-200 text-gray-600 px-2 py-1 rounded-full text-xs cursor-pointer"
                               onClick={(e) => {
                                 e.stopPropagation();
                                 setExpandedCells((prev) => ({
@@ -342,14 +342,15 @@ function TableComponent<T>({
         </table>
       </div>
       {enablePagination && page !== undefined && setPage && (
-        <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-10">
-          <PaginationComponent
+        <div>
+          <Pagination
+            count={calculatedTotalPages}
             page={page}
-            setPage={setPage}
-            totalPages={calculatedTotalPages}
-            disableDefaultStyles={disableDefaultStyles}
-            customClassNames={customClassNames.pagination}
-            enableDarkMode={enableDarkMode}
+            onChange={(_, value) => setPage(value)}
+            size="small"
+            color="primary"
+            showFirstButton
+            showLastButton
           />
         </div>
       )}
