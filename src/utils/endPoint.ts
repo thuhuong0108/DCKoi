@@ -11,6 +11,11 @@ const endPoint = {
     updatePackageItem: (id: string) => `/packageitems/${id}`,
     deletePackageItem: (id: string) => `/packageitems/${id}`,
   },
+  project: {
+    getPagingProject: "/projects",
+    getProjectById: (id: string) => `/projects/${id}`,
+    createProject: "/projects",
+  }
 };
 
 export { baseURL, endPoint, socketURL };

@@ -1,51 +1,39 @@
 import {
   Banner,
   DesignTemplate,
-  FormInput,
   PackageField,
-  Title,
+  Title
 } from "@/components";
-import { Button, Col, Radio, RadioChangeEvent, Row, Select } from "antd";
+import useForm from "@/hooks/useForm";
+import { ProjectType } from "@/models";
+import { projectActions } from "@/redux/slices/project/projectSlices";
+import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
+import { Box, Button, FormControl, FormControlLabel, MenuItem, Radio, RadioGroup, Select, TextField } from "@mui/material";
+import { Col, Row } from "antd";
 import { useState } from "react";
 
 const Contact = () => {
-  const [fields, setFields] = useState([
-    {
-      label: "Fullname",
-      placeholder: "Enter your fullname",
-      value: "",
+  const dispatch = useAppDispatch();
+  const isLoading = useAppSelector((state) => state.auth.loading);
+  const { loading, regField, regHandleSubmit } = useForm({
+    values: {
+      customerName: "",
+      address: "",
+      phone: "",
+      email: "",
+      area: 0,
+      depth: 0,
+      packageId: "",
+      note: "",
+      templatedesignid: ""
     },
-    {
-      label: "Phone number",
-      placeholder: "Enter your phone number",
-      value: "",
+    onSubmit: async (values: ProjectType) => {
+      console.log(values);
+      
+      dispatch(projectActions.createProject(values));
     },
-    {
-      label: "Email",
-      placeholder: "Enter your email",
-      value: "",
-    },
-    {
-      label: "Address",
-      placeholder: "Enter your address",
-      value: "",
-    },
-    {
-      label: "Estimated area of ​​koi pond to be built",
-      placeholder: "Enter estimated area of ​​koi pond to be built",
-      value: "",
-    },
-    {
-      label: "Koi pond construction depth",
-      placeholder: "Enter Koi pond construction depth",
-      value: "",
-    },
-  ]);
-  const optionPackage = [
-    "Basic package",
-    "Standard package",
-    "Premium package",
-  ];
+  });
+
   const dataPackage = [
     {
       key: "1",
@@ -71,19 +59,11 @@ const Contact = () => {
       quantity: 2.75,
     },
   ];
+
   const [design, setDesign] = useState("Use template design");
 
-  const onChange = (e: RadioChangeEvent) => {
-    console.log("radio checked", e.target.value);
-    setDesign(e.target.value);
-  };
-  const handleChangePackage = (value: string) => {
-    console.log(`Selected package: ${value}`);
-  };
-  const handleChangeValue = (e, index) => {
-    const newFields = [...fields];
-    newFields[index].value = e.target.value;
-    setFields(newFields);
+  const handleDesignChange = (event) => {
+    setDesign(event.target.value);
   };
 
   return (
@@ -91,66 +71,124 @@ const Contact = () => {
       <Banner />
       <Row className="p-5">
         <Col span={16} offset={4}>
-          <Title name="BASE INFORMATON" />
-          {fields.map((field, index) => (
-            <FormInput
-              key={index}
-              label={field.label}
-              placeholder={field.placeholder}
-              value={field.value}
-              onChange={(e) => handleChangeValue(e, index)}
+          <Box component="form"
+            onSubmit={regHandleSubmit}>
+            <Title name="BASE INFOMATION" />
+            <TextField
+              fullWidth
+              label="Fullname"
+              margin="normal"
+              variant="outlined"
+              {...regField("customerName")}
+              error={Boolean(regField("customerName").error)}
+              helperText={regField("customerName").error}
             />
-          ))}
-
-          <Title name="PACKAGE INFORMATON" />
-          <div className="my-4">
-            <Select
-              size="large"
-              style={{ width: "100%" }}
-              defaultValue="Basic package"
-              onChange={handleChangePackage}
-              options={optionPackage.map((pkg) => ({ label: pkg, value: pkg }))}
+            <TextField
+              fullWidth
+              label="Phone number"
+              margin="normal"
+              variant="outlined"
+              {...regField("phone")}
+              error={Boolean(regField("phone").error)}
+              helperText={regField("phone").error}
+            />
+            <TextField
+              fullWidth
+              label="Email"
+              margin="normal"
+              variant="outlined"
+              {...regField("email")}
+              error={Boolean(regField("email").error)}
+              helperText={regField("email").error}
+            />
+            <TextField
+              fullWidth
+              label="Address"
+              margin="normal"
+              variant="outlined"
+              {...regField("address")}
+              error={Boolean(regField("address").error)}
+              helperText={regField("address").error}
             />
 
-            <PackageField label="Pond layout" data={dataPackage} />
-            <PackageField label="Pond layout" data={dataPackage} />
-            <PackageField label="Pond layout" data={dataPackage} />
-          </div>
+            <div className="flex justify-between space-x-4">
+              <TextField
+                fullWidth
+                label="Estimated area of koi pond to be built"
+                margin="normal"
+                variant="outlined"
+                {...regField("area")}
+                error={Boolean(regField("area").error)}
+                helperText={regField("area").error}
+              />
+              <TextField
+                fullWidth
+                label="Koi pond construction depth"
+                margin="normal"
+                variant="outlined"
+                {...regField("depth")}
+                error={Boolean(regField("depth").error)}
+                helperText={regField("depth").error}
+              />
+            </div>
 
-          <Title name="DESIGN TEMPLATE" />
-          <div className="my-4">
-            <Radio.Group onChange={onChange} value={design}>
-              <Radio value="Use template design">Use template design</Radio>
-              <Radio value="Design a new layout">Design a new layout</Radio>
-            </Radio.Group>
-            {design === "Design a new layout" ? (
-              <></>
-            ) : (
-              <Row className="flex flex-row justify-between my-5">
-                <DesignTemplate />
-                <DesignTemplate />
-                <DesignTemplate />
-              </Row>
-            )}
-          </div>
+            <Title name="PACKAGE" />
+            <div className="my-3 space-y-3">
+              <Select
+                fullWidth
+                displayEmpty
+                margin="dense"
+                variant="outlined"
+                {...regField("packageId")}
+                error={Boolean(regField("packageId").error)}
+              >
+                <MenuItem value="basic">Basic Package</MenuItem>
+                <MenuItem value="standard">Standard Package</MenuItem>
+                <MenuItem value="premium">Premium Package</MenuItem>
+              </Select>
 
-          <Title name="NOTE" />
-          <FormInput
-            label="Special request"
-            placeholder="Enter your opinion"
-            value=""
-          />
+              <PackageField label="Pond layout" data={dataPackage} />
+            </div>
 
-          <div className="flex flex-row justify-between">
-            <Title name="TOTAL PRICE" />
-            <Title name="200.000.000VND" />
-          </div>
+            <Title name="DESIGN TEMPLATE" />
+            <div className="my-4">
+              <FormControl component="fieldset">
+                <RadioGroup row value={design} onChange={handleDesignChange}>
+                  <FormControlLabel value="Use template design" control={<Radio />} label="Use template design" />
+                  <FormControlLabel value="Design a new layout" control={<Radio />} label="Design a new layout" />
+                </RadioGroup>
+              </FormControl>
+              {design === "Design a new layout" ? null : (
+                <Row className="flex flex-row justify-between my-5">
+                  <DesignTemplate />
+                  <DesignTemplate />
+                  <DesignTemplate />
+                </Row>
+              )}
+            </div>
 
-          <div className="flex justify-end my-5">
-            <Button type="primary" size="large">
-              Send Request
-            </Button>
-          </div>
+            <Title name="NOTE" />
+            <TextField
+              fullWidth
+              label="Special request"
+              margin="normal"
+              variant="outlined"
+              {...regField("note")}
+              error={Boolean(regField("note").error)}
+              helperText={regField("note").error}
+            />
+
+            <div className="flex justify-end mt-4">
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                disabled={loading}
+              >
+                {isLoading ? "Loading..." : "Send request"}
+              </Button>
+            </div>
+          </Box>
         </Col>
       </Row>
     </div>
