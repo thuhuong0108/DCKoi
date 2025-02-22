@@ -40,7 +40,8 @@ const Login = () => {
                 variant="h5"
                 component="h1"
                 gutterBottom
-                align="center"
+                align="left"
+                sx={{ fontWeight: 700 }}
               >
                 Login
               </Typography>
