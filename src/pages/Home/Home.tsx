@@ -2,7 +2,10 @@ import ImgBanner from "@/assets/images/banner.png";
 import ImgHand from "@/assets/images/hand.png";
 import ImgFish from "@/assets/images/fish.png";
 import { FeatureCard, NavLinkCustom, ServiceCard } from "@/components";
-import { Col, Row, Select } from "antd";
+import { Col, Row, Select, Table } from "antd";
+import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
+import { useEffect } from "react";
+import { packageActions, selectPackages } from "@/redux/slices/package/packageSlices";
 
 const features = [
   {
@@ -57,6 +60,14 @@ const serviceFeatures = [
 ];
 
 const Home = () => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(
+      packageActions.fetchPackages({ pageNumber: 1, pageSize: 10})
+    );
+  }, []);
+
   return (
     <div className="space-y-6">
       {/* Banner */}
@@ -107,6 +118,18 @@ const Home = () => {
                   ))}
                 </div>
               </div>
+            </div>
+          </div>
+
+          {/* Our design and construction packages */}
+          <div className="">
+            <div className="text-center">
+              <h2 className="text-indigo-800 font-bold text-2xl">
+                Our design and construction packages
+              </h2>
+            </div>
+            <div className="mt-4">
+              <Table />
             </div>
           </div>
 

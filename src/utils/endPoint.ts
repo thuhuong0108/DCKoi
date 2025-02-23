@@ -1,3 +1,4 @@
+
 const baseURL = "https://kpcos.vinhuser.one/api/";
 const socketURL = "http://34.81.244.146:3333";
 const endPoint = {
@@ -15,6 +16,13 @@ const endPoint = {
     getPagingProject: "/projects",
     getProjectById: (id: string) => `/projects/${id}`,
     createProject: "/projects",
+  },
+  package: {
+    getPagingPackage: "/packages",
+    createPackage: "/packages",
+    getPackage: (id: string) => `packages/${id}`,
+    updatePackage: (id: string) => `packages/${id}`,
+    deletePackage: (id: string) => `packages/${id}`
   }
 };
 

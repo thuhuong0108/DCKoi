@@ -1,9 +1,9 @@
 import { PackageItemType } from "./PackageItemType";
 
 export interface PackageType {
-  id?: number;
+  id?: string;
   name: string;
   description: string;
-  price: number;
+  price: number[];
   items: [];
 }

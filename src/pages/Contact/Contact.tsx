@@ -26,7 +26,7 @@ const Contact = () => {
       depth: 0,
       packageId: "",
       note: "",
-      templatedesignid: ""
+      templatedesignid: null
     },
     validationSchema: validateProject,
     onSubmit: async (values: ProjectType) => {
