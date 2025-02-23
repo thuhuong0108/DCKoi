@@ -8,6 +8,7 @@ import useForm from "@/hooks/useForm";
 import { ProjectType } from "@/models";
 import { projectActions } from "@/redux/slices/project/projectSlices";
 import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
+import { validateProject } from "@/validations/validate";
 import { Box, Button, FormControl, FormControlLabel, MenuItem, Radio, RadioGroup, Select, TextField } from "@mui/material";
 import { Col, Row } from "antd";
 import { useState } from "react";
@@ -27,6 +28,7 @@ const Contact = () => {
       note: "",
       templatedesignid: ""
     },
+    validationSchema: validateProject,
     onSubmit: async (values: ProjectType) => {
       console.log(values);
       
