@@ -1,56 +1,52 @@
-import { confirmAlert, TableComponent, Title } from "@/components";
-import Button from "@/components/ui/Button";
-import Modal from "@/components/ui/Modal";
+import { EquipmentType } from "@/models";
 import { FormControl, Input, InputAdornment } from "@mui/material";
 import { Col, Row } from "antd";
-import React, { useEffect, useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
+import React, { useEffect, useState } from "react";
+import Modal from "@/components/ui/Modal";
 import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
 import {
-  packageItemActions,
-  selectPackageItems,
-} from "@/redux/slices/packageItem/packageItemSlices";
-import { PackageItemType } from "@/models";
-import Form from "./Form";
+  equipmentActions,
+  selectEquipment,
+} from "@/redux/slices/equipment/equipmentSlice";
+import { Button, confirmAlert, TableComponent, Title } from "@/components";
+import FormEquipment from "./FormEquipment";
 
-const PackageItem = () => {
+const EquipmentPage = () => {
   const dispatch = useAppDispatch();
-  const isLoading = useAppSelector((state) => state.packageItem.loading);
-
-  const items = useAppSelector(selectPackageItems);
-
-  useEffect(() => {
-    dispatch(
-      packageItemActions.fetchPackageItems({ pageNumber: 1, pageSize: 10 })
-    );
-  }, []);
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<PackageItemType | null>(
-    null
-  );
+  const isLoading = useAppSelector((state) => state.equipment.loading);
+  const items = useAppSelector(selectEquipment);
 
   const [search, setSearch] = useState("");
 
-  const handleEdit = (item: PackageItemType) => {
+  useEffect(() => {
+    dispatch(equipmentActions.fetchEquipment({ pageNumber: 1, pageSize: 10 }));
+  }, []);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<EquipmentType | null>(null);
+
+  const handleEdit = (item: EquipmentType) => {
+    console.log("edit item: ", item);
     setSelectedItem(item);
     setIsModalOpen(true);
   };
 
-  const handleDelete = (item: PackageItemType) => {
+  const handleDelete = (item: EquipmentType) => {
     confirmAlert({
-      title: "Xác nhận xóa hạng mục thi công",
-      message: "Bạn có chắc muốn xóa hạng mục này ?",
+      title: "Xác nhận xóa thiết bị",
+      message: "Bạn có chắc muốn xóa thiết bị này ?",
       yes: () => {
-        dispatch(packageItemActions.deletePackageItem(item.id));
+        console.log("delete equipment: ", item);
+        dispatch(equipmentActions.deleteEquipment(item.id));
       },
       no: () => {},
     });
   };
-
   return (
     <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 w-full h-full">
-      <Title name="Danh sách các hạng mục công việc" />
+      <Title name="Danh sách thiết bị" />
+
       <Row className="flex flex-row justify-between items-center my-3">
         <Col>
           <Button
@@ -59,7 +55,7 @@ const PackageItem = () => {
               setSelectedItem(null);
               setIsModalOpen(true);
             }}
-            title="Thêm hạng mục mới"
+            title="Thêm thiết bị mới"
             className="w-[185px] uppercase mt-3"
           />
         </Col>
@@ -79,10 +75,10 @@ const PackageItem = () => {
         </Col>
       </Row>
 
-      <TableComponent<PackageItemType>
-        columns={["Hạng mục công việc"]}
+      <TableComponent<EquipmentType>
+        columns={["Tên thiết bị", "Mô tả"]}
         data={items.data}
-        props={["name"]}
+        props={["name", "description"]}
         actions={true}
         actionTexts={["Sửa", "Xóa"]}
         actionFunctions={[handleEdit, handleDelete]}
@@ -91,7 +87,7 @@ const PackageItem = () => {
         page={items.pageNumber}
         setPage={(page) => {
           dispatch(
-            packageItemActions.fetchPackageItems({
+            equipmentActions.fetchEquipment({
               pageNumber: page,
               pageSize: 10,
             })
@@ -102,12 +98,14 @@ const PackageItem = () => {
       />
 
       <Modal
-        title={selectedItem ? "Chỉnh sửa hạng mục" : "Thêm mới hạng mục"}
-        desc="Vui lòng nhập tên hạng mục công việc"
+        title={selectedItem ? "Chỉnh sửa thiết bị" : "Thêm thiết bị mới"}
+        desc="Vui lòng nhập tên thiết bị"
         size="xl"
         visible={isModalOpen}
         onVisibleChange={setIsModalOpen}
-        content={<Form item={selectedItem} setIsModalOpen={setIsModalOpen} />}
+        content={
+          <FormEquipment item={selectedItem} setIsModalOpen={setIsModalOpen} />
+        }
         backdrop={true}
         closeBtn={true}
       />
@@ -115,4 +113,4 @@ const PackageItem = () => {
   );
 };
 
-export default PackageItem;
+export default EquipmentPage;

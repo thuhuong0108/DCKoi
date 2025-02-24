@@ -6,7 +6,7 @@ import { useAppDispatch } from "@/redux/store/hook";
 import { validatePackageItem } from "@/validations/validate";
 import { TextField } from "@mui/material";
 
-const Form = ({ item }) => {
+const Form = ({ item, setIsModalOpen }) => {
   const dispatch = useAppDispatch();
   const { loading, regField, regHandleSubmit } = useForm({
     values: item || { name: "", id: "" },
@@ -15,10 +15,13 @@ const Form = ({ item }) => {
       console.log("values: ", values);
 
       if (values.id == "") {
+        console.log("values: ", values);
         dispatch(packageItemActions.createPackageItem(values));
       } else {
         dispatch(packageItemActions.updatePackageItem(values));
       }
+
+      setIsModalOpen(false);
     },
   });
   return (

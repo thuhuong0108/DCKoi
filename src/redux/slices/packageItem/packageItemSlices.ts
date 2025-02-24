@@ -1,4 +1,3 @@
-import { PackageItem } from "./../../../models/PackageItem";
 // slice of state auth
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store/store";
@@ -40,9 +39,7 @@ export const packageItemSlice = createSlice({
     },
 
     //create
-    createPackageItem(state, action: PayloadAction<PackageItemType>) {
-      state.packageItems.data.unshift(action.payload);
-    },
+    createPackageItem(state, action: PayloadAction<PackageItemType>) {},
 
     //update
     updatePackageItem(state, action: PayloadAction<PackageItemType>) {

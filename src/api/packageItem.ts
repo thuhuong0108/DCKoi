@@ -1,11 +1,16 @@
 import { PackageItemType } from "@/models";
-import { ApiResult, ApiResultWithData, Filter } from "@/models/Common";
+import {
+  ApiResult,
+  ApiResultWithData,
+  ApiResultWithPagination,
+  Filter,
+} from "@/models/Common";
 import { endPoint } from "@/utils/endPoint";
 import http from "@/utils/http";
 
 const getPagingPackageItem = async (
   filter: Filter
-): Promise<ApiResultWithData<PackageItemType>> => {
+): Promise<ApiResultWithPagination<PackageItemType>> => {
   const response = await http.get(
     `${endPoint.packageItem.getPagingPackageItem}?PageNumber=${filter.pageNumber}&PageSize=${filter.pageSize}`
   );
@@ -20,6 +25,7 @@ const getPackageItem = async (
 };
 
 const createPackageItem = async (item: PackageItemType): Promise<ApiResult> => {
+  console.log("api create response item package : ", item);
   const response = await http.post(
     endPoint.packageItem.createPackageItem,
     item

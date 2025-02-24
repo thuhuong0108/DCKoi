@@ -11,8 +11,7 @@ import {
   PersonSharp,
   SupportAgentSharp,
 } from "@mui/icons-material";
-
-import { ReactElement } from "react";
+import BubbleChartIcon from "@mui/icons-material/BubbleChart";
 
 interface IndexProps {
   Page: () => ReactElement;
@@ -36,23 +35,24 @@ const LayoutAdmin: React.FC<IndexProps> = ({ Page }) => {
     },
     {
       link: "/admin/consultation",
-      children: "Consultation",
+      children: "Tư vấn",
       icon: <SupportAgentSharp />,
     },
     {
       link: "/admin/transactions",
-      children: "Transactions",
+      children: "Giao dịch",
       icon: <AttachMoneySharp />,
     },
-    { link: "/admin/projects", children: "Projects", icon: <FolderSharp /> },
-    { link: "/admin/staff", children: "Staff", icon: <PeopleSharp /> },
-    { link: "/admin/users", children: "Users", icon: <PersonSharp /> },
+    { link: "/admin/projects", children: "Dự án", icon: <FolderSharp /> },
+    { link: "/admin/staffs", children: "Nhân viên", icon: <PeopleSharp /> },
+    { link: "/admin/users", children: "Tài khoản", icon: <PersonSharp /> },
     {
       link: "/admin/management-packages",
-      children: "Packages",
+      children: "Gói thi công",
       icon: <CardGiftcardSharp />,
     },
-    { link: "/admin/services", children: "Services", icon: <BuildSharp /> },
+    { link: "/admin/services", children: "Dịch vụ", icon: <BubbleChartIcon /> },
+    { link: "/admin/equipments", children: "Thiết bị", icon: <BuildSharp /> },
     {
       link: "/admin/template-construction",
       children: "Template Construction",

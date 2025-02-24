@@ -5,7 +5,6 @@ import ActionDropdown from "./ActionDropdown";
 import { Link } from "react-router-dom";
 import { TableProps } from "./types";
 import { formatDate, isDateString, trimText } from "@/utils/helpers";
-import PaginationComponent from "./PaginationComponent";
 import { Pagination } from "@mui/material";
 function TableComponent<T>({
   columns,
@@ -230,15 +229,13 @@ function TableComponent<T>({
                   {props.map((prop) => {
                     let value = item[prop];
                     if (value === null || value === undefined || value === "") {
-                      value = "-" as T[keyof T];
+                      // value = "-" as T[keyof T];
                     }
                     const cellKey = `${dataIndex}-${String(prop)}`;
                     const isExpanded = expandedCells[cellKey];
                     let displayValue: React.ReactNode;
                     let valToFormat = String(value);
-                    if (typeof value === "string" && isDateString(value)) {
-                      valToFormat = formatDate(new Date(value), true);
-                    } else if (Array.isArray(value)) {
+                    if (Array.isArray(value)) {
                       let displayArray: any[] = value as any[];
                       if (!isExpanded && displayArray.length > 5) {
                         displayArray = displayArray.slice(0, 5);

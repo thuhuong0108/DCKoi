@@ -17,6 +17,9 @@ import {
   PackagePage,
   PackageItem,
   ManagementPackage,
+  EquipmentPage,
+  ServicePage,
+  StaffPage,
   ConstructionTemplate,
   ConstructionTemplateConfig,
 } from "@/pages/AdminPage";
@@ -55,6 +58,18 @@ const Routers = () => {
       ),
     },
     {
+      path: "/admin/equipments",
+      element: <LayoutAdmin Page={EquipmentPage} />,
+    },
+    {
+      path: "/admin/services",
+      element: <LayoutAdmin Page={ServicePage} />,
+    },
+    {
+      path: "/admin/staffs",
+      element: <LayoutAdmin Page={StaffPage} />,
+    },
+    {
       path: "/admin/management-packages",
       element: (
         <PrivateRouterAdmin
@@ -70,11 +85,19 @@ const Routers = () => {
     },
     {
       path: "/admin/management-packages/packages/:id",
-      element: <PrivateRouterAdmin Pages={() => <LayoutAdmin Page={PackageDetail} />} />,
+      element: (
+        <PrivateRouterAdmin
+          Pages={() => <LayoutAdmin Page={PackageDetail} />}
+        />
+      ),
     },
     {
       path: "/admin/management-packages/packages/create",
-      element: <PrivateRouterAdmin Pages={() => <LayoutAdmin Page={PackageCreate} />} />,
+      element: (
+        <PrivateRouterAdmin
+          Pages={() => <LayoutAdmin Page={PackageCreate} />}
+        />
+      ),
     },
     {
       path: "/admin/management-packages/package-items",
