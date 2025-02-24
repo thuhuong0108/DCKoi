@@ -21,7 +21,7 @@ const Contact = () => {
   const loadingPackages = useAppSelector(selectLoading);
 
   useEffect(() => {
-    dispatch(packageActions.fetchPackages({pageNumber: 1, pageSize: 10}));
+    dispatch(packageActions.fetchPackages({ pageNumber: 1, pageSize: 10 }));
   }, [dispatch]);
 
   const { loading, regField, regHandleSubmit } = useForm({
