@@ -38,3 +38,13 @@ export const validateStaff = yup.object().shape({
   phone: yup.string().required(),
   position: yup.string().required(),
 });
+
+export const validatePackage = yup.object().shape({
+  name: yup.string().required(),
+  description: yup.string().required(),
+  price: yup.number().required(),
+});
+export const validateTemplateConstruction = yup.object().shape({
+  name: yup.string().required(),
+  description: yup.string().required(),
+});

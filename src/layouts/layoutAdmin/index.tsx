@@ -1,4 +1,6 @@
 import { Sidebar, Menu, MenuItem, Logo } from "@/components/Sidebar";
+import { selectCurrentUser, selectRole } from "@/redux/slices/auth/authSlices";
+import { useAppSelector } from "@/redux/store/hook";
 import {
   AttachMoneySharp,
   BuildSharp,
@@ -51,15 +53,23 @@ const LayoutAdmin: React.FC<IndexProps> = ({ Page }) => {
     },
     { link: "/admin/services", children: "Dịch vụ", icon: <BubbleChartIcon /> },
     { link: "/admin/equipments", children: "Thiết bị", icon: <BuildSharp /> },
+    {
+      link: "/admin/template-construction",
+      children: "Template Construction",
+      icon: <BuildSharp />,
+    },
   ];
+
+  const currentUser = useAppSelector(selectCurrentUser);
+  const roleUser = useAppSelector(selectRole);
 
   return (
     <div className="flex">
       <Sidebar
         width={"270px"}
-        userName="Hoang Thi Thu Huong"
-        userimg=""
-        designation="Admin"
+        userName={currentUser.fullName}
+        userimg={currentUser.avatar}
+        designation={roleUser}
       >
         <Logo ref={null}>
           {" "}

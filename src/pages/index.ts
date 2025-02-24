@@ -13,6 +13,10 @@ import {
   ServicePage,
   EquipmentPage,
   StaffPage,
+  PackageCreate,
+  PackageDetail,
+  ConstructionTemplate,
+  ConstructionTemplateConfig,
 } from "./AdminPage";
 import TestUi from "./TestUi";
 export {
@@ -31,4 +35,8 @@ export {
   ServicePage,
   EquipmentPage,
   StaffPage,
+  PackageCreate,
+  PackageDetail,
+  ConstructionTemplate,
+  ConstructionTemplateConfig,
 };

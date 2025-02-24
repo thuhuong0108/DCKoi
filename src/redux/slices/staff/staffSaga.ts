@@ -12,7 +12,7 @@ function* fetchStaffWorker(action: PayloadAction<Filter>) {
     if (data.isSuccess) {
       yield put(staffActions.fetchStaffSuccess(data));
     } else {
-      messageSuccess(data.message);
+      messageError(data.message);
       yield put(staffActions.fetchStaffFaild);
     }
   } catch (error) {

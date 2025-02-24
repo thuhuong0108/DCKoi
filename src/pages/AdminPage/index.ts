@@ -9,6 +9,10 @@ import ServicePage from "./Service";
 import EquipmentPage from "./Equipment";
 import StaffPage from "./Staff";
 
+import PackageCreate from "./PackageCreate";
+import PackageDetail from "./PackageDetail";
+import ConstructionTemplate from "./ConstructionTemplate";
+import ConstructionTemplateConfig from "./ConstructionTemplateConfig";
 export {
   ConsultationPage,
   DetailConsultation,
@@ -20,4 +24,8 @@ export {
   ServicePage,
   EquipmentPage,
   StaffPage,
+  PackageCreate,
+  PackageDetail,
+  ConstructionTemplate,
+  ConstructionTemplateConfig,
 };

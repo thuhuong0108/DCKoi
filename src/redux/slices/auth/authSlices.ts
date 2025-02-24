@@ -1,8 +1,8 @@
 // slice of state auth
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store/store";
-import { User } from "@/models/User";
-import { RoleUser } from "@/models/enums/roleUser";
+import { UserType } from "@/models/User";
+import { RoleUser } from "@/models/enums/RoleUser";
 
 export interface LoginPayload {
   email: string;
@@ -11,7 +11,7 @@ export interface LoginPayload {
 export interface AuthState {
   isAuthenticated: boolean;
   loading: boolean;
-  currentUser?: User;
+  currentUser?: UserType;
   role: RoleUser;
 }
 
@@ -41,6 +41,7 @@ export const authSlice = createSlice({
     logout(state) {
       state.isAuthenticated = false;
       state.currentUser = undefined;
+      state.role = RoleUser.GUEST;
     },
   },
 });
@@ -49,6 +50,7 @@ export const authSlice = createSlice({
 export const selectIsAuthenticated = (state: RootState) =>
   state.auth.isAuthenticated;
 export const selectCurrentUser = (state: RootState) => state.auth.currentUser;
+export const selectRole = (state: RootState) => state.auth.role;
 
 // actions
 export const authActions = authSlice.actions;

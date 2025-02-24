@@ -8,17 +8,22 @@ interface LayoutProps {
   Pages: () => ReactElement;
 }
 const RootLayout = ({ Pages }: LayoutProps) => {
-  // const role = useAppSelector((state) => state.auth.role);
+  const role = useAppSelector((state) => state.auth.role);
 
-  // switch (role) {
-  //   case RoleUser.ADMINISTRATOR:
-  //     return <LayoutAdmin Page={Pages} />;
+  const pageName = Pages.name;
+  if (pageName === "Login" || pageName === "Register") {
+    return <Pages />;
+  }
 
-  //   default:
-  //     return <MainLayout Pages={Pages} />;
-  // }
+  switch (role) {
+    case RoleUser.ADMINISTRATOR:
+      return <LayoutAdmin Page={Pages} />;
 
-  return <MainLayout Pages={Pages} />;
+    default:
+      return <MainLayout Pages={Pages} />;
+  }
+
+  // return <MainLayout Pages={Pages} />;
 };
 
 export default RootLayout;

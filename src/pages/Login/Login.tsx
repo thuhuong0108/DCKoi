@@ -1,12 +1,20 @@
 import ImgLogo from "@/assets/images/logo.png";
 import useForm from "@/hooks/useForm";
-import { authActions, LoginPayload } from "@/redux/slices/auth/authSlices";
+import { RoleUser } from "@/models/enums/roleUser";
+import { authActions, LoginPayload, selectCurrentUser, selectIsAuthenticated, selectRole } from "@/redux/slices/auth/authSlices";
 import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
 import { validateLogin } from "@/validations/validate";
 import { Box, Button, TextField, Typography } from "@mui/material";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const isAuthenticated = useAppSelector(selectIsAuthenticated);
+  const currentUser = useAppSelector(selectCurrentUser);
+  const roleUser = useAppSelector(selectRole);
+
   const isLoading = useAppSelector((state) => state.auth.loading);
   const { loading, regField, regHandleSubmit } = useForm({
     values: {
@@ -18,6 +26,18 @@ const Login = () => {
       dispatch(authActions.login(values));
     },
   });
+ 
+
+  useEffect(() => {
+    if (isAuthenticated && currentUser) {
+      if (roleUser === RoleUser.CUSTOMER) {
+        navigate("/")
+      }
+      else if (roleUser === RoleUser.ADMINISTRATOR) {
+        navigate("/admin")
+      }
+    }
+  },[isAuthenticated, currentUser, roleUser, navigate]);
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
@@ -40,7 +60,8 @@ const Login = () => {
                 variant="h5"
                 component="h1"
                 gutterBottom
-                align="center"
+                align="left"
+                sx={{ fontWeight: 700 }}
               >
                 Login
               </Typography>
