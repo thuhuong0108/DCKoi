@@ -7,6 +7,8 @@ import PackageItem from "./PackageItemPage";
 import ManagementPackage from "./ManagementPackage";
 import PackageCreate from "./PackageCreate";
 import PackageDetail from "./PackageDetail";
+import ConstructionTemplate from "./ConstructionTemplate";
+import ConstructionTemplateConfig from "./ConstructionTemplateConfig";
 export {
   ConsultationPage,
   DetailConsultation,
@@ -17,4 +19,6 @@ export {
   ManagementPackage,
   PackageCreate,
   PackageDetail,
+  ConstructionTemplate,
+  ConstructionTemplateConfig,
 };

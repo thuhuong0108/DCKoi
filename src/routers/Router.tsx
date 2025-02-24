@@ -17,6 +17,8 @@ import {
   PackagePage,
   PackageItem,
   ManagementPackage,
+  ConstructionTemplate,
+  ConstructionTemplateConfig,
 } from "@/pages/AdminPage";
 import RootLayout from "@/layouts/RootLayout";
 import PrivateRouterAdmin from "./PrivateRouterAdmin";
@@ -28,22 +30,43 @@ const Routers = () => {
     { path: "/contact", element: <MainLayout Pages={Contact} /> },
     { path: "/login", element: <RootLayout Pages={Login} /> },
     { path: "/register", element: <Register /> },
-    { path: "/admin", element: <PrivateRouterAdmin Pages={() => <LayoutAdmin Page={ConsultationPage} />} /> },
+    {
+      path: "/admin",
+      element: (
+        <PrivateRouterAdmin
+          Pages={() => <LayoutAdmin Page={ConsultationPage} />}
+        />
+      ),
+    },
     {
       path: "/admin/detail-consultation",
-      element: <PrivateRouterAdmin Pages={() => <LayoutAdmin Page={DetailConsultation} />} />,
+      element: (
+        <PrivateRouterAdmin
+          Pages={() => <LayoutAdmin Page={DetailConsultation} />}
+        />
+      ),
     },
     {
       path: "/admin/consultation",
-      element: <PrivateRouterAdmin Pages={() => <LayoutAdmin Page={ConsultationPage} />} />,
+      element: (
+        <PrivateRouterAdmin
+          Pages={() => <LayoutAdmin Page={ConsultationPage} />}
+        />
+      ),
     },
     {
       path: "/admin/management-packages",
-      element: <PrivateRouterAdmin Pages={() => <LayoutAdmin Page={ManagementPackage} />} />,
+      element: (
+        <PrivateRouterAdmin
+          Pages={() => <LayoutAdmin Page={ManagementPackage} />}
+        />
+      ),
     },
     {
       path: "/admin/management-packages/packages",
-      element: <PrivateRouterAdmin Pages={() => <LayoutAdmin Page={PackagePage} />} />,
+      element: (
+        <PrivateRouterAdmin Pages={() => <LayoutAdmin Page={PackagePage} />} />
+      ),
     },
     {
       path: "/admin/management-packages/packages/:id",
@@ -55,17 +78,41 @@ const Routers = () => {
     },
     {
       path: "/admin/management-packages/package-items",
-      element: <PrivateRouterAdmin Pages={() => <LayoutAdmin Page={PackageItem} />} />,
+      element: (
+        <PrivateRouterAdmin Pages={() => <LayoutAdmin Page={PackageItem} />} />
+      ),
     },
     {
       path: "/admin/transactions",
-      element: <PrivateRouterAdmin Pages={() => <LayoutAdmin Page={ManagementTransaction} />} />,
+      element: (
+        <PrivateRouterAdmin
+          Pages={() => <LayoutAdmin Page={ManagementTransaction} />}
+        />
+      ),
     },
     {
       path: "/admin/users",
-      element: <PrivateRouterAdmin Pages={() => <LayoutAdmin Page={ManagementUser} />} />,
+      element: (
+        <PrivateRouterAdmin
+          Pages={() => <LayoutAdmin Page={ManagementUser} />}
+        />
+      ),
     },
-    { path: "/admin/test", element: <PrivateRouterAdmin Pages={() => <LayoutAdmin Page={TestUi} />} /> },
+    {
+      path: "/admin/test",
+      element: (
+        <PrivateRouterAdmin Pages={() => <LayoutAdmin Page={TestUi} />} />
+      ),
+    },
+    {
+      path: "/admin/template-construction",
+      element: <RootLayout Pages={ConstructionTemplate} />,
+    },
+    {
+      path: "/admin/template-construction/:id",
+      element: <RootLayout Pages={ConstructionTemplateConfig} />,
+    },
+    { path: "*", element: <div>404</div> },
   ]);
   console.log("Current Route:", location.pathname);
   return <div>{element}</div>;
