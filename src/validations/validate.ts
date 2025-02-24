@@ -28,6 +28,5 @@ export const validateProject = yup.object().shape({
   area: yup.number().required().positive(),
   depth: yup.number().required().positive(),
   packageId: yup.string(),
-  note: yup.string(),
-  templatedesignid: yup.string()
+  note: yup.string()
 });

@@ -54,7 +54,9 @@ export const projectSlice = createSlice({
 });
 
 //selectors
-
+export const selectProject = (state: RootState) =>
+    state.project.project;
+  export const selectLoading = (state: RootState) => state.project.loading;
 
 //actions
 export const projectActions = projectSlice.actions;

@@ -6,16 +6,24 @@ import {
 } from "@/components";
 import useForm from "@/hooks/useForm";
 import { ProjectType } from "@/models";
+import { packageActions, selectLoading, selectPackages } from "@/redux/slices/package/packageSlices";
 import { projectActions } from "@/redux/slices/project/projectSlices";
 import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
 import { validateProject } from "@/validations/validate";
 import { Box, Button, FormControl, FormControlLabel, MenuItem, Radio, RadioGroup, Select, TextField } from "@mui/material";
 import { Col, Row } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Contact = () => {
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector((state) => state.auth.loading);
+  const packages = useAppSelector(selectPackages);
+  const loadingPackages = useAppSelector(selectLoading);
+
+  useEffect(() => {
+    dispatch(packageActions.fetchPackages({pageNumber: 1, pageSize: 10}));
+  }, [dispatch]);
+
   const { loading, regField, regHandleSubmit } = useForm({
     values: {
       customerName: "",
@@ -31,7 +39,6 @@ const Contact = () => {
     validationSchema: validateProject,
     onSubmit: async (values: ProjectType) => {
       console.log(values);
-      
       dispatch(projectActions.createProject(values));
     },
   });
@@ -144,9 +151,15 @@ const Contact = () => {
                 {...regField("packageId")}
                 error={Boolean(regField("packageId").error)}
               >
-                <MenuItem value="basic">Basic Package</MenuItem>
-                <MenuItem value="standard">Standard Package</MenuItem>
-                <MenuItem value="premium">Premium Package</MenuItem>
+                {loadingPackages ? (
+                  <MenuItem disabled>Loading packages...</MenuItem>
+                ) : (
+                  packages.data.map((pkg) => (
+                    <MenuItem key={pkg.id} value={pkg.id}>
+                      {pkg.name}
+                    </MenuItem>
+                  ))
+                )}
               </Select>
 
               <PackageField label="Pond layout" data={dataPackage} />

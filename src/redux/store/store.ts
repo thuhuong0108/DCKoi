@@ -12,10 +12,14 @@ import { history } from "@/utils/history";
 import rootSaga from "./rootSaga";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
+import projectSlice from "../slices/project/projectSlices";
+import packageSlice from "../slices/package/packageSlices";
 const rootReducers = combineReducers({
   router: connectRouter(history),
   auth: authSlice,
   packageItem: packageItemSlice,
+  project: projectSlice,
+  package: packageSlice
 });
 
 const persistConfig = {
