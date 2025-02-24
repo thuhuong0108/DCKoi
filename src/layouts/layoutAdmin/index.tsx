@@ -1,90 +1,94 @@
-import { Sidebar } from "@/components";
-import { HomeOutlined } from "@ant-design/icons";
-import { Layout } from "antd";
-import { ReactElement } from "react";
-import ImgLogo from "@/assets/images/logo.png";
-import UserProfile, {
-  UserProfileProps,
-} from "@/components/Header/HeaderItem/UserProfile";
+import { Sidebar, Menu, MenuItem, Logo } from "@/components/Sidebar";
+import { selectCurrentUser, selectRole } from "@/redux/slices/auth/authSlices";
+import { useAppSelector } from "@/redux/store/hook";
+import {
+  AttachMoneySharp,
+  BuildSharp,
+  CardGiftcardSharp,
+  DashboardSharp,
+  FolderSharp,
+  PeopleSharp,
+  PersonSharp,
+  SupportAgentSharp,
+} from "@mui/icons-material";
+import BubbleChartIcon from "@mui/icons-material/BubbleChart";
 
-const { Header, Footer, Content, Sider } = Layout;
 interface IndexProps {
   Page: () => ReactElement;
 }
+interface MenuItemProps {
+  link?: string;
+  badge?: boolean;
+  target?: string;
+  children: React.ReactNode;
+  icon?: React.ReactNode;
+  end?: boolean;
+}
 
-const sidebarItems = [
-  {
-    key: "1",
-    label: "Dashboard",
-    link: "/admin",
-    icon: HomeOutlined,
-  },
-  {
-    key: "2",
-    label: "Consultation",
-    link: "/admin/consultation",
-    icon: HomeOutlined,
-  },
-  {
-    key: "3",
-    label: "Transacions",
-    link: "/admin/transacions",
-    icon: HomeOutlined,
-  },
-  {
-    key: "4",
-    label: "Projects",
-    link: "/admin/projects",
-    icon: HomeOutlined,
-  },
-  {
-    key: "5",
-    label: "Staff",
-    link: "/admin/staff",
-    icon: HomeOutlined,
-  },
-  {
-    key: "6",
-    label: "Users",
-    link: "/admin/users",
-    icon: HomeOutlined,
-  },
-  {
-    key: "7",
-    label: "Packages",
-    link: "/admin/packages",
-    icon: HomeOutlined,
-  },
-  {
-    key: "8",
-    label: "Services",
-    link: "/admin/services",
-    icon: HomeOutlined,
-  },
-];
-const user: UserProfileProps = {
-  name: "Admin",
-  role: "admin",
-  avatar:
-    "https://cdn.icon-icons.com/icons2/2643/PNG/512/avatar_female_woman_person_people_white_tone_icon_159360.png",
-};
 const LayoutAdmin: React.FC<IndexProps> = ({ Page }) => {
+  const homeMenu: MenuItemProps[] = [
+    {
+      link: "/admin",
+      children: "Dashboard",
+      icon: <DashboardSharp />,
+      end: true,
+    },
+    {
+      link: "/admin/consultation",
+      children: "Tư vấn",
+      icon: <SupportAgentSharp />,
+    },
+    {
+      link: "/admin/transactions",
+      children: "Giao dịch",
+      icon: <AttachMoneySharp />,
+    },
+    { link: "/admin/projects", children: "Dự án", icon: <FolderSharp /> },
+    { link: "/admin/staffs", children: "Nhân viên", icon: <PeopleSharp /> },
+    { link: "/admin/users", children: "Tài khoản", icon: <PersonSharp /> },
+    {
+      link: "/admin/management-packages",
+      children: "Gói thi công",
+      icon: <CardGiftcardSharp />,
+    },
+    { link: "/admin/services", children: "Dịch vụ", icon: <BubbleChartIcon /> },
+    { link: "/admin/equipments", children: "Thiết bị", icon: <BuildSharp /> },
+    {
+      link: "/admin/template-construction",
+      children: "Template Construction",
+      icon: <BuildSharp />,
+    },
+  ];
+
+  const currentUser = useAppSelector(selectCurrentUser);
+  const roleUser = useAppSelector(selectRole);
+
   return (
-    <Layout style={{ minHeight: "100vh" }}>
-      <Header className="flex flex-wrap items-center justify-between px-4 bg-white h-[80px]">
-        <img loading="lazy" src={ImgLogo} alt="Logo" className="w-[7%]" />
-        <UserProfile prop={user} />
-      </Header>
-      <Layout>
-        <Sider>
-          <Sidebar items={sidebarItems} />
-        </Sider>
-        <Content>
-          <Page />
-        </Content>
-      </Layout>
-      <Footer className="text-center">@DCKoi</Footer>
-    </Layout>
+    <div className="flex">
+      <Sidebar
+        width={"270px"}
+        userName={currentUser.fullName}
+        userimg={currentUser.avatar}
+        designation={roleUser}
+      >
+        <Logo ref={null}>
+          {" "}
+          <img src="/logo.png" alt="logo" />
+        </Logo>
+        <Menu subHeading="Home">
+          {homeMenu.map((item, index) => (
+            <MenuItem
+              key={index}
+              link={item.link}
+              children={item.children}
+              icon={item.icon}
+              end={item.end}
+            />
+          ))}
+        </Menu>
+      </Sidebar>
+      <Page />
+    </div>
   );
 };
 
