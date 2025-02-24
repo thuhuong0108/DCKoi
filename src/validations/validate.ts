@@ -19,3 +19,9 @@ export const validateLogin = yup.object().shape({
 export const validatePackageItem = yup.object().shape({
   name: yup.string().required(),
 });
+
+export const validatePackage = yup.object().shape({
+  name: yup.string().required(),
+  description: yup.string().required(),
+  price: yup.number().required(),
+});

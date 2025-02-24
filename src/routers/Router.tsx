@@ -6,6 +6,8 @@ import {
   Login,
   Register,
   TestUi,
+  PackageCreate,
+  PackageDetail,
 } from "@/pages";
 import { LayoutAdmin, MainLayout } from "@/layouts";
 import {
@@ -41,6 +43,14 @@ const Routers = () => {
     {
       path: "/admin/management-packages/packages",
       element: <LayoutAdmin Page={PackagePage} />,
+    },
+    {
+      path: "/admin/management-packages/packages/:id",
+      element: <LayoutAdmin Page={PackageDetail} />,
+    },
+    {
+      path: "/admin/management-packages/packages/create",
+      element: <LayoutAdmin Page={PackageCreate} />,
     },
     {
       path: "/admin/management-packages/package-items",
