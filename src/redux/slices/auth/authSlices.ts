@@ -41,6 +41,7 @@ export const authSlice = createSlice({
     logout(state) {
       state.isAuthenticated = false;
       state.currentUser = undefined;
+      state.role = RoleUser.GUEST;
     },
   },
 });

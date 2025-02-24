@@ -17,6 +17,7 @@ import {
   ManagementPackage,
 } from "@/pages/AdminPage";
 import RootLayout from "@/layouts/RootLayout";
+import PrivateRouterAdmin from "./PrivateRouterAdmin";
 
 const Routers = () => {
   const location = useLocation();
@@ -25,36 +26,36 @@ const Routers = () => {
     { path: "/contact", element: <MainLayout Pages={Contact} /> },
     { path: "/login", element: <RootLayout Pages={Login} /> },
     { path: "/register", element: <Register /> },
-    { path: "/admin", element: <LayoutAdmin Page={ConsultationPage} /> },
+    { path: "/admin", element: <PrivateRouterAdmin Pages={() => <LayoutAdmin Page={ConsultationPage} />} /> },
     {
       path: "/admin/detail-consultation",
-      element: <LayoutAdmin Page={DetailConsultation} />,
+      element: <PrivateRouterAdmin Pages={() => <LayoutAdmin Page={DetailConsultation} />} />,
     },
     {
       path: "/admin/consultation",
-      element: <LayoutAdmin Page={ConsultationPage} />,
+      element: <PrivateRouterAdmin Pages={() => <LayoutAdmin Page={ConsultationPage} />} />,
     },
     {
       path: "/admin/management-packages",
-      element: <LayoutAdmin Page={ManagementPackage} />,
+      element: <PrivateRouterAdmin Pages={() => <LayoutAdmin Page={ManagementPackage} />} />,
     },
     {
       path: "/admin/management-packages/packages",
-      element: <LayoutAdmin Page={PackagePage} />,
+      element: <PrivateRouterAdmin Pages={() => <LayoutAdmin Page={PackagePage} />} />,
     },
     {
       path: "/admin/management-packages/package-items",
-      element: <LayoutAdmin Page={PackageItem} />,
+      element: <PrivateRouterAdmin Pages={() => <LayoutAdmin Page={PackageItem} />} />,
     },
     {
       path: "/admin/transactions",
-      element: <LayoutAdmin Page={ManagementTransaction} />,
+      element: <PrivateRouterAdmin Pages={() => <LayoutAdmin Page={ManagementTransaction} />} />,
     },
     {
       path: "/admin/users",
-      element: <LayoutAdmin Page={ManagementUser} />,
+      element: <PrivateRouterAdmin Pages={() => <LayoutAdmin Page={ManagementUser} />} />,
     },
-    { path: "/admin/test", element: <LayoutAdmin Page={TestUi} /> },
+    { path: "/admin/test", element: <PrivateRouterAdmin Pages={() => <LayoutAdmin Page={TestUi} />} /> },
   ]);
   console.log("Current Route:", location.pathname);
   return <div>{element}</div>;
