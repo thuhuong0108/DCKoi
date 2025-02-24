@@ -1,7 +1,9 @@
 import React from 'react';
 import { Box, Avatar, Typography, IconButton, Tooltip, useTheme } from '@mui/material';
 import AlbumOutlinedIcon from '@mui/icons-material/AlbumOutlined';
-import { Link } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom'; 
+import { useAppDispatch } from '@/redux/store/hook';
+import { authActions } from '@/redux/slices/auth/authSlices';
 
 interface ProfileProps {
     userName?: string;
@@ -17,6 +19,15 @@ export const Profile = React.forwardRef<HTMLDivElement, ProfileProps>(({
     isCollapse = false
 }, ref) => {
     const theme = useTheme();
+
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+  
+    const handleLogout = () => {
+      dispatch(authActions.logout());
+      navigate("/login");
+    }
+
     return (
         <Box>
             {isCollapse ? '' :
@@ -36,15 +47,14 @@ export const Profile = React.forwardRef<HTMLDivElement, ProfileProps>(({
                     </Box>
                     <Box sx={{ ml: 'auto' }}>
                         <Tooltip title="Logout" placement="top">
-                            <Link to="/">  {/* Wrap the IconButton with Link */}
                                 <IconButton
                                     color="primary"
                                     aria-label="logout"
                                     size="small"
+                                    onClick={handleLogout}
                                 >
                                     <AlbumOutlinedIcon />
                                 </IconButton>
-                            </Link>
                         </Tooltip>
                     </Box>
                 </Box>

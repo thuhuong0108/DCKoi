@@ -3,6 +3,7 @@ import ImgHand from "@/assets/images/hand.png";
 import ImgFish from "@/assets/images/fish.png";
 import { FeatureCard, NavLinkCustom, ServiceCard } from "@/components";
 import { Col, Row, Select } from "antd";
+import { useAppDispatch } from "@/redux/store/hook";
 
 const features = [
   {

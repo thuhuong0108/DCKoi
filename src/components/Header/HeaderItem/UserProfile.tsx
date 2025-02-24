@@ -1,4 +1,7 @@
+import { authActions } from "@/redux/slices/auth/authSlices";
+import { useAppDispatch } from "@/redux/store/hook";
 import { Dropdown, MenuProps } from "antd";
+import { useNavigate } from "react-router-dom";
 
 export interface UserProfileProps {
   name: string;
@@ -10,18 +13,23 @@ interface UserProfile {
   prop: UserProfileProps;
 }
 
-const items: MenuProps["items"] = [
-  {
-    label: (
-      <a href="/logout" target="_blank" rel="noopener noreferrer">
-        Log out
-      </a>
-    ),
-    key: "0",
-  },
-];
-
 const UserProfile = ({ prop }: UserProfile) => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(authActions.logout());
+    navigate("/login");
+  }
+
+  const items: MenuProps["items"] = [
+    {
+      label: "Log out",
+      key: "0",
+      onClick: handleLogout
+    },
+  ];
+
   return (
     <Dropdown
       menu={{ items }}

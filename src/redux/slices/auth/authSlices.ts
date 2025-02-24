@@ -41,6 +41,7 @@ export const authSlice = createSlice({
     logout(state) {
       state.isAuthenticated = false;
       state.currentUser = undefined;
+      state.role = RoleUser.GUEST;
     },
   },
 });
@@ -49,6 +50,7 @@ export const authSlice = createSlice({
 export const selectIsAuthenticated = (state: RootState) =>
   state.auth.isAuthenticated;
 export const selectCurrentUser = (state: RootState) => state.auth.currentUser;
+export const selectRole = (state: RootState) => state.auth.role;
 
 // actions
 export const authActions = authSlice.actions;

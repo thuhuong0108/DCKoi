@@ -25,8 +25,8 @@ function* loginWorker(action: PayloadAction<LoginPayload>) {
   }
 }
 
-function* logoutWorker() {
-  yield put(authActions.logout());
+function logoutWorker() {
+  // yield put(authActions.logout());
   localStorage.removeItem("token");
 }
 
