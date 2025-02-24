@@ -5,6 +5,10 @@ import ManagementUser from "./User";
 import PackagePage from "./Packages";
 import PackageItem from "./PackageItemPage";
 import ManagementPackage from "./ManagementPackage";
+import ServicePage from "./Service";
+import EquipmentPage from "./Equipment";
+import StaffPage from "./Staff";
+
 export {
   ConsultationPage,
   DetailConsultation,
@@ -13,4 +17,7 @@ export {
   ManagementTransaction,
   PackageItem,
   ManagementPackage,
+  ServicePage,
+  EquipmentPage,
+  StaffPage,
 };

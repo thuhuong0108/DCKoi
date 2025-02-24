@@ -10,6 +10,9 @@ import {
   PackagePage,
   PackageItem,
   ManagementPackage,
+  ServicePage,
+  EquipmentPage,
+  StaffPage,
 } from "./AdminPage";
 import TestUi from "./TestUi";
 export {
@@ -25,4 +28,7 @@ export {
   PackagePage,
   PackageItem,
   ManagementPackage,
+  ServicePage,
+  EquipmentPage,
+  StaffPage,
 };

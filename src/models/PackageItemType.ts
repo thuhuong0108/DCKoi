@@ -1,4 +1,4 @@
 export interface PackageItemType {
-  id: string;
+  id?: string;
   name: string;
 }

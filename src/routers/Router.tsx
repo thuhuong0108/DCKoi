@@ -15,6 +15,9 @@ import {
   PackagePage,
   PackageItem,
   ManagementPackage,
+  EquipmentPage,
+  ServicePage,
+  StaffPage,
 } from "@/pages/AdminPage";
 import RootLayout from "@/layouts/RootLayout";
 
@@ -33,6 +36,18 @@ const Routers = () => {
     {
       path: "/admin/consultation",
       element: <LayoutAdmin Page={ConsultationPage} />,
+    },
+    {
+      path: "/admin/equipments",
+      element: <LayoutAdmin Page={EquipmentPage} />,
+    },
+    {
+      path: "/admin/services",
+      element: <LayoutAdmin Page={ServicePage} />,
+    },
+    {
+      path: "/admin/staffs",
+      element: <LayoutAdmin Page={StaffPage} />,
     },
     {
       path: "/admin/management-packages",

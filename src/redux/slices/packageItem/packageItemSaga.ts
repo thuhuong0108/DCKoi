@@ -31,7 +31,6 @@ function* fetchItemWorker(action: PayloadAction<Filter>) {
 // create
 function* createItemWorker(action: PayloadAction<PackageItemType>) {
   try {
-    console.log(action.payload);
     const data = yield call(createPackageItem, action.payload);
 
     if (data.isSuccess) {

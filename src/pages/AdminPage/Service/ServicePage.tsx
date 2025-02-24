@@ -1,56 +1,54 @@
-import { confirmAlert, TableComponent, Title } from "@/components";
-import Button from "@/components/ui/Button";
-import Modal from "@/components/ui/Modal";
+import {
+  Button,
+  confirmAlert,
+  Modal,
+  TableComponent,
+  Title,
+} from "@/components";
 import { FormControl, Input, InputAdornment } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 import { Col, Row } from "antd";
 import React, { useEffect, useState } from "react";
-import SearchIcon from "@mui/icons-material/Search";
-import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
 import {
-  packageItemActions,
-  selectPackageItems,
-} from "@/redux/slices/packageItem/packageItemSlices";
-import { PackageItemType } from "@/models";
-import Form from "./Form";
+  selectedService,
+  serviceActions,
+} from "@/redux/slices/service/serviceSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
+import { ServiceType } from "@/models";
+import FormService from "./FormService";
 
-const PackageItem = () => {
+const ServicePage = () => {
   const dispatch = useAppDispatch();
-  const isLoading = useAppSelector((state) => state.packageItem.loading);
+  const isLoading = useAppSelector((state) => state.service.loading);
 
-  const items = useAppSelector(selectPackageItems);
+  const items = useAppSelector(selectedService);
 
   useEffect(() => {
-    dispatch(
-      packageItemActions.fetchPackageItems({ pageNumber: 1, pageSize: 10 })
-    );
+    dispatch(serviceActions.fetchService({ pageNumber: 1, pageSize: 10 }));
   }, []);
 
+  const [selectedItem, setSelectedItem] = useState<ServiceType | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<PackageItemType | null>(
-    null
-  );
+  const [search, setSearch] = useState();
 
-  const [search, setSearch] = useState("");
-
-  const handleEdit = (item: PackageItemType) => {
+  const handleEdit = (item: ServiceType) => {
     setSelectedItem(item);
     setIsModalOpen(true);
   };
 
-  const handleDelete = (item: PackageItemType) => {
+  const handleDelete = (item: ServiceType) => {
     confirmAlert({
-      title: "Xác nhận xóa hạng mục thi công",
-      message: "Bạn có chắc muốn xóa hạng mục này ?",
+      title: "Xác nhận xóa dịch vụ",
+      message: "Bạn có chắc chắn muốn xóa dịch vụ này không ?",
       yes: () => {
-        dispatch(packageItemActions.deletePackageItem(item.id));
+        dispatch(serviceActions.deleteService(item.id));
       },
       no: () => {},
     });
   };
-
   return (
     <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 w-full h-full">
-      <Title name="Danh sách các hạng mục công việc" />
+      <Title name="Danh sách dịch vụ" />
       <Row className="flex flex-row justify-between items-center my-3">
         <Col>
           <Button
@@ -59,7 +57,7 @@ const PackageItem = () => {
               setSelectedItem(null);
               setIsModalOpen(true);
             }}
-            title="Thêm hạng mục mới"
+            title="Thêm dịch vụ mới"
             className="w-[185px] uppercase mt-3"
           />
         </Col>
@@ -78,23 +76,25 @@ const PackageItem = () => {
           </FormControl>
         </Col>
       </Row>
-
-      <TableComponent<PackageItemType>
-        columns={["Hạng mục công việc"]}
+      <TableComponent<ServiceType>
+        columns={[
+          "Tên dịch vụ",
+          "Mô tả dịch vụ",
+          " Giá",
+          "Đơn vị",
+          "Phân loại",
+        ]}
         data={items.data}
-        props={["name"]}
+        props={["name", "description", "price", "unit", "type"]}
+        loading={isLoading}
         actions={true}
         actionTexts={["Sửa", "Xóa"]}
         actionFunctions={[handleEdit, handleDelete]}
-        loading={isLoading}
         enablePagination={true}
         page={items.pageNumber}
         setPage={(page) => {
           dispatch(
-            packageItemActions.fetchPackageItems({
-              pageNumber: page,
-              pageSize: 10,
-            })
+            serviceActions.fetchService({ pageNumber: page, pageSize: 10 })
           );
         }}
         itemsPerPage={items.pageSize}
@@ -102,12 +102,14 @@ const PackageItem = () => {
       />
 
       <Modal
-        title={selectedItem ? "Chỉnh sửa hạng mục" : "Thêm mới hạng mục"}
-        desc="Vui lòng nhập tên hạng mục công việc"
+        title={selectedItem ? "Chỉnh sửa thiết bị" : "Thêm thiết bị mới"}
+        desc="Vui lòng nhập tên thiết bị"
         size="xl"
         visible={isModalOpen}
         onVisibleChange={setIsModalOpen}
-        content={<Form item={selectedItem} setIsModalOpen={setIsModalOpen} />}
+        content={
+          <FormService item={selectedItem} setIsModalOpen={setIsModalOpen} />
+        }
         backdrop={true}
         closeBtn={true}
       />
@@ -115,4 +117,4 @@ const PackageItem = () => {
   );
 };
 
-export default PackageItem;
+export default ServicePage;

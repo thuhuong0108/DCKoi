@@ -11,6 +11,30 @@ const endPoint = {
     updatePackageItem: (id: string) => `/packageitems/${id}`,
     deletePackageItem: (id: string) => `/packageitems/${id}`,
   },
+
+  equipment: {
+    createEquipment: "/equipments",
+    getPagingEquipment: "/equipments",
+    getEquipment: (id: string) => `/equipments/${id}`,
+    updateEquipment: (id: string) => `/equipments/${id}`,
+    deleteEquipment: (id: string) => `/equipments/${id}`,
+  },
+
+  service: {
+    createService: "/services",
+    getPagingService: "/services",
+    getService: (id: string) => `/services/${id}`,
+    updateService: (id: string) => `/services/${id}`,
+    deleteService: (id: string) => `services/${id}`,
+  },
+
+  staff: {
+    createStaff: "/staff",
+    getPagingStaff: "/staff",
+    // getStaff: (id: string) => `/staff/${id}`,
+    // updateStaff: (id: string) => `/staff/${id}`,
+    // deleteStaff: (id: string) => `staff/${id}`,
+  },
 };
 
 export { baseURL, endPoint, socketURL };
