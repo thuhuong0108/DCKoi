@@ -47,11 +47,11 @@ const Routers = () => {
     },
     {
       path: "/admin/management-packages/packages/:id",
-      element: <LayoutAdmin Page={PackageDetail} />,
+      element: <PrivateRouterAdmin Pages={() => <LayoutAdmin Page={PackageDetail} />} />,
     },
     {
       path: "/admin/management-packages/packages/create",
-      element: <LayoutAdmin Page={PackageCreate} />,
+      element: <PrivateRouterAdmin Pages={() => <LayoutAdmin Page={PackageCreate} />} />,
     },
     {
       path: "/admin/management-packages/package-items",

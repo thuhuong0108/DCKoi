@@ -127,8 +127,8 @@ const PackageDetail = () => {
   };
 
   return (
-    <div className="flex flex-col justify-between mb-5 mt-8 mx-10 h-full w-full">
-      <Title name="Thêm mới gói" />
+    <div className="flex flex-col justify-between mb-5 mt-8 mx-10 h-full w-full space-y-4">
+      <Title name="Chi tiết gói" />
       <Card elevation={3} sx={{ p: 3, borderRadius: 2 }}>
         <CardContent>
           <Typography variant="h6" gutterBottom>
@@ -169,79 +169,87 @@ const PackageDetail = () => {
               <Grid item xs={12} md={6} key={index}>
                 <Box
                   sx={{
-                    backgroundColor: "#f5f5f5",
+                    backgroundColor: "#f9f9f9",
                     borderRadius: 1,
                     p: 2,
                   }}
                 >
-                  <Typography variant="subtitle1" fontWeight={600}>
-                    {tier.label}
-                  </Typography>
-                  <TextField
-                    required
-                    fullWidth
-                    label="Giá"
-                    {...(tier.editable ? regField("price") : {})}
-                    value={
-                      tier.editable ? price : Math.round(price * tier.factor)
-                    }
-                    error={Boolean(error)}
-                    helperText={error}
-                    InputProps={{
-                      readOnly: !tier.editable,
-                      endAdornment: (
-                        <InputAdornment position="end">vnd/1m3</InputAdornment>
-                      ),
-                    }}
-                  />
+                  <div className="space-y-2 text-blue-700">
+                    <Typography variant="subtitle1" fontWeight={600}>
+                      {tier.label}
+                    </Typography>
+                    <TextField
+                      required
+                      fullWidth
+                      label="Giá"
+                      {...(tier.editable ? regField("price") : {})}
+                      value={
+                        tier.editable ? price : Math.round(price * tier.factor)
+                      }
+                      error={Boolean(error)}
+                      helperText={error}
+                      InputProps={{
+                        readOnly: !tier.editable,
+                        endAdornment: (
+                          <InputAdornment position="end">vnd/m3</InputAdornment>
+                        ),
+                      }}
+                    />
+                  </div>
                 </Box>
               </Grid>
             ))}
           </Grid>
         </CardContent>
 
-        <CardContent>
+        <CardContent className="space-y-3">
           <Typography variant="h6" gutterBottom>
             Chọn hạng mục thi công
           </Typography>
           <Grid container spacing={2}>
             {regField("items").value.map((item, index) => (
-              <Grid item xs={12} md={6} key={index}>
+              <Grid item xs={12} md={4} key={index}>
                 <Box
                   sx={{
-                    backgroundColor: "#f5f5f5",
+                    backgroundColor: "#f9f9f9",
                     borderRadius: 1,
                     p: 2,
                   }}
                 >
-                  <Typography variant="subtitle1" fontWeight={600}>
-                    {item.name}
-                  </Typography>
-                  <TextField
-                    fullWidth
-                    label="Số lượng"
-                    type="number"
-                    {...regField(`items[${index}].quantity`)}
-                    value={item.quantity}
-                  />
-                  <TextField
-                    label="Mô tả"
-                    {...regField(`items[${index}].description`)}
-                    value={item.description}
-                  />
+                  <div className="space-y-3">
+                    <Typography variant="subtitle1" fontWeight={600}>
+                      {item.name}
+                    </Typography>
+                    <TextField
+                      fullWidth
+                      label="Số lượng"
+                      type="number"
+                      {...regField(`items[${index}].quantity`)}
+                      value={item.quantity}
+                    />
+                    <TextField
+                      fullWidth
+                      label="Mô tả"
+                      {...regField(`items[${index}].description`)}
+                      value={item.description}
+                    />
+                  </div>
                 </Box>
               </Grid>
             ))}
           </Grid>
-          <Button onClick={() => setIsModalOpen(true)}>Thêm hạng mục</Button>
+          <Button className="border-none text-lg font-bold" onClick={() => setIsModalOpen(true)}>Thêm hạng mục</Button>
         </CardContent>
 
         <CardContent>
           <Button
+            block
+            size="large"
             type="primary"
             onClick={regHandleSubmit}
             loading={loading}
             disabled={loading}
+            className="text-lg font-semibold"
           >
             Lưu
           </Button>
