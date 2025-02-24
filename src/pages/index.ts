@@ -12,6 +12,8 @@ import {
   ManagementPackage,
   PackageCreate,
   PackageDetail,
+  ConstructionTemplate,
+  ConstructionTemplateConfig,
 } from "./AdminPage";
 import TestUi from "./TestUi";
 export {
@@ -29,4 +31,6 @@ export {
   ManagementPackage,
   PackageCreate,
   PackageDetail,
+  ConstructionTemplate,
+  ConstructionTemplateConfig,
 };

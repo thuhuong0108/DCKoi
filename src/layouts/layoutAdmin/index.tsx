@@ -53,6 +53,11 @@ const LayoutAdmin: React.FC<IndexProps> = ({ Page }) => {
       icon: <CardGiftcardSharp />,
     },
     { link: "/admin/services", children: "Services", icon: <BuildSharp /> },
+    {
+      link: "/admin/template-construction",
+      children: "Template Construction",
+      icon: <BuildSharp />,
+    },
   ];
 
   const currentUser = useAppSelector(selectCurrentUser);

@@ -8,6 +8,8 @@ import createSagaMiddleware from "redux-saga";
 import authSlice from "../slices/auth/authSlices";
 import packageItemSlice from "../slices/packageItem/packageItemSlices";
 import packageSlice from "../slices/package/packageSlices";
+import templateConstructionSlice from "../slices/templateConstruction/templateContrutionSlices";
+import templateConstructionDetailSlice from "../slices/templateConstructionDetail/templateConstructionDetailSlices";
 import { connectRouter, routerMiddleware } from "connected-react-router";
 import { history } from "@/utils/history";
 import rootSaga from "./rootSaga";
@@ -18,6 +20,8 @@ const rootReducers = combineReducers({
   auth: authSlice,
   packageItem: packageItemSlice,
   package: packageSlice,
+  templateConstruction: templateConstructionSlice,
+  templateConstructionDetail: templateConstructionDetailSlice,
 });
 
 const persistConfig = {
