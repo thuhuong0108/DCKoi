@@ -9,6 +9,7 @@ const TemplateCard = ({ item }: { item: TemplateConstructionType }) => {
   const navigate = useNavigate();
   return (
     <Card
+      className="shadow-md border border-black hover:shadow-xl hover:border-black drop-shadow-lg"
       hoverable
       style={{
         width: 300,
@@ -21,9 +22,9 @@ const TemplateCard = ({ item }: { item: TemplateConstructionType }) => {
     >
       <div className="flex flex-col justify-between w-full p-2">
         <div>
-          <Card.Meta title={item.name} />
+          <Card.Meta title={<span style={{ fontWeight: 'bold', fontSize: 20 }}>{item.name}</span>} />
         </div>
-        <div>
+        <div className="font-semibold">
           {item.isActive ? (
             <Typography.Text type="success">
               {displayActive(item.isActive)}

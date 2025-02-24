@@ -42,10 +42,10 @@ const ConstructionTemplate = () => {
   });
 
   return (
-    <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 h-full">
+    <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 h-full space-y-4">
       <Title name="Các quy trình thi công " />
 
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-5 gap-4">
         {isLoading ? (
           Array.from({ length: 10 }).map((_, index) => (
             <TemplateSkeleton key={index} />
@@ -61,6 +61,7 @@ const ConstructionTemplate = () => {
       </div>
       <br />
 
+      <div className="flex justify-end">
       <Pagination
         count={items.totalPages}
         page={items.pageNumber}
@@ -73,15 +74,17 @@ const ConstructionTemplate = () => {
           );
         }}
       />
+      </div>
 
       <Modal
-        title="Thêm quy trình thi công"
+        title={<h2 className="font-bold text-2xl">Thêm quy trình thi công</h2>}
         visible={ModalVisible}
         onCancel={() => setModalVisible(false)}
         footer={null}
       >
-        <Card>
+        <Card className="border-none">
           <Skeleton loading={loading} active>
+            <div className="space-y-4">
             <TextField
               required
               fullWidth
@@ -99,9 +102,12 @@ const ConstructionTemplate = () => {
               helperText={regField("description").error}
             />
 
-            <Button onClick={regHandleSubmit} type="primary">
+            <div className="flex justify-end">
+            <Button size="large" onClick={regHandleSubmit} type="primary" className="px-5 font-semibold drop-shadow-xl">
               Thêm
             </Button>
+            </div>
+            </div>
           </Skeleton>
         </Card>
       </Modal>

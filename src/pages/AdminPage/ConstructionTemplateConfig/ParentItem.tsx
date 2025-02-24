@@ -10,6 +10,7 @@ import { createItemsTemlateConstruction } from "@/api/templateConstruction";
 import { useAppDispatch } from "@/redux/store/hook";
 import { messageError } from "@/components";
 import { templateConstructionDetailActions } from "@/redux/slices/templateConstructionDetail/templateConstructionDetailSlices";
+import { Add } from "@mui/icons-material";
 
 const ParentItem = ({
   item,
@@ -53,11 +54,12 @@ const ParentItem = ({
 
     return (
       <Modal
-        title={`Thêm công việc cho ${item.name}`}
+        title={<h2 className="font-bold text-2xl">Thêm công việc cho {item.name}</h2>}
         visible={isModalVisible}
         onOk={() => regHandleSubmit()}
         onCancel={() => setIsModalVisible(false)}
       >
+        <div className="space-y-4">
         <TextField
           required
           fullWidth
@@ -73,23 +75,25 @@ const ParentItem = ({
           error={Boolean(regField("description").error)}
           helperText={regField("description").error}
         />
+        </div>
       </Modal>
     );
   };
 
   return (
     <div className="bg-gray-300 p-4 rounded-lg shadow-md w-[300px] h-full">
-      <div className="text-lg font-bold">{item.name}</div>
+      <div className="text-lg font-bold text-center">{item.name}</div>
       {/* line */}
-      <div className="border-b-2 my-2"></div>
+      <div className="border-b-4 border-sky-600 my-2"></div>
 
       <div className=" flex flex-col justify-between">
         {item.child &&
           item.child.map((child) => <ChildItem key={child.id} item={child} />)}
 
         {/* add new child */}
-        <div className="bg-gray-300 p-4 rounded-lg shadow-md w-[300px] h-full">
-          <Button type="primary" onClick={() => setIsModalVisible(true)}>
+        <div className="bg-white mt-1 rounded-lg shadow-md w-full h-full">
+          <Button size="large" block className="border-none text-lg font-semibold" onClick={() => setIsModalVisible(true)}>
+            <Add />
             Thêm công việc
           </Button>
         </div>

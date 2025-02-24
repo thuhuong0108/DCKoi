@@ -30,7 +30,9 @@ const Packages = () => {
   }, []);
   return (
     <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 h-full">
-      <Title name="Các gói thi công" />
+      <div className="text-center">
+        <Title name="Các gói thi công" />
+      </div>
       {packageLoading || packageItemLoading ? (
         Array.from({ length: 10 }).map((_, index) => (
           <PackageSkeleton key={index} />
