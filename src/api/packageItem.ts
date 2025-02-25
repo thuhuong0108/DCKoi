@@ -25,7 +25,6 @@ const getPackageItem = async (
 };
 
 const createPackageItem = async (item: PackageItemType): Promise<ApiResult> => {
-  console.log("api create response item package : ", item);
   const response = await http.post(
     endPoint.packageItem.createPackageItem,
     item

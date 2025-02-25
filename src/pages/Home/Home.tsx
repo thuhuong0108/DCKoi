@@ -1,7 +1,12 @@
 import ImgBanner from "@/assets/images/banner.png";
 import ImgHand from "@/assets/images/hand.png";
 import ImgFish from "@/assets/images/fish.png";
-import { FeatureCard, NavLinkCustom, ServiceCard } from "@/components";
+import {
+  EstimatedPrice,
+  FeatureCard,
+  NavLinkCustom,
+  ServiceCard,
+} from "@/components";
 import { Col, Row, Select } from "antd";
 import { useAppDispatch } from "@/redux/store/hook";
 import Packages from "./Packages";
@@ -112,30 +117,6 @@ const Home = () => {
             </div>
           </div>
 
-          {/* Initial estimated price */}
-          <div className="">
-            <div className="text-center">
-              <h2 className="text-indigo-800 font-bold text-2xl">
-                Initial estimated price
-              </h2>
-            </div>
-            <div className="mt-4">
-              <Select
-                size="large"
-                style={{ width: "100%" }}
-                defaultValue="Basic package"
-                onChange={handleChangePackage}
-                options={optionPackage.map((pkg) => ({
-                  label: pkg,
-                  value: pkg,
-                }))}
-              />
-            </div>
-
-            {/* Form estimated price */}
-            <div className="mt-4"></div>
-          </div>
-
           {/* Maintain Service */}
           <div className="">
             <div className="text-center">
@@ -177,9 +158,24 @@ const Home = () => {
               />
             </div>
           </div>
+
+          <Packages />
+
+          {/* Initial estimated price */}
+          <div className="my-5">
+            <div className="text-center">
+              <h2 className="text-indigo-800 font-bold text-2xl">
+                Dự tính giá sơ bộ
+              </h2>
+            </div>
+
+            <EstimatedPrice />
+
+            {/* Form estimated price */}
+            <div className="mt-4"></div>
+          </div>
         </Col>
       </Row>
-      <Packages />
     </div>
   );
 };

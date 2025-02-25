@@ -43,7 +43,7 @@ const FormStaff = ({ item, setIsModalOpen }) => {
         fullWidth
         label="Họ tên"
         margin="normal"
-        variant="standard"
+        variant="outlined"
         {...regField("fullName")}
         error={Boolean(regField("fullName").error)}
         helperText={regField("fullName").error}
@@ -54,7 +54,7 @@ const FormStaff = ({ item, setIsModalOpen }) => {
         label="Email"
         type="email"
         margin="normal"
-        variant="standard"
+        variant="outlined"
         {...regField("email")}
         error={Boolean(regField("email").error)}
         helperText={regField("email").error}
@@ -65,49 +65,27 @@ const FormStaff = ({ item, setIsModalOpen }) => {
         label="Số điện thoại"
         type="number"
         margin="normal"
-        variant="standard"
+        variant="outlined"
         {...regField("phone")}
         error={Boolean(regField("phone").error)}
         helperText={regField("phone").error}
       />
 
-      {/* <FormControl fullWidth margin="normal" variant="standard">
-        <InputLabel>Chức vụ</InputLabel>
-        <NativeSelect
-          {...regField("position")}
-          error={Boolean(regField("position").error)}
-          inputProps={{
-            name: "position",
-          }}
-        >
-          <option value="Unit">Unit</option>
-          <option value="m2">m2</option>
-          <option value="m3">m3</option>
-        </NativeSelect>
-        {regField("position").error && (
-          <div className="text-red-500 text-sm">
-            {regField("position").error}
-          </div>
-        )}
-      </FormControl> */}
-
-      <FormControl fullWidth>
+      {/* <FormControl fullWidth>
         <InputLabel>Chức vụ</InputLabel>
 
         <Select
-          value={regField("position").value}
+          value={formik.values.position} 
           label="Chức vụ"
-          onChange={(e) => {
-            formik.setFieldValue("position", e.target.value);
-          }}
+          onChange={(e) => formik.setFieldValue("position", e.target.value)} 
         >
           {Object.values(Position).map((position) => (
             <MenuItem key={position} value={position}>
-              {parsePosition(position)}
+              {parsePosition(position)}{" "}
             </MenuItem>
           ))}
         </Select>
-      </FormControl>
+      </FormControl> */}
 
       <div className="flex justify-end">
         <Button
