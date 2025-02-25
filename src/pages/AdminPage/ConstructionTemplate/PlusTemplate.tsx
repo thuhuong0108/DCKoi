@@ -11,9 +11,10 @@ const PlusTemplate = ({
 }) => {
   return (
     <Card
+      className="shadow-md"
       hoverable
       style={{
-        width: 240,
+        width: 300,
         height: 300,
         display: "flex",
         alignItems: "center",
@@ -23,7 +24,7 @@ const PlusTemplate = ({
         setIsModalOpen(true);
       }}
     >
-      <div style={{ textAlign: "center" }}>
+      <div style={{ textAlign: "center" }} >
         <PlusOutlined style={{ fontSize: "48px", color: "#1890ff" }} />
         <Meta description="Thêm quy trình thi công mới" />
       </div>

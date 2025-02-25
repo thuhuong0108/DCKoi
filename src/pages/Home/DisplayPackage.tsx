@@ -2,6 +2,7 @@ import { PackageType } from "@/models";
 import { PackageItem } from "@/models/PackageItem";
 import React from "react";
 import { priceTiers } from "./type";
+import { formatPrice } from "@/utils/helpers";
 
 const DisplayPackage = ({
   pkg,
@@ -27,11 +28,16 @@ const DisplayPackage = ({
           <tbody>
             {priceTiers.map((tier, tierIndex) => (
               <tr key={tier.label} className="border">
-                <td className="py-2 px-4 border font-bold">{tier.label}</td>
+                <td className="py-4 px-5 border font-bold text-indigo-600">
+                  {tier.label}
+                </td>
                 {pkg.map((pack) => (
-                  <td key={pack.id} className="py-2 px-4 border text-center">
+                  <td
+                    key={pack.id}
+                    className="py-2 px-4 border text-center font-semibold"
+                  >
                     {pack.price.length > tierIndex
-                      ? `${pack.price[tierIndex]}`
+                      ? `${formatPrice(pack.price[tierIndex])} đ/m3`
                       : "N/A"}
                   </td>
                 ))}
@@ -39,7 +45,7 @@ const DisplayPackage = ({
             ))}
             {itemPackage.map((item) => (
               <tr key={item.id} className="border">
-                <td className="py-2 px-4 border">{item.name}</td>
+                <td className="py-4 px-5 border font-semibold">{item.name}</td>
                 {pkg.map((pack) => {
                   const foundItem = pack.items.find(
                     (pItem) => pItem.idPackageItem === item.id

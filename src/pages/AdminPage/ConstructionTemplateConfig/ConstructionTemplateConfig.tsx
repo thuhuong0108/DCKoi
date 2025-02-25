@@ -9,6 +9,7 @@ import useForm from "@/hooks/useForm";
 import { TextField } from "@mui/material";
 import { validateTemplateConstruction } from "@/validations/validate";
 import { createItemsTemlateConstruction } from "@/api/templateConstruction";
+import { Add } from "@mui/icons-material";
 
 const ConstructionTemplateConfig = () => {
   const { id } = useParams<{ id: string }>();
@@ -84,24 +85,23 @@ const ConstructionTemplateConfig = () => {
       <Title name="Cấu hình mẫu thi công" />
 
       <div className="flex flex-col">
-        <div className="flex flex-row justify-between p-2">
-          <div>
-            <div className="text-lg font-bold">Tên mẫu thi công:</div>
-            <div>{template.name}</div>
-          </div>
-          <div>
-            <div className="text-lg font-bold">Trạng thái:</div>
-            <div>{template.isActive ? "Hoạt động" : "Không hoạt động"}</div>
+        <div className="flex flex-row justify-between py-2">
+          <div className="mt-4 flex items-center gap-4">
+            <h2 className="text-2xl font-bold">{template.name}</h2>
+            <div className={`${template.isActive ? "bg-green-500" : "bg-red-500"} font-bold text-white py-1 px-3 rounded-md`}>
+              {template.isActive ? "Hoạt động" : "Không hoạt động"}
+              </div>
           </div>
         </div>
-        <div className="p-2">
-          <div className="text-lg font-bold">Mô tả:</div>
-          <div>{template.description}</div>
+        <div className="py-4"> 
+          <div className="text-lg font-semibold max-w-2xl break-words">
+            {template.description}
+            </div>
         </div>
       </div>
-      <div className="flex flex-col">
+      <div className="flex flex-col gap-4">
         <div className="text-lg font-bold">Danh sách hạng mục thi công:</div>
-        <div className="flex flex-row ">
+        <div className="flex flex-row gap-4">
           {template.templateContructionItems &&
             template.templateContructionItems.map((item) => (
               <ParentItem
@@ -112,7 +112,8 @@ const ConstructionTemplateConfig = () => {
               />
             ))}
           <div className="bg-gray-300 p-4 rounded-lg shadow-md w-[300px] h-full">
-            <Button type="primary" onClick={() => setIsModalVisible(true)}>
+            <Button block size="large" type="default" className="font-bold" onClick={() => setIsModalVisible(true)}>
+              <Add />
               Thêm hạng mục
             </Button>
           </div>
