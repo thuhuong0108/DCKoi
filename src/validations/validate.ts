@@ -51,6 +51,17 @@ export const validateTemplateConstruction = yup.object().shape({
 });
 
 export const validateEstimatePrice = yup.object().shape({
+  area: yup.number().required().min(0),
+  depth: yup.number().required().min(0),
+});
+export const validateRequestProject = yup.object().shape({
+  customerName: yup.string().required(),
+  district: yup.string().required(),
+  email: yup.string().email().required(),
+  ward: yup.string().required(),
+  address: yup.string().required(),
+  phone: yup.number().required(),
   area: yup.number().required(),
-  depth: yup.number().required(),
+  depth: yup.string().required(),
+  packageId: yup.string().required(),
 });
