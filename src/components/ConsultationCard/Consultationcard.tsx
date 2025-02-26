@@ -6,23 +6,25 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import ArticleIcon from "@mui/icons-material/Article";
 import { useNavigate } from "react-router-dom";
+import ImgWarning from "@/assets/images/warning.png";
 
 interface ConsultationProp {
-  fullname: string;
+  customerName: string;
   date: string;
   time: string;
   phone: string;
   address: string;
-  basepackage: string;
+  packageName: string;
   status: string;
 }
 const Consultationcard = ({
-  fullname,
+  customerName,
   date,
   time,
   phone,
   address,
-  basepackage,
+  packageName,
+  standOut,
   status,
 }: ConsultationProp) => {
   const navigate = useNavigate();
@@ -44,7 +46,7 @@ const Consultationcard = ({
       <Card.Header className="custom-header flex flex-row justify-between items-center">
         <div>
           <Avatar size="default" icon={<UserOutlined />} />
-          <label className="text-xl font-weight-bold mx-2">{fullname}</label>
+          <label className="text-xl font-weight-bold mx-2">{customerName}</label>
         </div>
         {status === "pending" ? (
           <label className="text-sm bg-yellow-100 text-yellow-500 p-1 border-none rounded-lg w-[70px] text-center">
@@ -59,6 +61,7 @@ const Consultationcard = ({
             {status}
           </label>
         )}
+        {standOut ? (<img src={ImgWarning} alt="Warning" width={25} />) : ""}
       </Card.Header>
       <Card.Body className="custom-body">
         <div className="p-2 flex flex-row justify-between items-center text-gray-400 border-b-2 ">
@@ -76,7 +79,7 @@ const Consultationcard = ({
         </div>
         <div className="p-2 flex flex-row justify-start items-center">
           <ArticleIcon className="mr-2 " />
-          <label className="text-black">{basepackage}</label>
+          <label className="text-black">{packageName}</label>
         </div>
       </Card.Body>
       <Card.Footer className="custom-footer flex flex-row justify-between">

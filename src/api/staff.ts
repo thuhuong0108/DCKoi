@@ -19,4 +19,13 @@ const createStaff = async (staff: StaffType): Promise<ApiResult> => {
   return response;
 };
 
-export { getAllStaff, createStaff };
+const getAllConsultantAvailable = async(
+  filter: Filter
+): Promise<ApiResultWithPagination<StaffType>> => {
+  const response = await http.get(
+    `${endPoint.staff.getAllConsultantAvailable}?PageNumber=${filter.pageNumber}&PageSize=${filter.pageSize}`
+  );
+  return response;
+}
+
+export { getAllStaff, createStaff, getAllConsultantAvailable };

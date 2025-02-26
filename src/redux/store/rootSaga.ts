@@ -8,6 +8,7 @@ import { templateConstructionDetailSaga } from "../slices/templateConstructionDe
 import { all } from "redux-saga/effects";
 import { serviceSaga } from "../slices/service/serviceSaga";
 import { staffSaga } from "../slices/staff/staffSaga";
+import { consultationSaga } from "../slices/consultation/consultationSaga";
 
 export default function* rootSaga() {
   yield all([
@@ -19,5 +20,6 @@ export default function* rootSaga() {
     packageSaga(),
     templateConstructionSaga(),
     templateConstructionDetailSaga(),
+    consultationSaga(),
   ]);
 }

@@ -37,6 +37,7 @@ const endPoint = {
     // getStaff: (id: string) => `/staff/${id}`,
     // updateStaff: (id: string) => `/staff/${id}`,
     // deleteStaff: (id: string) => `staff/${id}`,
+    getAllConsultantAvailable: "/staff/consultant"
   },
 
   package: {
@@ -52,6 +53,10 @@ const endPoint = {
     getTemplateConstruction: (id: string) => `/templatecontructions/${id}`,
     createTemplateConstructionItem: "/templatecontructions/items",
   },
+  consultation: {
+    getProjectForConsultation: "/projects/consultation",
+    assignConsultant: (id: string) => `/projects/${id}/assignconsultant`
+  }
 };
 
 export { baseURL, endPoint, socketURL };

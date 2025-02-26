@@ -10,8 +10,26 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
+import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
+import { useEffect, useState } from "react";
+import { consultationActions, selectConsultation } from "@/redux/slices/consultation/consultationSlice";
+import EmptyContent from "@/components/ui/EmptyContent";
 
 const ConsultationPage = () => {
+  const dispatch = useAppDispatch();
+  // const dataConsultation = useAppSelector(selectConsultation);
+
+  useEffect(() => {
+    dispatch(
+      consultationActions.fetchConsultation({
+        pageNumber: 1,
+        pageSize: 8
+      })
+    )
+  }, []);
+
+  const [modalVisible, setModalVisible] = useState(false);
+
   const sortby = [
     {
       value: "date",
@@ -24,52 +42,57 @@ const ConsultationPage = () => {
   ];
 
   const dataConsultation = [
-    {
-      fullname: "Hoang Xuan Viet",
-      date: "Wed, December 11, 2024",
-      time: "11:00 AM",
-      phone: "0123 456 789",
-      address: "10/5, 106 Street, Tang Nhon Phu A Ward, Thu Duc City",
-      basepackage: "Basic package",
-      status: "pending",
-    },
-    {
-      fullname: "Hoang Xuan Viet",
-      date: "Wed, December 11, 2024",
-      time: "11:00 AM",
-      phone: "0123 456 789",
-      address: "10/5, 106 Street, Tang Nhon Phu A Ward, Thu Duc City",
-      basepackage: "Basic package",
-      status: "cancel",
-    },
-    {
-      fullname: "Hoang Xuan Viet",
-      date: "Wed, December 11, 2024",
-      time: "11:00 AM",
-      phone: "0123 456 789",
-      address: "10/5, 106 Street, Tang Nhon Phu A Ward, Thu Duc City",
-      basepackage: "Basic package",
-      status: "done",
-    },
-    {
-      fullname: "Hoang Xuan Viet",
-      date: "Wed, December 11, 2024",
-      time: "11:00 AM",
-      phone: "0123 456 789",
-      address: "10/5, 106 Street, Tang Nhon Phu A Ward, Thu Duc City",
-      basepackage: "Basic package",
-      status: "pending",
-    },
-    {
-      fullname: "Hoang Xuan Viet",
-      date: "Wed, December 11, 2024",
-      time: "11:00 AM",
-      phone: "0123 456 789",
-      address: "10/5, 106 Street, Tang Nhon Phu A Ward, Thu Duc City",
-      basepackage: "Basic package",
-      status: "pending",
-    },
-  ];
+      {
+        customerName: "Hoang Xuan Viet",
+        date: "Wed, December 11, 2024",
+        time: "11:00 AM",
+        phone: "0123 456 789",
+        address: "10/5, 106 Street, Tang Nhon Phu A Ward, Thu Duc City",
+        packageName: "Basic package",
+        standOut: true,
+        status: "pending",
+      },
+      {
+        customerName: "Hoang Xuan Viet",
+        date: "Wed, December 11, 2024",
+        time: "11:00 AM",
+        phone: "0123 456 789",
+        address: "10/5, 106 Street, Tang Nhon Phu A Ward, Thu Duc City",
+        packageName: "Basic package",
+        standOut: true,
+        status: "cancel",
+      },
+      {
+        customerName: "Hoang Xuan Viet",
+        date: "Wed, December 11, 2024",
+        time: "11:00 AM",
+        phone: "0123 456 789",
+        address: "10/5, 106 Street, Tang Nhon Phu A Ward, Thu Duc City",
+        packageName: "Basic package",
+        standOut: false,
+        status: "done",
+      },
+      {
+        customerName: "Hoang Xuan Viet",
+        date: "Wed, December 11, 2024",
+        time: "11:00 AM",
+        phone: "0123 456 789",
+        address: "10/5, 106 Street, Tang Nhon Phu A Ward, Thu Duc City",
+        packageName: "Basic package",
+        standOut: false,
+        status: "pending",
+      },
+      {
+        customerName: "Hoang Xuan Viet",
+        date: "Wed, December 11, 2024",
+        time: "11:00 AM",
+        phone: "0123 456 789",
+        address: "10/5, 106 Street, Tang Nhon Phu A Ward, Thu Duc City",
+        packageName: "Basic package",
+        standOut: false,
+        status: "pending",
+      },
+    ];
 
   return (
     <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 min-h-full w-screen">
@@ -112,11 +135,24 @@ const ConsultationPage = () => {
       </Row>
 
       <Row>
-        {dataConsultation.map((item, index) => (
-          <Col>
-            <Consultationcard {...item} key={index} />
-          </Col>
-        ))}
+        {dataConsultation?.length > 0 ? (
+          dataConsultation.map((item, index) => (
+            <Col>
+              <Consultationcard {...item} key={index} />
+            </Col>
+          ))
+        ) : (
+          <EmptyContent title="Empty consultation" imgUrl="https://static.thenounproject.com/png/203873-200.png"/>
+        )}
+        {/* {dataConsultation?.data?.length > 0 ? (
+          dataConsultation.data.map((item, index) => (
+            <Col>
+              <Consultationcard {...item} key={index} />
+            </Col>
+          ))
+        ) : (
+          <EmptyContent title="Empty consultation" imgUrl="https://static.thenounproject.com/png/203873-200.png"/>
+        )} */}
       </Row>
 
       <Row className="flex flex-row justify-between items-stretch mt-1">

@@ -11,6 +11,7 @@ import InputField from "./FieldCustom";
 import Consultationcard from "./ConsultationCard";
 import PackgeCard from "./PackageCard";
 import ServiceCard from "./ServiceCard";
+import ModalConsultant from "./ModalConsultant";
 export * from "./Sidebar";
 export * from "./ui";
 
@@ -29,4 +30,5 @@ export {
   Consultationcard,
   PackgeCard,
   ServiceCard,
+  ModalConsultant
 };
