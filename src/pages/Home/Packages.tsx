@@ -1,4 +1,3 @@
-import { Title } from "@/components";
 import {
   packageActions,
   selectPackage,
@@ -29,9 +28,9 @@ const Packages = () => {
     );
   }, []);
   return (
-    <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 h-full">
+    <div className="mt-10">
       <div className="text-center">
-        <Title name="Các gói thi công" />
+        <h2 className="text-indigo-800 font-bold text-2xl">Các gói thi công</h2>
       </div>
       {packageLoading || packageItemLoading ? (
         Array.from({ length: 10 }).map((_, index) => (

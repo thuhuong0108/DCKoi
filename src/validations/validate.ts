@@ -44,7 +44,13 @@ export const validatePackage = yup.object().shape({
   description: yup.string().required(),
   price: yup.number().required(),
 });
+
 export const validateTemplateConstruction = yup.object().shape({
   name: yup.string().required(),
   description: yup.string().required(),
+});
+
+export const validateEstimatePrice = yup.object().shape({
+  area: yup.number().required(),
+  depth: yup.number().required(),
 });

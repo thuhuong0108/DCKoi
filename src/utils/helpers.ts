@@ -36,3 +36,8 @@ export function parsePosition(position: Position): string {
       return "Vị trí không xác định";
   }
 }
+export const formatPrice = (amount: number): string => {
+  return new Intl.NumberFormat("en-US", {
+    maximumFractionDigits: 0, // Đảm bảo không có phần thập phân
+  }).format(amount);
+};
