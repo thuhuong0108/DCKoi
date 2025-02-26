@@ -1,7 +1,10 @@
 import useForm from "@/hooks/useForm";
 import Button from "../../components/ui/Button";
-import { validateEstimatePrice } from "@/validations/validate";
-import { Select } from "antd";
+import {
+  validateEstimatePrice,
+  validateRequestProject,
+} from "@/validations/validate";
+import { Form, Modal, Select, Typography } from "antd";
 import { TextField } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
 import {
@@ -13,10 +16,21 @@ import { PackageType } from "@/models";
 import { messageError } from "../../components/ui";
 import { EstimatePrice } from "./type";
 import { formatPrice } from "@/utils/helpers";
+import {
+  Cities,
+  Districts,
+  IDistricts,
+  IWards,
+  Wards,
+} from "@/constants/Address";
+import TextArea from "antd/es/input/TextArea";
+import SelectForm from "./SelectForm";
 
 const EstimatedPrice = () => {
   const dispatch = useAppDispatch();
   const packageLoading = useAppSelector((state) => state.package.loading);
+
+  const [visible, setVisible] = useState(false);
 
   const packages = useAppSelector(selectPackage);
 
@@ -57,6 +71,7 @@ const EstimatedPrice = () => {
             volume,
             totalPrice,
             price,
+            selectedPackage,
           });
         }
       } else {
@@ -95,8 +110,7 @@ const EstimatedPrice = () => {
       <TextField
         required
         type="number"
-        label="Độ sâu 
-        của hồ cá Koi"
+        label="Độ sâu của hồ cá Koi"
         {...regField("depth")}
         error={Boolean(regField("depth").error)}
         helperText={regField("depth").error}
@@ -164,8 +178,18 @@ const EstimatedPrice = () => {
               value={formatPrice(result.totalPrice)}
             />
           </div>
+
+          <Button
+            primary
+            size="lg"
+            title="Gửi yêu cầu"
+            onClick={() => {
+              setVisible(true);
+            }}
+          />
         </div>
       )}
+      <SelectForm visible={visible} setVisible={setVisible} result={result} />
     </div>
   );
 };

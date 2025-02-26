@@ -12,6 +12,8 @@ function* loginWorker(action: PayloadAction<LoginPayload>) {
     if (data.isSuccess) {
       // set to local storage
 
+      console.log(data.data.token);
+
       localStorage.setItem("token", data.data.token);
       yield put(authActions.loginSuccess(data));
     } else {

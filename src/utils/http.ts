@@ -10,11 +10,11 @@ const axiosCore = axios.create({
 
 //
 axiosCore.interceptors.request.use(async (request) => {
-  // const session = await localStorage.getItem("token");
-  // if (session) {
-  //   const sessionData = JSON.parse(session);
-  //   request.headers.Authorization = `Bearer ${sessionData.token}`;
-  // }
+  const session = await localStorage.getItem("token");
+
+  if (session) {
+    request.headers.Authorization = `Bearer ${session}`;
+  }
   return request;
 });
 
