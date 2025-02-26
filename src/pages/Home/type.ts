@@ -1,3 +1,5 @@
+import { PackageType } from "@/models";
+
 export interface PriceTier {
   label: string;
 }
@@ -14,4 +16,5 @@ export interface EstimatePrice {
   volume: number;
   totalPrice: number;
   price: number;
+  selectedPackage: null | PackageType;
 }

@@ -52,6 +52,9 @@ const endPoint = {
     getTemplateConstruction: (id: string) => `/templatecontructions/${id}`,
     createTemplateConstructionItem: "/templatecontructions/items",
   },
+  project: {
+    requestProject: "/projects",
+  },
 };
 
 export { baseURL, endPoint, socketURL };

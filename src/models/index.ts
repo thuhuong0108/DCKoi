@@ -4,6 +4,7 @@ import { EquipmentType } from "./EquipmentType";
 import { ServiceType } from "./ServiceType";
 import { UserType } from "./User";
 import { StaffType } from "./StaffType";
+import { ProjectRequest } from "./Request/ProjectRequest";
 
 import {
   TemplateConstructionType,
@@ -21,4 +22,5 @@ export type {
   TemplateConstructionType,
   TemplateConstructionItemType,
   TemplateConstructionTypeDetail,
+  ProjectRequest,
 };
