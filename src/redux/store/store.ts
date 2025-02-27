@@ -21,6 +21,7 @@ import { persistReducer, persistStore } from "redux-persist";
 import serviceSlice from "../slices/service/serviceSlice";
 import staffSlice from "../slices/staff/staffSlice";
 import consultationSlice from "../slices/consultation/consultationSlice";
+import consultantAvailableSlice from "../slices/consultantAvailable/consultantAvailableSlice";
 
 const rootReducers = combineReducers({
   router: connectRouter(history),
@@ -32,7 +33,8 @@ const rootReducers = combineReducers({
   package: packageSlice,
   templateConstruction: templateConstructionSlice,
   templateConstructionDetail: templateConstructionDetailSlice,
-  consultation: consultationSlice
+  consultation: consultationSlice,
+  consultantAvailable: consultantAvailableSlice,
 });
 
 const persistConfig = {

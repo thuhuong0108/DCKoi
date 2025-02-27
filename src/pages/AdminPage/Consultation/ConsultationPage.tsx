@@ -43,6 +43,7 @@ const ConsultationPage = () => {
 
   const dataConsultation = [
       {
+        id: "1",
         customerName: "Hoang Xuan Viet",
         date: "Wed, December 11, 2024",
         time: "11:00 AM",
@@ -53,6 +54,7 @@ const ConsultationPage = () => {
         status: "pending",
       },
       {
+        id: "3",
         customerName: "Hoang Xuan Viet",
         date: "Wed, December 11, 2024",
         time: "11:00 AM",
@@ -63,6 +65,7 @@ const ConsultationPage = () => {
         status: "cancel",
       },
       {
+        id: "2",
         customerName: "Hoang Xuan Viet",
         date: "Wed, December 11, 2024",
         time: "11:00 AM",
@@ -73,6 +76,7 @@ const ConsultationPage = () => {
         status: "done",
       },
       {
+        id: "7",
         customerName: "Hoang Xuan Viet",
         date: "Wed, December 11, 2024",
         time: "11:00 AM",
@@ -83,6 +87,7 @@ const ConsultationPage = () => {
         status: "pending",
       },
       {
+        id: "6",
         customerName: "Hoang Xuan Viet",
         date: "Wed, December 11, 2024",
         time: "11:00 AM",

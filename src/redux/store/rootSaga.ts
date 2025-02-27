@@ -9,6 +9,7 @@ import { all } from "redux-saga/effects";
 import { serviceSaga } from "../slices/service/serviceSaga";
 import { staffSaga } from "../slices/staff/staffSaga";
 import { consultationSaga } from "../slices/consultation/consultationSaga";
+import { consultantAvailableSaga } from "../slices/consultantAvailable/consultationAvailableSaga";
 
 export default function* rootSaga() {
   yield all([
@@ -21,5 +22,6 @@ export default function* rootSaga() {
     templateConstructionSaga(),
     templateConstructionDetailSaga(),
     consultationSaga(),
+    consultantAvailableSaga(),
   ]);
 }
