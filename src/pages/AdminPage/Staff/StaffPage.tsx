@@ -69,18 +69,7 @@ const StaffPage = () => {
         totalPages={items.totalPages}
       />
 
-      <Modal
-        title={selectedItem ? "Chỉnh sửa nhân viên" : "Thêm nhân viên mới"}
-        desc="Vui lòng nhập thông tin nhân vien"
-        size="xl"
-        visible={isModalOpen}
-        onVisibleChange={setIsModalOpen}
-        content={
-          <FormStaff item={selectedItem} setIsModalOpen={setIsModalOpen} />
-        }
-        backdrop={true}
-        closeBtn={true}
-      />
+      <FormStaff item={selectedItem} setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} />
     </div>
   );
 };
