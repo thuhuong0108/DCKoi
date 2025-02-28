@@ -27,7 +27,7 @@ export function parsePosition(position: Position): string {
     case Position.MANAGER:
       return "Quản lý";
     case Position.CONSULTANT:
-      return "Tư vấn";
+      return "Nhân viên tư vấn";
     case Position.DESIGNER:
       return "Nhân viên thiết kế";
     case Position.CONSTRUCTOR:
@@ -38,6 +38,6 @@ export function parsePosition(position: Position): string {
 }
 export const formatPrice = (amount: number): string => {
   return new Intl.NumberFormat("en-US", {
-    maximumFractionDigits: 0, // Đảm bảo không có phần thập phân
+    maximumFractionDigits: 0,
   }).format(amount);
 };

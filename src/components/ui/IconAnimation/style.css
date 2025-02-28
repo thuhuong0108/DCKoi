@@ -1,0 +1,44 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.container .icon {
+  display: inline-block;
+  margin: 0 20px;
+  font-size: 40px;
+  z-index: 1;
+}
+
+.container .icon.icon7 .icon-element {
+  font-size: 35px;
+  animation: icon7 1s ease-out 1s forwards;
+}
+
+@keyframes icon7 {
+  0%,
+  50% {
+    transform: rotate(0deg);
+    opacity: 1;
+    color: black;
+  }
+  5%,
+  90% {
+    transform: rotate(-50deg);
+    opacity: 0.1;
+    color: #df0e0e;
+  }
+  41%,
+  50% {
+    transform: rotate(0deg);
+    opacity: 1;
+    color: #df0e0e;
+  }
+  61%,
+  100% {
+    opacity: 1;
+    color: #df0e0e;
+  }
+}

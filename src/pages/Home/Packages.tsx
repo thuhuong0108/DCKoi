@@ -11,7 +11,6 @@ import DisplayPackage from "./DisplayPackage";
 const Packages = () => {
   const dispatch = useAppDispatch();
   const packageLoading = useAppSelector((state) => state.package.loading);
-  console.log(packageLoading);
 
   const packages = useAppSelector(selectPackage);
   const packageItemLoading = useAppSelector(

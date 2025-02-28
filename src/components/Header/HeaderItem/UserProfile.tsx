@@ -20,13 +20,13 @@ const UserProfile = ({ prop }: UserProfile) => {
   const handleLogout = () => {
     dispatch(authActions.logout());
     navigate("/login");
-  }
+  };
 
   const items: MenuProps["items"] = [
     {
       label: "Log out",
       key: "0",
-      onClick: handleLogout
+      onClick: handleLogout,
     },
   ];
 
@@ -44,9 +44,9 @@ const UserProfile = ({ prop }: UserProfile) => {
               loading="lazy"
               src={prop.avatar}
               alt={`Profile picture of ${prop.name}`}
-              className="object-contain shrink-0 rounded-lg aspect-[0.85] w-[45px]"
+              className="object-contain shrink-0 rounded-lg aspect-[0.85] w-[30px]"
             />
-            <div className="flex flex-col my-auto min-h-[40px]">
+            <div className="flex flex-col my-auto min-h-[20px]">
               <div className="text-left text-base font-semibold text-zinc-900">
                 {prop.name}
               </div>

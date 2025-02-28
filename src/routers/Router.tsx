@@ -8,8 +8,11 @@ import {
   TestUi,
   PackageCreate,
   PackageDetail,
+  // ProjectsPage,
+  ConsultingPage,
+  DetailConsulting,
 } from "@/pages";
-import { LayoutAdmin, MainLayout } from "@/layouts";
+import { LayoutAdmin, LayoutCustomer, MainLayout } from "@/layouts";
 import {
   ManagementTransaction,
   ManagementUser,
@@ -33,6 +36,16 @@ const Routers = () => {
     { path: "/contact", element: <MainLayout Pages={Contact} /> },
     { path: "/login", element: <RootLayout Pages={Login} /> },
     { path: "/register", element: <Register /> },
+    // customer
+    {
+      path: "/space-management",
+      element: <LayoutCustomer Page={ConsultingPage} />,
+    },
+    {
+      path: "/space-management/detail-consulting/:id",
+      element: <LayoutCustomer Page={DetailConsulting} />,
+    },
+
     {
       path: "/admin",
       element: (

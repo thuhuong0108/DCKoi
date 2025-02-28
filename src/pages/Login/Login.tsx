@@ -1,7 +1,13 @@
 import ImgLogo from "@/assets/images/logo.png";
 import useForm from "@/hooks/useForm";
 import { RoleUser } from "@/models/enums/roleUser";
-import { authActions, LoginPayload, selectCurrentUser, selectIsAuthenticated, selectRole } from "@/redux/slices/auth/authSlices";
+import {
+  authActions,
+  LoginPayload,
+  selectCurrentUser,
+  selectIsAuthenticated,
+  selectRole,
+} from "@/redux/slices/auth/authSlices";
 import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
 import { validateLogin } from "@/validations/validate";
 import { Box, Button, TextField, Typography } from "@mui/material";
@@ -26,18 +32,16 @@ const Login = () => {
       dispatch(authActions.login(values));
     },
   });
- 
 
   useEffect(() => {
     if (isAuthenticated && currentUser) {
       if (roleUser === RoleUser.CUSTOMER) {
-        navigate("/")
-      }
-      else if (roleUser === RoleUser.ADMINISTRATOR) {
-        navigate("/admin")
+        navigate("/");
+      } else if (roleUser === RoleUser.ADMINISTRATOR) {
+        navigate("/admin");
       }
     }
-  },[isAuthenticated, currentUser, roleUser, navigate]);
+  }, [isAuthenticated, currentUser, roleUser, navigate]);
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">

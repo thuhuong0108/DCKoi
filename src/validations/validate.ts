@@ -10,6 +10,16 @@ export interface ParseResult {
   errorArr: Record<string, string>;
 }
 
+export const validateRegister = yup.object().shape({
+  fullName: yup.string().required(),
+  email: yup.string().email().required(),
+  phone: yup.string().required(),
+  password: yup.string().required(),
+  address: yup.string().required(),
+  dob: yup.date().required(),
+  gender: yup.string().required(),
+});
+
 export const validateLogin = yup.object().shape({
   email: yup.string().email().required(),
   password: yup.string().required(),
