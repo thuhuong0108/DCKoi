@@ -45,7 +45,7 @@ const Routers = () => {
       path: "/space-management/detail-consulting/:id",
       element: <LayoutCustomer Page={DetailConsulting} />,
     },
-
+    // admin
     {
       path: "/admin",
       element: (
@@ -147,6 +147,12 @@ const Routers = () => {
     {
       path: "/admin/template-construction/:id",
       element: <RootLayout Pages={ConstructionTemplateConfig} />,
+    },
+
+    // consultant
+    {
+      path: "/consultant",
+      element: <RootLayout Pages={ConsultationPage} />,
     },
     { path: "*", element: <div>404</div> },
   ]);

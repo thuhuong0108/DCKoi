@@ -3,6 +3,7 @@ import { useAppSelector } from "@/redux/store/hook";
 import React, { ReactElement } from "react";
 import LayoutAdmin from "../layoutAdmin";
 import MainLayout from "../mainLayout/MainLayout";
+import LayoutConsultant from "../layoutConsultant";
 
 interface LayoutProps {
   Pages: () => ReactElement;
@@ -18,7 +19,8 @@ const RootLayout = ({ Pages }: LayoutProps) => {
   switch (role) {
     case RoleUser.ADMINISTRATOR:
       return <LayoutAdmin Page={Pages} />;
-
+    case RoleUser.CONSULTANT:
+      return <LayoutConsultant Page={Pages} />;
     default:
       return <MainLayout Pages={Pages} />;
   }

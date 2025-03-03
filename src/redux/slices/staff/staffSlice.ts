@@ -36,6 +36,19 @@ export const staffSlice = createSlice({
     createStaff(state, action: PayloadAction<StaffType>) {
       console.log("create staff: ", action.payload);
     },
+    fetchConsutantStaff(state, action: PayloadAction<Filter>) {
+      state.loading = true;
+    },
+    fetchConsutantStaffSuccess(
+      state,
+      action: PayloadAction<Pagination<StaffType>>
+    ) {
+      state.staffs = action.payload;
+      state.loading = false;
+    },
+    fetchConsutantStaffFaild(state) {
+      state.loading = false;
+    },
   },
 });
 
