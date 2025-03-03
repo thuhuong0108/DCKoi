@@ -1,4 +1,4 @@
-import { messageInfo, TableComponent, Title } from "@/components";
+import { confirmAlert, messageInfo, TableComponent, Title } from "@/components";
 import Button from "@/components/ui/Button";
 import { QuotationProjectType } from "@/models/ProjectType";
 // import Card from "@/components/ui/Card";
@@ -6,19 +6,25 @@ import {
   projectDetailActions,
   selectedProjectDetail,
 } from "@/redux/slices/projectDetail/projectDetailSlices";
+import {
+  quotationProjectActions,
+  selectedQuotationProject,
+} from "@/redux/slices/quotationProject/QuotationProjectSlices";
 import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
-import { parsePosition } from "@/utils/helpers";
+
 import {
   EyeOutlined,
   MailOutlined,
   PhoneOutlined,
   PushpinOutlined,
 } from "@ant-design/icons";
-import { Card, Col, Input, Row } from "antd";
-import Meta from "antd/es/card/Meta";
-import TextArea from "antd/es/input/TextArea";
-import React, { useEffect } from "react";
+import { Card, Col, Input, Modal, Row, Steps } from "antd";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import DetailPackageRequest from "./DetailPackageRequest";
+import { Position } from "@/models/enums/Position";
+import { parsePosition } from "@/utils/helpers";
+import DetailQuotationConsulting from "./DetailQuotationConsulting";
 
 const DetailConsulting = () => {
   const dispatch = useAppDispatch();
@@ -27,159 +33,215 @@ const DetailConsulting = () => {
 
   const item = useAppSelector(selectedProjectDetail);
 
+  const quotations = useAppSelector(selectedQuotationProject);
+
   useEffect(() => {
     dispatch(projectDetailActions.fetchProjectDetail(id));
-  }, []);
+    if (item && item.data && item.data.id) {
+      dispatch(quotationProjectActions.fetchQuotationProject(item.data.id));
+    }
+  }, [dispatch, id, item?.data?.id]);
 
-  const handleDetail = () => {
+  console.log("item", item);
+  console.log("quotations", quotations);
+
+  const [openDetailPackage, setOpenDetailPackage] = useState(false);
+
+  const [openDetailQuotation, setOpenDetailQuotation] = useState(false);
+
+  const packageDetail = item.data.packageDetail;
+
+  const handleDetailQuotation = (quotation: QuotationProjectType) => {
     messageInfo("Detail");
+    setOpenDetailQuotation(true);
   };
 
-  const handleAccept = () => {
-    messageInfo("handleAccept");
+  const handleUpdating = (quotation: QuotationProjectType) => {
+    console.log("quotation: ", quotation);
+
+    confirmAlert({
+      title: "Xác nhận cập nhật lại bảng báo giá",
+      message: "Bạn có chắc chắn muốn cập nhật lại bảng báo giá này không ?",
+      yes: () => {},
+      no: () => {},
+    });
   };
 
-  const handleReject = () => {
-    messageInfo("handleReject");
+  const handleAccept = (quotation: QuotationProjectType) => {
+    confirmAlert({
+      title: "Xác nhận bảng báo giá",
+      message: "Bạn có chắc chắn xác nhận bảng báo giá này này ?",
+      yes: () => {},
+      no: () => {},
+    });
   };
+
   return (
     <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 w-full h-full">
       <Title name="Chi tiết yêu cầu tư vấn" />
+      <Row className="my-8 mx-10">
+        <Steps
+          current={1}
+          status="process"
+          items={[
+            {
+              title: "Đã gửi yêu cầu",
+            },
+            {
+              title: "Chờ chỉ định nhân viên",
+            },
+            {
+              title: "Chờ báo giá",
+            },
+            {
+              title: "Hoàn thành báo giá",
+            },
+          ]}
+        />
+      </Row>
 
-      <div className="flex flex-col mt-4">
+      <div className="flex flex-row justify-evenly items-center mb-4">
         <div className="flex flex-row justify-start items-center ">
-          <label className="text-gray-600 font-medium w-[150px]">
-            Ngày gửi yêu cầu
+          <label className="text-gray-400 font-medium w-[150px]">
+            Ngày gửi yêu cầu:
           </label>
           <label className="text-black">{item.data.createdDate}</label>
         </div>
         <div className="flex flex-row justify-start items-center ">
-          <label className="text-gray-600 font-medium w-[150px]">
-            Cập nhật mới nhất
+          <label className="text-gray-400 font-medium w-[150px]">
+            Cập nhật mới nhất:
           </label>
           <label className="text-black">{item.data.updatedDate}</label>
         </div>
       </div>
       <Row className="flex flex-row justify-between mt-4">
-        <Col className="w-1/2 px-4">
-          <h1 className="text-xl font-semibold text-black my-4">
-            Thông tin khách hàng
-          </h1>
+        <Col className="w-1/3 px-4 flex flex-col">
           <Card
             hoverable
             children={
-              <div>
-                <Row className="flex flex-row justify-start items-center my-3">
-                  <img
-                    className="w-[100px] h-[100px] mr-10"
-                    src="https://cdn-icons-png.flaticon.com/512/1177/1177568.png"
-                    alt="user"
-                  />
-                  <Col className="flex flex-col gap-4">
+              <div className="h-full flex flex-col ">
+                <Row className="flex flex-col ">
+                  <div className="flex flex-col justify-start items-center gap-4 my-4">
+                    <img
+                      className="w-[100px] h-[100px]"
+                      src="https://cdn-icons-png.flaticon.com/512/9131/9131646.png"
+                      alt="user"
+                    />
                     <label className="text-black font-semibold text-4xl">
                       {item.data.customerName}
                     </label>
-                    <label className="text-gray-600 font-medium text-lg">
+                    <label className="text-sm bg-blue-200 text-blue-500 p-1 border-none rounded-lg w-[100px] text-center">
+                      Khách hàng
+                    </label>
+                  </div>
+
+                  <Col className="flex flex-col gap-4">
+                    <label className="font-medium text-gray-600 text-lg">
                       <MailOutlined /> {item.data.email}
                     </label>
-                    <label className="text-gray-600 font-medium text-lg">
+                    <label className="font-medium text-gray-600 text-lg">
                       <PhoneOutlined /> {item.data.phone}
+                    </label>
+                    <label className="font-medium text-gray-600 text-lg">
+                      <PushpinOutlined />
+                      {item.data.address}
                     </label>
                   </Col>
                 </Row>
-                <div className="flex flex-row justify-start items-center text-gray-600 mt-3">
-                  <PushpinOutlined className="w-[50px] h-[50px]" />
-                  <label className="font-light text-base">
-                    {item.data.address}
-                  </label>
-                </div>
               </div>
             }
-            className="w-full shadow-lg border rounded-2xl"
+            className="w-full h-full shadow-lg border rounded-2xl bg-indigo-50 "
           />
         </Col>
-
-        <Col className="w-1/2 px-4">
-          <h1 className="text-xl font-semibold text-black my-4">
-            Thông tin nhân viên tư vấn
-          </h1>
+        <Col className="w-1/3 px-4 flex flex-col">
           <Card
             hoverable
             children={
-              <div>
-                <Row className="flex flex-row justify-start items-center my-3">
-                  <img
-                    className="w-[100px] h-[100px] mr-10"
-                    src="https://cdn-icons-png.flaticon.com/512/3143/3143160.png"
-                    alt="user"
-                  />
-                  <Col className="flex flex-col gap-4">
+              <div className="h-full flex flex-col ">
+                <Row className="flex flex-col ">
+                  <div className="flex flex-col justify-start items-center gap-4 my-4">
+                    <img
+                      className="w-[100px] h-[100px]"
+                      src="https://cdn-icons-png.flaticon.com/512/4536/4536762.png"
+                      alt="package"
+                    />
                     <label className="text-black font-semibold text-4xl">
-                      {item.data.staff[0].fullName}
+                      {item.data.packageName}
+                    </label>
+                    <label className="text-sm bg-gray-200 text-gray-500 p-1 border-none rounded-lg w-[200px] text-center">
+                      Yêu cầu thiết kê thi công
+                    </label>
+                  </div>
+
+                  <Col className="flex flex-col mt-5 gap-4">
+                    <label className="text-gray-600 font-medium text-lg">
+                      # Chi tiết gói thi công:{" "}
+                      <Button
+                        block
+                        title={item.data.packageName}
+                        leadingIcon={<EyeOutlined />}
+                        onClick={() => setOpenDetailPackage(true)}
+                      />
                     </label>
                     <label className="text-gray-600 font-medium text-lg">
-                      <MailOutlined /> {item.data.staff[0].email}
+                      # Diện tích dự tính: {item.data.area} m2
                     </label>
                     <label className="text-gray-600 font-medium text-lg">
-                      # {parsePosition(item.data.staff[0].position)}
+                      # Độ sâu của hồ: {item.data.depth} m
                     </label>
                   </Col>
                 </Row>
-                <div className="flex flex-row justify-start items-center text-gray-600 mt-3">
-                  <label className="font-light text-base">
-                    Mã số nhân viên: {item.data.staff[0].id}
-                  </label>
-                </div>
               </div>
             }
-            className="w-full shadow-lg border rounded-2xl"
+            className="w-full h-full shadow-lg border rounded-2xl bg-gray-50 "
           />
         </Col>
-      </Row>
 
-      <h1 className="text-xl font-semibold text-black my-4">
-        Yêu cầu thi công
-      </h1>
-      <Card
-        hoverable
-        children={
-          <div>
-            <Col className="flex flex-row items-start">
-              <div className="flex flex-col gap-4">
-                <div className="flex flex-row justify-start items-center ">
-                  <label className="text-gray-600 font-medium text-lg w-[200px]">
-                    Gói thi công yêu cầu
-                  </label>
-                  <Button
-                    ghost
-                    title={item.data.packageName}
-                    leadingIcon={<EyeOutlined />}
-                    onClick={handleDetail}
-                    className="text-black font-semibold text-lg"
-                  />
-                </div>
-                <div className="flex flex-row justify-start items-center ">
-                  <label className="text-gray-600 font-medium text-lg w-[200px]">
-                    Diện tích dự tính (m2)
-                  </label>
-                  <label className="text-black font-semibold text-lg">
-                    {item.data.area}
-                  </label>
-                </div>
-                <div className="flex flex-row justify-start items-center ">
-                  <label className="text-gray-600 font-medium text-lg w-[200px]">
-                    Độ sâu của hồ (m)
-                  </label>
-                  <label className="text-black font-semibold text-lg">
-                    {item.data.depth}
-                  </label>
-                </div>
-              </div>
-            </Col>
-          </div>
-        }
-        className="w-1/2 mx-4 shadow-lg border rounded-2xl"
-      />
+        <Col className="w-1/3 px-4 flex flex-col">
+          {item.data.staff &&
+            item.data.staff.length > 0 &&
+            item.data.staff
+              .filter((staff) => staff.position === Position.CONSULTANT)
+              .map((staff, index) => (
+                <Card
+                  key={index}
+                  hoverable
+                  children={
+                    <div className="h-full flex flex-col ">
+                      <Row className="flex flex-col ">
+                        <div className="flex flex-col justify-start items-center gap-4 my-4">
+                          <img
+                            className="w-[100px] h-[100px]"
+                            src="https://cdn-icons-png.flaticon.com/512/3143/3143160.png"
+                            alt="user"
+                          />
+                          <label className="text-black font-semibold text-4xl">
+                            {staff.fullName}
+                          </label>
+                          <label className="text-sm bg-red-200 text-red-500 p-1 border-none rounded-lg w-[150px] text-center">
+                            Nhân viên tư vấn
+                          </label>
+                        </div>
+
+                        <Col className="flex flex-col mt-5 gap-4">
+                          <label className="font-medium text-gray-600 text-lg">
+                            # Mã số nhân viên: {staff.id}
+                          </label>
+                          <label className="text-gray-600 font-medium text-lg">
+                            <MailOutlined /> {staff.email}
+                          </label>
+                          <label className="text-gray-600 font-medium text-lg">
+                            # {parsePosition(staff.position)}
+                          </label>
+                        </Col>
+                      </Row>
+                    </div>
+                  }
+                  className="w-full h-full shadow-lg border rounded-2xl bg-stone-100"
+                />
+              ))}
+        </Col>
+      </Row>
 
       <Row>
         <h1 className="text-xl font-semibold text-black my-4">
@@ -190,7 +252,7 @@ const DetailConsulting = () => {
           value={item.data.note}
           disabled
           rows={4}
-          className="bg-gray-100 border border-gray-300 rounded-md text-base p-2"
+          className="bg-gray-100 border border-gray-300 rounded-md text-lg p-2"
         />
       </Row>
 
@@ -198,43 +260,66 @@ const DetailConsulting = () => {
         <h1 className="text-xl font-semibold text-black my-4">
           Báo giá thiết kế thi công
         </h1>
-
-        {/* <TableComponent<QuotationProjectType>
-          columns={[
-            "Tên bản báo giá",
-            "Mẫu thi công",
-            "Phiên bản",
-            "Ngày gửi",
-            "Trạng thái",
-            "Chú thích",
-          ]}
-          data={item.data.}
-          props={[
-            "projectId",
-            "templateConstructionId",
-            "version",
-            "createdDate",
-            "status",
-            "reason",
-          ]}
-          actions={true}
-          actionTexts={["Chi tiết", "Chấp nhận", "Từ chối"]}
-          actionFunctions={[handleAccept, handleReject]}
-          loading={isLoading}
-          enablePagination={true}
-          page={item.data.packageDetail.}
-          setPage={(page) => {
-            dispatch(
-              equipmentActions.fetchEquipment({
-                pageNumber: page,
-                pageSize: 10,
-              })
-            );
-          }}
-          itemsPerPage={items.pageSize}
-          totalPages={items.totalPages}
-        /> */}
       </Row>
+      <TableComponent<QuotationProjectType>
+        columns={[
+          "Tên bản báo giá",
+          "Mẫu thi công",
+          "Phiên bản",
+          "Ngày gửi",
+          "Trạng thái",
+          "Chú thích",
+        ]}
+        data={quotations.data}
+        props={[
+          "projectId",
+          "templateConstructionId",
+          "version",
+          "createdDate",
+          "status",
+          "reason",
+        ]}
+        actions={true}
+        actionTexts={["Chi tiết", "Yêu cầu cập nhật", "Chấp nhận"]}
+        actionFunctions={[handleDetailQuotation, handleUpdating, handleAccept]}
+        loading={isLoading}
+        enablePagination={true}
+        page={quotations.pageNumber}
+        setPage={(page) => {
+          dispatch(quotationProjectActions.fetchQuotationProject());
+        }}
+        itemsPerPage={quotations.pageSize}
+        totalPages={quotations.totalPages}
+      />
+
+      <Modal
+        title={`Mô tả chi tiết ${packageDetail ? packageDetail.name : ""}`}
+        centered
+        open={openDetailPackage}
+        width={1000}
+        onCancel={() => setOpenDetailPackage(false)}
+        onClose={() => setOpenDetailPackage(false)}
+        onOk={() => setOpenDetailPackage(false)}
+        footer={[]}
+      >
+        <DetailPackageRequest detail={packageDetail} />
+      </Modal>
+
+      <Modal
+        title={`Báo giá chi tiết ${packageDetail ? packageDetail.name : ""}`}
+        centered
+        open={openDetailQuotation}
+        width={1000}
+        onCancel={() => setOpenDetailQuotation(false)}
+        onClose={() => setOpenDetailQuotation(false)}
+        onOk={() => setOpenDetailQuotation(false)}
+        footer={[]}
+      >
+        <DetailQuotationConsulting
+          quotation={packageDetail}
+          project={item.data}
+        />
+      </Modal>
     </div>
   );
 };

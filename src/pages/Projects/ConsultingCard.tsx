@@ -5,8 +5,9 @@ import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import ArticleIcon from "@mui/icons-material/Article";
 import { useNavigate } from "react-router-dom";
 import { ProjectType } from "@/models/ProjectType";
-import { Project } from "@/models/enums/Status";
 import { Button, Card, IconAnimation } from "@/components";
+import { parseStatusProject } from "@/utils/helpers";
+import { ProjectStatus } from "@/models/enums/Status";
 
 const ConsultingCard = ({ item }: { item: ProjectType }) => {
   const navigate = useNavigate();
@@ -35,17 +36,17 @@ const ConsultingCard = ({ item }: { item: ProjectType }) => {
               {item.customerName}
             </label>
           </div>
-          {item.status === Project.PENDING ? (
-            <label className="text-sm bg-indigo-200 text-idibg-indigo-500 p-1 border-none rounded-lg w-[70px] text-center">
-              {item.status}
+          {item.status === ProjectStatus.REQUESTING ? (
+            <label className="text-sm bg-indigo-200 text-indigo-500 p-1 border-none rounded-lg w-[100px] text-center">
+              {parseStatusProject(item.status)}
             </label>
-          ) : item.status === Project.CANCEL ? (
-            <label className="text-sm bg-red-100 text-red-500 p-1 border-none rounded-lg w-[70px] text-center">
-              {item.status}
+          ) : item.status === ProjectStatus.FINISHED ? (
+            <label className="text-sm bg-red-100 text-red-500 p-1 border-none rounded-lg w-[100px] text-center">
+              {parseStatusProject(item.status)}
             </label>
           ) : (
-            <label className="text-sm bg-green-100 text-green-500 p-1 border-none rounded-lg w-[70px] text-center">
-              {item.status}
+            <label className="text-sm bg-green-100 text-green-500 p-1 border-none rounded-lg w-[100px] text-center">
+              {parseStatusProject(item.status)}
             </label>
           )}
         </Card.Header>

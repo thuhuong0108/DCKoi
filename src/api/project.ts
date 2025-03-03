@@ -1,19 +1,20 @@
+import http from "@/utils/http";
+import { ProjectRequest } from "@/models";
 import {
   ApiResult,
   ApiResultWithAData,
   ApiResultWithData,
   ApiResultWithPagination,
-  Filter,
-} from "@/models/Common";
-import { Position } from "@/models/enums/Position";
-import { Project } from "@/models/enums/Status";
+} from "./../models/Common";
+import { Filter } from "@/models/Common";
+import { endPoint } from "@/utils/endPoint";
 import {
-  ProjectType,
   ProjectDetailType,
+  ProjectType,
   QuotationProjectType,
 } from "@/models/ProjectType";
-import { endPoint } from "@/utils/endPoint";
-import http from "@/utils/http";
+import { ProjectStatus, QuotationStatus } from "@/models/enums/Status";
+import { Position } from "@/models/enums/Position";
 
 // const getPagingProject = async (
 //   filter: Filter
@@ -81,7 +82,7 @@ const getPagingProject = async (
         packageName: "Premium Package",
         standOut: true,
         note: "High priority project.",
-        status: Project.PENDING,
+        status: ProjectStatus.REQUESTING,
         createdDate: "01/01/2025",
         updatedDate: "01/01/2025",
       },
@@ -109,7 +110,7 @@ const getProject = async (
       packageName: "Premium Package",
       standOut: true,
       note: "Quá trình thi công hồ cá koi yêu cầu sự chuẩn bị kỹ lưỡng và tuân thủ các bước chi tiết để đảm bảo hồ cá hoạt động tốt và môi trường sống của cá koi luôn được duy trì ổn định. Đầu tiên, cần kiểm tra địa điểm thi công để xác định độ sâu và diện tích phù hợp cho hồ, đồng thời phải bảo đảm rằng vị trí không bị ảnh hưởng bởi yếu tố bên ngoài như ánh sáng mặt trời quá mức hay gió mạnh. Sau khi đã xác định vị trí, tiến hành đào móng và xây dựng phần nền móng vững chắc, đồng thời lắp đặt hệ thống lọc và máy bơm để đảm bảo chất lượng nước trong hồ luôn được làm sạch và tuần hoàn.",
-      status: Project.PENDING,
+      status: ProjectStatus.REQUESTING,
       createdDate: "01/01/2025",
       updatedDate: "01/01/2025",
 
@@ -134,6 +135,60 @@ const getProject = async (
             description: "description 11",
             name: "package item 1",
           },
+          {
+            idPackageItem: "2",
+            quantity: 1,
+            description: "description 11",
+            name: "package item 1",
+          },
+          {
+            idPackageItem: "3",
+            quantity: 1,
+            description: "description 11",
+            name: "package item 1",
+          },
+          {
+            idPackageItem: "4",
+            quantity: 1,
+            description: "description 11",
+            name: "package item 1",
+          },
+          {
+            idPackageItem: "5",
+            quantity: 1,
+            description: "description 11",
+            name: "package item 1",
+          },
+          {
+            idPackageItem: "6",
+            quantity: 1,
+            description: "description 11",
+            name: "package item 1",
+          },
+          {
+            idPackageItem: "7",
+            quantity: 1,
+            description: "description 11",
+            name: "package item 1",
+          },
+          {
+            idPackageItem: "8",
+            quantity: 1,
+            description: "description 11",
+            name: "package item 1",
+          },
+          {
+            idPackageItem: "9",
+            quantity: 1,
+            description: "description 11",
+            name: "package item 1",
+          },
+          {
+            idPackageItem: "10",
+            quantity: 1,
+            description: "description 11",
+            name: "package item 1",
+          },
         ],
       },
     },
@@ -142,11 +197,6 @@ const getProject = async (
   console.log("res: ", res);
 
   return res;
-};
-
-const createProject = async (item: ProjectType): Promise<ApiResult> => {
-  const response = await http.post(endPoint.project.createProject, item);
-  return response;
 };
 
 const assignConsultant = async (projectId: string): Promise<ApiResult> => {
@@ -159,15 +209,50 @@ const assignConsultant = async (projectId: string): Promise<ApiResult> => {
 const getQuotationProject = async (
   projectId: string
 ): Promise<ApiResultWithData<QuotationProjectType>> => {
-  const response = await http.get(endPoint.project.getQuotation(projectId));
+  const response: ApiResultWithPagination<QuotationProjectType> = {
+    isSuccess: true,
+    statusCode: 1,
+    message: "",
+    data: [
+      {
+        id: "1",
+        projectId: projectId,
+        templateConstructionId: "1",
+        version: 1,
+        createdDate: "01/01/2025",
+        updatedDate: "01/01/2025",
+        status: QuotationStatus.OPEN,
+        reason: "reason",
+      },
+      {
+        id: "2",
+        projectId: projectId,
+        templateConstructionId: "1",
+        version: 2,
+        createdDate: "01/01/2025",
+        updatedDate: "01/01/2025",
+        status: QuotationStatus.OPEN,
+        reason:
+          "Quá trình thi công hồ cá koi yêu cầu sự chuẩn bị kỹ lưỡng và tuân thủ các bước chi tiết để đảm bảo hồ cá hoạt động tốt và môi trường sống của cá koi luôn được duy trì ổn định. Đầu tiên, cần kiểm tra địa điểm thi công để xác định độ sâu và diện tích phù hợp cho hồ, đồng thời phải bảo đảm rằng vị trí không bị ảnh hưởng bởi yếu tố bên ngoài như ánh sáng mặt trời quá mức hay gió mạnh. Sau khi đã xác định vị trí, tiến hành đào móng và xây dựng phần nền móng vững chắc, đồng thời lắp đặt hệ thống lọc và máy bơm để đảm bảo chất lượng nước trong hồ luôn được làm sạch và tuần hoàn.",
+      },
+    ],
+    pageNumber: 1,
+    pageSize: 10,
+    totalPages: 1,
+    totalRecords: 2,
+  };
 
+  return response;
+};
+const requestProject = async (request: ProjectRequest): Promise<ApiResult> => {
+  const response = await http.post(endPoint.project.requestProject, request);
   return response;
 };
 
 export {
   getPagingProject,
   getProject,
-  createProject,
   assignConsultant,
   getQuotationProject,
+  requestProject,
 };

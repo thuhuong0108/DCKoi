@@ -25,22 +25,17 @@ const PackageField = (props: PackageFieldpros) => {
 
   const columns: TableColumnsType<DataType> = [
     {
-      title: "Item",
+      title: "Danh mục",
       dataIndex: "item",
       width: "25%",
     },
     {
-      title: "Description",
+      title: "Mô tả",
       dataIndex: "description",
       width: "45%",
     },
     {
-      title: "Unit",
-      dataIndex: "unit",
-      width: "15%",
-    },
-    {
-      title: "Quantity",
+      title: "Số lượng",
       dataIndex: "quantity",
       width: "15%",
     },

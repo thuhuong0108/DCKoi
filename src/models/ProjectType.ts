@@ -1,5 +1,5 @@
 import { Position } from "./enums/Position";
-import { Project } from "./enums/Status";
+import { ProjectStatus, QuotationStatus } from "./enums/Status";
 import { PackageType } from "./PackageType";
 
 export interface Staff {
@@ -20,7 +20,7 @@ export interface ProjectType {
   packageName: string;
   standOut: boolean;
   note: string;
-  status: Project;
+  status: ProjectStatus;
   createdDate: string;
   updatedDate: string;
 }
@@ -36,7 +36,7 @@ export interface ProjectDetailType {
   packageName: string;
   standOut: boolean;
   note: string;
-  status: Project;
+  status: ProjectStatus;
   createdDate: string;
   updatedDate: string;
   staff: Staff[];
@@ -50,6 +50,6 @@ export interface QuotationProjectType {
   version: number;
   createdDate: string;
   updatedDate: string;
-  status: Project;
+  status: QuotationStatus;
   reason: string;
 }

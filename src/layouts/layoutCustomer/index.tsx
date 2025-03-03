@@ -46,12 +46,6 @@ const LayoutCustomer: React.FC<IndexProps> = ({ Page }) => {
       icon: <PaidIcon />,
     },
     {
-      link: "/space-management/contracts",
-      children: "Hợp đồng",
-      icon: <CreditScoreIcon />,
-      badge: true,
-    },
-    {
       link: "/space-management/services",
       children: "Dịch vụ",
       icon: <BuildSharp />,
