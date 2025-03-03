@@ -1,4 +1,4 @@
-import { QuotationType } from "@/models";
+import { ApproveQuotationType, QuotationType, RejectQuotationType } from "@/models";
 import { ApiResultWithAData } from "@/models/Common";
 import { RootState } from "@/redux/store/store";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
@@ -39,6 +39,15 @@ export const quotationSlice = createSlice({
     createQuotation(state, action: PayloadAction<QuotationType>) {
       console.log("create quotation: ", action.payload);
     },
+
+    rejectAcceptQuotation(state, action: PayloadAction<RejectQuotationType>) {
+      console.log("reject-accept quotation", action.payload);
+      
+    },
+
+    approveQuotation(state, action: PayloadAction<ApproveQuotationType>) {
+      console.log("approve quotation", action.payload);
+    }
   },
 });
 

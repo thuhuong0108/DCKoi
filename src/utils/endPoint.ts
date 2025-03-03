@@ -68,10 +68,10 @@ const endPoint = {
     createQuotation: "/quotation",
     getAllQuotation: "/quotation",
     getQuotationDetail: (id: string) => `/quotation/${id}`,
-    rejectQuotation: (id: string) => `/quotaion/${id}/reject-accept`,
-    approveQuotation: (id: string) => `/quotaion/${id}/approve-edit`,
-    editQuotation: (id: string) => `/quotaion/${id}/edit`,
-    rewriteQuotation: (id: string) => `/quotaion/${id}/rewrite`,
+    rejectQuotation: (id: string) => `/quotation/${id}/reject-accept`,
+    approveQuotation: (id: string) => `/quotation/${id}/approve-edit`,
+    editQuotation: (id: string) => `/quotation/${id}/edit`,
+    rewriteQuotation: (id: string) => `/quotation/${id}/rewrite`,
   },
 };
 
