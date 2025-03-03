@@ -73,6 +73,13 @@ const endPoint = {
     editQuotation: (id: string) => `/quotaion/${id}/edit`,
     rewriteQuotation: (id: string) => `/quotaion/${id}/rewrite`,
   },
+
+  contract: {
+    createContract: "/contracts",
+    acceptContract: (id: string) => `/contracts/${id}/accept`,
+    rejectContract: (id: string) => `/contracts/${id}/reject`,
+    verifyContract: (id: string) => `/contracts/${id}/verify`,
+  }
 };
 
 export { baseURL, endPoint, socketURL };

@@ -23,6 +23,11 @@ import {
   FieldQuotationDetailType,
 } from "./QuotationType";
 
+import {
+  ContractType,
+  ContractOTP,
+} from "./ContractType";
+
 export type {
   PackageItemType,
   PackageType,
@@ -42,4 +47,6 @@ export type {
   ProjectRequest,
   ProjectType,
   AssginStaff,
+  ContractType,
+  ContractOTP
 };
