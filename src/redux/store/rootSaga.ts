@@ -12,6 +12,7 @@ import { staffSaga } from "../slices/staff/staffSaga";
 import { projectDetailSaga } from "../slices/projectDetail/projectDetailSaga";
 import { quotationProjectSaga } from "../slices/quotationProject/quotationProjectSaga";
 import { quotationSaga } from "../slices/quotation/quotationSaga";
+import { quotationDetailSaga } from "../quotationDetail/quotationDetailSaga";
 
 export default function* rootSaga() {
   yield all([
@@ -27,5 +28,7 @@ export default function* rootSaga() {
     projectDetailSaga(),
     quotationProjectSaga(),
     quotationSaga(),
+    quotationDetailSaga(),
+    ,
   ]);
 }

@@ -8,7 +8,7 @@ export interface QuotationType {
   createdDate: string;
   updatedDate: string;
   status: QuotationStatus;
-  reason: string;
+  reason?: string;
   services: ServiceQuotationType[];
   equipments: EquipmentQuotationType[];
 }
@@ -33,4 +33,16 @@ export interface EquipmentQuotationType {
   quantity: number;
   note: string;
   category: string;
+}
+
+export interface ApproveQuotationType {
+  id?: string;
+  isAcpprove: boolean;
+  reason: string;
+}
+
+export interface RejectQuotationType {
+  id?: string;
+  isAccept: boolean;
+  reason: string;
 }

@@ -17,6 +17,8 @@ import {
   QuotationType,
   ServiceQuotationType,
   EquipmentQuotationType,
+  ApproveQuotationType,
+  RejectQuotationType,
 } from "./QuotationType";
 
 export type {
@@ -32,6 +34,8 @@ export type {
   QuotationType,
   ServiceQuotationType,
   EquipmentQuotationType,
+  ApproveQuotationType,
+  RejectQuotationType,
   ProjectRequest,
   ProjectType,
 };
