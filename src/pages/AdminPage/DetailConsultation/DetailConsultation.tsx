@@ -20,26 +20,21 @@ import {
 } from "@ant-design/icons";
 import { Card, Col, Input, Modal, Row, Steps } from "antd";
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import DetailQuotationConsulting from "./DetailQuotationConsulting";
-import {
-  quotationDetailActions,
-  selectedQuotationDetail,
-} from "@/redux/slices/quotationDetail/quotationDetailSlices";
-import { QuotationType } from "@/models";
+import { useParams } from "react-router-dom";
 import DetailPackageRequest from "./DetailPackageRequest";
+import { Position } from "@/models/enums/Position";
+import { parsePosition } from "@/utils/helpers";
+import DetailQuotationConsulting from "./DetailQuotationConsulting";
+import { quotationDetailActions } from "@/redux/slices/quotationDetail/quotationDetailSlices";
 
-const DetailConsultingStaff = () => {
+const DetailConsultation = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const { id } = useParams();
   const isLoading = useAppSelector((state) => state.projectDetail.loading);
 
   const item = useAppSelector(selectedProjectDetail);
 
   const quotations = useAppSelector(selectedQuotationProject);
-
-  const quotation = useAppSelector(selectedQuotationDetail);
 
   useEffect(() => {
     dispatch(projectDetailActions.fetchProjectDetail(id));
@@ -58,15 +53,36 @@ const DetailConsultingStaff = () => {
 
   const packageDetail = item.package;
 
+  const quotationDetail = useAppSelector(
+    (state) => state.quotationDetail.quotationDetail
+  );
+
   const handleDetailQuotation = (quotation: QuotationProjectType) => {
     dispatch(quotationDetailActions.fetchQuotationDetail(quotation.id));
     setOpenDetailQuotation(true);
   };
 
+  const handleUpdating = (quotation: QuotationProjectType) => {
+    confirmAlert({
+      title: "Xác nhận cập nhật lại bảng báo giá",
+      message: "Bạn có chắc chắn muốn cập nhật lại bảng báo giá này không ?",
+      yes: () => {},
+      no: () => {},
+    });
+  };
+
+  const handleAccept = (quotation: QuotationProjectType) => {
+    confirmAlert({
+      title: "Xác nhận bảng báo giá",
+      message: "Bạn có chắc chắn xác nhận bảng báo giá này này ?",
+      yes: () => {},
+      no: () => {},
+    });
+  };
+
   return (
     <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 w-full h-full">
       <Title name="Chi tiết yêu cầu tư vấn" />
-
       <Row className="my-8 mx-10">
         <Steps
           current={1}
@@ -74,6 +90,9 @@ const DetailConsultingStaff = () => {
           items={[
             {
               title: "Đã gửi yêu cầu",
+            },
+            {
+              title: "Chờ chỉ định nhân viên",
             },
             {
               title: "Chờ báo giá",
@@ -100,7 +119,7 @@ const DetailConsultingStaff = () => {
         </div>
       </div>
       <Row className="flex flex-row justify-between mt-4">
-        <Col className="w-1/2 px-4 flex flex-col">
+        <Col className="w-1/3 px-4 flex flex-col">
           <Card
             hoverable
             children={
@@ -138,7 +157,7 @@ const DetailConsultingStaff = () => {
             className="w-full h-full shadow-lg border rounded-2xl bg-indigo-50 "
           />
         </Col>
-        <Col className="w-1/2 px-4 flex flex-col">
+        <Col className="w-1/3 px-4 flex flex-col">
           <Card
             hoverable
             children={
@@ -165,7 +184,7 @@ const DetailConsultingStaff = () => {
                         block
                         title={item.package.name}
                         leadingIcon={<EyeOutlined />}
-                        // onClick={() => ())}
+                        onClick={() => setOpenDetailPackage(true)}
                       />
                     </label>
                     <label className="text-gray-600 font-medium text-lg">
@@ -181,7 +200,53 @@ const DetailConsultingStaff = () => {
             className="w-full h-full shadow-lg border rounded-2xl bg-gray-50 "
           />
         </Col>
+
+        <Col className="w-1/3 px-4 flex flex-col">
+          {item.staff &&
+            item.staff.length > 0 &&
+            item.staff
+              .filter((staff) => staff.position === Position.CONSULTANT)
+              .map((staff, index) => (
+                <Card
+                  key={index}
+                  hoverable
+                  children={
+                    <div className="h-full flex flex-col ">
+                      <Row className="flex flex-col ">
+                        <div className="flex flex-col justify-start items-center gap-4 my-4">
+                          <img
+                            className="w-[100px] h-[100px]"
+                            src="https://cdn-icons-png.flaticon.com/512/3143/3143160.png"
+                            alt="user"
+                          />
+                          <label className="text-black font-semibold text-4xl">
+                            {staff.fullName}
+                          </label>
+                          <label className="text-sm bg-red-200 text-red-500 p-1 border-none rounded-lg w-[150px] text-center">
+                            Nhân viên tư vấn
+                          </label>
+                        </div>
+
+                        <Col className="flex flex-col mt-5 gap-4">
+                          <label className="font-medium text-gray-600 text-lg">
+                            # Mã số nhân viên: {staff.id}
+                          </label>
+                          <label className="text-gray-600 font-medium text-lg">
+                            <MailOutlined /> {staff.email}
+                          </label>
+                          <label className="text-gray-600 font-medium text-lg">
+                            # {parsePosition(staff.position)}
+                          </label>
+                        </Col>
+                      </Row>
+                    </div>
+                  }
+                  className="w-full h-full shadow-lg border rounded-2xl bg-stone-100"
+                />
+              ))}
+        </Col>
       </Row>
+
       <Row>
         <h1 className="text-xl font-semibold text-black my-4">
           Chú thích yêu cầu
@@ -195,19 +260,11 @@ const DetailConsultingStaff = () => {
         />
       </Row>
 
-      <h1 className="text-xl font-semibold text-black my-4">
-        Báo giá chi tiết
-      </h1>
-
-      <div className="mt-5">
-        <Button
-          primary
-          title="Viết báo giá"
-          size="lg"
-          onClick={() => navigate(`/consultant/${item.id}/new-quotation`)}
-        />
-      </div>
-
+      <Row>
+        <h1 className="text-xl font-semibold text-black my-4">
+          Báo giá thiết kế thi công
+        </h1>
+      </Row>
       <TableComponent<QuotationProjectType>
         columns={[
           "Tên bản báo giá",
@@ -253,7 +310,7 @@ const DetailConsultingStaff = () => {
       </Modal>
 
       <Modal
-        title={`Báo giá chi tiết `}
+        title={`Báo giá chi tiết ${item.customerName ? item.customerName : ""}`}
         centered
         open={openDetailQuotation}
         width={1000}
@@ -262,10 +319,10 @@ const DetailConsultingStaff = () => {
         onOk={() => setOpenDetailQuotation(false)}
         footer={[]}
       >
-        <DetailQuotationConsulting quotation={quotation} project={item} />
+        <DetailQuotationConsulting quotation={quotationDetail} project={item} />
       </Modal>
     </div>
   );
 };
 
-export default DetailConsultingStaff;
+export default DetailConsultation;

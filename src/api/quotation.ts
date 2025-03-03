@@ -26,6 +26,7 @@ const getQuotation = async (
   id: string
 ): Promise<ApiResultWithAData<QuotationType>> => {
   const response = await http.get(endPoint.quotation.getQuotationDetail(id));
+
   return response;
 };
 

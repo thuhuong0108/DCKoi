@@ -73,7 +73,7 @@ const Consultationcard = ({
       <Card.Footer className="custom-footer full">
         <Button
           info
-          onClick={() => navigate(`/consultant/detail/${id}`)}
+          onClick={() => navigate(`/consultant/${id}`)}
           title="Chi tiết"
         />
       </Card.Footer>

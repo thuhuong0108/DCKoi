@@ -1,8 +1,8 @@
 import { FieldQuotationDetailType } from "@/models";
 import { Category } from "@/models/enums/Category";
 import { useEffect, useState } from "react";
+import CategoryField from "./TableQuotation";
 import { QuotationItem } from "./type";
-import TableQuotation from "@/pages/DetailConsulting/TableQuotation";
 
 const DetailQuotationConsulting = ({ quotation, project }) => {
   const services = quotation.services;
@@ -52,19 +52,25 @@ const DetailQuotationConsulting = ({ quotation, project }) => {
 
     setItemWork(itemWork);
   }, [services, equipments]);
+
+  const handleChangePackage = (value: string) => {
+    console.log(`Selected package: ${value}`);
+  };
+
   return (
     <div>
       <div className="my-4"></div>
-      {totalPriceQuotation}
 
       {itemWork.map((item, index) => (
-        <TableQuotation
+        <CategoryField
           key={index}
           name={item.name}
           items={item.items}
           totalPrice={item.totalPrice}
         />
       ))}
+
+      {totalPriceQuotation}
     </div>
   );
 };

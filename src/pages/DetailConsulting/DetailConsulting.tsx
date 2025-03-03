@@ -25,6 +25,10 @@ import DetailPackageRequest from "./DetailPackageRequest";
 import { Position } from "@/models/enums/Position";
 import { parsePosition } from "@/utils/helpers";
 import DetailQuotationConsulting from "./DetailQuotationConsulting";
+import {
+  quotationDetailActions,
+  selectedQuotationDetail,
+} from "@/redux/slices/quotationDetail/quotationDetailSlices";
 
 const DetailConsulting = () => {
   const dispatch = useAppDispatch();
@@ -35,19 +39,18 @@ const DetailConsulting = () => {
 
   const quotations = useAppSelector(selectedQuotationProject);
 
+  const quotation = useAppSelector(selectedQuotationDetail);
+
   useEffect(() => {
     dispatch(projectDetailActions.fetchProjectDetail(id));
-    // if (item && item.id) {
-    //   dispatch(quotationProjectActions.fetchQuotationProject(item.id));
-    // }
+    if (item && item.id) {
+      dispatch(quotationProjectActions.fetchQuotationProject(item.id));
+    }
   }, [dispatch, id, item?.id]);
 
   useEffect(() => {
-    console.log("fetch project");
     dispatch(projectDetailActions.fetchProjectDetail(id));
   }, []);
-  console.log("item", item);
-  console.log("quotations", quotations);
 
   const [openDetailPackage, setOpenDetailPackage] = useState(false);
 
@@ -56,7 +59,7 @@ const DetailConsulting = () => {
   const packageDetail = item.package;
 
   const handleDetailQuotation = (quotation: QuotationProjectType) => {
-    messageInfo("Detail");
+    dispatch(quotationDetailActions.fetchQuotationDetail(quotation.id));
     setOpenDetailQuotation(true);
   };
 
@@ -90,9 +93,6 @@ const DetailConsulting = () => {
           items={[
             {
               title: "Đã gửi yêu cầu",
-            },
-            {
-              title: "Chờ chỉ định nhân viên",
             },
             {
               title: "Chờ báo giá",
@@ -310,7 +310,7 @@ const DetailConsulting = () => {
       </Modal>
 
       <Modal
-        title={`Báo giá chi tiết ${packageDetail ? packageDetail.name : ""}`}
+        title={`Báo giá chi tiết`}
         centered
         open={openDetailQuotation}
         width={1000}
@@ -319,7 +319,7 @@ const DetailConsulting = () => {
         onOk={() => setOpenDetailQuotation(false)}
         footer={[]}
       >
-        <DetailQuotationConsulting quotation={packageDetail} project={item} />
+        <DetailQuotationConsulting quotation={quotation} project={item} />
       </Modal>
     </div>
   );

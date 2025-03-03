@@ -13,11 +13,11 @@ function* fetchQuotationWorker(action: PayloadAction<string>) {
       yield put(quotationActions.fetchQuotationSuccess(data));
     } else {
       messageSuccess(data.message);
-      yield put(quotationActions.fetchQuotationFaild);
+      yield put(quotationActions.fetchQuotationFailed);
     }
   } catch (error) {
     messageError("Hệ thống đang bị lỗi");
-    yield put(quotationActions.fetchQuotationFaild);
+    yield put(quotationActions.fetchQuotationFailed);
     console.log(error);
   }
 }
@@ -30,12 +30,19 @@ function* createQuotationWorker(action: PayloadAction<QuotationType>) {
       const quotationState: QuotaitonState = yield select(
         (state) => state.quotation
       );
+
+      yield put(
+        quotationActions.fetchQuotation({
+          pageNumber: quotationState.quotation.pageNumber,
+          pageSize: quotationState.quotation.pageSize,
+        })
+      );
     } else {
       messageError(data.message);
     }
   } catch (error) {
     messageError("Hệ thống đang bị lỗi");
-    yield put(quotationActions.fetchQuotationFaild);
+    yield put(quotationActions.fetchQuotationFailed);
     console.log(error);
   }
 }

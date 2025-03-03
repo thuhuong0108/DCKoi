@@ -34,7 +34,7 @@ const LayoutConsultant: React.FC<IndexProps> = ({ Page }) => {
     },
     {
       link: "/consultant/quotation",
-      children: "Báo giá",
+      children: "Dự án",
       icon: <ProfileOutlined />,
     },
   ];

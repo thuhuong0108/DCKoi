@@ -8,8 +8,6 @@ function* fetchProjectDetailWorker(action: PayloadAction<string>) {
   try {
     const res = yield call(getProject, action.payload);
     if (res.isSuccess) {
-      console.log("project detail: ", res.data);
-
       yield put(projectDetailActions.fetchProjectDetailSuccess(res.data));
     } else {
       messageSuccess(res.message);
@@ -18,7 +16,6 @@ function* fetchProjectDetailWorker(action: PayloadAction<string>) {
   } catch (error) {
     messageError("Hệ thống đang bị lỗi");
     yield put(projectDetailActions.fetchProjectDetailFaild);
-    console.log(error);
   }
 }
 

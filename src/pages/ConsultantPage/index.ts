@@ -1,3 +1,4 @@
 import DetailConsultingStaff from "./DetailConsultingStaff";
 import ConsultationStaffPage from "./Consultation/ConsultationStaffPage";
-export { DetailConsultingStaff, ConsultationStaffPage };
+import CreateQuotation from "./CreateQuotation";
+export { DetailConsultingStaff, ConsultationStaffPage, CreateQuotation };

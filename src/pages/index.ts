@@ -23,7 +23,11 @@ import {
   ConstructionTemplateConfig,
 } from "./AdminPage";
 
-import { ConsultationStaffPage, DetailConsultingStaff } from "./ConsultantPage";
+import {
+  ConsultationStaffPage,
+  DetailConsultingStaff,
+  CreateQuotation,
+} from "./ConsultantPage";
 
 import AuthorizePage from "./ErrorPage";
 
@@ -58,6 +62,7 @@ export {
   //consultant
   ConsultationStaffPage,
   DetailConsultingStaff,
+  CreateQuotation,
 
   //error
   AuthorizePage,

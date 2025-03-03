@@ -1,52 +1,72 @@
-import { TableComponent, Title } from "@/components";
-import { EquipmentQuotationType, ServiceQuotationType } from "@/models";
-import React from "react";
+import { FieldQuotationDetailType } from "@/models";
+import { Category } from "@/models/enums/Category";
+import { useEffect, useState } from "react";
+import { QuotationItem } from "./type";
+import TableQuotation from "./TableQuotation";
 
 const DetailQuotationConsulting = ({ quotation, project }) => {
   const services = quotation.services;
   const equipments = quotation.equipments;
+  const [itemWork, setItemWork] = useState<QuotationItem[]>([]);
+  const [totalPriceQuotation, setTotalPrice] = useState<number>(0);
+
+  useEffect(() => {
+    const categoryCollection: string[] = Object.values(Category);
+
+    // Build itemWork from services and equipments
+    const itemWork = categoryCollection.map((category) => {
+      const servicesInCategory = services.filter(
+        (service) => service.category === category
+      );
+
+      const equipmentsInCategory = equipments
+        .filter((equipment) => equipment.category === category)
+        .map((equipment) => ({
+          ...equipment,
+          unit: "Chiếc",
+        }));
+
+      const fieldQuotationDetailType: FieldQuotationDetailType[] = [
+        ...servicesInCategory,
+        ...equipmentsInCategory,
+      ];
+
+      let totalPrice = fieldQuotationDetailType.reduce(
+        (sum, item) => sum + item.price * item.quantity,
+        0
+      );
+
+      return {
+        totalPrice,
+        name: category,
+        items: fieldQuotationDetailType,
+      };
+    });
+
+    console.log(itemWork);
+
+    // Update total price using previous state
+    setTotalPrice((prevTotal) =>
+      itemWork.reduce((sum, item) => sum + item.totalPrice, 0)
+    );
+
+    setItemWork(itemWork);
+  }, [services, equipments]);
+
   return (
     <div>
-      <TableComponent<ServiceQuotationType>
-        columns={[
-          "Danh mục công việc",
-          "Mô tả",
-          "Giá",
-          "Số lượng",
-          "Đơn vị",
-          "Phân loại",
-          "Ghi chú",
-          "Kiểu công việc",
-        ]}
-        data={services}
-        props={[
-          "name",
-          "description",
-          "price",
-          "unit",
-          "type",
-          "quantity",
-          "note",
-          "category",
-        ]}
-        actions={false}
-        enablePagination={false}
-      />
+      <div className="my-4"></div>
 
-      <TableComponent<EquipmentQuotationType>
-        columns={[
-          "Tên thiết bị",
-          "Mô tả",
-          "Giá",
-          "Số lượng",
-          "Ghi chú",
-          "Phân loại",
-        ]}
-        data={equipments}
-        props={["name", "description", "price", "quantity", "note", "category"]}
-        actions={false}
-        enablePagination={false}
-      />
+      {itemWork.map((item, index) => (
+        <TableQuotation
+          key={index}
+          name={item.name}
+          items={item.items}
+          totalPrice={item.totalPrice}
+        />
+      ))}
+
+      {totalPriceQuotation}
     </div>
   );
 };

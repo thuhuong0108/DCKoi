@@ -14,6 +14,7 @@ import {
   AuthorizePage,
   ConsultationStaffPage,
   DetailConsultingStaff,
+  CreateQuotation,
 } from "@/pages";
 import {
   LayoutAdmin,
@@ -73,7 +74,7 @@ const Routers = () => {
       ),
     },
     {
-      path: "/admin/detail-consultation",
+      path: "/admin/consultation/:id",
       element: (
         <PrivateRouterAdmin
           Pages={() => <LayoutAdmin Page={DetailConsultation} />}
@@ -185,10 +186,19 @@ const Routers = () => {
       ),
     },
     {
-      path: "/consultant/detail/:id",
+      path: "/consultant/:id",
       element: (
         <PrivateRouterConsultant
           Pages={() => <LayoutConsultant Page={DetailConsultingStaff} />}
+        />
+      ),
+    },
+
+    {
+      path: "/consultant/:id/new-quotation",
+      element: (
+        <PrivateRouterConsultant
+          Pages={() => <LayoutConsultant Page={CreateQuotation} />}
         />
       ),
     },

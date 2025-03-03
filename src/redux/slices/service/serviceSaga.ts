@@ -18,11 +18,11 @@ function* fetchServiceWorker(action: PayloadAction<Filter>) {
       yield put(serviceActions.fetchServiceSuccess(data));
     } else {
       messageSuccess(data.message);
-      yield put(serviceActions.fetchServiceFaild);
+      yield put(serviceActions.fetchServiceFaild());
     }
   } catch (error) {
     messageError("Hệ thống đang bị lỗi");
-    yield put(serviceActions.fetchServiceFaild);
+    yield put(serviceActions.fetchServiceFaild());
     console.log(error);
   }
 }
@@ -45,7 +45,7 @@ function* createServiceWorker(action: PayloadAction<ServiceType>) {
     }
   } catch (error) {
     messageError("Hệ thống đang bị lỗi");
-    yield put(serviceActions.fetchServiceFaild);
+    yield put(serviceActions.fetchServiceFaild());
     console.log(error);
   }
 }
@@ -67,7 +67,7 @@ function* updateServiceWorker(action: PayloadAction<ServiceType>) {
     }
   } catch (error) {
     messageError("Hệ thống đang bị lỗi");
-    yield put(serviceActions.fetchServiceFaild);
+    yield put(serviceActions.fetchServiceFaild());
     console.log(error);
   }
 }
@@ -89,7 +89,7 @@ function* deleteServiceWorker(action: PayloadAction<string>) {
     }
   } catch (error) {
     messageError("Hệ thống đang bị lỗi");
-    yield put(serviceActions.fetchServiceFaild);
+    yield put(serviceActions.fetchServiceFaild());
     console.log(error);
   }
 }
