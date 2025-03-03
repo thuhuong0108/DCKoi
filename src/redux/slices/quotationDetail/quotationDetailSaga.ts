@@ -8,7 +8,7 @@ function* fetchQuotaionDetailWorker(action: PayloadAction<string>) {
   try {
     const data = yield call(getQuotation, action.payload);
     if (data.isSuccess) {
-      yield put(quotationDetailActions.fetchQuotationDetailSuccess(data));
+      yield put(quotationDetailActions.fetchQuotationDetailSuccess(data.data));
     } else {
       messageSuccess(data.message);
       yield put(quotationDetailActions.fetchQuotationDetailFailed);

@@ -39,7 +39,7 @@ const Consultationcard = ({
   const dispatch = useAppDispatch();
 
   const handleDetail = () => {
-    navigate("/admin/detail-consultation");
+    navigate(`${id}`);
   };
   const handleAddStaff = () => {
     fetchStaff();

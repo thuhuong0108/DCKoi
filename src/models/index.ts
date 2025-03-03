@@ -20,6 +20,7 @@ import {
   EquipmentQuotationType,
   ApproveQuotationType,
   RejectQuotationType,
+  FieldQuotationDetailType,
 } from "./QuotationType";
 
 export type {
@@ -37,6 +38,7 @@ export type {
   EquipmentQuotationType,
   ApproveQuotationType,
   RejectQuotationType,
+  FieldQuotationDetailType,
   ProjectRequest,
   ProjectType,
   AssginStaff,
