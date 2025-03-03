@@ -53,8 +53,8 @@ const endPoint = {
 
   project: {
     createProject: "/projects",
-    // getPagingProjects: "/projects/consultation",
-    getPagingProjects: "/projects               ",
+    getPagingProjects: "/projects/consultation",
+    // getPagingProjects: "/projects               ",
     getProject: (id: string) => `/projects/${id}`,
     assignConsultant: (id: string) => `/projects/${id}/assignconsultant`,
     getQuotation: (id: string) => `/projects/${id}/quotation`,

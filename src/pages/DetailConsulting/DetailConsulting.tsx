@@ -37,11 +37,15 @@ const DetailConsulting = () => {
 
   useEffect(() => {
     dispatch(projectDetailActions.fetchProjectDetail(id));
-    if (item && item.data && item.data.id) {
-      dispatch(quotationProjectActions.fetchQuotationProject(item.data.id));
-    }
-  }, [dispatch, id, item?.data?.id]);
+    // if (item && item.id) {
+    //   dispatch(quotationProjectActions.fetchQuotationProject(item.id));
+    // }
+  }, [dispatch, id, item?.id]);
 
+  useEffect(() => {
+    console.log("fetch project");
+    dispatch(projectDetailActions.fetchProjectDetail(id));
+  }, []);
   console.log("item", item);
   console.log("quotations", quotations);
 
@@ -49,7 +53,7 @@ const DetailConsulting = () => {
 
   const [openDetailQuotation, setOpenDetailQuotation] = useState(false);
 
-  const packageDetail = item.data.packageDetail;
+  const packageDetail = item.package;
 
   const handleDetailQuotation = (quotation: QuotationProjectType) => {
     messageInfo("Detail");
@@ -105,13 +109,13 @@ const DetailConsulting = () => {
           <label className="text-gray-400 font-medium w-[150px]">
             Ngày gửi yêu cầu:
           </label>
-          <label className="text-black">{item.data.createdDate}</label>
+          <label className="text-black">{item.createdDate}</label>
         </div>
         <div className="flex flex-row justify-start items-center ">
           <label className="text-gray-400 font-medium w-[150px]">
             Cập nhật mới nhất:
           </label>
-          <label className="text-black">{item.data.updatedDate}</label>
+          <label className="text-black">{item.updatedDate}</label>
         </div>
       </div>
       <Row className="flex flex-row justify-between mt-4">
@@ -128,7 +132,7 @@ const DetailConsulting = () => {
                       alt="user"
                     />
                     <label className="text-black font-semibold text-4xl">
-                      {item.data.customerName}
+                      {item.customerName}
                     </label>
                     <label className="text-sm bg-blue-200 text-blue-500 p-1 border-none rounded-lg w-[100px] text-center">
                       Khách hàng
@@ -137,14 +141,14 @@ const DetailConsulting = () => {
 
                   <Col className="flex flex-col gap-4">
                     <label className="font-medium text-gray-600 text-lg">
-                      <MailOutlined /> {item.data.email}
+                      <MailOutlined /> {item.email}
                     </label>
                     <label className="font-medium text-gray-600 text-lg">
-                      <PhoneOutlined /> {item.data.phone}
+                      <PhoneOutlined /> {item.phone}
                     </label>
                     <label className="font-medium text-gray-600 text-lg">
                       <PushpinOutlined />
-                      {item.data.address}
+                      {item.address}
                     </label>
                   </Col>
                 </Row>
@@ -166,7 +170,7 @@ const DetailConsulting = () => {
                       alt="package"
                     />
                     <label className="text-black font-semibold text-4xl">
-                      {item.data.packageName}
+                      {item.package.name}
                     </label>
                     <label className="text-sm bg-gray-200 text-gray-500 p-1 border-none rounded-lg w-[200px] text-center">
                       Yêu cầu thiết kê thi công
@@ -178,16 +182,16 @@ const DetailConsulting = () => {
                       # Chi tiết gói thi công:{" "}
                       <Button
                         block
-                        title={item.data.packageName}
+                        title={item.package.name}
                         leadingIcon={<EyeOutlined />}
                         onClick={() => setOpenDetailPackage(true)}
                       />
                     </label>
                     <label className="text-gray-600 font-medium text-lg">
-                      # Diện tích dự tính: {item.data.area} m2
+                      # Diện tích dự tính: {item.area} m2
                     </label>
                     <label className="text-gray-600 font-medium text-lg">
-                      # Độ sâu của hồ: {item.data.depth} m
+                      # Độ sâu của hồ: {item.depth} m
                     </label>
                   </Col>
                 </Row>
@@ -198,9 +202,9 @@ const DetailConsulting = () => {
         </Col>
 
         <Col className="w-1/3 px-4 flex flex-col">
-          {item.data.staff &&
-            item.data.staff.length > 0 &&
-            item.data.staff
+          {item.staff &&
+            item.staff.length > 0 &&
+            item.staff
               .filter((staff) => staff.position === Position.CONSULTANT)
               .map((staff, index) => (
                 <Card
@@ -249,7 +253,7 @@ const DetailConsulting = () => {
         </h1>
 
         <Input.TextArea
-          value={item.data.note}
+          value={item.note}
           disabled
           rows={4}
           className="bg-gray-100 border border-gray-300 rounded-md text-lg p-2"
@@ -315,10 +319,7 @@ const DetailConsulting = () => {
         onOk={() => setOpenDetailQuotation(false)}
         footer={[]}
       >
-        <DetailQuotationConsulting
-          quotation={packageDetail}
-          project={item.data}
-        />
+        <DetailQuotationConsulting quotation={packageDetail} project={item} />
       </Modal>
     </div>
   );

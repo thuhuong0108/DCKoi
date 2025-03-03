@@ -1,20 +1,38 @@
-import { RootState } from "./../../store/store";
 import { ProjectDetailType } from "@/models/ProjectType";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ApiResultWithAData } from "@/models/Common";
+import { RootState } from "./../../store/store";
+import { ProjectStatus } from "@/models/enums/Status";
 
 export interface ProjectDetailState {
   loading: boolean;
-  projectDefault: ApiResultWithAData<ProjectDetailType>;
+  projectDefault: ProjectDetailType;
 }
 
 const initialState: ProjectDetailState = {
   loading: false,
   projectDefault: {
-    isSuccess: false,
-    statusCode: 0,
-    message: "",
-    data: {} as ProjectDetailType,
+    id: "",
+    customerName: "",
+    address: "",
+    phone: "",
+    email: "",
+    area: 0,
+    depth: 0,
+    packageName: "",
+    standOut: false,
+    note: "",
+    status: ProjectStatus.CONSTRUCTING,
+    createdDate: "",
+    updatedDate: "",
+    staff: [],
+    package: {
+      id: "",
+      name: "",
+      description: "",
+      isActive: false,
+      price: [],
+      items: [],
+    },
   },
 };
 export const projectDetailSlice = createSlice({
@@ -25,7 +43,7 @@ export const projectDetailSlice = createSlice({
       state.loading = true;
     },
     fetchProjectDetailSuccess(state, action: PayloadAction<ProjectDetailType>) {
-      state.projectDefault.data = action.payload;
+      state.projectDefault = action.payload;
       state.loading = false;
     },
     fetchProjectDetailFaild(state) {
