@@ -2,7 +2,7 @@ import { FieldQuotationDetailType } from "@/models";
 import { Category } from "@/models/enums/Category";
 import { useEffect, useState } from "react";
 import { QuotationItem } from "./type";
-import TableQuotation from "./TableQuotation";
+import TableQuotation from "@/pages/DetailConsulting/TableQuotation";
 
 const DetailQuotationConsulting = ({ quotation, project }) => {
   const services = quotation.services;
@@ -52,10 +52,10 @@ const DetailQuotationConsulting = ({ quotation, project }) => {
 
     setItemWork(itemWork);
   }, [services, equipments]);
-
   return (
     <div>
       <div className="my-4"></div>
+      {totalPriceQuotation}
 
       {itemWork.map((item, index) => (
         <TableQuotation
@@ -65,8 +65,6 @@ const DetailQuotationConsulting = ({ quotation, project }) => {
           totalPrice={item.totalPrice}
         />
       ))}
-
-      {totalPriceQuotation}
     </div>
   );
 };

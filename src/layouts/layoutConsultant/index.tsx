@@ -1,6 +1,7 @@
 import { Sidebar, Menu, MenuItem, Logo } from "@/components/Sidebar";
 import { selectCurrentUser, selectRole } from "@/redux/slices/auth/authSlices";
 import { useAppSelector } from "@/redux/store/hook";
+import { ProfileOutlined } from "@ant-design/icons";
 import {
   AttachMoneySharp,
   BuildSharp,
@@ -30,6 +31,11 @@ const LayoutConsultant: React.FC<IndexProps> = ({ Page }) => {
       link: "/consultant",
       children: "Tư vấn",
       icon: <SupportAgentSharp />,
+    },
+    {
+      link: "/consultant/quotation",
+      children: "Dự án",
+      icon: <ProfileOutlined />,
     },
   ];
 

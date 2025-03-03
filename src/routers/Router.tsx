@@ -11,8 +11,17 @@ import {
   // ProjectsPage,
   ConsultingPage,
   DetailConsulting,
+  AuthorizePage,
+  ConsultationStaffPage,
+  DetailConsultingStaff,
+  CreateQuotation,
 } from "@/pages";
-import { LayoutAdmin, LayoutCustomer, MainLayout } from "@/layouts";
+import {
+  LayoutAdmin,
+  LayoutConsultant,
+  LayoutCustomer,
+  MainLayout,
+} from "@/layouts";
 import {
   ManagementTransaction,
   ManagementUser,
@@ -28,6 +37,8 @@ import {
 } from "@/pages/AdminPage";
 import RootLayout from "@/layouts/RootLayout";
 import PrivateRouterAdmin from "./PrivateRouterAdmin";
+import PrivateRouterCustomer from "./PrivateRouterCustomer";
+import PrivateRouterConsultant from "./PrivateRouterConsultant";
 
 const Routers = () => {
   const location = useLocation();
@@ -39,11 +50,19 @@ const Routers = () => {
     // customer
     {
       path: "/space-management",
-      element: <LayoutCustomer Page={ConsultingPage} />,
+      element: (
+        <PrivateRouterCustomer
+          Pages={() => <LayoutCustomer Page={ConsultingPage} />}
+        />
+      ),
     },
     {
       path: "/space-management/detail-consulting/:id",
-      element: <LayoutCustomer Page={DetailConsulting} />,
+      element: (
+        <PrivateRouterCustomer
+          Pages={() => <LayoutCustomer Page={DetailConsulting} />}
+        />
+      ),
     },
     // admin
     {
@@ -72,15 +91,23 @@ const Routers = () => {
     },
     {
       path: "/admin/equipments",
-      element: <LayoutAdmin Page={EquipmentPage} />,
+      element: (
+        <PrivateRouterAdmin
+          Pages={() => <LayoutAdmin Page={EquipmentPage} />}
+        />
+      ),
     },
     {
       path: "/admin/services",
-      element: <LayoutAdmin Page={ServicePage} />,
+      element: (
+        <PrivateRouterAdmin Pages={() => <LayoutAdmin Page={ServicePage} />} />
+      ),
     },
     {
       path: "/admin/staffs",
-      element: <LayoutAdmin Page={StaffPage} />,
+      element: (
+        <PrivateRouterAdmin Pages={() => <LayoutAdmin Page={StaffPage} />} />
+      ),
     },
     {
       path: "/admin/management-packages",
@@ -152,11 +179,38 @@ const Routers = () => {
     // consultant
     {
       path: "/consultant",
-      element: <RootLayout Pages={ConsultationPage} />,
+      element: (
+        <PrivateRouterConsultant
+          Pages={() => <LayoutConsultant Page={ConsultationStaffPage} />}
+        />
+      ),
     },
-    { path: "*", element: <div>404</div> },
+    {
+      path: "/consultant/:id",
+      element: (
+        <PrivateRouterConsultant
+          Pages={() => <LayoutConsultant Page={DetailConsultingStaff} />}
+        />
+      ),
+    },
+
+    {
+      path: "/consultant/:id/new-quotation",
+      element: (
+        <PrivateRouterConsultant
+          Pages={() => <LayoutConsultant Page={CreateQuotation} />}
+        />
+      ),
+    },
+
+    { path: "/error-authorized", element: <AuthorizePage /> },
   ]);
   console.log("Current Route:", location.pathname);
+
+  // const authorizeUser = (role: string) => {
+  //   switch (role)
+  //   case
+  // }
   return <div>{element}</div>;
 };
 
