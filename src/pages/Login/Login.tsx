@@ -51,6 +51,9 @@ const Login = () => {
         case RoleUser.DESIGNER:
           navigate("/designer");
           break;
+        case RoleUser.MANAGER:
+          navigate("/manager");
+          break;
       }
     }
   }, [isAuthenticated, currentUser, roleUser, navigate]);

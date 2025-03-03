@@ -49,6 +49,34 @@ export const staffSlice = createSlice({
     fetchConsutantStaffFaild(state) {
       state.loading = false;
     },
+    fetchManagerStaff(state, action: PayloadAction<Filter>) {
+      state.loading = true;
+    },
+    fetchManagerStaffSuccess(
+      state,
+      action: PayloadAction<Pagination<StaffType>>
+    ) {
+      state.staffs = action.payload;
+      state.loading = false;
+    },
+    fetchManagerStaffFaild(state) {
+      state.loading = false;
+    },
+
+    fetchDesignerStaff(state, action: PayloadAction<Filter>) {
+      state.loading = true;
+    },
+
+    fetchDesignerStaffSuccess(
+      state,
+      action: PayloadAction<Pagination<StaffType>>
+    ) {
+      state.staffs = action.payload;
+      state.loading = false;
+    },
+    fetchDesignerStaffFaild(state) {
+      state.loading = false;
+    },
   },
 });
 

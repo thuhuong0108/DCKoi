@@ -23,6 +23,8 @@ export interface ProjectType {
   status: ProjectStatus;
   createdDate: string;
   updatedDate: string;
+  imageUrl?: string;
+  name?: string;
 }
 
 export interface ProjectDetailType {

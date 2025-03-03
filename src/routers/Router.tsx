@@ -11,6 +11,10 @@ import {
   // ProjectsPage,
   ConsultingPage,
   DetailConsulting,
+  ManagerProject,
+  ManagerDesign,
+  DesignDashboard,
+  DesignProjectDetail,
 } from "@/pages";
 import { LayoutAdmin, LayoutCustomer, MainLayout } from "@/layouts";
 import {
@@ -25,6 +29,7 @@ import {
   StaffPage,
   ConstructionTemplate,
   ConstructionTemplateConfig,
+  Design,
 } from "@/pages/AdminPage";
 import RootLayout from "@/layouts/RootLayout";
 import PrivateRouterAdmin from "./PrivateRouterAdmin";
@@ -148,11 +153,36 @@ const Routers = () => {
       path: "/admin/template-construction/:id",
       element: <RootLayout Pages={ConstructionTemplateConfig} />,
     },
+    {
+      path: "/admin/design",
+      element: <RootLayout Pages={Design} />,
+    },
 
     // consultant
     {
       path: "/consultant",
       element: <RootLayout Pages={ConsultationPage} />,
+    },
+
+    // manager
+    {
+      path: "/manager",
+      element: <RootLayout Pages={ManagerProject} />,
+    },
+    {
+      path: "/manager/design",
+      element: <RootLayout Pages={ManagerDesign} />,
+    },
+
+    // designer
+    {
+      path: "/designer",
+      element: <RootLayout Pages={DesignDashboard} />,
+    },
+
+    {
+      path: "/designer/:id",
+      element: <RootLayout Pages={DesignProjectDetail} />,
     },
     { path: "*", element: <div>404</div> },
   ]);

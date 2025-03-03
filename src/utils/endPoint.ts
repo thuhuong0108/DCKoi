@@ -34,6 +34,8 @@ const endPoint = {
     createStaff: "/staff",
     getPagingStaff: "/staff",
     getPagingConsutanStaff: "/staff/consultant",
+    getPagingManagerStaff: "/staff/manager",
+    getPagingDesignerStaff: "/staff/designer",
     // getStaff: (id: string) => `/staff/${id}`,
     // updateStaff: (id: string) => `/staff/${id}`,
     // deleteStaff: (id: string) => `staff/${id}`,
@@ -62,6 +64,7 @@ const endPoint = {
     assignConsultant: (id: string) => `/projects/${id}/assignconsultant`,
     getQuotation: (id: string) => `/projects/${id}/quotation`,
     requestProject: "/projects",
+    getProjectDesign: `/projects/design`,
   },
 
   quotation: {
