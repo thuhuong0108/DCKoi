@@ -1,5 +1,5 @@
 import ConsultationPage from "./Consultation";
-import DetailConsultation from "./DetailPage";
+import DetailConsultation from "./DetailConsultation";
 import ManagementTransaction from "./Transaction";
 import ManagementUser from "./User";
 import PackagePage from "./Packages";

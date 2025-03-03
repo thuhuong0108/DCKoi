@@ -7,6 +7,7 @@ import {
 import ConsultingCard from "./ConsultingCard";
 import { Col, Row } from "antd";
 import { Title } from "@/components";
+import { Pagination } from "@mui/material";
 
 const ConsultingPage = () => {
   const dispatch = useAppDispatch();
@@ -29,6 +30,8 @@ const ConsultingPage = () => {
           </Col>
         ))}
       </Row>
+
+      <Pagination count={items.totalPages} color="primary" />
     </div>
   );
 };

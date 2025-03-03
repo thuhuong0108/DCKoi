@@ -55,7 +55,7 @@ const Routers = () => {
       ),
     },
     {
-      path: "/admin/detail-consultation",
+      path: "/admin/consultation/:id",
       element: (
         <PrivateRouterAdmin
           Pages={() => <LayoutAdmin Page={DetailConsultation} />}

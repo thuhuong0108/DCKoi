@@ -46,3 +46,15 @@ export interface RejectQuotationType {
   isAccept: boolean;
   reason: string;
 }
+
+export interface FieldQuotationDetailType {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  unit: string | "PSC" | "Chiếc";
+  type?: string;
+  quantity: number;
+  note: string;
+  category: string;
+}
