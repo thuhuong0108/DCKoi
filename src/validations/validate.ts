@@ -45,6 +45,7 @@ export const validateService = yup.object().shape({
 export const validateStaff = yup.object().shape({
   fullName: yup.string().required(),
   email: yup.string().email().required(),
+  password: yup.string().required(),
   phone: yup.string().required(),
   position: yup.string().required(),
 });

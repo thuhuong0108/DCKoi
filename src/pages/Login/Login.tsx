@@ -35,10 +35,22 @@ const Login = () => {
 
   useEffect(() => {
     if (isAuthenticated && currentUser) {
-      if (roleUser === RoleUser.CUSTOMER) {
-        navigate("/");
-      } else if (roleUser === RoleUser.ADMINISTRATOR) {
-        navigate("/admin");
+      switch (roleUser) {
+        case RoleUser.CUSTOMER:
+          navigate("/");
+          break;
+        case RoleUser.ADMINISTRATOR:
+          navigate("/admin");
+          break;
+        case RoleUser.CONSTRUCTOR:
+          navigate("/constructor");
+          break;
+        case RoleUser.CONSULTANT:
+          navigate("/consultation");
+          break;
+        case RoleUser.DESIGNER:
+          navigate("/designer");
+          break;
       }
     }
   }, [isAuthenticated, currentUser, roleUser, navigate]);
