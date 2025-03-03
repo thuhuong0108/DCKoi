@@ -20,6 +20,10 @@ import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 import serviceSlice from "../slices/service/serviceSlice";
 import staffSlice from "../slices/staff/staffSlice";
+import projectSlice from "../slices/project/projectSlices";
+import projectDetailSlice from "../slices/projectDetail/projectDetailSlices";
+import quotationProjectSlice from "../slices/quotationProject/QuotationProjectSlices";
+import quotationSlice from "../slices/quotation/quotationSlices";
 
 const rootReducers = combineReducers({
   router: connectRouter(history),
@@ -31,6 +35,10 @@ const rootReducers = combineReducers({
   package: packageSlice,
   templateConstruction: templateConstructionSlice,
   templateConstructionDetail: templateConstructionDetailSlice,
+  project: projectSlice,
+  projectDetail: projectDetailSlice,
+  quotationProject: quotationProjectSlice,
+  quotation: quotationSlice,
 });
 
 const persistConfig = {

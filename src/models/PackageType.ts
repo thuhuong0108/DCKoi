@@ -5,7 +5,7 @@ interface items {
   name: string;
 }
 export interface PackageType {
-  id?: number;
+  id?: string;
   name: string;
   description: string;
   isActive: boolean;
