@@ -8,6 +8,8 @@ function* fetchProjectDetailWorker(action: PayloadAction<string>) {
   try {
     const res = yield call(getProject, action.payload);
     if (res.isSuccess) {
+      console.log("project detail: ", res.data);
+
       yield put(projectDetailActions.fetchProjectDetailSuccess(res.data));
     } else {
       messageSuccess(res.message);

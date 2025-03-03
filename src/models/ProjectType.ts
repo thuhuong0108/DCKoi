@@ -40,7 +40,7 @@ export interface ProjectDetailType {
   createdDate: string;
   updatedDate: string;
   staff: Staff[];
-  packageDetail: PackageType;
+  package: PackageType;
 }
 
 export interface QuotationProjectType {
