@@ -5,6 +5,7 @@ import Contact from "./Contact/Contact";
 // import ProjectsPage from "./Projects";
 import ConsultingPage from "./Projects";
 import DetailConsulting from "./DetailConsulting";
+
 import {
   ConsultationPage,
   DetailConsultation,
@@ -21,7 +22,13 @@ import {
   ConstructionTemplate,
   ConstructionTemplateConfig,
 } from "./AdminPage";
+
+import { ConsultationStaffPage, DetailConsultingStaff } from "./ConsultantPage";
+
+import AuthorizePage from "./ErrorPage";
+
 import TestUi from "./TestUi";
+
 export {
   // customer
   Home,
@@ -47,6 +54,13 @@ export {
   PackageDetail,
   ConstructionTemplate,
   ConstructionTemplateConfig,
+
+  //consultant
+  ConsultationStaffPage,
+  DetailConsultingStaff,
+
+  //error
+  AuthorizePage,
 
   //test
   TestUi,
