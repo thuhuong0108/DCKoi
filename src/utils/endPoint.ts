@@ -1,3 +1,5 @@
+import { assignConsultant } from "@/api/project";
+
 const baseURL = "https://kpcos.vinhuser.one/api/";
 const socketURL = "http://34.81.244.146:3333";
 const endPoint = {
@@ -31,6 +33,7 @@ const endPoint = {
   staff: {
     createStaff: "/staff",
     getPagingStaff: "/staff",
+    getPagingConsutanStaff: "/staff/consultant",
     // getStaff: (id: string) => `/staff/${id}`,
     // updateStaff: (id: string) => `/staff/${id}`,
     // deleteStaff: (id: string) => `staff/${id}`,

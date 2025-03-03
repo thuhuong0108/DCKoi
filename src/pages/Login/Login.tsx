@@ -46,7 +46,7 @@ const Login = () => {
           navigate("/constructor");
           break;
         case RoleUser.CONSULTANT:
-          navigate("/consultation");
+          navigate("/consultant");
           break;
         case RoleUser.DESIGNER:
           navigate("/designer");

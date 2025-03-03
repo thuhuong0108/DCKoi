@@ -6,6 +6,7 @@ import { UserType } from "./User";
 import { StaffType } from "./StaffType";
 import { ProjectRequest } from "./Request/ProjectRequest";
 import { ProjectType } from "./ProjectType";
+import { AssginStaff } from "./Request/AssginStaff";
 
 import {
   TemplateConstructionType,
@@ -34,4 +35,5 @@ export type {
   EquipmentQuotationType,
   ProjectRequest,
   ProjectType,
+  AssginStaff,
 };

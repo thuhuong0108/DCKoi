@@ -81,3 +81,10 @@ export const formatPrice = (amount: number): string => {
     maximumFractionDigits: 0,
   }).format(amount);
 };
+
+export const formatDateVietNamese = (date: string) => {
+  const dateObj = new Date(date);
+  return `${dateObj.getDate()}/${
+    dateObj.getMonth() + 1
+  }/${dateObj.getFullYear()}`;
+};

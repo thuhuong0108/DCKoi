@@ -1,4 +1,4 @@
-import { createStaff, getAllStaff } from "@/api/staff";
+import { createStaff, getAllStaff, getConsultantStaff } from "@/api/staff";
 import { Filter } from "@/models/Common";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { call, fork, put, select, take } from "redux-saga/effects";
@@ -44,6 +44,28 @@ function* createStaffWorker(action: PayloadAction<StaffType>) {
     console.log(error);
   }
 }
+function* fetchConsutantStaffWorker(action: PayloadAction<Filter>) {
+  try {
+    const data = yield call(getConsultantStaff, action.payload);
+    if (data.isSuccess) {
+      yield put(staffActions.fetchConsutantStaffSuccess(data));
+    } else {
+      messageError(data.message);
+      yield put(staffActions.fetchConsutantStaffFaild);
+    }
+  } catch (error) {
+    messageError("Hệ thống đang bị lỗi");
+    yield put(staffActions.fetchConsutantStaffFaild);
+    console.log(error);
+  }
+}
+
+function* fetchConsutantStaffWatcher() {
+  while (true) {
+    const action = yield take(staffActions.fetchConsutantStaff);
+    yield fork(fetchConsutantStaffWorker, action);
+  }
+}
 
 function* fetchStaffWatcher() {
   while (true) {
@@ -62,4 +84,5 @@ function* createStaffWatcher() {
 export function* staffSaga() {
   yield fork(fetchStaffWatcher);
   yield fork(createStaffWatcher);
+  yield fork(fetchConsutantStaffWatcher);
 }

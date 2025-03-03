@@ -1,37 +1,68 @@
-import Card from "../ui/Card";
-import { Avatar } from "antd";
+import { ProjectType, StaffType } from "@/models";
+import { ProjectStatus } from "@/models/enums/Status";
+import { staffActions } from "@/redux/slices/staff/staffSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
+import { parseStatusProject } from "@/utils/helpers";
 import { UserOutlined } from "@ant-design/icons";
-import { Button } from "../ui";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import ArticleIcon from "@mui/icons-material/Article";
+import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import { Avatar, Modal } from "antd";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Button, messageError, messageSuccess } from "../ui";
+import Card from "../ui/Card";
+import { assignConsultant } from "@/api/project";
+import { projectActions } from "@/redux/slices/project/projectSlices";
 
-interface ConsultationProp {
-  fullname: string;
-  date: string;
-  time: string;
-  phone: string;
-  address: string;
-  basepackage: string;
-  status: string;
-}
 const Consultationcard = ({
-  fullname,
-  date,
-  time,
-  phone,
+  customerName,
   address,
-  basepackage,
+  phone,
+  email,
+  area,
+  depth,
+  packageName,
+  standOut,
+  note,
   status,
-}: ConsultationProp) => {
+  createdDate,
+  updatedDate,
+  id,
+}: ProjectType & {}) => {
   const navigate = useNavigate();
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const item = useAppSelector((state) => state.staff.staffs);
+
+  const dispatch = useAppDispatch();
 
   const handleDetail = () => {
     navigate("/admin/detail-consultation");
   };
   const handleAddStaff = () => {
-    console.log("data: ", status);
+    fetchStaff();
+    setIsModalVisible(true);
+  };
+
+  // fetch staff to add to project
+  const fetchStaff = () => {
+    dispatch(staffActions.fetchConsutantStaff({ pageNumber: 1, pageSize: 10 }));
+  };
+
+  const [loading, setLoading] = useState(false);
+
+  const handleAdd = async (idStaff: string) => {
+    setLoading(true);
+    const res = await assignConsultant(id, { staffId: idStaff });
+    if (res.isSuccess) {
+      messageSuccess(res.message);
+      dispatch(projectActions.reloadProject());
+    } else {
+      messageError(res.message);
+    }
+    setLoading(false);
   };
   return (
     <Card
@@ -44,26 +75,27 @@ const Consultationcard = ({
       <Card.Header className="custom-header flex flex-row justify-between items-center">
         <div>
           <Avatar size="default" icon={<UserOutlined />} />
-          <label className="text-xl font-weight-bold mx-2">{fullname}</label>
-        </div>
-        {status === "pending" ? (
-          <label className="text-sm bg-yellow-100 text-yellow-500 p-1 border-none rounded-lg w-[70px] text-center">
-            {status}
+          <label className="text-xl font-weight-bold mx-2">
+            {customerName}
           </label>
-        ) : status === "cancel" ? (
+        </div>
+        {status === ProjectStatus.REQUESTING ? (
+          <label className="text-sm bg-yellow-100 text-yellow-500 p-1 border-none rounded-lg w-[70px] text-center">
+            {parseStatusProject(status)}
+          </label>
+        ) : status === ProjectStatus.FINISHED ? (
           <label className="text-sm bg-red-100 text-red-500 p-1 border-none rounded-lg w-[70px] text-center">
-            {status}
+            {parseStatusProject(status)}
           </label>
         ) : (
           <label className="text-sm bg-green-100 text-green-500 p-1 border-none rounded-lg w-[70px] text-center">
-            {status}
+            {parseStatusProject(status)}
           </label>
         )}
       </Card.Header>
       <Card.Body className="custom-body">
         <div className="p-2 flex flex-row justify-between items-center text-gray-400 border-b-2 ">
-          <label>{date}</label>
-          <label>{time}</label>
+          <label>{createdDate}</label>
         </div>
         <div className="p-2 flex flex-row justify-start items-center">
           <LocalPhoneIcon className="mr-2 " />
@@ -76,23 +108,69 @@ const Consultationcard = ({
         </div>
         <div className="p-2 flex flex-row justify-start items-center">
           <ArticleIcon className="mr-2 " />
-          <label className="text-black">{basepackage}</label>
+          <label className="text-black">{packageName}</label>
         </div>
       </Card.Body>
       <Card.Footer className="custom-footer flex flex-row justify-between">
-        <Button
-          info
-          onClick={handleDetail}
-          title="Detail"
-          className="w-[165px]"
-        />
-        <Button
-          danger
-          onClick={handleAddStaff}
-          title="Add staff"
-          className="w-[165px] uppercase"
-        />
+        {status === ProjectStatus.REQUESTING ? (
+          <Button
+            danger
+            onClick={handleAddStaff}
+            title="Thêm nhân viên"
+            className="w-[165px]"
+          />
+        ) : (
+          <Button
+            info
+            onClick={handleDetail}
+            title="Chi tiết"
+            className="w-[165px]"
+          />
+        )}
       </Card.Footer>
+
+      <Modal
+        title="Basic Modal"
+        visible={isModalVisible}
+        onCancel={() => setIsModalVisible(false)}
+        footer={null}
+        // hideCancelButton
+      >
+        <div className="flex flex-row justify-between items-center">
+          {/* no. , staff code, fullName, action*/}
+          <label>STT</label>
+          <div className="flex items-center gap-2 w-36">
+            <span className="text-sm font-medium">Họ và tên</span>
+          </div>
+          <label>Thao tác</label>
+        </div>
+
+        {item.data.map((item: StaffType, index: number) => (
+          <div
+            key={index}
+            className="flex flex-row justify-between items-center"
+          >
+            {/* no. , staff code, fullName, action*/}
+            <label>{index}</label>
+
+            <div className="flex items-center gap-2 w-36">
+              <Avatar size="default" icon={<UserOutlined />} />
+              <span className="text-sm font-medium">
+                {item?.fullName || "Unknown User"}
+              </span>
+            </div>
+
+            <Button
+              title="Thêm"
+              loading={loading}
+              onClick={async () => {
+                handleAdd(item.id);
+                setIsModalVisible(false);
+              }}
+            />
+          </div>
+        ))}
+      </Modal>
     </Card>
   );
 };

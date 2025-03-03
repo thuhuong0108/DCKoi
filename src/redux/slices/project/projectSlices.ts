@@ -1,8 +1,7 @@
-import { RootState } from "./../../store/store";
 import { ProjectType } from "@/models";
 import { Filter, Pagination } from "@/models/Common";
-import { ProjectType } from "@/models/ProjectType";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "./../../store/store";
 
 export interface ProjectState {
   loading: boolean;
@@ -32,6 +31,10 @@ export const projectSlice = createSlice({
     },
     fetchProjectFaild(state) {
       state.loading = false;
+    },
+
+    reloadProject(state) {
+      state.loading = true;
     },
 
     // createProject(state, action: PayloadAction<ProjectType>) {

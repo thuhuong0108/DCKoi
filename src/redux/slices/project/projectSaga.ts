@@ -63,10 +63,37 @@ function* fetchProjectWorker(action: PayloadAction<Filter>) {
 //   }
 // }
 
+function* reloadProjectWorker() {
+  try {
+    const projectState = yield select((state) => state.project);
+    const data = yield call(getPagingProject, {
+      pageNumber: projectState.projects.pageNumber,
+      pageSize: projectState.projects.pageSize,
+    });
+    if (data.isSuccess) {
+      yield put(projectActions.fetchProjectSuccess(data));
+    } else {
+      messageError(data.message);
+      yield put(projectActions.fetchProjectFaild());
+    }
+  } catch (error) {
+    messageError("Tải dữ liệu dự án bị lỗi");
+    console.log("Error load project: ", error);
+    yield put(projectActions.fetchProjectFaild());
+  }
+}
+
 function* fetchProjectWatcher() {
   while (true) {
     const action = yield take(projectActions.fetchProject);
     yield fork(fetchProjectWorker, action);
+  }
+}
+
+function* reloadProjectWatcher() {
+  while (true) {
+    yield take(projectActions.reloadProject);
+    yield fork(reloadProjectWorker);
   }
 }
 
@@ -80,4 +107,5 @@ function* fetchProjectWatcher() {
 export function* projectSaga() {
   yield fork(fetchProjectWatcher);
   //   yield fork(createItemWatcher);
+  yield fork(reloadProjectWatcher);
 }

@@ -1,5 +1,5 @@
 import http from "@/utils/http";
-import { ProjectRequest } from "@/models";
+import { AssginStaff, ProjectRequest } from "@/models";
 import {
   ApiResult,
   ApiResultWithAData,
@@ -34,9 +34,13 @@ const getProject = async (
   return response;
 };
 
-const assignConsultant = async (projectId: string): Promise<ApiResult> => {
+const assignConsultant = async (
+  projectId: string,
+  staff: AssginStaff
+): Promise<ApiResult> => {
   const response = await http.post(
-    endPoint.project.assignConsultant(projectId)
+    endPoint.project.assignConsultant(projectId),
+    staff
   );
   return response;
 };
