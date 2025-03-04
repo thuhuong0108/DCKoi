@@ -38,8 +38,9 @@ const TableQuotation = (props: QuotationItem) => {
       dataIndex: "unit",
       width: "10%",
     },
+
     {
-      title: "Note",
+      title: "Chú thích",
       dataIndex: "note",
       width: "25%",
     },

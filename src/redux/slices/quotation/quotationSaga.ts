@@ -1,9 +1,9 @@
-import { call, fork, put, select, take } from "redux-saga/effects";
+import { approveQuotation, createQuotation, getQuotation, rejectQuotation } from "@/api/quotation";
 import { messageError, messageSuccess } from "@/components";
+import { ApproveQuotationType, QuotationType, RejectQuotationType } from "@/models";
 import { PayloadAction } from "@reduxjs/toolkit";
+import { call, fork, put, select, take } from "redux-saga/effects";
 import { QuotaitonState, quotationActions } from "./quotationSlices";
-import { createQuotation, getQuotation } from "@/api/quotation";
-import { QuotationType } from "@/models";
 
 function* fetchQuotationWorker(action: PayloadAction<string>) {
   try {
@@ -47,6 +47,42 @@ function* createQuotationWorker(action: PayloadAction<QuotationType>) {
   }
 }
 
+function* rejectQuotationWorker(action: PayloadAction<RejectQuotationType>) {
+  try {
+    const data = yield call(rejectQuotation, action.payload);
+    if (data.isSuccess) {
+      messageSuccess(data.message);
+
+      yield put(quotationActions.rejectAcceptQuotation(data));
+    }
+    else {
+      messageError(data.message);
+    }
+  }
+  catch (error) {
+    messageError("Hệ thống đang bị lỗi");
+    console.log(error);
+  }
+}
+
+function* approveQuotationWorker(action: PayloadAction<ApproveQuotationType>) {
+  try {
+    const data = yield call(approveQuotation, action.payload);
+    if (data.isSuccess) {
+      messageSuccess(data.message);
+
+      yield put(quotationActions.approveQuotation(data));
+    }
+    else {
+      messageError(data.message);
+    }
+  }
+  catch (error) {
+    messageError("Hệ thống đang bị lỗi");
+    console.log(error);
+  }
+}
+
 function* fetchQuotationWatcher() {
   while (true) {
     const action = yield take(quotationActions.fetchQuotation);
@@ -61,7 +97,23 @@ function* createQuotationWatcher() {
   }
 }
 
+function* rejectAcceptQuotationWatcher() {
+  while (true) {
+    const action = yield take(quotationActions.rejectAcceptQuotation);
+    yield fork(rejectQuotationWorker, action);
+  }
+}
+
+function* approveQuotationWatcher() {
+  while (true) {
+    const action = yield take(quotationActions.approveQuotation);
+    yield fork(approveQuotationWorker, action);
+  }
+}
+
 export function* quotationSaga() {
   yield fork(fetchQuotationWatcher);
   yield fork(createQuotationWatcher);
+  yield fork(rejectAcceptQuotationWatcher);
+  yield fork(approveQuotationWatcher);
 }

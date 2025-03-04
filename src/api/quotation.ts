@@ -39,7 +39,7 @@ const rejectQuotation = async (
   quotationReject: RejectQuotationType
 ): Promise<ApiResult> => {
   const response = await http.put(
-    endPoint.quotation.rejectQuotation(quotationReject.id)
+    endPoint.quotation.rejectQuotation(quotationReject.id), quotationReject
   );
   return response;
 };

@@ -34,6 +34,8 @@ const endPoint = {
     createStaff: "/staff",
     getPagingStaff: "/staff",
     getPagingConsutanStaff: "/staff/consultant",
+    getPagingManagerStaff: "/staff/manager",
+    getPagingDesignerStaff: "/staff/designer",
     // getStaff: (id: string) => `/staff/${id}`,
     // updateStaff: (id: string) => `/staff/${id}`,
     // deleteStaff: (id: string) => `staff/${id}`,
@@ -62,16 +64,17 @@ const endPoint = {
     assignConsultant: (id: string) => `/projects/${id}/assignconsultant`,
     getQuotation: (id: string) => `/projects/${id}/quotation`,
     requestProject: "/projects",
+    getProjectDesign: `/projects/design`,
   },
 
   quotation: {
     createQuotation: "/quotation",
     getAllQuotation: "/quotation",
     getQuotationDetail: (id: string) => `/quotation/${id}`,
-    rejectQuotation: (id: string) => `/quotaion/${id}/reject-accept`,
-    approveQuotation: (id: string) => `/quotaion/${id}/approve-edit`,
-    editQuotation: (id: string) => `/quotaion/${id}/edit`,
-    rewriteQuotation: (id: string) => `/quotaion/${id}/rewrite`,
+    rejectQuotation: (id: string) => `/quotation/${id}/reject-accept`,
+    approveQuotation: (id: string) => `/quotation/${id}/approve-edit`,
+    editQuotation: (id: string) => `/quotation/${id}/edit`,
+    rewriteQuotation: (id: string) => `/quotation/${id}/rewrite`,
   },
 };
 

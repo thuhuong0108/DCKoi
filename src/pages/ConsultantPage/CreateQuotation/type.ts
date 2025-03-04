@@ -1,11 +1,25 @@
-import { EquipmentType } from "@/models";
+import { EquipmentType, FieldQuotationDetailType } from "@/models";
 
 export interface TableAddProps {
-  data: EquipmentType[];
+  data: FieldQuotationDetailType[];
 }
 
 export interface QuotationItem {
   name: string;
   totalPrice: number;
-  items: [];
+  items: FieldQuotationDetailType[];
 }
+export interface Funtion {
+  removeItem: (item: FieldQuotationDetailType) => void;
+  // openEquipments: () => void;
+  // openServices: () => void;
+}
+// export interface Items {
+//   id: string;
+//   quantity: number;
+//   name: string;
+//   note: string;
+//   category: string;
+//   unit: string;
+//   price: number;
+// }
