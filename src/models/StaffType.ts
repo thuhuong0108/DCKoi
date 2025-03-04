@@ -7,4 +7,6 @@ export interface StaffType {
   password: string;
   phone: string;
   position: Position;
+  isActive: boolean;
+  avatar: string;
 }

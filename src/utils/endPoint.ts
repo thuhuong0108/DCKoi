@@ -1,5 +1,4 @@
-import { templateConstructionActions } from "@/redux/slices/templateConstruction/templateContrutionSlices";
-import { create } from "@mui/material/styles/createTransitions";
+import { assignConsultant } from "@/api/project";
 
 const baseURL = "https://kpcos.vinhuser.one/api/";
 const socketURL = "http://34.81.244.146:3333";
@@ -34,6 +33,9 @@ const endPoint = {
   staff: {
     createStaff: "/staff",
     getPagingStaff: "/staff",
+    getPagingConsutanStaff: "/staff/consultant",
+    getPagingManagerStaff: "/staff/manager",
+    getPagingDesignerStaff: "/staff/designer",
     // getStaff: (id: string) => `/staff/${id}`,
     // updateStaff: (id: string) => `/staff/${id}`,
     // deleteStaff: (id: string) => `staff/${id}`,
@@ -46,14 +48,33 @@ const endPoint = {
     updatePackage: (id: string) => `/packages/${id}`,
     deletePackage: (id: string) => `/packages/${id}`,
   },
+
   templateConstruction: {
     createTemplateConstruction: "/templatecontructions",
     getTemplateConstructions: "/templatecontructions",
     getTemplateConstruction: (id: string) => `/templatecontructions/${id}`,
     createTemplateConstructionItem: "/templatecontructions/items",
   },
+
   project: {
+    createProject: "/projects",
+    getPagingProjects: "/projects/consultation",
+    // getPagingProjects: "/projects               ",
+    getProject: (id: string) => `/projects/${id}`,
+    assignConsultant: (id: string) => `/projects/${id}/assignconsultant`,
+    getQuotation: (id: string) => `/projects/${id}/quotation`,
     requestProject: "/projects",
+    getProjectDesign: `/projects/design`,
+  },
+
+  quotation: {
+    createQuotation: "/quotation",
+    getAllQuotation: "/quotation",
+    getQuotationDetail: (id: string) => `/quotation/${id}`,
+    rejectQuotation: (id: string) => `/quotation/${id}/reject-accept`,
+    approveQuotation: (id: string) => `/quotation/${id}/approve-edit`,
+    editQuotation: (id: string) => `/quotation/${id}/edit`,
+    rewriteQuotation: (id: string) => `/quotation/${id}/rewrite`,
   },
 };
 

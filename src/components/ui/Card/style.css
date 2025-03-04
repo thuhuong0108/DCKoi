@@ -9,7 +9,7 @@
 }
 
 .card.inner {
-  @apply border border-blue-400;
+  @apply border border-teal-400;
 }
 
 .card.hoverable {

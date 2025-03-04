@@ -8,8 +8,17 @@ import {
   TestUi,
   PackageCreate,
   PackageDetail,
+  // ProjectsPage,
+  ConsultingPage,
+  DetailConsulting,
+  ManagerProject,
+  ManagerDesign,
+  DesignDashboard,
+  ConsultationStaffPage,
+  DetailConsultingStaff,
+  CreateQuotation,
 } from "@/pages";
-import { LayoutAdmin, MainLayout } from "@/layouts";
+import { LayoutAdmin, LayoutCustomer, MainLayout } from "@/layouts";
 import {
   ManagementTransaction,
   ManagementUser,
@@ -22,6 +31,7 @@ import {
   StaffPage,
   ConstructionTemplate,
   ConstructionTemplateConfig,
+  Design,
 } from "@/pages/AdminPage";
 import RootLayout from "@/layouts/RootLayout";
 import PrivateRouterAdmin from "./PrivateRouterAdmin";
@@ -33,6 +43,16 @@ const Routers = () => {
     { path: "/contact", element: <MainLayout Pages={Contact} /> },
     { path: "/login", element: <RootLayout Pages={Login} /> },
     { path: "/register", element: <Register /> },
+    // customer
+    {
+      path: "/space-management",
+      element: <LayoutCustomer Page={ConsultingPage} />,
+    },
+    {
+      path: "/space-management/detail-consulting/:id",
+      element: <LayoutCustomer Page={DetailConsulting} />,
+    },
+    // admin
     {
       path: "/admin",
       element: (
@@ -42,7 +62,7 @@ const Routers = () => {
       ),
     },
     {
-      path: "/admin/detail-consultation",
+      path: "/admin/consultation/:id",
       element: (
         <PrivateRouterAdmin
           Pages={() => <LayoutAdmin Page={DetailConsultation} />}
@@ -134,6 +154,41 @@ const Routers = () => {
     {
       path: "/admin/template-construction/:id",
       element: <RootLayout Pages={ConstructionTemplateConfig} />,
+    },
+    {
+      path: "/admin/design",
+      element: <RootLayout Pages={Design} />,
+    },
+
+    // consultant
+    {
+      path: "/consultant",
+      element: <RootLayout Pages={ConsultationStaffPage} />,
+    },
+    {
+      path: "/consultant/:id",
+      element: <RootLayout Pages={DetailConsultingStaff} />,
+    },
+
+    {
+      path: "/consultant/:id/new-quotation",
+      element: <RootLayout Pages={CreateQuotation} />,
+    },
+
+    // manager
+    {
+      path: "/manager",
+      element: <RootLayout Pages={ManagerProject} />,
+    },
+    {
+      path: "/manager/design",
+      element: <RootLayout Pages={ManagerDesign} />,
+    },
+
+    // designer
+    {
+      path: "/designer",
+      element: <RootLayout Pages={DesignDashboard} />,
     },
     { path: "*", element: <div>404</div> },
   ]);

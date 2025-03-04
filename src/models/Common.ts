@@ -4,8 +4,13 @@ export interface ApiResult {
   message: string;
 }
 export interface ApiResultWithData<T> extends ApiResult {
+  data: T[];
+}
+
+export interface ApiResultWithAData<T> extends ApiResult {
   data: T;
 }
+
 export interface ApiResultWithPagination<T> extends ApiResultWithData<T> {
   pageNumber: number;
   pageSize: number;

@@ -19,4 +19,36 @@ const createStaff = async (staff: StaffType): Promise<ApiResult> => {
   return response;
 };
 
-export { getAllStaff, createStaff };
+const getConsultantStaff = async (
+  filter: Filter
+): Promise<ApiResultWithPagination<StaffType>> => {
+  const response = await http.get(
+    `${endPoint.staff.getPagingConsutanStaff}?PageNumber=${filter.pageNumber}&PageSize=${filter.pageSize}`
+  );
+  return response;
+};
+
+const getManagerStaff = async (
+  filter: Filter
+): Promise<ApiResultWithPagination<StaffType>> => {
+  const response = await http.get(
+    `${endPoint.staff.getPagingManagerStaff}?PageNumber=${filter.pageNumber}&PageSize=${filter.pageSize}`
+  );
+  return response;
+};
+
+const getDesignerStaff = async (
+  filter: Filter
+): Promise<ApiResultWithPagination<StaffType>> => {
+  const response = await http.get(
+    `${endPoint.staff.getPagingDesignerStaff}?PageNumber=${filter.pageNumber}&PageSize=${filter.pageSize}`
+  );
+  return response;
+};
+export {
+  getAllStaff,
+  createStaff,
+  getConsultantStaff,
+  getManagerStaff,
+  getDesignerStaff,
+};

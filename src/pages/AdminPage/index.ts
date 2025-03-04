@@ -1,5 +1,5 @@
 import ConsultationPage from "./Consultation";
-import DetailConsultation from "./DetailPage";
+import DetailConsultation from "./DetailConsultation";
 import ManagementTransaction from "./Transaction";
 import ManagementUser from "./User";
 import PackagePage from "./Packages";
@@ -13,6 +13,7 @@ import PackageCreate from "./PackageCreate";
 import PackageDetail from "./PackageDetail";
 import ConstructionTemplate from "./ConstructionTemplate";
 import ConstructionTemplateConfig from "./ConstructionTemplateConfig";
+import Design from "./Design";
 export {
   ConsultationPage,
   DetailConsultation,
@@ -28,4 +29,5 @@ export {
   PackageDetail,
   ConstructionTemplate,
   ConstructionTemplateConfig,
+  Design,
 };
