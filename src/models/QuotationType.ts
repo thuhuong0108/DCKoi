@@ -37,7 +37,7 @@ export interface EquipmentQuotationType {
 
 export interface ApproveQuotationType {
   id?: string;
-  isAcpprove: boolean;
+  isApprove: boolean;
   reason: string;
 }
 

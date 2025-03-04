@@ -1,4 +1,4 @@
-import { confirmAlert, messageInfo, TableComponent, Title } from "@/components";
+import { confirmAlert, TableComponent, Title } from "@/components";
 import Button from "@/components/ui/Button";
 import { QuotationProjectType } from "@/models/ProjectType";
 // import Card from "@/components/ui/Card";
@@ -12,6 +12,9 @@ import {
 } from "@/redux/slices/quotationProject/QuotationProjectSlices";
 import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
 
+import { Position } from "@/models/enums/Position";
+import { quotationDetailActions } from "@/redux/slices/quotationDetail/quotationDetailSlices";
+import { parsePosition } from "@/utils/helpers";
 import {
   EyeOutlined,
   MailOutlined,
@@ -19,13 +22,10 @@ import {
   PushpinOutlined,
 } from "@ant-design/icons";
 import { Card, Col, Input, Modal, Row, Steps } from "antd";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import DetailPackageRequest from "./DetailPackageRequest";
-import { Position } from "@/models/enums/Position";
-import { parsePosition } from "@/utils/helpers";
 import DetailQuotationConsulting from "./DetailQuotationConsulting";
-import { quotationDetailActions } from "@/redux/slices/quotationDetail/quotationDetailSlices";
 
 const DetailConsultation = () => {
   const dispatch = useAppDispatch();
@@ -66,8 +66,8 @@ const DetailConsultation = () => {
     confirmAlert({
       title: "Xác nhận cập nhật lại bảng báo giá",
       message: "Bạn có chắc chắn muốn cập nhật lại bảng báo giá này không ?",
-      yes: () => {},
-      no: () => {},
+      yes: () => { },
+      no: () => { },
     });
   };
 
@@ -75,8 +75,8 @@ const DetailConsultation = () => {
     confirmAlert({
       title: "Xác nhận bảng báo giá",
       message: "Bạn có chắc chắn xác nhận bảng báo giá này này ?",
-      yes: () => {},
-      no: () => {},
+      yes: () => { },
+      no: () => { },
     });
   };
 
