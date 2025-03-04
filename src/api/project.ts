@@ -58,10 +58,21 @@ const requestProject = async (request: ProjectRequest): Promise<ApiResult> => {
   return response;
 };
 
+const getProjectDesign = async (
+  filter: Filter
+): Promise<ApiResultWithPagination<ProjectType>> => {
+  const response = await http.get(
+    `${endPoint.project.getProjectDesign}?PageNumber=${filter.pageNumber}&PageSize=${filter.pageSize}`
+  );
+
+  return response;
+};
+
 export {
   getPagingProject,
   getProject,
   assignConsultant,
   getQuotationProject,
   requestProject,
+  getProjectDesign,
 };

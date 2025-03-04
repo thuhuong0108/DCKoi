@@ -11,6 +11,7 @@ import {
 } from "@/models/Common";
 import { QuotationStatus } from "@/models/enums/Status";
 import { QuotationRequest } from "@/models/Request/QuotationRequest";
+
 import { RootState } from "@/redux/store/store";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
@@ -79,6 +80,9 @@ export const quotationSlice = createSlice({
     //rewrite
     rewriteQuotation(state, action: PayloadAction<QuotationRequest>) {
       console.log("rewrite quotation: ", action.payload);
+    },
+    rejectAcceptQuotation(state, action: PayloadAction<RejectQuotationType>) {
+      console.log("reject-accept quotation", action.payload);
     },
   },
 });

@@ -43,8 +43,6 @@ const DetailQuotationConsulting = ({ quotation, project }) => {
       };
     });
 
-    console.log(itemWork);
-
     // Update total price using previous state
     setTotalPrice((prevTotal) =>
       itemWork.reduce((sum, item) => sum + item.totalPrice, 0)

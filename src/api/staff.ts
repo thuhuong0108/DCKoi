@@ -28,4 +28,27 @@ const getConsultantStaff = async (
   return response;
 };
 
-export { getAllStaff, createStaff, getConsultantStaff };
+const getManagerStaff = async (
+  filter: Filter
+): Promise<ApiResultWithPagination<StaffType>> => {
+  const response = await http.get(
+    `${endPoint.staff.getPagingManagerStaff}?PageNumber=${filter.pageNumber}&PageSize=${filter.pageSize}`
+  );
+  return response;
+};
+
+const getDesignerStaff = async (
+  filter: Filter
+): Promise<ApiResultWithPagination<StaffType>> => {
+  const response = await http.get(
+    `${endPoint.staff.getPagingDesignerStaff}?PageNumber=${filter.pageNumber}&PageSize=${filter.pageSize}`
+  );
+  return response;
+};
+export {
+  getAllStaff,
+  createStaff,
+  getConsultantStaff,
+  getManagerStaff,
+  getDesignerStaff,
+};

@@ -11,17 +11,14 @@ import {
   // ProjectsPage,
   ConsultingPage,
   DetailConsulting,
-  AuthorizePage,
+  ManagerProject,
+  ManagerDesign,
+  DesignDashboard,
   ConsultationStaffPage,
   DetailConsultingStaff,
   CreateQuotation,
 } from "@/pages";
-import {
-  LayoutAdmin,
-  LayoutConsultant,
-  LayoutCustomer,
-  MainLayout,
-} from "@/layouts";
+import { LayoutAdmin, LayoutCustomer, MainLayout } from "@/layouts";
 import {
   ManagementTransaction,
   ManagementUser,
@@ -34,11 +31,10 @@ import {
   StaffPage,
   ConstructionTemplate,
   ConstructionTemplateConfig,
+  Design,
 } from "@/pages/AdminPage";
 import RootLayout from "@/layouts/RootLayout";
 import PrivateRouterAdmin from "./PrivateRouterAdmin";
-import PrivateRouterCustomer from "./PrivateRouterCustomer";
-import PrivateRouterConsultant from "./PrivateRouterConsultant";
 
 const Routers = () => {
   const location = useLocation();
@@ -50,19 +46,11 @@ const Routers = () => {
     // customer
     {
       path: "/space-management",
-      element: (
-        <PrivateRouterCustomer
-          Pages={() => <LayoutCustomer Page={ConsultingPage} />}
-        />
-      ),
+      element: <LayoutCustomer Page={ConsultingPage} />,
     },
     {
       path: "/space-management/detail-consulting/:id",
-      element: (
-        <PrivateRouterCustomer
-          Pages={() => <LayoutCustomer Page={DetailConsulting} />}
-        />
-      ),
+      element: <LayoutCustomer Page={DetailConsulting} />,
     },
     // admin
     {
@@ -91,23 +79,15 @@ const Routers = () => {
     },
     {
       path: "/admin/equipments",
-      element: (
-        <PrivateRouterAdmin
-          Pages={() => <LayoutAdmin Page={EquipmentPage} />}
-        />
-      ),
+      element: <LayoutAdmin Page={EquipmentPage} />,
     },
     {
       path: "/admin/services",
-      element: (
-        <PrivateRouterAdmin Pages={() => <LayoutAdmin Page={ServicePage} />} />
-      ),
+      element: <LayoutAdmin Page={ServicePage} />,
     },
     {
       path: "/admin/staffs",
-      element: (
-        <PrivateRouterAdmin Pages={() => <LayoutAdmin Page={StaffPage} />} />
-      ),
+      element: <LayoutAdmin Page={StaffPage} />,
     },
     {
       path: "/admin/management-packages",
@@ -175,42 +155,44 @@ const Routers = () => {
       path: "/admin/template-construction/:id",
       element: <RootLayout Pages={ConstructionTemplateConfig} />,
     },
+    {
+      path: "/admin/design",
+      element: <RootLayout Pages={Design} />,
+    },
 
     // consultant
     {
       path: "/consultant",
-      element: (
-        <PrivateRouterConsultant
-          Pages={() => <LayoutConsultant Page={ConsultationStaffPage} />}
-        />
-      ),
+      element: <RootLayout Pages={ConsultationStaffPage} />,
     },
     {
       path: "/consultant/:id",
-      element: (
-        <PrivateRouterConsultant
-          Pages={() => <LayoutConsultant Page={DetailConsultingStaff} />}
-        />
-      ),
+      element: <RootLayout Pages={DetailConsultingStaff} />,
     },
 
     {
       path: "/consultant/:id/new-quotation",
-      element: (
-        <PrivateRouterConsultant
-          Pages={() => <LayoutConsultant Page={CreateQuotation} />}
-        />
-      ),
+      element: <RootLayout Pages={CreateQuotation} />,
     },
 
-    { path: "/error-authorized", element: <AuthorizePage /> },
+    // manager
+    {
+      path: "/manager",
+      element: <RootLayout Pages={ManagerProject} />,
+    },
+    {
+      path: "/manager/design",
+      element: <RootLayout Pages={ManagerDesign} />,
+    },
+
+    // designer
+    {
+      path: "/designer",
+      element: <RootLayout Pages={DesignDashboard} />,
+    },
+    { path: "*", element: <div>404</div> },
   ]);
   console.log("Current Route:", location.pathname);
-
-  // const authorizeUser = (role: string) => {
-  //   switch (role)
-  //   case
-  // }
   return <div>{element}</div>;
 };
 

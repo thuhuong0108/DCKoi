@@ -70,3 +70,7 @@ export {
   //test
   TestUi,
 };
+
+export * from "./AdminPage";
+export * from "./ManagerPages";
+export * from "./DesignerPages";
