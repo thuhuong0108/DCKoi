@@ -4,6 +4,7 @@ import type { TableColumnsType } from "antd";
 import { FieldQuotationDetailType } from "@/models";
 import { useState } from "react";
 import { QuotationItem } from "./type";
+import { formatPrice } from "@/utils/helpers";
 
 const TableQuotation = (props: QuotationItem) => {
   const [visible, setVisible] = useState(false);
@@ -69,7 +70,7 @@ const TableQuotation = (props: QuotationItem) => {
       <Row className="px-5 pt-2">
         <Col span={24} className="flex justify-end">
           <label className="text-lg font-bold">
-            Tổng tiền: {props.totalPrice}
+            Tổng tiền: {formatPrice(props.totalPrice)}
           </label>
         </Col>
       </Row>

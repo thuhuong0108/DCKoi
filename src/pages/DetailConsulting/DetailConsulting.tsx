@@ -29,6 +29,7 @@ import {
   quotationDetailActions,
   selectedQuotationDetail,
 } from "@/redux/slices/quotationDetail/quotationDetailSlices";
+import { quotationActions } from "@/redux/slices/quotation/quotationSlices";
 
 const DetailConsulting = () => {
   const dispatch = useAppDispatch();
@@ -64,21 +65,30 @@ const DetailConsulting = () => {
   };
 
   const handleUpdating = (quotation: QuotationProjectType) => {
-    console.log("quotation: ", quotation);
-
     confirmAlert({
       title: "Xác nhận cập nhật lại bảng báo giá",
       message: "Bạn có chắc chắn muốn cập nhật lại bảng báo giá này không ?",
-      yes: () => {},
+      yes: () => {
+        // dispatch(quotationActions.editQuotation({}));
+      },
       no: () => {},
     });
   };
 
+  console.log("quotation: ", quotation);
   const handleAccept = (quotation: QuotationProjectType) => {
     confirmAlert({
       title: "Xác nhận bảng báo giá",
-      message: "Bạn có chắc chắn xác nhận bảng báo giá này này ?",
-      yes: () => {},
+      message: "Bạn có chắc chắn xác nhận bảng báo giá này ?",
+      yes: () => {
+        dispatch(
+          quotationActions.approveQuotation({
+            isApprove: true,
+            reason: "",
+            id: quotation.id,
+          })
+        );
+      },
       no: () => {},
     });
   };
@@ -284,8 +294,8 @@ const DetailConsulting = () => {
           "reason",
         ]}
         actions={true}
-        actionTexts={["Chi tiết", "Yêu cầu cập nhật", "Chấp nhận"]}
-        actionFunctions={[handleDetailQuotation, handleUpdating, handleAccept]}
+        actionTexts={["Chi tiết"]}
+        actionFunctions={[handleDetailQuotation]}
         loading={isLoading}
         enablePagination={true}
         page={quotations.pageNumber}
