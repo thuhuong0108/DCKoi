@@ -1,6 +1,6 @@
 import ImgLogo from "@/assets/images/logo.png";
 import useForm from "@/hooks/useForm";
-import { RoleUser } from "@/models/enums/roleUser";
+import { RoleUser } from "@/models/enums/RoleUser";
 import {
   authActions,
   LoginPayload,

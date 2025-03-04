@@ -14,7 +14,9 @@ import {
   ManagerProject,
   ManagerDesign,
   DesignDashboard,
-  DesignProjectDetail,
+  ConsultationStaffPage,
+  DetailConsultingStaff,
+  CreateQuotation,
 } from "@/pages";
 import { LayoutAdmin, LayoutCustomer, MainLayout } from "@/layouts";
 import {
@@ -161,7 +163,16 @@ const Routers = () => {
     // consultant
     {
       path: "/consultant",
-      element: <RootLayout Pages={ConsultationPage} />,
+      element: <RootLayout Pages={ConsultationStaffPage} />,
+    },
+    {
+      path: "/consultant/:id",
+      element: <RootLayout Pages={DetailConsultingStaff} />,
+    },
+
+    {
+      path: "/consultant/:id/new-quotation",
+      element: <RootLayout Pages={CreateQuotation} />,
     },
 
     // manager
@@ -178,11 +189,6 @@ const Routers = () => {
     {
       path: "/designer",
       element: <RootLayout Pages={DesignDashboard} />,
-    },
-
-    {
-      path: "/designer/:id",
-      element: <RootLayout Pages={DesignProjectDetail} />,
     },
     { path: "*", element: <div>404</div> },
   ]);

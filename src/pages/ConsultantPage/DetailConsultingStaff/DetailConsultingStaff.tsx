@@ -20,18 +20,18 @@ import {
 } from "@ant-design/icons";
 import { Card, Col, Input, Modal, Row, Steps } from "antd";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import DetailPackageRequest from "./DetailPackageRequest";
-import { Position } from "@/models/enums/Position";
-import { parsePosition } from "@/utils/helpers";
+import { useNavigate, useParams } from "react-router-dom";
 import DetailQuotationConsulting from "./DetailQuotationConsulting";
 import {
   quotationDetailActions,
   selectedQuotationDetail,
 } from "@/redux/slices/quotationDetail/quotationDetailSlices";
+import { QuotationType } from "@/models";
+import DetailPackageRequest from "./DetailPackageRequest";
 
-const DetailConsulting = () => {
+const DetailConsultingStaff = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { id } = useParams();
   const isLoading = useAppSelector((state) => state.projectDetail.loading);
 
@@ -63,29 +63,10 @@ const DetailConsulting = () => {
     setOpenDetailQuotation(true);
   };
 
-  const handleUpdating = (quotation: QuotationProjectType) => {
-    console.log("quotation: ", quotation);
-
-    confirmAlert({
-      title: "Xác nhận cập nhật lại bảng báo giá",
-      message: "Bạn có chắc chắn muốn cập nhật lại bảng báo giá này không ?",
-      yes: () => {},
-      no: () => {},
-    });
-  };
-
-  const handleAccept = (quotation: QuotationProjectType) => {
-    confirmAlert({
-      title: "Xác nhận bảng báo giá",
-      message: "Bạn có chắc chắn xác nhận bảng báo giá này này ?",
-      yes: () => {},
-      no: () => {},
-    });
-  };
-
   return (
     <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 w-full h-full">
       <Title name="Chi tiết yêu cầu tư vấn" />
+
       <Row className="my-8 mx-10">
         <Steps
           current={1}
@@ -119,7 +100,7 @@ const DetailConsulting = () => {
         </div>
       </div>
       <Row className="flex flex-row justify-between mt-4">
-        <Col className="w-1/3 px-4 flex flex-col">
+        <Col className="w-1/2 px-4 flex flex-col">
           <Card
             hoverable
             children={
@@ -157,7 +138,7 @@ const DetailConsulting = () => {
             className="w-full h-full shadow-lg border rounded-2xl bg-indigo-50 "
           />
         </Col>
-        <Col className="w-1/3 px-4 flex flex-col">
+        <Col className="w-1/2 px-4 flex flex-col">
           <Card
             hoverable
             children={
@@ -184,7 +165,7 @@ const DetailConsulting = () => {
                         block
                         title={item.package.name}
                         leadingIcon={<EyeOutlined />}
-                        onClick={() => setOpenDetailPackage(true)}
+                        // onClick={() => ())}
                       />
                     </label>
                     <label className="text-gray-600 font-medium text-lg">
@@ -200,53 +181,7 @@ const DetailConsulting = () => {
             className="w-full h-full shadow-lg border rounded-2xl bg-gray-50 "
           />
         </Col>
-
-        <Col className="w-1/3 px-4 flex flex-col">
-          {item.staff &&
-            item.staff.length > 0 &&
-            item.staff
-              .filter((staff) => staff.position === Position.CONSULTANT)
-              .map((staff, index) => (
-                <Card
-                  key={index}
-                  hoverable
-                  children={
-                    <div className="h-full flex flex-col ">
-                      <Row className="flex flex-col ">
-                        <div className="flex flex-col justify-start items-center gap-4 my-4">
-                          <img
-                            className="w-[100px] h-[100px]"
-                            src="https://cdn-icons-png.flaticon.com/512/3143/3143160.png"
-                            alt="user"
-                          />
-                          <label className="text-black font-semibold text-4xl">
-                            {staff.fullName}
-                          </label>
-                          <label className="text-sm bg-red-200 text-red-500 p-1 border-none rounded-lg w-[150px] text-center">
-                            Nhân viên tư vấn
-                          </label>
-                        </div>
-
-                        <Col className="flex flex-col mt-5 gap-4">
-                          <label className="font-medium text-gray-600 text-lg">
-                            # Mã số nhân viên: {staff.id}
-                          </label>
-                          <label className="text-gray-600 font-medium text-lg">
-                            <MailOutlined /> {staff.email}
-                          </label>
-                          <label className="text-gray-600 font-medium text-lg">
-                            # {parsePosition(staff.position)}
-                          </label>
-                        </Col>
-                      </Row>
-                    </div>
-                  }
-                  className="w-full h-full shadow-lg border rounded-2xl bg-stone-100"
-                />
-              ))}
-        </Col>
       </Row>
-
       <Row>
         <h1 className="text-xl font-semibold text-black my-4">
           Chú thích yêu cầu
@@ -260,11 +195,19 @@ const DetailConsulting = () => {
         />
       </Row>
 
-      <Row>
-        <h1 className="text-xl font-semibold text-black my-4">
-          Báo giá thiết kế thi công
-        </h1>
-      </Row>
+      <h1 className="text-xl font-semibold text-black my-4">
+        Báo giá chi tiết
+      </h1>
+
+      <div className="mt-5">
+        <Button
+          primary
+          title="Viết báo giá"
+          size="lg"
+          onClick={() => navigate(`/consultant/${item.id}/new-quotation`)}
+        />
+      </div>
+
       <TableComponent<QuotationProjectType>
         columns={[
           "Tên bản báo giá",
@@ -284,8 +227,8 @@ const DetailConsulting = () => {
           "reason",
         ]}
         actions={true}
-        actionTexts={["Chi tiết", "Yêu cầu cập nhật", "Chấp nhận"]}
-        actionFunctions={[handleDetailQuotation, handleUpdating, handleAccept]}
+        actionTexts={["Chi tiết"]}
+        actionFunctions={[handleDetailQuotation]}
         loading={isLoading}
         enablePagination={true}
         page={quotations.pageNumber}
@@ -310,7 +253,7 @@ const DetailConsulting = () => {
       </Modal>
 
       <Modal
-        title={`Báo giá chi tiết`}
+        title={`Báo giá chi tiết `}
         centered
         open={openDetailQuotation}
         width={1000}
@@ -325,4 +268,4 @@ const DetailConsulting = () => {
   );
 };
 
-export default DetailConsulting;
+export default DetailConsultingStaff;

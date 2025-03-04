@@ -57,4 +57,5 @@ export interface FieldQuotationDetailType {
   quantity: number;
   note: string;
   category: string;
+  isService?: boolean;
 }

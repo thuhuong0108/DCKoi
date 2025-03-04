@@ -1,3 +1,4 @@
+import { Category } from "@/models/enums/Category";
 import { Position } from "@/models/enums/Position";
 import { ProjectStatus, QuotationStatus } from "@/models/enums/Status";
 
@@ -88,3 +89,24 @@ export const formatDateVietNamese = (date: string) => {
     dateObj.getMonth() + 1
   }/${dateObj.getFullYear()}`;
 };
+
+export function parseCategory(category: Category): string {
+  switch (category) {
+    case Category.PRELIMINARIES:
+      return "Công tác chuẩn bị";
+    case Category.POND_LAYOUT:
+      return "Khung hồ";
+    case Category.PLUMBING_WORKS:
+      return "Hệ thống bơm";
+    case Category.POWER_HOUSE:
+      return "Hệ thống điện";
+    case Category.WATER_STORAGE_TANK_PLATFORM:
+      return "Bồn chứa nước";
+    case Category.LANDSCAPING:
+      return "Cảnh quan";
+    case Category.CONTINGENCY:
+      return "Chi phí phát sinh";
+    default:
+      return "Không xác định";
+  }
+}

@@ -39,8 +39,6 @@ const RootLayout = ({ Pages }: LayoutProps) => {
     default:
       return <MainLayout Pages={Pages} />;
   }
-
-  // return <MainLayout Pages={Pages} />;
 };
 
 export default RootLayout;
