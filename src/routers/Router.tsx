@@ -17,6 +17,8 @@ import {
   ConsultationStaffPage,
   DetailConsultingStaff,
   CreateQuotation,
+  CustomerDesign,
+  CustomerDesignDetail,
 } from "@/pages";
 import { LayoutAdmin, LayoutCustomer, MainLayout } from "@/layouts";
 import {
@@ -51,6 +53,14 @@ const Routers = () => {
     {
       path: "/space-management/detail-consulting/:id",
       element: <LayoutCustomer Page={DetailConsulting} />,
+    },
+    {
+      path: "/design",
+      element: <LayoutCustomer Page={CustomerDesign} />,
+    },
+    {
+      path: "/design/:id",
+      element: <LayoutCustomer Page={CustomerDesignDetail} />,
     },
     // admin
     {
