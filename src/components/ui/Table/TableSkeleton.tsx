@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Skeleton from '@mui/material/Skeleton';
+import Skeleton from "@mui/material/Skeleton";
 
 import { TableSkeletonProps } from "./types";
 
@@ -24,23 +24,23 @@ const TableSkeleton: React.FC<TableSkeletonProps> = ({
   }, [enableDarkMode]);
   const baseContainerClassName =
     enableDarkMode && isDarkMode
-      ? "bg-gray-900 text-gray-200 border-gray-700"
-      : "bg-white text-gray-900 border-gray-200";
+      ? "bg-gray-100 text-gray-100 border-gray-700"
+      : "bg-white text-gray-100 border-gray-50";
   const baseTableClassName =
     enableDarkMode && isDarkMode
-      ? "bg-gray-900 text-gray-200 divide-gray-700"
-      : "bg-white text-gray-900 divide-gray-300";
+      ? "bg-gray-100 text-gray-100 divide-gray-200"
+      : "bg-white text-gray-100 divide-gray-300";
   const baseThClassName =
-    enableDarkMode && isDarkMode ? "text-gray-300" : "text-gray-900";
+    enableDarkMode && isDarkMode ? "text-gray-300" : "text-gray-100";
   const baseTdClassName =
-    enableDarkMode && isDarkMode ? "text-gray-300" : "text-gray-900";
+    enableDarkMode && isDarkMode ? "text-gray-300" : "text-gray-100";
   const baseTrClassName = (index: number) =>
     index % 2 === 0
       ? enableDarkMode && isDarkMode
-        ? "bg-gray-800"
+        ? "bg-gray-50"
         : "bg-white"
       : enableDarkMode && isDarkMode
-      ? "bg-gray-700"
+      ? "bg-gray-200"
       : "bg-gray-50";
   const containerClassName = disableDefaultStyles
     ? customClassNames.container || ""
@@ -85,7 +85,7 @@ const TableSkeleton: React.FC<TableSkeletonProps> = ({
                 </tr>
               </thead>
               <tbody>
-                {Array.from({ length: 10 }).map((_, index) => (
+                {Array.from({ length: 5 }).map((_, index) => (
                   <tr key={index} className={trClassName(index)}>
                     {Array.from({ length: 4 }).map((_, colIndex) => (
                       <td key={colIndex} className={tdClassName}>

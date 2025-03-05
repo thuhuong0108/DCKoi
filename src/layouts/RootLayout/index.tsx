@@ -20,7 +20,7 @@ interface MenuItemProps {
 }
 const RootLayout = ({ Pages }: LayoutProps) => {
   const role = useAppSelector((state) => state.auth.role);
-
+  console.log(role);
   const pageName = Pages.name;
   if (pageName === "Login" || pageName === "Register") {
     return <Pages />;

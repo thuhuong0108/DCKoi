@@ -1,4 +1,4 @@
-import { EquipmentType, FieldQuotationDetailType } from "@/models";
+import { FieldQuotationDetailType } from "@/models";
 
 export interface TableAddProps {
   data: FieldQuotationDetailType[];

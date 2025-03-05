@@ -4,6 +4,7 @@ import type { TableColumnsType } from "antd";
 import { FieldQuotationDetailType } from "@/models";
 import { useState } from "react";
 import { QuotationItem } from "./type";
+import { formatPrice } from "@/utils/helpers";
 
 const CategoryField = (props: QuotationItem) => {
   const [visible, setVisible] = useState(false);
@@ -52,7 +53,7 @@ const CategoryField = (props: QuotationItem) => {
           <PlusSquareOutlined
             style={{ marginRight: "8px", fontSize: "20px" }}
           />
-          <label className="text-lg">{props.name}</label>
+          <label className="text-base">{props.name}</label>
         </Col>
       </Row>
       <Row className="px-5 pt-2">
@@ -66,10 +67,13 @@ const CategoryField = (props: QuotationItem) => {
         )}
       </Row>
 
-      <Row className="px-5 pt-2">
-        <Col span={24} className="flex justify-end">
-          <label className="text-lg font-bold">
-            Tổng tiền: {props.totalPrice}
+      <Row className="p-2 my-2 flex justify-end bg-gray-50">
+        <Col span={18}>
+          <label className="text-base font-semibold">Tổng tiền:</label>
+        </Col>
+        <Col span={6}>
+          <label className="text-base font-semibold">
+            {formatPrice(props.totalPrice)} VND
           </label>
         </Col>
       </Row>
