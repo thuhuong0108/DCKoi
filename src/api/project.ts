@@ -9,6 +9,7 @@ import {
 import { Filter } from "@/models/Common";
 import { endPoint } from "@/utils/endPoint";
 import {
+  ProjectDesignType,
   ProjectDetailType,
   ProjectType,
   QuotationProjectType,
@@ -68,6 +69,17 @@ const getProjectDesign = async (
   return response;
 };
 
+const getAllDesignForSpecificProject = async(
+  id: string,
+  filter: Filter
+): Promise<ApiResultWithPagination<ProjectDesignType>> => {
+  const response = await http.get(
+    `${endPoint.project.getAllDesignForSpecificProject(id)}?PageNumber=${filter.pageNumber}&PageSize=${filter.pageSize}`
+  );
+
+  return response;
+}
+
 export {
   getPagingProject,
   getProject,
@@ -75,4 +87,5 @@ export {
   getQuotationProject,
   requestProject,
   getProjectDesign,
+  getAllDesignForSpecificProject,
 };

@@ -5,6 +5,7 @@ import Contact from "./Contact/Contact";
 // import ProjectsPage from "./Projects";
 import ConsultingPage from "./Projects";
 import DetailConsulting from "./DetailConsulting";
+import CustomerProjectDesign from "./CustomerProjectDesign";
 import CustomerDesign from "./CustomerDesign";
 import CustomerDesignDetail from "./CustomerDesignDetail";
 
@@ -43,6 +44,7 @@ export {
   Contact,
   ConsultingPage,
   DetailConsulting,
+  CustomerProjectDesign,
   CustomerDesign,
   CustomerDesignDetail,
   // ProjectsPage,

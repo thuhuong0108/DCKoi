@@ -1,71 +1,73 @@
-import { ImageGallery, Title } from "@/components"
+import { ImageGallery, Title } from "@/components";
+import EmptyContent from "@/components/ui/EmptyContent";
 import { Position } from "@/models/enums/Position";
-import { designDetailActions, selectedDesignDetail } from "@/redux/designDetail/designDetailSlices";
+import { designDetailActions, selectedDesignDetail } from "@/redux/slices/designDetail/designDetailSlices";
 import { projectDetailActions, selectedProjectDetail } from "@/redux/slices/projectDetail/projectDetailSlices";
-import { useAppDispatch, useAppSelector } from "@/redux/store/hook"
+import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
 import { parsePosition } from "@/utils/helpers";
-import { EyeOutlined, LeftOutlined, MailOutlined, PhoneOutlined, PushpinOutlined, RightOutlined } from "@ant-design/icons";
+import { MailOutlined, PhoneOutlined, PushpinOutlined } from "@ant-design/icons";
 import { TextField } from "@mui/material";
-import { Button, Card, Col, Input, Modal, Row } from "antd";
+import { Button, Card, Col, Input, message, Modal, Row } from "antd";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 const CustomerDesignDetail = () => {
-  // const dispatch = useAppDispatch();
-  // const { id } = useParams();
+  const dispatch = useAppDispatch();
+  const { id } = useParams();
 
-  // const item = useAppSelector(selectedProjectDetail);
+  const item = useAppSelector(selectedProjectDetail);
 
-  // const designs = useAppSelector(selectedDesignDetail);
+  const designs = useAppSelector(selectedDesignDetail);
 
-  // useEffect(() => {
-  //   dispatch(projectDetailActions.fetchProjectDetail(id));
-  //   if (item && item.id) {
-  //     dispatch(designDetailActions.fetchDesignDetail(item.id));
-  //   }
-  // }, [dispatch, id, item, item.id]);
+  useEffect(() => {
+    dispatch(projectDetailActions.fetchProjectDetail(id));
+    if (item && item.id) {
+      dispatch(designDetailActions.fetchDesignDetail(item.id));
+    }
+  }, [dispatch, id, item, item.id]);
 
   const [reason, setReason] = useState("");
   const [openModalReason, setOpenModalReason] = useState(false);
 
-  const item = {
-    id: "123",
-    customerName: "Nguyễn Văn A",
-    email: "nguyenvana@example.com",
-    phone: "0987654321",
-    address: "123 Đường ABC, Quận 1, TP. Hồ Chí Minh",
-    area: 50,
-    depth: 2,
-    package: {
-      id: "p001",
-      name: "Gói thiết kế hồ cá Koi cao cấp"
-    },
-    staff: [
-      {
-        id: "s001",
-        fullName: "Trần B",
-        email: "tranb@example.com",
-        position: Position.CONSULTANT
-      },
-      {
-        id: "s002",
-        fullName: "Lê C",
-        email: "lec@example.com",
-        position: Position.DESIGNER
-      }
-    ]
+  const [openConfirmAccept, setOpenConfirmAccept] = useState(false);
+
+  const [selectedImage, setSelectedImage] = useState("");
+
+  const images = designs.designImages;
+
+  const handleRejectDesign = () => {
+    setOpenModalReason(true);
   };
 
-  const [selectedImage, setSelectedImage] = useState(
-    "https://storage.googleapis.com/digital-platform/hinh_anh_goi_y_15_mau_thiet_ke_ho_ca_Koi_dep_ai_nhin_cung_me_so_1_c8b8397ee5/hinh_anh_goi_y_15_mau_thiet_ke_ho_ca_Koi_dep_ai_nhin_cung_me_so_1_c8b8397ee5.jpg"
-  );
+  const confirmAcceptDesign = () => {
+    {
+      dispatch(designDetailActions.acceptDesign(designs.id));
+      setOpenConfirmAccept(false);
+    }
+  }
 
-  const images = [
-    "https://storage.googleapis.com/digital-platform/hinh_anh_goi_y_15_mau_thiet_ke_ho_ca_Koi_dep_ai_nhin_cung_me_so_1_c8b8397ee5/hinh_anh_goi_y_15_mau_thiet_ke_ho_ca_Koi_dep_ai_nhin_cung_me_so_1_c8b8397ee5.jpg",
-    "https://sp-ao.shortpixel.ai/client/to_auto,q_glossy,ret_img,w_800,h_450/https://cuahangthuysinh.vn/wp-content/uploads/2023/06/dich-vu-thi-cong-ho-ca-koi-dep.webp",
-    "https://cdn-icons-png.flaticon.com/512/3143/3143160.png",
-    "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-  ];
+  const confirmRejectDesign = () => {
+    if (reason.trim()) {
+      dispatch(designDetailActions.rejectDesign({
+        id: designs.id, reason
+      }));
+      setOpenModalReason(false);
+      setReason("");
+    } else {
+      message.warning("Vui lòng nhập lý do từ chối");
+    }
+  };
+
+  if (!item.id) {
+    return (
+      <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 w-full h-full">
+        <Title name="Chi tiết thiết kế" />
+
+        <EmptyContent imgUrl="https://cdn1.iconfinder.com/data/icons/files-line-1/32/file_20-512.png"
+          title="Chi tiết bản thiết kế đang trống hoặc đang bị lỗi" />
+      </div>
+    )
+  }
 
   return (
     <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 w-full h-full">
@@ -204,10 +206,10 @@ const CustomerDesignDetail = () => {
             disabled
           />
           <div className="flex flex-row gap-5">
-            <Button onClick={() => setOpenModalReason(true)} type="primary" className="px-8 py-6 text-lg font-semibold">
+            <Button onClick={() => setOpenConfirmAccept(true)} type="primary" className="px-8 py-6 text-lg font-semibold">
               Chấp nhận
             </Button>
-            <Button onClick={() => setOpenModalReason(true)} color="danger" variant="solid" className="px-8 py-6 text-lg font-semibold">
+            <Button onClick={() => handleRejectDesign()} color="danger" variant="solid" className="px-8 py-6 text-lg font-semibold">
               Từ chối
             </Button>
           </div>
@@ -215,11 +217,18 @@ const CustomerDesignDetail = () => {
       </Row>
 
       <Modal
+        title="Xác nhận chấp nhận bản thiết kế?"
+        open={openConfirmAccept}
+        onCancel={() => setOpenConfirmAccept(false)}
+        onOk={() => confirmAcceptDesign()}
+      >
+        <p className="font-semibold text-lg">Bạn có chắc chắn muốn chấp nhận bản thiết kế này không?</p>
+      </Modal>
+
+      <Modal
         title="Vui lòng nhập lý do"
         open={openModalReason}
         onCancel={() => setOpenModalReason(false)}
-        onClose={() => setOpenModalReason(false)}
-        onOk={() => setOpenModalReason(false)}
         footer={[]}
       >
         <Input.TextArea
@@ -228,10 +237,14 @@ const CustomerDesignDetail = () => {
           rows={4}
         />
         <div className="flex flex-row gap-4 mt-2">
-          <Button onClick={() => setOpenModalReason(false)} type="primary">
+          <Button
+            onClick={() => confirmRejectDesign()}
+            type="primary">
             Xác nhận
           </Button>
-          <Button color="danger" variant="solid" onClick={() => setOpenModalReason(false)}>
+          <Button color="danger"
+            variant="solid"
+            onClick={() => setOpenModalReason(false)}>
             Hủy
           </Button>
         </div>

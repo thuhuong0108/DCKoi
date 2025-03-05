@@ -65,6 +65,7 @@ const endPoint = {
     getQuotation: (id: string) => `/projects/${id}/quotation`,
     requestProject: "/projects",
     getProjectDesign: `/projects/design`,
+    getAllDesignForSpecificProject: (id: string) => `/projects/${id}/design`
   },
 
   quotation: {
@@ -78,7 +79,10 @@ const endPoint = {
   },
 
   design: {
-    getDesign: (id: string) => `/design/${id}`,
+    getDesign: (id: string) => `/designs/${id}`,
+    rejectDesign: (id: string) => `/designs/${id}/reject`,
+    acceptDesign: (id: string) => `/designs/${id}/accept`,
+    requestEditDesign: (id: string) => `/designs/${id}/request-edit`,
   }
 };
 

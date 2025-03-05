@@ -19,6 +19,7 @@ import {
   CreateQuotation,
   CustomerDesign,
   CustomerDesignDetail,
+  CustomerProjectDesign,
 } from "@/pages";
 import { LayoutAdmin, LayoutCustomer, MainLayout } from "@/layouts";
 import {
@@ -56,10 +57,14 @@ const Routers = () => {
     },
     {
       path: "/design",
-      element: <LayoutCustomer Page={CustomerDesign} />,
+      element: <LayoutCustomer Page={CustomerProjectDesign} />,
     },
     {
       path: "/design/:id",
+      element: <LayoutCustomer Page={CustomerDesign} />,
+    },
+    {
+      path: "/design/:id/detail",
       element: <LayoutCustomer Page={CustomerDesignDetail} />,
     },
     // admin

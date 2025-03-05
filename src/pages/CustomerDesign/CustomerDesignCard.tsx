@@ -1,19 +1,13 @@
-import { ProjectType } from "@/models";
-import DrawIcon from "@mui/icons-material/Draw";
-import EditLocationIcon from "@mui/icons-material/EditLocation";
+import { ProjectDesignType } from "@/models/ProjectType";
 import { Card, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
 
 const CustomerDesignCard = ({
     id,
     imageUrl,
-    address,
-    area,
-    depth,
-    packageName,
-    name,
-    createdDate,
-}: ProjectType) => {
+    version,
+    status,
+}: ProjectDesignType) => {
     const navigate = useNavigate();
 
     const handleCardClick = () => {
@@ -36,22 +30,14 @@ const CustomerDesignCard = ({
                 />
             }
         >
-            <Card.Meta title={name ? name : "project Name ACB"} />
 
             <div className="flex items-center justify-between mt-2">
                 <div className="flex flex-col justify-between mt-2">
-                    {/* location */}
                     <div className="flex items-center">
-                        <EditLocationIcon />
-                        <span className="ml-2 text-sm">{address}</span>
+                        <span className="ml-2 text-sm">{status}</span>
                     </div>
-
-                    {/* size */}
                     <div className="flex items-center">
-                        <DrawIcon />
-                        <span className="ml-2 text-sm">
-                            {area}m x {depth}m
-                        </span>
+                        <span className="ml-2 text-sm">Version {version}</span>
                     </div>
                 </div>
             </div>
@@ -65,10 +51,8 @@ const CustomerDesignCard = ({
 
             <div className="flex items-center flex-row justify-between">
                 <Typography.Text strong aria-level={2}>
-                    {packageName}
+                    {status}
                 </Typography.Text>
-
-                <Typography className="text-sm">{createdDate}</Typography>
             </div>
         </Card>
     )
