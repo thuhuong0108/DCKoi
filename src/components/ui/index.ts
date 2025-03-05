@@ -8,6 +8,7 @@ import ScrollbarContainer from "./Scrollbar";
 import SwitchContainer from "./Switch";
 import TimelineContainer from "./Timeline";
 import IconAnimation from "./IconAnimation";
+import CircularProgressWithLabel from "./CircularProgressWithLabel";
 
 export const Button = ButtonControl;
 export const Avatar = AvatarContainer;
@@ -17,6 +18,7 @@ export const Modal = ModalComp;
 export const Scrollbar = ScrollbarContainer;
 export const Switch = SwitchContainer;
 export const Timeline = TimelineContainer;
+export const CircularProgress = CircularProgressWithLabel;
 
 export {
   messageInfo,

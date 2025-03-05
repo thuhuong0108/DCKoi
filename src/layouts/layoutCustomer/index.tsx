@@ -5,6 +5,7 @@ import {
   BuildSharp,
   SupportAgentSharp,
   FolderSharp,
+  Construction,
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 
@@ -38,6 +39,12 @@ const LayoutCustomer: React.FC<IndexProps> = ({ Page }) => {
       link: "/space-management",
       children: "Tư vấn ",
       icon: <SupportAgentSharp />,
+      badge: true,
+    },
+    {
+      link: "/construction",
+      children: "Thi công",
+      icon: <Construction />,
       badge: true,
     },
     {
