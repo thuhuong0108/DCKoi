@@ -79,7 +79,7 @@ const CustomerDesign = () => {
                         status: ProjectStatus.FINISHED,
                         createdDate: "2024-01-15",
                         updatedDate: "2024-02-01",
-                        name: "Thiết kế nhà phố",
+                        name: "Hồ cá rộng",
                     },
                     {
                         id: "2",
@@ -96,7 +96,7 @@ const CustomerDesign = () => {
                         status: ProjectStatus.DESIGNING,
                         createdDate: "2023-12-10",
                         updatedDate: "2024-01-20",
-                        name: "Biệt thự hiện đại",
+                        name: "Hồ cá sân vườn",
                     },
                 ],
                 totalPages: 1,

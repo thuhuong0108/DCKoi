@@ -76,6 +76,10 @@ const endPoint = {
     editQuotation: (id: string) => `/quotation/${id}/edit`,
     rewriteQuotation: (id: string) => `/quotation/${id}/rewrite`,
   },
+
+  design: {
+    getDesign: (id: string) => `/design/${id}`,
+  }
 };
 
 export { baseURL, endPoint, socketURL };

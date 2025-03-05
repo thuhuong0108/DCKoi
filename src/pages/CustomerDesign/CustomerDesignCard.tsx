@@ -1,28 +1,19 @@
 import { ProjectType } from "@/models";
-import { staffActions } from "@/redux/slices/staff/staffSlice";
-import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
 import DrawIcon from "@mui/icons-material/Draw";
 import EditLocationIcon from "@mui/icons-material/EditLocation";
-import { Button, Card, Typography } from "antd";
-import { useState } from "react";
+import { Card, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
 
 const CustomerDesignCard = ({
     id,
     imageUrl,
-    customerName,
     address,
     area,
     depth,
+    packageName,
     name,
-    phone
+    createdDate,
 }: ProjectType) => {
-    const dispatch = useAppDispatch();
-    const managers = useAppSelector((state) => state.staff.staffs);
-    const loading = useAppSelector((state) => state.staff.loading);
-
-    const [visible, setVisible] = useState(false);
-
     const navigate = useNavigate();
 
     const handleCardClick = () => {
@@ -74,10 +65,10 @@ const CustomerDesignCard = ({
 
             <div className="flex items-center flex-row justify-between">
                 <Typography.Text strong aria-level={2}>
-                    {customerName}
+                    {packageName}
                 </Typography.Text>
 
-                <Typography className="text-sm">{phone}</Typography>
+                <Typography className="text-sm">{createdDate}</Typography>
             </div>
         </Card>
     )
