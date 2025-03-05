@@ -43,43 +43,89 @@ import {
   QuotationRequest,
   QuotationServiceRequest,
 } from "@/models/Request/QuotationRequest";
+import {
+  quotationDetailActions,
+  selectedQuotationDetail,
+} from "@/redux/slices/quotationDetail/quotationDetailSlices";
+import { formatPrice } from "@/utils/helpers";
+import { rewriteQuotation, updateQuotation } from "@/api/quotation";
 import { quotationActions } from "@/redux/slices/quotation/quotationSlices";
+import { QuotationStatus } from "@/models/enums/Status";
 
-const CreateQuotation = () => {
+const RewriteQuotation = () => {
   const { Column } = Table;
   const navigate = useNavigate();
-
   const { id } = useParams();
   const dispatch = useAppDispatch();
+  const quotation = useAppSelector(selectedQuotationDetail);
   const project = useAppSelector(selectedProjectDetail);
-  const equipments = useAppSelector(selectEquipment);
-  const services = useAppSelector(selectedService);
+  const equipmentTable = useAppSelector(selectEquipment);
+  const serviceTable = useAppSelector(selectedService);
+  const [totalPriceQuotation, setTotalPrice] = useState<number>(0);
 
   useEffect(() => {
-    dispatch(projectDetailActions.fetchProjectDetail(id));
-  }, [dispatch, id]);
+    dispatch(quotationDetailActions.fetchQuotationDetail(id));
+  }, [id]);
+
+  useEffect(() => {
+    if (quotation.projectId)
+      dispatch(projectDetailActions.fetchProjectDetail(quotation.projectId));
+  }, [quotation.projectId]);
+
+  const equipments = quotation.equipments;
+  const services = quotation.services;
 
   const [itemWork, setItemWork] = useState<QuotationItem[]>([]);
   const templates = useAppSelector(
     (state) => state.templateConstruction.templateConstructions
   );
-  const [selectedTemplate, setSelectedTemplate] =
-    useState<TemplateConstructionType | null>(null);
 
   useEffect(() => {
     const categoryCollection: string[] = Object.values(Category);
 
-    // Build itemWork with category field
-    const itemWork: QuotationItem[] = categoryCollection.map((category) => {
+    // Build itemWork from services and equipments
+    const itemWork = categoryCollection.map((category) => {
+      const servicesInCategory = services
+        .filter((service) => service.category === category)
+        .map((service) => ({
+          ...service,
+          isService: true,
+        }));
+
+      const equipmentsInCategory = equipments
+        .filter((equipment) => equipment.category === category)
+        .map((equipment) => ({
+          ...equipment,
+          unit: "Chiếc",
+        }));
+
+      const fieldQuotationDetailType: FieldQuotationDetailType[] = [
+        ...servicesInCategory,
+        ...equipmentsInCategory,
+      ];
+
+      const totalPrice = fieldQuotationDetailType.reduce(
+        (sum, item) => sum + item.price * item.quantity,
+        0
+      );
+
       return {
+        totalPrice,
         name: category,
-        items: [],
-        totalPrice: 0,
+        items: fieldQuotationDetailType,
       };
     });
 
+    // Update total price using previous state
+    setTotalPrice((prevTotal) =>
+      itemWork.reduce((sum, item) => sum + item.totalPrice, 0)
+    );
+
     setItemWork(itemWork);
-  }, []);
+  }, [services, equipments]);
+
+  const [selectedTemplate, setSelectedTemplate] =
+    useState<TemplateConstructionType | null>(null);
 
   const handleAddEquipments = () => {
     dispatch(equipmentActions.fetchEquipment({ pageNumber: 1, pageSize: 10 }));
@@ -126,22 +172,18 @@ const CreateQuotation = () => {
         const updatedItems = work.items.filter(
           (item) => item.id !== itemToRemove.id
         );
-
         const updatedTotalPrice = updatedItems.reduce(
           (sum, item) => sum + item.price * item.quantity,
           0
         );
-
         return {
           ...work,
           items: updatedItems,
           totalPrice: updatedTotalPrice,
         };
       }
-
       return work;
     });
-
     setItemWork(updatedItemWork);
   };
 
@@ -154,6 +196,11 @@ const CreateQuotation = () => {
         return {
           id: item.id,
           quantity: item.quantity,
+          name: item.name,
+          description: item.description,
+          price: item.price,
+          unit: item.unit,
+          type: "",
           category: item.category,
           note: item.note,
         };
@@ -166,21 +213,30 @@ const CreateQuotation = () => {
       .map((item) => {
         return {
           id: item.id,
+          name: item.name,
+          description: item.description,
+          price: item.price,
           quantity: item.quantity,
           category: item.category,
           note: item.note,
-          price: item.price,
         };
       });
     //  build data
     const data: QuotationRequest = {
-      projectId: id,
+      id: id,
+      projectId: quotation.projectId,
       templateConstructionId: selectedTemplate?.id || "",
       services: services,
       equipments: equipments,
     };
-    dispatch(quotationActions.createQuotation(data));
-    navigate(`/consultant/${id}`);
+
+    if (quotation.status === QuotationStatus.REJECTED) {
+      dispatch(quotationActions.rewriteQuotation(data));
+    } else {
+      dispatch(quotationActions.updateQuotation(data));
+    }
+
+    navigate(`/consultant/${quotation.projectId}`);
   };
 
   const handleAddServicesToItem = (item: ServiceType) => {
@@ -220,11 +276,22 @@ const CreateQuotation = () => {
   const [openServices, setOpenServices] = useState(false);
   const [openEquipments, setOpenEquipments] = useState(false);
   const [openTemplate, setOpenTemplate] = useState(false);
+  const handleUpdateItem = (updatedItem: FieldQuotationDetailType) => {
+    const updatedItemWork = itemWork.map((work) => {
+      return {
+        ...work,
+        items: work.items.map((item) =>
+          item.id === updatedItem.id ? updatedItem : item
+        ),
+      };
+    });
+    setItemWork(updatedItemWork);
+  };
 
   return (
     <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 w-full h-full">
       <Title name="Thông tin báo giá chi tiết thi công" />
-
+      <label>Phiên bản: {quotation.version}</label>
       <Row className="flex flex-row items-start w-full gap-x-20 mt-4">
         <Col>
           <div className="flex flex-row justify-start items-center gap-4 text-lg">
@@ -238,6 +305,15 @@ const CreateQuotation = () => {
               Gói thiết kế thi công:
             </label>
             <span className="text-gray-500">{project.package.name}</span>
+          </div>
+          <div className="flex flex-row justify-start items-center gap-4 text-lg">
+            <PoundCircleOutlined />
+            <label className="text-black font-semibold">
+              Tổng giá trị hợp đồng:
+            </label>
+            <span className="text-gray-500">
+              {formatPrice(totalPriceQuotation)} VND
+            </span>
           </div>
         </Col>
 
@@ -283,6 +359,7 @@ const CreateQuotation = () => {
             name={item.name}
             items={item.items}
             totalPrice={item.totalPrice}
+            onUpdateItem={handleUpdateItem}
           />
           <div className="my-2">
             <Button
@@ -313,7 +390,7 @@ const CreateQuotation = () => {
         onOk={() => setOpenServices(false)}
         footer={[]}
       >
-        <Table<ServiceType> dataSource={services.data}>
+        <Table<ServiceType> dataSource={serviceTable.data}>
           <Column title="Tên dịch vụ" dataIndex="name" key="name" />
           <Column title="Mô tả" dataIndex="description" key="description" />
 
@@ -339,7 +416,7 @@ const CreateQuotation = () => {
         onOk={() => setOpenEquipments(false)}
         footer={[]}
       >
-        <Table<EquipmentType> dataSource={equipments.data}>
+        <Table<EquipmentType> dataSource={equipmentTable.data}>
           <Column title="Tên thiết bị" dataIndex="name" key="name" />
           <Column title="Mô tả" dataIndex="description" key="description" />
 
@@ -409,10 +486,10 @@ const CreateQuotation = () => {
       </Modal>
 
       <div className="flex justify-end">
-        <Button title="Lưu báo giá" onClick={handleSaveQuotation} />
+        <Button title="Gửi báo giá" onClick={handleSaveQuotation} />
       </div>
     </div>
   );
 };
 
-export default CreateQuotation;
+export default RewriteQuotation;

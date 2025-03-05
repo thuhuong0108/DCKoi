@@ -17,6 +17,7 @@ import {
   ConsultationStaffPage,
   DetailConsultingStaff,
   CreateQuotation,
+  RewriteQuotation,
 } from "@/pages";
 import { LayoutAdmin, LayoutCustomer, MainLayout } from "@/layouts";
 import {
@@ -169,10 +170,13 @@ const Routers = () => {
       path: "/consultant/:id",
       element: <RootLayout Pages={DetailConsultingStaff} />,
     },
-
     {
       path: "/consultant/:id/new-quotation",
       element: <RootLayout Pages={CreateQuotation} />,
+    },
+    {
+      path: "/consultant/:id/rewrite-quotation",
+      element: <RootLayout Pages={RewriteQuotation} />,
     },
 
     // manager
@@ -190,6 +194,7 @@ const Routers = () => {
       path: "/designer",
       element: <RootLayout Pages={DesignDashboard} />,
     },
+
     { path: "*", element: <div>404</div> },
   ]);
   console.log("Current Route:", location.pathname);

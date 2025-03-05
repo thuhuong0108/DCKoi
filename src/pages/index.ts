@@ -5,30 +5,6 @@ import Contact from "./Contact/Contact";
 // import ProjectsPage from "./Projects";
 import ConsultingPage from "./Projects";
 import DetailConsulting from "./DetailConsulting";
-
-import {
-  ConsultationPage,
-  DetailConsultation,
-  ManagementTransaction,
-  ManagementUser,
-  PackagePage,
-  PackageItem,
-  ManagementPackage,
-  ServicePage,
-  EquipmentPage,
-  StaffPage,
-  PackageCreate,
-  PackageDetail,
-  ConstructionTemplate,
-  ConstructionTemplateConfig,
-} from "./AdminPage";
-
-import {
-  ConsultationStaffPage,
-  DetailConsultingStaff,
-  CreateQuotation,
-} from "./ConsultantPage";
-
 import AuthorizePage from "./ErrorPage";
 
 import TestUi from "./TestUi";
@@ -43,27 +19,6 @@ export {
   DetailConsulting,
   // ProjectsPage,
 
-  //admin
-  ConsultationPage,
-  DetailConsultation,
-  ManagementTransaction,
-  ManagementUser,
-  PackagePage,
-  PackageItem,
-  ManagementPackage,
-  ServicePage,
-  EquipmentPage,
-  StaffPage,
-  PackageCreate,
-  PackageDetail,
-  ConstructionTemplate,
-  ConstructionTemplateConfig,
-
-  //consultant
-  ConsultationStaffPage,
-  DetailConsultingStaff,
-  CreateQuotation,
-
   //error
   AuthorizePage,
 
@@ -74,3 +29,4 @@ export {
 export * from "./AdminPage";
 export * from "./ManagerPages";
 export * from "./DesignerPages";
+export * from "./ConsultantPage";
