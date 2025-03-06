@@ -24,60 +24,55 @@ const Consultationcard = ({
   const navigate = useNavigate();
 
   return (
-    <Card
-      className="shadow-innerTop p-4 w-[370px] m-2"
-      padding="sm"
-      bordered={true}
-      inner={true}
-      hoverable={true}
-    >
-      <Card.Header className="custom-header flex flex-row justify-between items-center">
-        <div>
-          <Avatar size="default" icon={<UserOutlined />} />
-          <label className="text-xl font-weight-bold mx-2">
-            {customerName}
-          </label>
-        </div>
-        {status === ProjectStatus.REQUESTING ? (
-          <label className="text-sm bg-yellow-100 text-yellow-500 p-1 border-none rounded-lg w-[70px] text-center">
-            {parseStatusProject(status)}
-          </label>
-        ) : status === ProjectStatus.FINISHED ? (
-          <label className="text-sm bg-red-100 text-red-500 p-1 border-none rounded-lg w-[70px] text-center">
-            {parseStatusProject(status)}
-          </label>
-        ) : (
-          <label className="text-sm bg-green-100 text-green-500 p-1 border-none rounded-lg w-[70px] text-center">
-            {parseStatusProject(status)}
-          </label>
-        )}
-      </Card.Header>
-      <Card.Body className="custom-body">
-        <div className="p-2 flex flex-row justify-between items-center text-gray-400 border-b-2 ">
-          <label>{createdDate}</label>
-        </div>
-        <div className="p-2 flex flex-row justify-start items-center">
-          <LocalPhoneIcon className="mr-2 " />
-          <label className="text-black">{phone}</label>
-        </div>
+    <div onClick={() => navigate(`${id}`)}>
+      <Card
+        className="shadow-innerTop p-4 w-[370px] m-2"
+        padding="sm"
+        bordered
+        inner
+        hoverable
+      >
+        <Card.Header className="custom-header flex flex-row justify-between items-center">
+          <div>
+            <Avatar size="default" icon={<UserOutlined />} />
+            <label className="text-xl font-weight-bold mx-2">
+              {customerName}
+            </label>
+          </div>
+          {status === ProjectStatus.REQUESTING ? (
+            <label className="text-sm bg-yellow-100 text-yellow-500 p-1 border-none rounded-lg w-[70px] text-center">
+              {parseStatusProject(status)}
+            </label>
+          ) : status === ProjectStatus.FINISHED ? (
+            <label className="text-sm bg-red-100 text-red-500 p-1 border-none rounded-lg w-[70px] text-center">
+              {parseStatusProject(status)}
+            </label>
+          ) : (
+            <label className="text-sm bg-green-100 text-green-500 p-1 border-none rounded-lg w-[70px] text-center">
+              {parseStatusProject(status)}
+            </label>
+          )}
+        </Card.Header>
+        <Card.Body className="custom-body">
+          <div className="p-2 flex flex-row justify-between items-center text-gray-400 border-b-2 ">
+            <label>{createdDate}</label>
+          </div>
+          <div className="p-2 flex flex-row justify-start items-center">
+            <LocalPhoneIcon className="mr-2 " />
+            <label className="text-black">{phone}</label>
+          </div>
 
-        <div className="p-2 flex flex-row justify-start items-center">
-          <LocationOnIcon className="mr-2 " />
-          <label className="text-black">{address}</label>
-        </div>
-        <div className="p-2 flex flex-row justify-start items-center">
-          <ArticleIcon className="mr-2 " />
-          <label className="text-black">{packageName}</label>
-        </div>
-      </Card.Body>
-      <Card.Footer className="custom-footer full">
-        <Button
-          info
-          onClick={() => navigate(`/consultant/${id}`)}
-          title="Chi tiết"
-        />
-      </Card.Footer>
-    </Card>
+          <div className="p-2 flex flex-row justify-start items-center">
+            <LocationOnIcon className="mr-2 " />
+            <label className="text-black">{address}</label>
+          </div>
+          <div className="p-2 flex flex-row justify-start items-center">
+            <ArticleIcon className="mr-2 " />
+            <label className="text-black">{packageName}</label>
+          </div>
+        </Card.Body>
+      </Card>
+    </div>
   );
 };
 

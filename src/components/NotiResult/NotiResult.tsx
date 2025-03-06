@@ -1,7 +1,7 @@
 import React from "react";
 import { Result } from "antd";
 
-const NotiResult = ({ icon, title, status }) => {
+const NotiResult = ({ icon, title, status, sutitle }) => {
   return (
     <div>
       <Result
@@ -9,6 +9,7 @@ const NotiResult = ({ icon, title, status }) => {
         icon={icon}
         title={title}
         style={{ padding: 0 }}
+        subTitle={sutitle}
       />
     </div>
   );

@@ -41,8 +41,6 @@ const createTemlateConstruction = async (
 const createItemsTemlateConstruction = async (
   item: any
 ): Promise<ApiResult> => {
-  console.log(item);
-
   const response = await http.post(
     endPoint.templateConstruction.createTemplateConstructionItem,
     item
