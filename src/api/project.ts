@@ -68,6 +68,13 @@ const getProjectDesign = async (
   return response;
 };
 
+const getDesignOfProject = async (
+  id: string
+): Promise<ApiResultWithPagination<ProjectType>> => {
+  const response = await http.get(`${endPoint.project.getDesignOfProject(id)}`);
+  return response;
+};
+
 export {
   getPagingProject,
   getProject,
@@ -75,4 +82,5 @@ export {
   getQuotationProject,
   requestProject,
   getProjectDesign,
+  getDesignOfProject,
 };

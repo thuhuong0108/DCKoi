@@ -13,7 +13,7 @@ const DesignDashboard = () => {
     dispatch(
       projectActions.fetchDesignProject({ pageNumber: 1, pageSize: 10 })
     );
-  }, [dispatch]);
+  }, []);
   if (isLoading) {
     return (
       <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 h-full">

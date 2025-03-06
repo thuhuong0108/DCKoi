@@ -17,6 +17,8 @@ import {
   ConsultationStaffPage,
   DetailConsultingStaff,
   CreateQuotation,
+  DesignProjectDetail,
+  DesignProject,
 } from "@/pages";
 import { LayoutAdmin, LayoutCustomer, MainLayout } from "@/layouts";
 import {
@@ -190,9 +192,17 @@ const Routers = () => {
       path: "/designer",
       element: <RootLayout Pages={DesignDashboard} />,
     },
+    {
+      path: "/designer/:id",
+      element: <RootLayout Pages={DesignProjectDetail} />,
+    },
+    {
+      path: "/designer/:id/design",
+      element: <RootLayout Pages={DesignProject} />,
+    },
+
     { path: "*", element: <div>404</div> },
   ]);
-  console.log("Current Route:", location.pathname);
   return <div>{element}</div>;
 };
 

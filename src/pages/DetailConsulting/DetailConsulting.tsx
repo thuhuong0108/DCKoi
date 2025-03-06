@@ -23,7 +23,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import DetailPackageRequest from "./DetailPackageRequest";
 import { Position } from "@/models/enums/Position";
-import { parsePosition } from "@/utils/helpers";
+import { parsePosition, parseStatusQuotation } from "@/utils/helpers";
 import DetailQuotationConsulting from "./DetailQuotationConsulting";
 import {
   quotationDetailActions,
@@ -266,23 +266,9 @@ const DetailConsulting = () => {
         </h1>
       </Row>
       <TableComponent<QuotationProjectType>
-        columns={[
-          "Tên bản báo giá",
-          "Mẫu thi công",
-          "Phiên bản",
-          "Ngày gửi",
-          "Trạng thái",
-          "Chú thích",
-        ]}
+        columns={["Phiên bản", "Ngày gửi", "Trạng thái", "Chú thích"]}
         data={quotations.data}
-        props={[
-          "projectId",
-          "templateConstructionId",
-          "version",
-          "createdDate",
-          "status",
-          "reason",
-        ]}
+        props={["version", "createdDate", "status", "reason"]}
         actions={true}
         actionTexts={["Chi tiết", "Yêu cầu cập nhật", "Chấp nhận"]}
         actionFunctions={[handleDetailQuotation, handleUpdating, handleAccept]}
@@ -291,6 +277,24 @@ const DetailConsulting = () => {
         page={quotations.pageNumber}
         setPage={(page) => {
           dispatch(quotationProjectActions.fetchQuotationProject());
+        }}
+        formatValue={(value, key) => {
+          if (key === "status") {
+            return (
+              <label
+                className={`${
+                  value === "PREVIEW"
+                    ? "text-yellow-500"
+                    : value === "APPROVED"
+                    ? "text-green-500"
+                    : "text-red-500"
+                }`}
+              >
+                {parseStatusQuotation(value)}
+              </label>
+            );
+          }
+          return value;
         }}
         itemsPerPage={quotations.pageSize}
         totalPages={quotations.totalPages}

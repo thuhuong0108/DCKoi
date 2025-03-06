@@ -1,0 +1,11 @@
+export enum DesignState {
+  OPENING = "OPENING",
+
+  REJECTED = "REJECTED",
+
+  PREVIEWING = "PREVIEWING",
+
+  EDITING = "EDITING",
+
+  CONFIRMED = "CONFIRMED",
+}

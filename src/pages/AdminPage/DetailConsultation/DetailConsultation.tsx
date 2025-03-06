@@ -66,8 +66,8 @@ const DetailConsultation = () => {
     confirmAlert({
       title: "Xác nhận cập nhật lại bảng báo giá",
       message: "Bạn có chắc chắn muốn cập nhật lại bảng báo giá này không ?",
-      yes: () => { },
-      no: () => { },
+      yes: () => {},
+      no: () => {},
     });
   };
 
@@ -75,8 +75,8 @@ const DetailConsultation = () => {
     confirmAlert({
       title: "Xác nhận bảng báo giá",
       message: "Bạn có chắc chắn xác nhận bảng báo giá này này ?",
-      yes: () => { },
-      no: () => { },
+      yes: () => {},
+      no: () => {},
     });
   };
 
@@ -266,23 +266,9 @@ const DetailConsultation = () => {
         </h1>
       </Row>
       <TableComponent<QuotationProjectType>
-        columns={[
-          "Tên bản báo giá",
-          "Mẫu thi công",
-          "Phiên bản",
-          "Ngày gửi",
-          "Trạng thái",
-          "Chú thích",
-        ]}
+        columns={["Phiên bản", "Ngày gửi", "Trạng thái", "Chú thích"]}
         data={quotations.data}
-        props={[
-          "projectId",
-          "templateConstructionId",
-          "version",
-          "createdDate",
-          "status",
-          "reason",
-        ]}
+        props={["version", "createdDate", "status", "reason"]}
         actions={true}
         actionTexts={["Chi tiết"]}
         actionFunctions={[handleDetailQuotation]}
