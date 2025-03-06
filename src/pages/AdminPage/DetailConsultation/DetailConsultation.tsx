@@ -31,6 +31,7 @@ import { QuotationStatus } from "@/models/enums/Status";
 const DetailConsultation = () => {
   const dispatch = useAppDispatch();
   const { id } = useParams();
+
   const isLoading = useAppSelector((state) => state.projectDetail.loading);
 
   const item = useAppSelector(selectedProjectDetail);
@@ -42,7 +43,7 @@ const DetailConsultation = () => {
     if (item && item.id) {
       dispatch(quotationProjectActions.fetchQuotationProject(item.id));
     }
-  }, [dispatch, id, item?.id]);
+  }, [id, item?.id]);
 
   useEffect(() => {
     dispatch(projectDetailActions.fetchProjectDetail(id));
@@ -253,27 +254,13 @@ const DetailConsultation = () => {
         </h1>
       </Row>
       <TableComponent<QuotationProjectType>
-        columns={[
-          "Tên bản báo giá",
-          "Mẫu thi công",
-          "Phiên bản",
-          "Ngày gửi",
-          "Trạng thái",
-          "Chú thích",
-        ]}
+        columns={["Phiên bản", "Ngày gửi", "Trạng thái", "Chú thích"]}
         data={quotations.data}
-        props={[
-          "projectId",
-          "templateConstructionId",
-          "version",
-          "createdDate",
-          "status",
-          "reason",
-        ]}
-        formatValue={parseStatus}
+        props={["version", "createdDate", "status", "reason"]}
         actions={true}
         actionTexts={["Chi tiết"]}
         actionFunctions={[handleDetailQuotation]}
+        formatValue={parseStatus}
         loading={isLoading}
         enablePagination={true}
         page={quotations.pageNumber}

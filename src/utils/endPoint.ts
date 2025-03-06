@@ -2,6 +2,7 @@ import { assignConsultant } from "@/api/project";
 
 const baseURL = "https://kpcos.vinhuser.one/api/";
 const socketURL = "http://34.81.244.146:3333";
+const cloudinaryURL = "https://api.cloudinary.com/v1_1/dulapxpnp/upload";
 const endPoint = {
   auth: {
     login: "/auth/signin",
@@ -65,6 +66,8 @@ const endPoint = {
     getQuotation: (id: string) => `/projects/${id}/quotation`,
     requestProject: "/projects",
     getProjectDesign: `/projects/design`,
+    getDesignOfProject: (id: string) =>
+      `/projects/${id}/design?PageNumber=1&PageSize=100`,
   },
 
   quotation: {
@@ -75,6 +78,12 @@ const endPoint = {
     approveQuotation: (id: string) => `/quotation/${id}/approve-edit`,
     editQuotation: (id: string) => `/quotation/${id}/edit`,
     rewriteQuotation: (id: string) => `/quotation/${id}/rewrite`,
+  },
+
+  design: {
+    postDesign: "/designs",
+    getDesign: (id: string) => `/designs/${id}`,
+    putDesign: (id: string) => `/designs/${id}`,
   },
 };
 

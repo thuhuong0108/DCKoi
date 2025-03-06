@@ -1,4 +1,5 @@
 import { Category } from "@/models/enums/Category";
+import { DesignState } from "@/models/enums/DesignState";
 import { Position } from "@/models/enums/Position";
 import { ProjectStatus, QuotationStatus } from "@/models/enums/Status";
 
@@ -108,5 +109,22 @@ export function parseCategory(category: Category): string {
       return "Chi phí phát sinh";
     default:
       return "Không xác định";
+  }
+}
+
+export function parseStatusDesign(status: DesignState): string {
+  switch (status) {
+    case DesignState.OPENING:
+      return "Chờ phê duyệt";
+    case DesignState.CONFIRMED:
+      return "Đã xác nhận";
+    case DesignState.EDITING:
+      return "Chờ chỉnh sửa";
+    case DesignState.REJECTED:
+      return "Không phê duyệt";
+    case DesignState.PREVIEWING:
+      return "Chờ chấp thuận";
+    default:
+      return "Trạng thái không xác định";
   }
 }

@@ -17,6 +17,8 @@ import {
   ConsultationStaffPage,
   DetailConsultingStaff,
   CreateQuotation,
+  DesignProjectDetail,
+  DesignProject,
   RewriteQuotation,
 } from "@/pages";
 import { LayoutAdmin, LayoutCustomer, MainLayout } from "@/layouts";
@@ -64,19 +66,20 @@ const Routers = () => {
         />
       ),
     },
-    {
-      path: "/admin/consultation/:id",
-      element: (
-        <PrivateRouterAdmin
-          Pages={() => <LayoutAdmin Page={DetailConsultation} />}
-        />
-      ),
-    },
+
     {
       path: "/admin/consultation",
       element: (
         <PrivateRouterAdmin
           Pages={() => <LayoutAdmin Page={ConsultationPage} />}
+        />
+      ),
+    },
+    {
+      path: "/admin/consultation/:id",
+      element: (
+        <PrivateRouterAdmin
+          Pages={() => <LayoutAdmin Page={DetailConsultation} />}
         />
       ),
     },
@@ -204,10 +207,17 @@ const Routers = () => {
       path: "/designer",
       element: <RootLayout Pages={DesignDashboard} />,
     },
+    {
+      path: "/designer/:id",
+      element: <RootLayout Pages={DesignProjectDetail} />,
+    },
+    {
+      path: "/designer/:id/design",
+      element: <RootLayout Pages={DesignProject} />,
+    },
 
     { path: "*", element: <div>404</div> },
   ]);
-  console.log("Current Route:", location.pathname);
   return <div>{element}</div>;
 };
 

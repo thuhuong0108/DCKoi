@@ -33,7 +33,6 @@ const RootLayout = ({ Pages }: LayoutProps) => {
       return <LayoutConsultant Page={Pages} />;
     case RoleUser.MANAGER:
       return <LayoutManager Page={Pages} />;
-
     case RoleUser.DESIGNER:
       return <LayoutDesigner Page={Pages} />;
     default:

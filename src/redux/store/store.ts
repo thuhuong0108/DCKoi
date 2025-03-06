@@ -25,6 +25,8 @@ import projectDetailSlice from "../slices/projectDetail/projectDetailSlices";
 import quotationProjectSlice from "../slices/quotationProject/QuotationProjectSlices";
 import quotationSlice from "../slices/quotation/quotationSlices";
 import quotationDetailSlice from "../slices/quotationDetail/quotationDetailSlices";
+import designSlice from "../slices/design/designSlices";
+import designImageSlice from "../slices/imageDesign/imageDesignSlices";
 
 const rootReducers = combineReducers({
   router: connectRouter(history),
@@ -41,6 +43,8 @@ const rootReducers = combineReducers({
   quotationProject: quotationProjectSlice,
   quotation: quotationSlice,
   quotationDetail: quotationDetailSlice,
+  design: designSlice,
+  designImage: designImageSlice,
 });
 
 const persistConfig = {

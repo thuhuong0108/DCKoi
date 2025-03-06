@@ -7,6 +7,8 @@ import { StaffType } from "./StaffType";
 import { ProjectRequest } from "./Request/ProjectRequest";
 import { ProjectType } from "./ProjectType";
 import { AssginStaff } from "./Request/AssginStaff";
+import { DesignRequest } from "./Request/DesignRequest";
+import { DesignType } from "./DesignType";
 
 import {
   TemplateConstructionType,
@@ -24,6 +26,8 @@ import {
 } from "./QuotationType";
 
 export type {
+  DesignType,
+  DesignRequest,
   PackageItemType,
   PackageType,
   UserType,
