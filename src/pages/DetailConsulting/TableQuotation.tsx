@@ -4,6 +4,7 @@ import type { TableColumnsType } from "antd";
 import { FieldQuotationDetailType } from "@/models";
 import { useState } from "react";
 import { QuotationItem } from "./type";
+import { formatPrice } from "@/utils/helpers";
 
 const TableQuotation = (props: QuotationItem) => {
   const [visible, setVisible] = useState(false);
@@ -27,11 +28,22 @@ const TableQuotation = (props: QuotationItem) => {
       title: "Giá",
       dataIndex: "price",
       width: "10%",
+      render: (text, record) => {
+        return <>{formatPrice(record.price)}</>;
+      },
     },
     {
       title: "Số lượng",
       dataIndex: "quantity",
       width: "10%",
+    },
+    {
+      title: "Tổng tiền",
+      dataIndex: "total",
+      width: "15%",
+      render: (text, record) => {
+        return <>{formatPrice(record.price * record.quantity)}</>;
+      },
     },
     {
       title: "Đơn vị",
@@ -42,7 +54,7 @@ const TableQuotation = (props: QuotationItem) => {
     {
       title: "Chú thích",
       dataIndex: "note",
-      width: "25%",
+      width: "15%",
     },
   ];
 
@@ -53,7 +65,7 @@ const TableQuotation = (props: QuotationItem) => {
           <PlusSquareOutlined
             style={{ marginRight: "8px", fontSize: "20px" }}
           />
-          <label className="text-lg">{props.name}</label>
+          <label className="text-base">{props.name}</label>
         </Col>
       </Row>
       <Row className="px-5 pt-2">
@@ -67,10 +79,13 @@ const TableQuotation = (props: QuotationItem) => {
         )}
       </Row>
 
-      <Row className="px-5 pt-2">
-        <Col span={24} className="flex justify-end">
-          <label className="text-lg font-bold">
-            Tổng tiền: {props.totalPrice}
+      <Row className="p-2 my-2 flex justify-end bg-gray-50">
+        <Col span={18}>
+          <label className="text-base font-semibold">Tổng tiền:</label>
+        </Col>
+        <Col span={6}>
+          <label className="text-base font-semibold">
+            {formatPrice(props.totalPrice)} VND
           </label>
         </Col>
       </Row>

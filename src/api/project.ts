@@ -27,9 +27,9 @@ const getPagingProject = async (
 };
 
 const getProject = async (
-  id: string
-): Promise<ApiResultWithData<ProjectDetailType>> => {
-  const response = await http.get(endPoint.project.getProject(id));
+  projectId: string
+): Promise<ApiResultWithAData<ProjectDetailType>> => {
+  const response = await http.get(endPoint.project.getProject(projectId));
 
   return response;
 };

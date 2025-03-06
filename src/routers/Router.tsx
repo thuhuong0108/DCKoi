@@ -19,6 +19,7 @@ import {
   CreateQuotation,
   DesignProjectDetail,
   DesignProject,
+  RewriteQuotation,
 } from "@/pages";
 import { LayoutAdmin, LayoutCustomer, MainLayout } from "@/layouts";
 import {
@@ -63,19 +64,20 @@ const Routers = () => {
         />
       ),
     },
-    {
-      path: "/admin/consultation/:id",
-      element: (
-        <PrivateRouterAdmin
-          Pages={() => <LayoutAdmin Page={DetailConsultation} />}
-        />
-      ),
-    },
+
     {
       path: "/admin/consultation",
       element: (
         <PrivateRouterAdmin
           Pages={() => <LayoutAdmin Page={ConsultationPage} />}
+        />
+      ),
+    },
+    {
+      path: "/admin/consultation/:id",
+      element: (
+        <PrivateRouterAdmin
+          Pages={() => <LayoutAdmin Page={DetailConsultation} />}
         />
       ),
     },
@@ -171,10 +173,13 @@ const Routers = () => {
       path: "/consultant/:id",
       element: <RootLayout Pages={DetailConsultingStaff} />,
     },
-
     {
       path: "/consultant/:id/new-quotation",
       element: <RootLayout Pages={CreateQuotation} />,
+    },
+    {
+      path: "/consultant/:id/rewrite-quotation",
+      element: <RootLayout Pages={RewriteQuotation} />,
     },
 
     // manager

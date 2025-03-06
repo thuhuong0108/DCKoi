@@ -1,4 +1,4 @@
-import { confirmAlert, messageInfo, TableComponent, Title } from "@/components";
+import { messageError, TableComponent, Title } from "@/components";
 import Button from "@/components/ui/Button";
 import { QuotationProjectType } from "@/models/ProjectType";
 // import Card from "@/components/ui/Card";
@@ -29,6 +29,8 @@ import {
   quotationDetailActions,
   selectedQuotationDetail,
 } from "@/redux/slices/quotationDetail/quotationDetailSlices";
+import DetailConsultingSkeleton from "./DetailConsultingSkeleton";
+import { QuotationStatus } from "@/models/enums/Status";
 
 const DetailConsulting = () => {
   const dispatch = useAppDispatch();
@@ -59,30 +61,24 @@ const DetailConsulting = () => {
   const packageDetail = item.package;
 
   const handleDetailQuotation = (quotation: QuotationProjectType) => {
-    dispatch(quotationDetailActions.fetchQuotationDetail(quotation.id));
-    setOpenDetailQuotation(true);
+    if (quotation.status === QuotationStatus.OPEN) {
+      messageError("Bạn chưa có quyền xem báo giá này.");
+    } else {
+      dispatch(quotationDetailActions.fetchQuotationDetail(quotation.id));
+      setOpenDetailQuotation(true);
+    }
   };
 
-  const handleUpdating = (quotation: QuotationProjectType) => {
-    console.log("quotation: ", quotation);
-
-    confirmAlert({
-      title: "Xác nhận cập nhật lại bảng báo giá",
-      message: "Bạn có chắc chắn muốn cập nhật lại bảng báo giá này không ?",
-      yes: () => {},
-      no: () => {},
-    });
+  const parseStatus = (status: QuotationStatus, prop: string) => {
+    if (prop === "status") {
+      return parseStatusQuotation(status);
+    }
+    return;
   };
 
-  const handleAccept = (quotation: QuotationProjectType) => {
-    confirmAlert({
-      title: "Xác nhận bảng báo giá",
-      message: "Bạn có chắc chắn xác nhận bảng báo giá này này ?",
-      yes: () => {},
-      no: () => {},
-    });
-  };
-
+  if (isLoading) {
+    return <DetailConsultingSkeleton />;
+  }
   return (
     <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 w-full h-full">
       <Title name="Chi tiết yêu cầu tư vấn" />
@@ -270,8 +266,8 @@ const DetailConsulting = () => {
         data={quotations.data}
         props={["version", "createdDate", "status", "reason"]}
         actions={true}
-        actionTexts={["Chi tiết", "Yêu cầu cập nhật", "Chấp nhận"]}
-        actionFunctions={[handleDetailQuotation, handleUpdating, handleAccept]}
+        actionTexts={["Chi tiết"]}
+        actionFunctions={[handleDetailQuotation]}
         loading={isLoading}
         enablePagination={true}
         page={quotations.pageNumber}
@@ -314,7 +310,7 @@ const DetailConsulting = () => {
       </Modal>
 
       <Modal
-        title={`Báo giá chi tiết`}
+        title={`Thông tin báo giá `}
         centered
         open={openDetailQuotation}
         width={1000}
@@ -323,7 +319,11 @@ const DetailConsulting = () => {
         onOk={() => setOpenDetailQuotation(false)}
         footer={[]}
       >
-        <DetailQuotationConsulting quotation={quotation} project={item} />
+        <DetailQuotationConsulting
+          quotation={quotation}
+          project={item}
+          setOpenDetailQuotation={setOpenDetailQuotation}
+        />
       </Modal>
     </div>
   );

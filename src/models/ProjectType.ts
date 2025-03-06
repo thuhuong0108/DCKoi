@@ -35,7 +35,6 @@ export interface ProjectDetailType {
   email: string;
   area: number;
   depth: number;
-  packageName: string;
   standOut: boolean;
   note: string;
   status: ProjectStatus;

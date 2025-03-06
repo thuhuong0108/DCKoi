@@ -14,7 +14,7 @@ import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
 
 import { Position } from "@/models/enums/Position";
 import { quotationDetailActions } from "@/redux/slices/quotationDetail/quotationDetailSlices";
-import { parsePosition } from "@/utils/helpers";
+import { parsePosition, parseStatusQuotation } from "@/utils/helpers";
 import {
   EyeOutlined,
   MailOutlined,
@@ -26,10 +26,12 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import DetailPackageRequest from "./DetailPackageRequest";
 import DetailQuotationConsulting from "./DetailQuotationConsulting";
+import { QuotationStatus } from "@/models/enums/Status";
 
 const DetailConsultation = () => {
   const dispatch = useAppDispatch();
   const { id } = useParams();
+
   const isLoading = useAppSelector((state) => state.projectDetail.loading);
 
   const item = useAppSelector(selectedProjectDetail);
@@ -41,7 +43,7 @@ const DetailConsultation = () => {
     if (item && item.id) {
       dispatch(quotationProjectActions.fetchQuotationProject(item.id));
     }
-  }, [dispatch, id, item?.id]);
+  }, [id, item?.id]);
 
   useEffect(() => {
     dispatch(projectDetailActions.fetchProjectDetail(id));
@@ -62,22 +64,11 @@ const DetailConsultation = () => {
     setOpenDetailQuotation(true);
   };
 
-  const handleUpdating = (quotation: QuotationProjectType) => {
-    confirmAlert({
-      title: "Xác nhận cập nhật lại bảng báo giá",
-      message: "Bạn có chắc chắn muốn cập nhật lại bảng báo giá này không ?",
-      yes: () => {},
-      no: () => {},
-    });
-  };
-
-  const handleAccept = (quotation: QuotationProjectType) => {
-    confirmAlert({
-      title: "Xác nhận bảng báo giá",
-      message: "Bạn có chắc chắn xác nhận bảng báo giá này này ?",
-      yes: () => {},
-      no: () => {},
-    });
+  const parseStatus = (status: QuotationStatus, prop: string) => {
+    if (prop === "status") {
+      return parseStatusQuotation(status);
+    }
+    return;
   };
 
   return (
@@ -90,9 +81,6 @@ const DetailConsultation = () => {
           items={[
             {
               title: "Đã gửi yêu cầu",
-            },
-            {
-              title: "Chờ chỉ định nhân viên",
             },
             {
               title: "Chờ báo giá",
@@ -272,6 +260,7 @@ const DetailConsultation = () => {
         actions={true}
         actionTexts={["Chi tiết"]}
         actionFunctions={[handleDetailQuotation]}
+        formatValue={parseStatus}
         loading={isLoading}
         enablePagination={true}
         page={quotations.pageNumber}
@@ -305,7 +294,11 @@ const DetailConsultation = () => {
         onOk={() => setOpenDetailQuotation(false)}
         footer={[]}
       >
-        <DetailQuotationConsulting quotation={quotationDetail} project={item} />
+        <DetailQuotationConsulting
+          quotation={quotationDetail}
+          project={item}
+          setOpenDetailQuotation={setOpenDetailQuotation}
+        />
       </Modal>
     </div>
   );
