@@ -1,5 +1,6 @@
 import { ImageGallery, Title } from "@/components";
 import EmptyContent from "@/components/ui/EmptyContent";
+import { DesignState } from "@/models/enums/DesignState";
 import { Position } from "@/models/enums/Position";
 import { designDetailActions, selectedDesignDetail } from "@/redux/slices/designDetail/designDetailSlices";
 import { projectDetailActions, selectedProjectDetail } from "@/redux/slices/projectDetail/projectDetailSlices";
@@ -20,7 +21,6 @@ const CustomerDesignDetail = () => {
 
 
   const [reason, setReason] = useState("");
-  const [openModalReason, setOpenModalReason] = useState(false);
 
   const [openConfirmAccept, setOpenConfirmAccept] = useState(false);
 
@@ -41,10 +41,6 @@ const CustomerDesignDetail = () => {
     }
   }, [dispatch, id, design.projectId, design.designImages]);
 
-  const handleRejectDesign = () => {
-    setOpenModalReason(true);
-  };
-
   const handleRequestEditDesign = () => {
     setOpenModalRequestEdit(true);
   }
@@ -55,18 +51,6 @@ const CustomerDesignDetail = () => {
       setOpenConfirmAccept(false);
     }
   }
-
-  const confirmRejectDesign = () => {
-    if (reason.trim()) {
-      dispatch(designDetailActions.rejectDesign({
-        id: design.id, reason
-      }));
-      setOpenModalReason(false);
-      setReason("");
-    } else {
-      message.warning("Vui lòng nhập lý do từ chối");
-    }
-  };
 
   const confirmRequestEditDesign = () => {
     if (reason.trim()) {
@@ -221,96 +205,66 @@ const CustomerDesignDetail = () => {
               Loại bản thiết kế: {design.type}
             </p>
           </div>
-          <div className="flex flex-row gap-5">
-            <Button
-              onClick={() => setOpenConfirmAccept(true)}
-              type="primary"
-              className="px-8 py-6 text-lg font-semibold">
-              Chấp nhận
-            </Button>
-            <Button
-              onClick={() => handleRejectDesign()}
-              color="danger"
-              variant="solid"
-              className="px-8 py-6 text-lg font-semibold">
-              Từ chối
-            </Button>
-          </div>
+          {design.status === DesignState.PREVIEWING && (
+            <>
+              <div className="flex flex-row gap-5">
+                <Button
+                  block
+                  onClick={() => setOpenConfirmAccept(true)}
+                  type="primary"
+                  className="px-8 py-6 text-lg font-semibold">
+                  Chấp nhận
+                </Button>
 
-          <div className="mt-2">
-            <Button
-              onClick={() => handleRequestEditDesign()}
-              block
-              color="gold"
-              variant="solid"
-              className="px-8 py-6 text-lg font-semibold">
-              Yêu cầu chỉnh sửa
-            </Button>
-          </div>
+                <Button
+                  onClick={() => handleRequestEditDesign()}
+                  block
+                  color="gold"
+                  variant="solid"
+                  className="px-8 py-6 text-lg font-semibold">
+                  Yêu cầu chỉnh sửa
+                </Button>
+              </div>
+
+              {/* Accept */}
+              <Modal
+                title="Xác nhận chấp nhận bản thiết kế?"
+                open={openConfirmAccept}
+                onCancel={() => setOpenConfirmAccept(false)}
+                onOk={() => confirmAcceptDesign()}
+              >
+                <p className="font-semibold text-lg">Bạn có chắc chắn muốn chấp nhận bản thiết kế này không?</p>
+              </Modal>
+
+              {/* Request edit */}
+              <Modal
+                title="Vui lòng nhập lý do chỉnh sửa"
+                open={openModalRequestEdit}
+                onCancel={() => setOpenModalRequestEdit(false)}
+                footer={[]}
+              >
+                <Input.TextArea
+                  value={reason}
+                  onChange={(e) => setReason(e.target.value)}
+                  rows={4}
+                />
+                <div className="flex flex-row gap-4 mt-2">
+                  <Button
+                    onClick={() => confirmRequestEditDesign()}
+                    type="primary">
+                    Xác nhận
+                  </Button>
+                  <Button color="danger"
+                    variant="solid"
+                    onClick={() => setOpenModalRequestEdit(false)}>
+                    Hủy
+                  </Button>
+                </div>
+              </Modal>
+            </>
+          )}
         </Col>
       </Row>
-
-      {/* Accept */}
-      <Modal
-        title="Xác nhận chấp nhận bản thiết kế?"
-        open={openConfirmAccept}
-        onCancel={() => setOpenConfirmAccept(false)}
-        onOk={() => confirmAcceptDesign()}
-      >
-        <p className="font-semibold text-lg">Bạn có chắc chắn muốn chấp nhận bản thiết kế này không?</p>
-      </Modal>
-
-      {/* Reject */}
-      <Modal
-        title="Vui lòng nhập lý do từ chối"
-        open={openModalReason}
-        onCancel={() => setOpenModalReason(false)}
-        footer={[]}
-      >
-        <Input.TextArea
-          value={reason}
-          onChange={(e) => setReason(e.target.value)}
-          rows={4}
-        />
-        <div className="flex flex-row gap-4 mt-2">
-          <Button
-            onClick={() => confirmRejectDesign()}
-            type="primary">
-            Xác nhận
-          </Button>
-          <Button color="danger"
-            variant="solid"
-            onClick={() => setOpenModalReason(false)}>
-            Hủy
-          </Button>
-        </div>
-      </Modal>
-
-      {/* Request edit */}
-      <Modal
-        title="Vui lòng nhập lý do chỉnh sửa"
-        open={openModalRequestEdit}
-        onCancel={() => setOpenModalRequestEdit(false)}
-        footer={[]}
-      >
-        <Input.TextArea
-          value={reason}
-          onChange={(e) => setReason(e.target.value)}
-          rows={4}
-        />
-        <div className="flex flex-row gap-4 mt-2">
-          <Button
-            onClick={() => confirmRequestEditDesign()}
-            type="primary">
-            Xác nhận
-          </Button>
-          <Button color="danger"
-            variant="solid"
-            onClick={() => setOpenModalRequestEdit(false)}>
-            Hủy
-          </Button>
-        </div>
-      </Modal>
     </div>
   )
 }
