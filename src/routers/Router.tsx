@@ -33,6 +33,8 @@ import {
   ConstructionTemplate,
   ConstructionTemplateConfig,
   Design,
+  ManagementProjects,
+  AdminContract,
 } from "@/pages/AdminPage";
 import RootLayout from "@/layouts/RootLayout";
 import PrivateRouterAdmin from "./PrivateRouterAdmin";
@@ -159,6 +161,14 @@ const Routers = () => {
     {
       path: "/admin/design",
       element: <RootLayout Pages={Design} />,
+    },
+    {
+      path: "/admin/projects",
+      element: <RootLayout Pages={ManagementProjects} />,
+    },
+    {
+      path: "/admin/consultation/:id/contract",
+      element: <RootLayout Page={AdminContract} />,
     },
 
     // consultant
