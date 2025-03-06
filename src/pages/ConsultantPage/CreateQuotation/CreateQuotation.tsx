@@ -1,4 +1,4 @@
-import { messageError, messageSuccess, Title } from "@/components";
+import { Title } from "@/components";
 import {
   equipmentActions,
   selectEquipment,
@@ -14,10 +14,9 @@ import {
   InboxOutlined,
   MailOutlined,
   PhoneOutlined,
-  PoundCircleOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Col, Input, Modal, Row } from "antd";
+import { Col, Modal, Row } from "antd";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -229,12 +228,12 @@ const CreateQuotation = () => {
         <Col>
           <div className="flex flex-row justify-start items-center gap-4 text-lg">
             <BorderlessTableOutlined />
-            <label className="text-black font-semibold">Công trình: </label>
+            <label className="text-blue-800 font-semibold">Công trình: </label>
             <span className="text-gray-500"> #Tên dự án</span>
           </div>
           <div className="flex flex-row justify-start items-center gap-4 text-lg">
             <InboxOutlined />
-            <label className="text-black font-semibold">
+            <label className="text-blue-800 font-semibold">
               Gói thiết kế thi công:
             </label>
             <span className="text-gray-500">{project.package.name}</span>
@@ -244,25 +243,29 @@ const CreateQuotation = () => {
         <Col>
           <div className="flex flex-row justify-start items-center gap-4 text-lg">
             <UserOutlined />
-            <label className="text-black font-semibold">Khách hàng: </label>
+            <label className="text-blue-800 font-semibold">Khách hàng: </label>
             <span className="text-gray-500"> {project.customerName}</span>
           </div>
 
           <div className="flex flex-row justify-start items-center gap-4 text-lg">
             <PhoneOutlined />
-            <label className="text-black font-semibold">Số điện thoại: </label>
+            <label className="text-blue-800 font-semibold">
+              Số điện thoại:{" "}
+            </label>
             <span className="text-gray-500"> {project.phone}</span>
           </div>
 
           <div className="flex flex-row justify-start items-center gap-4 text-lg">
             <MailOutlined />
-            <label className="text-black font-semibold">Địa chỉ email: </label>
+            <label className="text-blue-800 font-semibold">
+              Địa chỉ email:{" "}
+            </label>
             <span className="text-gray-500"> {project.email}</span>
           </div>
 
           <div className="flex flex-row justify-start items-baseline gap-4 text-lg">
             <EnvironmentOutlined />
-            <label className="text-black font-semibold">
+            <label className="text-blue-800 font-semibold">
               Địa chỉ thi công:
             </label>
 
@@ -364,7 +367,7 @@ const CreateQuotation = () => {
       <div>
         {" "}
         <div className="flex flex-row justify-between items-center">
-          <label className="text-black font-semibold">
+          <label className="text-blue-800 font-semibold">
             Tên quy trình: {selectedTemplate?.name}
           </label>
         </div>

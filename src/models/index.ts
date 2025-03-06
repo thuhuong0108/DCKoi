@@ -25,6 +25,9 @@ import {
   FieldQuotationDetailType,
 } from "./QuotationType";
 
+import { ContractType, PaymentBatch } from "./ContractType";
+
+import { ConstructionType, ConstructionItem } from "./ConstructionType";
 export type {
   DesignType,
   DesignRequest,
@@ -46,4 +49,8 @@ export type {
   ProjectRequest,
   ProjectType,
   AssginStaff,
+  ContractType,
+  PaymentBatch,
+  ConstructionType,
+  ConstructionItem,
 };

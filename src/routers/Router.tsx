@@ -35,9 +35,12 @@ import {
   ConstructionTemplate,
   ConstructionTemplateConfig,
   Design,
+  ManagementProjects,
+  AdminContract,
 } from "@/pages/AdminPage";
 import RootLayout from "@/layouts/RootLayout";
 import PrivateRouterAdmin from "./PrivateRouterAdmin";
+import ContractPage from "@/pages/ContractPage";
 
 const Routers = () => {
   const location = useLocation();
@@ -52,8 +55,12 @@ const Routers = () => {
       element: <LayoutCustomer Page={ConsultingPage} />,
     },
     {
-      path: "/space-management/detail-consulting/:id",
+      path: "/space-management/:id/detail-consulting",
       element: <LayoutCustomer Page={DetailConsulting} />,
+    },
+    {
+      path: "/space-management/contract",
+      element: <LayoutCustomer Page={ContractPage} />,
     },
     // admin
     {
@@ -75,11 +82,11 @@ const Routers = () => {
     },
     {
       path: "/admin/consultation/:id",
-      element: (
-        <PrivateRouterAdmin
-          Pages={() => <LayoutAdmin Page={DetailConsultation} />}
-        />
-      ),
+      element: <RootLayout Pages={DetailConsultation} />,
+    },
+    {
+      path: "/admin/consultation/:id/contract/:quotationId",
+      element: <RootLayout Pages={AdminContract} />,
     },
     {
       path: "/admin/equipments",
@@ -162,6 +169,10 @@ const Routers = () => {
     {
       path: "/admin/design",
       element: <RootLayout Pages={Design} />,
+    },
+    {
+      path: "/admin/projects",
+      element: <RootLayout Pages={ManagementProjects} />,
     },
 
     // consultant

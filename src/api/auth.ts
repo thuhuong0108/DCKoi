@@ -8,7 +8,6 @@ const loginApi = async (
   data: LoginPayload
 ): Promise<ApiResultWithData<User>> => {
   const response = await http.post(endPoint.auth.login, data);
-  console.log(response);
   return response;
 };
 

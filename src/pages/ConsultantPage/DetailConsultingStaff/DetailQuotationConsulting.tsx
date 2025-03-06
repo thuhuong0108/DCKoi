@@ -113,20 +113,20 @@ const DetailQuotationConsulting = ({ quotation, project }) => {
       <Row className="flex flex-row items-start w-full gap-x-20 mt-4">
         <Col>
           <div className="flex flex-row justify-start items-center gap-4 text-lg">
-            <BorderlessTableOutlined />
-            <label className="text-black font-semibold">Công trình: </label>
+            <BorderlessTableOutlined className="text-blue-600" />
+            <label className="text-blue-600 font-semibold">Công trình: </label>
             <span className="text-gray-500"> #Tên dự án</span>
           </div>
           <div className="flex flex-row justify-start items-center gap-4 text-lg">
-            <InboxOutlined />
-            <label className="text-black font-semibold">
+            <InboxOutlined className="text-blue-600" />
+            <label className="text-blue-600 font-semibold">
               Gói thiết kế thi công:
             </label>
             <span className="text-gray-500">{project.package.name}</span>
           </div>
           <div className="flex flex-row justify-start items-center gap-4 text-lg">
-            <PoundCircleOutlined />
-            <label className="text-black font-semibold">
+            <PoundCircleOutlined className="text-blue-600" />
+            <label className="text-blue-600 font-semibold">
               Tổng giá trị hợp đồng:
             </label>
             <span className="text-gray-500">
@@ -138,26 +138,30 @@ const DetailQuotationConsulting = ({ quotation, project }) => {
 
         <Col>
           <div className="flex flex-row justify-start items-center gap-4 text-lg">
-            <UserOutlined />
-            <label className="text-black font-semibold">Khách hàng: </label>
+            <UserOutlined className="text-blue-600" />
+            <label className="text-blue-600 font-semibold">Khách hàng: </label>
             <span className="text-gray-500"> {project.customerName}</span>
           </div>
 
           <div className="flex flex-row justify-start items-center gap-4 text-lg">
-            <PhoneOutlined />
-            <label className="text-black font-semibold">Số điện thoại: </label>
+            <PhoneOutlined className="text-blue-600" />
+            <label className="text-blue-600 font-semibold">
+              Số điện thoại:{" "}
+            </label>
             <span className="text-gray-500"> {project.phone}</span>
           </div>
 
           <div className="flex flex-row justify-start items-center gap-4 text-lg">
-            <MailOutlined />
-            <label className="text-black font-semibold">Địa chỉ email: </label>
+            <MailOutlined className="text-blue-600" />
+            <label className="text-blue-600 font-semibold">
+              Địa chỉ email:{" "}
+            </label>
             <span className="text-gray-500"> {project.email}</span>
           </div>
 
           <div className="flex flex-row justify-start items-baseline gap-4 text-lg">
-            <EnvironmentOutlined />
-            <label className="text-black font-semibold">
+            <EnvironmentOutlined className="text-blue-600" />
+            <label className="text-blue-600 font-semibold">
               Địa chỉ thi công:
             </label>
 

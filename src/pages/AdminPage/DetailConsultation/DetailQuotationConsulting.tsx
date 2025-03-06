@@ -22,12 +22,14 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { formatPrice } from "@/utils/helpers";
+import { useNavigate } from "react-router-dom";
 
 const DetailQuotationConsulting = ({
   quotation,
   project,
   setOpenDetailQuotation,
 }) => {
+  const navigate = useNavigate();
   const services = quotation.services;
   const equipments = quotation.equipments;
   const [itemWork, setItemWork] = useState<QuotationItem[]>([]);
@@ -75,8 +77,6 @@ const DetailQuotationConsulting = ({
       };
     });
 
-    console.log(itemWork);
-
     // Update total price using previous state
     setTotalPrice((prevTotal) =>
       itemWork.reduce((sum, item) => sum + item.totalPrice, 0)
@@ -112,7 +112,7 @@ const DetailQuotationConsulting = ({
 
       {role === RoleUser.ADMINISTRATOR &&
         quotationStatus === QuotationStatus.OPEN && (
-          <div className="bg-white w-full p-5 border-2 rounded-md">
+          <div className="bg-white w-full p-5 border-2 rounded-md my-4">
             <div className="flex justify-between">
               <div className="flex items-center space-x-2">
                 <p className="text-xl text-red-500">
@@ -158,6 +158,34 @@ const DetailQuotationConsulting = ({
             )}
           </div>
         )}
+
+      {quotationStatus === QuotationStatus.APPROVED && (
+        <div className="bg-white w-full p-5 border-2 rounded-md my-4">
+          <div className="flex justify-between">
+            <div className="flex items-center space-x-2">
+              <p className="text-xl text-red-500">
+                Tạo hợp đồng cho khách hàng!
+              </p>
+            </div>
+            <div className="flex gap-2">
+              <Button
+                onClick={() => setOpenDetailQuotation(false)}
+                color="danger"
+                variant="solid"
+              >
+                Hủy
+              </Button>
+              <Button
+                onClick={() => navigate(`contract/${quotation.id}`)}
+                color="primary"
+                variant="solid"
+              >
+                Tạo
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <Title name="Thông tin báo giá chi tiết" />
       <label>Phiên bản: {quotation.version}</label>
