@@ -1,7 +1,11 @@
 import { Category } from "@/models/enums/Category";
 import { DesignState } from "@/models/enums/DesignState";
 import { Position } from "@/models/enums/Position";
-import { ProjectStatus, QuotationStatus } from "@/models/enums/Status";
+import {
+  ContractStatus,
+  ProjectStatus,
+  QuotationStatus,
+} from "@/models/enums/Status";
 
 export const formatDate = (date: Date, includeTime = false): string => {
   const options: Intl.DateTimeFormatOptions = includeTime
@@ -124,6 +128,19 @@ export function parseStatusDesign(status: DesignState): string {
       return "Không phê duyệt";
     case DesignState.PREVIEWING:
       return "Chờ chấp thuận";
+    default:
+      return "Trạng thái không xác định";
+  }
+}
+
+export function parseStatusContract(status: ContractStatus): string {
+  switch (status) {
+    case ContractStatus.PROCESS:
+      return "Đang xử lí";
+    case ContractStatus.ACTIVE:
+      return "Có hiệu lực";
+    case ContractStatus.CANCEL:
+      return "Hủy bỏ";
     default:
       return "Trạng thái không xác định";
   }
