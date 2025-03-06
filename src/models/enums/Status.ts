@@ -15,3 +15,9 @@ export enum QuotationStatus {
   UPDATING = "UPDATING",
   CONFIRMED = "CONFIRMED",
 }
+
+export enum ContractStatus {
+  PROCESS = "PROCESS",
+  ACTIVE = "ACTIVE",
+  CANCEL = "CANCEL",
+}

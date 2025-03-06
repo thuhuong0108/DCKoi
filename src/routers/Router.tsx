@@ -77,11 +77,11 @@ const Routers = () => {
     },
     {
       path: "/admin/consultation/:id",
-      element: (
-        <PrivateRouterAdmin
-          Pages={() => <LayoutAdmin Page={DetailConsultation} />}
-        />
-      ),
+      element: <RootLayout Pages={DetailConsultation} />,
+    },
+    {
+      path: "/admin/consultation/:id/contract/:quotationId",
+      element: <RootLayout Pages={AdminContract} />,
     },
     {
       path: "/admin/equipments",
@@ -168,10 +168,6 @@ const Routers = () => {
     {
       path: "/admin/projects",
       element: <RootLayout Pages={ManagementProjects} />,
-    },
-    {
-      path: "/admin/consultation/:id/contract",
-      element: <RootLayout Page={AdminContract} />,
     },
 
     // consultant

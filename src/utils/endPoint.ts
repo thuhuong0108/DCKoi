@@ -85,6 +85,10 @@ const endPoint = {
     getDesign: (id: string) => `/designs/${id}`,
     putDesign: (id: string) => `/designs/${id}`,
   },
+
+  construction: {
+    createConstruction: "/constructions",
+  },
 };
 
 export { baseURL, endPoint, socketURL };

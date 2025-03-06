@@ -77,8 +77,6 @@ const DetailQuotationConsulting = ({
       };
     });
 
-    console.log(itemWork);
-
     // Update total price using previous state
     setTotalPrice((prevTotal) =>
       itemWork.reduce((sum, item) => sum + item.totalPrice, 0)
@@ -178,7 +176,7 @@ const DetailQuotationConsulting = ({
                 Hủy
               </Button>
               <Button
-                onClick={() => navigate("contract")}
+                onClick={() => navigate(`contract/${quotation.id}`)}
                 color="primary"
                 variant="solid"
               >
