@@ -52,8 +52,6 @@ function* rejectQuotationWorker(action: PayloadAction<RejectQuotationType>) {
     const data = yield call(rejectQuotation, action.payload);
     if (data.isSuccess) {
       messageSuccess(data.message);
-
-      yield put(quotationActions.rejectAcceptQuotation(data));
     }
     else {
       messageError(data.message);
@@ -70,8 +68,6 @@ function* approveQuotationWorker(action: PayloadAction<ApproveQuotationType>) {
     const data = yield call(approveQuotation, action.payload);
     if (data.isSuccess) {
       messageSuccess(data.message);
-
-      yield put(quotationActions.approveQuotation(data));
     }
     else {
       messageError(data.message);

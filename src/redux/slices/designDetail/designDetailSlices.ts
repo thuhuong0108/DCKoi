@@ -46,17 +46,17 @@ export const designDetailSlice = createSlice({
 
         //reject
         rejectDesign(state, action: PayloadAction<ReasonDesignType>) {
-            console.log("reject quotation ", action.payload);
+            console.log("reject design ", action.payload);
         },
 
         //accept
         acceptDesign(state, action: PayloadAction<string>) {
-            console.log("accept quotation");
+            console.log("accept design");
         },
 
         //request edit
         requestEditDesign(state, action: PayloadAction<ReasonDesignType>) {
-            console.log("request edit quotation ", action.payload);
+            console.log("request edit design ", action.payload);
         },
     }
 });

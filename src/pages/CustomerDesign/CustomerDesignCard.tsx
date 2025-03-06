@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 const CustomerDesignCard = ({
     id,
     imageUrl,
+    type,
     version,
     status,
 }: ProjectDesignType) => {
@@ -12,7 +13,7 @@ const CustomerDesignCard = ({
 
     const handleCardClick = () => {
         if (id) {
-            navigate(`/design/${id}`);
+            navigate(`/design/${id}/detail`);
         }
     };
 
@@ -34,10 +35,10 @@ const CustomerDesignCard = ({
             <div className="flex items-center justify-between mt-2">
                 <div className="flex flex-col justify-between mt-2">
                     <div className="flex items-center">
-                        <span className="ml-2 text-sm">{status}</span>
+                        <span className="ml-2 text-md font-semibold">Trạng thái: {status}</span>
                     </div>
                     <div className="flex items-center">
-                        <span className="ml-2 text-sm">Version {version}</span>
+                        <span className="ml-2 text-md font-semibold">Version {version}</span>
                     </div>
                 </div>
             </div>
@@ -51,7 +52,7 @@ const CustomerDesignCard = ({
 
             <div className="flex items-center flex-row justify-between">
                 <Typography.Text strong aria-level={2}>
-                    {status}
+                    Loại bản thiết kế: {type}
                 </Typography.Text>
             </div>
         </Card>

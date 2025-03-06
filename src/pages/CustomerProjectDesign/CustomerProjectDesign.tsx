@@ -3,7 +3,7 @@ import { projectActions, selectedLoading, selectedProject } from "@/redux/slices
 import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
 import { Pagination } from "@mui/material";
 import { Col, Row } from "antd";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import CustomerProjectDesignCard from "./CustomerProjectDesignCard";
 import CustomerProjectDesignSkeleton from "./CustomerProjectDesignSkeleton";
 import EmptyContent from "@/components/ui/EmptyContent";
@@ -13,11 +13,13 @@ const CustomerProjectDesign = () => {
     const items = useAppSelector(selectedProject);
     const isLoading = useAppSelector(selectedLoading);
 
+    const [page, setPage] = useState(1);
+
     useEffect(() => {
         dispatch(
-            projectActions.fetchProject({ pageNumber: 1, pageSize: 10 })
+            projectActions.fetchDesignProject({ pageNumber: page, pageSize: 10 })
         )
-    }, [dispatch]);
+    }, [dispatch, page]);
 
     if (isLoading) {
         return (
@@ -57,7 +59,11 @@ const CustomerProjectDesign = () => {
                 ))}
             </Row>
 
-            <Pagination count={items.totalPages} color="primary" />
+            <Pagination
+                page={page}
+                count={items.totalPages}
+                color="primary"
+                onChange={(event, value) => setPage(value)} />
         </div>
     )
 }

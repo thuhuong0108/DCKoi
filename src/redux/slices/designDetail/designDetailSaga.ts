@@ -26,8 +26,6 @@ function* rejectDesignWorker(action: PayloadAction<ReasonDesignType>) {
     const data = yield call(rejectDesign, action.payload);
     if (data.isSuccess) {
       messageSuccess(data.message);
-
-      yield put(designDetailActions.rejectDesign(data));
     }
     else {
       messageError(data.message);
@@ -44,8 +42,6 @@ function* acceptDesignWorker(action: PayloadAction<string>) {
     const data = yield call(acceptDesign, action.payload);
     if (data.isSuccess) {
       messageSuccess(data.message);
-
-      yield put(designDetailActions.acceptDesign(data));
     }
     else {
       messageError(data.message);
@@ -62,8 +58,6 @@ function* requestEditDesignWorker(action: PayloadAction<ReasonDesignType>) {
     const data = yield call(requestEditDesign, action.payload);
     if (data.isSuccess) {
       messageSuccess(data.message);
-
-      yield put(designDetailActions.requestEditDesign(data));
     }
     else {
       messageError(data.message);
