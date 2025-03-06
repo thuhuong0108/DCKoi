@@ -19,7 +19,7 @@ export interface ServiceQuotationType {
   description: string;
   price: number;
   unit: string;
-  type: string;
+  type?: string;
   quantity: number;
   note: string;
   category: string;

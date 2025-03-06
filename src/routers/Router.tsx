@@ -17,6 +17,9 @@ import {
   ConsultationStaffPage,
   DetailConsultingStaff,
   CreateQuotation,
+  DesignProjectDetail,
+  DesignProject,
+  RewriteQuotation,
   CustomerDesign,
   CustomerDesignDetail,
   CustomerProjectDesign,
@@ -76,19 +79,20 @@ const Routers = () => {
         />
       ),
     },
-    {
-      path: "/admin/consultation/:id",
-      element: (
-        <PrivateRouterAdmin
-          Pages={() => <LayoutAdmin Page={DetailConsultation} />}
-        />
-      ),
-    },
+
     {
       path: "/admin/consultation",
       element: (
         <PrivateRouterAdmin
           Pages={() => <LayoutAdmin Page={ConsultationPage} />}
+        />
+      ),
+    },
+    {
+      path: "/admin/consultation/:id",
+      element: (
+        <PrivateRouterAdmin
+          Pages={() => <LayoutAdmin Page={DetailConsultation} />}
         />
       ),
     },
@@ -184,10 +188,13 @@ const Routers = () => {
       path: "/consultant/:id",
       element: <RootLayout Pages={DetailConsultingStaff} />,
     },
-
     {
       path: "/consultant/:id/new-quotation",
       element: <RootLayout Pages={CreateQuotation} />,
+    },
+    {
+      path: "/consultant/:id/rewrite-quotation",
+      element: <RootLayout Pages={RewriteQuotation} />,
     },
 
     // manager
@@ -205,9 +212,17 @@ const Routers = () => {
       path: "/designer",
       element: <RootLayout Pages={DesignDashboard} />,
     },
+    {
+      path: "/designer/:id",
+      element: <RootLayout Pages={DesignProjectDetail} />,
+    },
+    {
+      path: "/designer/:id/design",
+      element: <RootLayout Pages={DesignProject} />,
+    },
+
     { path: "*", element: <div>404</div> },
   ]);
-  console.log("Current Route:", location.pathname);
   return <div>{element}</div>;
 };
 

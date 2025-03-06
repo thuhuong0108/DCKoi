@@ -50,9 +50,7 @@ const DesignCard = ({
         <Button
           type="primary"
           onClick={() => {
-            if (standOut) {
-              navigate(`${id}`);
-            }
+            navigate(`${id}`);
           }}
         >
           Xem

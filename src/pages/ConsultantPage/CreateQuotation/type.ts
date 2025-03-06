@@ -11,15 +11,4 @@ export interface QuotationItem {
 }
 export interface Funtion {
   removeItem: (item: FieldQuotationDetailType) => void;
-  // openEquipments: () => void;
-  // openServices: () => void;
 }
-// export interface Items {
-//   id: string;
-//   quantity: number;
-//   name: string;
-//   note: string;
-//   category: string;
-//   unit: string;
-//   price: number;
-// }

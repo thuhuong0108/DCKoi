@@ -26,8 +26,10 @@ import {
   quotationDetailActions,
   selectedQuotationDetail,
 } from "@/redux/slices/quotationDetail/quotationDetailSlices";
-import { QuotationType } from "@/models";
 import DetailPackageRequest from "./DetailPackageRequest";
+import DetailConsultingSkeleton from "./DetailConsultingSkeleton";
+import { QuotationStatus } from "@/models/enums/Status";
+import { parseStatusQuotation } from "@/utils/helpers";
 
 const DetailConsultingStaff = () => {
   const dispatch = useAppDispatch();
@@ -62,6 +64,17 @@ const DetailConsultingStaff = () => {
     dispatch(quotationDetailActions.fetchQuotationDetail(quotation.id));
     setOpenDetailQuotation(true);
   };
+
+  const parseStatus = (status: QuotationStatus, prop: string) => {
+    if (prop === "status") {
+      return parseStatusQuotation(status);
+    }
+    return;
+  };
+
+  if (isLoading) {
+    return <DetailConsultingSkeleton />;
+  }
 
   return (
     <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 w-full h-full">
@@ -226,6 +239,7 @@ const DetailConsultingStaff = () => {
           "status",
           "reason",
         ]}
+        formatValue={parseStatus}
         actions={true}
         actionTexts={["Chi tiết"]}
         actionFunctions={[handleDetailQuotation]}

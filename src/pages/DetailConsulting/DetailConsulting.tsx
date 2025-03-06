@@ -1,4 +1,4 @@
-import { confirmAlert, messageInfo, TableComponent, Title } from "@/components";
+import { messageError, TableComponent, Title } from "@/components";
 import Button from "@/components/ui/Button";
 import { QuotationProjectType } from "@/models/ProjectType";
 // import Card from "@/components/ui/Card";
@@ -23,12 +23,14 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import DetailPackageRequest from "./DetailPackageRequest";
 import { Position } from "@/models/enums/Position";
-import { parsePosition } from "@/utils/helpers";
+import { parsePosition, parseStatusQuotation } from "@/utils/helpers";
 import DetailQuotationConsulting from "./DetailQuotationConsulting";
 import {
   quotationDetailActions,
   selectedQuotationDetail,
 } from "@/redux/slices/quotationDetail/quotationDetailSlices";
+import DetailConsultingSkeleton from "./DetailConsultingSkeleton";
+import { QuotationStatus } from "@/models/enums/Status";
 
 const DetailConsulting = () => {
   const dispatch = useAppDispatch();
@@ -59,30 +61,24 @@ const DetailConsulting = () => {
   const packageDetail = item.package;
 
   const handleDetailQuotation = (quotation: QuotationProjectType) => {
-    dispatch(quotationDetailActions.fetchQuotationDetail(quotation.id));
-    setOpenDetailQuotation(true);
+    if (quotation.status === QuotationStatus.OPEN) {
+      messageError("Bạn chưa có quyền xem báo giá này.");
+    } else {
+      dispatch(quotationDetailActions.fetchQuotationDetail(quotation.id));
+      setOpenDetailQuotation(true);
+    }
   };
 
-  const handleUpdating = (quotation: QuotationProjectType) => {
-    console.log("quotation: ", quotation);
-
-    confirmAlert({
-      title: "Xác nhận cập nhật lại bảng báo giá",
-      message: "Bạn có chắc chắn muốn cập nhật lại bảng báo giá này không ?",
-      yes: () => {},
-      no: () => {},
-    });
+  const parseStatus = (status: QuotationStatus, prop: string) => {
+    if (prop === "status") {
+      return parseStatusQuotation(status);
+    }
+    return;
   };
 
-  const handleAccept = (quotation: QuotationProjectType) => {
-    confirmAlert({
-      title: "Xác nhận bảng báo giá",
-      message: "Bạn có chắc chắn xác nhận bảng báo giá này này ?",
-      yes: () => {},
-      no: () => {},
-    });
-  };
-
+  if (isLoading) {
+    return <DetailConsultingSkeleton />;
+  }
   return (
     <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 w-full h-full">
       <Title name="Chi tiết yêu cầu tư vấn" />
@@ -266,31 +262,35 @@ const DetailConsulting = () => {
         </h1>
       </Row>
       <TableComponent<QuotationProjectType>
-        columns={[
-          "Tên bản báo giá",
-          "Mẫu thi công",
-          "Phiên bản",
-          "Ngày gửi",
-          "Trạng thái",
-          "Chú thích",
-        ]}
+        columns={["Phiên bản", "Ngày gửi", "Trạng thái", "Chú thích"]}
         data={quotations.data}
-        props={[
-          "projectId",
-          "templateConstructionId",
-          "version",
-          "createdDate",
-          "status",
-          "reason",
-        ]}
+        props={["version", "createdDate", "status", "reason"]}
         actions={true}
-        actionTexts={["Chi tiết", "Yêu cầu cập nhật", "Chấp nhận"]}
-        actionFunctions={[handleDetailQuotation, handleUpdating, handleAccept]}
+        actionTexts={["Chi tiết"]}
+        actionFunctions={[handleDetailQuotation]}
         loading={isLoading}
         enablePagination={true}
         page={quotations.pageNumber}
         setPage={(page) => {
           dispatch(quotationProjectActions.fetchQuotationProject());
+        }}
+        formatValue={(value, key) => {
+          if (key === "status") {
+            return (
+              <label
+                className={`${
+                  value === "PREVIEW"
+                    ? "text-yellow-500"
+                    : value === "APPROVED"
+                    ? "text-green-500"
+                    : "text-red-500"
+                }`}
+              >
+                {parseStatusQuotation(value)}
+              </label>
+            );
+          }
+          return value;
         }}
         itemsPerPage={quotations.pageSize}
         totalPages={quotations.totalPages}
@@ -310,7 +310,7 @@ const DetailConsulting = () => {
       </Modal>
 
       <Modal
-        title={`Báo giá chi tiết`}
+        title={`Thông tin báo giá `}
         centered
         open={openDetailQuotation}
         width={1000}
@@ -319,7 +319,11 @@ const DetailConsulting = () => {
         onOk={() => setOpenDetailQuotation(false)}
         footer={[]}
       >
-        <DetailQuotationConsulting quotation={quotation} project={item} />
+        <DetailQuotationConsulting
+          quotation={quotation}
+          project={item}
+          setOpenDetailQuotation={setOpenDetailQuotation}
+        />
       </Modal>
     </div>
   );

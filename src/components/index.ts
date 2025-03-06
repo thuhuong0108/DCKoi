@@ -12,6 +12,7 @@ import Consultationcard from "./ConsultationCard";
 import PackgeCard from "./PackageCard";
 import ServiceCard from "./ServiceCard";
 import EstimatedPrice from "./EstimatedPrice";
+import NotiResult from "./NotiResult";
 import ImageGallery from "./ImageGallery";
 export * from "./Sidebar";
 export * from "./ui";
@@ -32,5 +33,6 @@ export {
   PackgeCard,
   ServiceCard,
   EstimatedPrice,
+  NotiResult,
   ImageGallery,
 };

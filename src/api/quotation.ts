@@ -39,7 +39,8 @@ const rejectQuotation = async (
   quotationReject: RejectQuotationType
 ): Promise<ApiResult> => {
   const response = await http.put(
-    endPoint.quotation.rejectQuotation(quotationReject.id), quotationReject
+    endPoint.quotation.rejectQuotation(quotationReject.id),
+    quotationReject
   );
   return response;
 };
@@ -48,7 +49,8 @@ const approveQuotation = async (
   quotationApprove: ApproveQuotationType
 ): Promise<ApiResult> => {
   const response = await http.put(
-    endPoint.quotation.approveQuotation(quotationApprove.id)
+    endPoint.quotation.approveQuotation(quotationApprove.id),
+    quotationApprove
   );
   return response;
 };
@@ -57,7 +59,8 @@ const updateQuotation = async (
   quotation: QuotationRequest
 ): Promise<ApiResult> => {
   const response = await http.put(
-    endPoint.quotation.editQuotation(quotation.id)
+    endPoint.quotation.editQuotation(quotation.id),
+    quotation
   );
   return response;
 };
@@ -66,7 +69,8 @@ const rewriteQuotation = async (
   quotation: QuotationRequest
 ): Promise<ApiResult> => {
   const response = await http.put(
-    endPoint.quotation.rewriteQuotation(quotation.id)
+    endPoint.quotation.rewriteQuotation(quotation.id),
+    quotation
   );
   return response;
 };

@@ -11,11 +11,11 @@ function* fetchQuotaionDetailWorker(action: PayloadAction<string>) {
       yield put(quotationDetailActions.fetchQuotationDetailSuccess(data.data));
     } else {
       messageSuccess(data.message);
-      yield put(quotationDetailActions.fetchQuotationDetailFailed);
+      yield put(quotationDetailActions.fetchQuotationDetailFailed());
     }
   } catch (error) {
     messageError("Hệ thống đang bị lỗi");
-    yield put(quotationDetailActions.fetchQuotationDetailFailed);
+    yield put(quotationDetailActions.fetchQuotationDetailFailed());
     console.log(error);
   }
 }

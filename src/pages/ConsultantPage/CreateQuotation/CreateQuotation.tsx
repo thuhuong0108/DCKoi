@@ -1,9 +1,4 @@
-import {
-  messageError,
-  messageSuccess,
-  TableComponent,
-  Title,
-} from "@/components";
+import { messageError, messageSuccess, Title } from "@/components";
 import {
   equipmentActions,
   selectEquipment,
@@ -13,8 +8,16 @@ import {
   serviceActions,
 } from "@/redux/slices/service/serviceSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
-import { BorderlessTableOutlined } from "@ant-design/icons";
-import { Col, Input, Modal, Row, Select } from "antd";
+import {
+  BorderlessTableOutlined,
+  EnvironmentOutlined,
+  InboxOutlined,
+  MailOutlined,
+  PhoneOutlined,
+  PoundCircleOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
+import { Col, Input, Modal, Row } from "antd";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -29,12 +32,10 @@ import {
   ServiceType,
   TemplateConstructionType,
 } from "@/models";
-import TableServices from "./TableService";
-import TableEquipments from "./TableEquipment";
 import { Category } from "@/models/enums/Category";
 import { QuotationItem } from "./type";
 
-import { Space, Table, Tag } from "antd";
+import { Space, Table } from "antd";
 import TableQuotation from "./TableQuotation";
 import { templateConstructionActions } from "@/redux/slices/templateConstruction/templateContrutionSlices";
 import {
@@ -42,10 +43,10 @@ import {
   QuotationRequest,
   QuotationServiceRequest,
 } from "@/models/Request/QuotationRequest";
-import { createQuotation } from "@/api/quotation";
+import { quotationActions } from "@/redux/slices/quotation/quotationSlices";
 
 const CreateQuotation = () => {
-  const { Column, ColumnGroup } = Table;
+  const { Column } = Table;
   const navigate = useNavigate();
 
   const { id } = useParams();
@@ -53,12 +54,11 @@ const CreateQuotation = () => {
   const project = useAppSelector(selectedProjectDetail);
   const equipments = useAppSelector(selectEquipment);
   const services = useAppSelector(selectedService);
-  const [itemQuotation, setItemQuotation] = useState<
-    FieldQuotationDetailType[]
-  >([]);
+
   useEffect(() => {
     dispatch(projectDetailActions.fetchProjectDetail(id));
-  });
+  }, [dispatch, id]);
+
   const [itemWork, setItemWork] = useState<QuotationItem[]>([]);
   const templates = useAppSelector(
     (state) => state.templateConstruction.templateConstructions
@@ -118,18 +118,31 @@ const CreateQuotation = () => {
     setOpenTemplate(false);
   };
 
-  const removeItem = (item: FieldQuotationDetailType) => {
-    const itemWorkClone = [...itemWork];
+  const removeItem = (itemToRemove: FieldQuotationDetailType) => {
+    if (!itemWork || itemWork.length === 0) return;
 
-    const index = itemWorkClone.findIndex((work) => work.name === category);
-    if (index === -1) return;
+    const updatedItemWork = itemWork.map((work) => {
+      if (work.name === itemToRemove.category) {
+        const updatedItems = work.items.filter(
+          (item) => item.id !== itemToRemove.id
+        );
 
-    const indexItem = itemWorkClone[index].items.findIndex(
-      (i) => i.id === item.id
-    );
-    if (indexItem === -1) return;
-    itemWorkClone[index].items.splice(indexItem, 1);
-    setItemWork(itemWorkClone);
+        const updatedTotalPrice = updatedItems.reduce(
+          (sum, item) => sum + item.price * item.quantity,
+          0
+        );
+
+        return {
+          ...work,
+          items: updatedItems,
+          totalPrice: updatedTotalPrice,
+        };
+      }
+
+      return work;
+    });
+
+    setItemWork(updatedItemWork);
   };
 
   const handleSaveQuotation = async () => {
@@ -166,13 +179,8 @@ const CreateQuotation = () => {
       services: services,
       equipments: equipments,
     };
-    const res = await createQuotation(data);
-    if (res.isSuccess) {
-      messageSuccess("Tạo báo giá thành công");
-      navigate(`/consultant/${id}`);
-    } else {
-      messageError(res.message);
-    }
+    dispatch(quotationActions.createQuotation(data));
+    navigate(`/consultant/${id}`);
   };
 
   const handleAddServicesToItem = (item: ServiceType) => {
@@ -209,8 +217,6 @@ const CreateQuotation = () => {
   };
   const [category, setCategory] = useState(Category.CONTINGENCY);
 
-  const handleDelete = (item: FieldQuotationDetailType) => {};
-
   const [openServices, setOpenServices] = useState(false);
   const [openEquipments, setOpenEquipments] = useState(false);
   const [openTemplate, setOpenTemplate] = useState(false);
@@ -219,60 +225,48 @@ const CreateQuotation = () => {
     <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 w-full h-full">
       <Title name="Thông tin báo giá chi tiết thi công" />
 
-      <Row className="flex flex-row items-center w-full gap-x-20">
+      <Row className="flex flex-row items-start w-full gap-x-20 mt-4">
         <Col>
           <div className="flex flex-row justify-start items-center gap-4 text-lg">
             <BorderlessTableOutlined />
             <label className="text-black font-semibold">Công trình: </label>
-            <span className="text-gray-400ay"> #Tên dự án</span>
+            <span className="text-gray-500"> #Tên dự án</span>
           </div>
           <div className="flex flex-row justify-start items-center gap-4 text-lg">
-            <BorderlessTableOutlined />
+            <InboxOutlined />
             <label className="text-black font-semibold">
               Gói thiết kế thi công:
             </label>
-            <Input
-              placeholder={project.package.name}
-              disabled
-              className="w-[200px]"
-            />
-          </div>
-          <div className="flex flex-row justify-start items-center gap-4 text-lg">
-            <BorderlessTableOutlined />
-            <label className="text-black font-semibold">
-              Tổng giá trị hợp đồng{" "}
-            </label>
-            <span className="text-gray-400ay"> ####</span>
+            <span className="text-gray-500">{project.package.name}</span>
           </div>
         </Col>
 
         <Col>
           <div className="flex flex-row justify-start items-center gap-4 text-lg">
-            <BorderlessTableOutlined />
+            <UserOutlined />
             <label className="text-black font-semibold">Khách hàng: </label>
-            <span className="text-gray-400ay"> {project.customerName}</span>
+            <span className="text-gray-500"> {project.customerName}</span>
           </div>
 
           <div className="flex flex-row justify-start items-center gap-4 text-lg">
-            <BorderlessTableOutlined />
+            <PhoneOutlined />
             <label className="text-black font-semibold">Số điện thoại: </label>
-            <span className="text-gray-400ay"> {project.phone}</span>
+            <span className="text-gray-500"> {project.phone}</span>
           </div>
 
           <div className="flex flex-row justify-start items-center gap-4 text-lg">
-            <BorderlessTableOutlined />
+            <MailOutlined />
             <label className="text-black font-semibold">Địa chỉ email: </label>
-            <span className="text-gray-400ay"> {project.email}</span>
+            <span className="text-gray-500"> {project.email}</span>
           </div>
 
-          <div className="flex flex-row justify-start items-center gap-4 text-lg">
-            <BorderlessTableOutlined />
-            <label className="text-black font-semibold">Địa chỉ thi công</label>
-            <Input
-              placeholder={project.address}
-              disabled
-              className="w-[500px]"
-            />
+          <div className="flex flex-row justify-start items-baseline gap-4 text-lg">
+            <EnvironmentOutlined />
+            <label className="text-black font-semibold">
+              Địa chỉ thi công:
+            </label>
+
+            <span className=" text-gray-500">{project.address}</span>
           </div>
         </Col>
       </Row>
@@ -290,7 +284,7 @@ const CreateQuotation = () => {
             items={item.items}
             totalPrice={item.totalPrice}
           />
-          <div>
+          <div className="my-2">
             <Button
               title="Thêm thiết bị"
               onClick={() => {
