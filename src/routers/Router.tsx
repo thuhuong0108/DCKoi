@@ -20,6 +20,10 @@ import {
   DesignProjectDetail,
   DesignProject,
   RewriteQuotation,
+  CustomerDesign,
+  CustomerDesignDetail,
+  CustomerProjectDesign,
+  ProjectsPage,
 } from "@/pages";
 import { LayoutAdmin, LayoutCustomer, MainLayout } from "@/layouts";
 import {
@@ -51,12 +55,30 @@ const Routers = () => {
     { path: "/register", element: <Register /> },
     // customer
     {
-      path: "/space-management",
+      path: "/space-management/consultations",
       element: <LayoutCustomer Page={ConsultingPage} />,
     },
     {
-      path: "/space-management/:id/detail-consulting",
+      path: "/space-management/consultations/:id/detail-consulting",
       element: <LayoutCustomer Page={DetailConsulting} />,
+    },
+    {
+      path: "/space-management/projects",
+      element: <LayoutCustomer Page={ProjectsPage} />,
+    },
+
+    {
+      path: "/design",
+      element: <LayoutCustomer Page={CustomerProjectDesign} />,
+    },
+
+    {
+      path: "/design/:id",
+      element: <LayoutCustomer Page={CustomerDesign} />,
+    },
+    {
+      path: "/design/:id/detail",
+      element: <LayoutCustomer Page={CustomerDesignDetail} />,
     },
     {
       path: "/space-management/contract",

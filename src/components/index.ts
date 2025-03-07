@@ -13,6 +13,7 @@ import PackgeCard from "./PackageCard";
 import ServiceCard from "./ServiceCard";
 import EstimatedPrice from "./EstimatedPrice";
 import NotiResult from "./NotiResult";
+import ImageGallery from "./ImageGallery";
 import CountdownTime from "./CountDown";
 export * from "./Sidebar";
 export * from "./ui";
@@ -35,4 +36,5 @@ export {
   EstimatedPrice,
   NotiResult,
   CountdownTime,
+  ImageGallery,
 };

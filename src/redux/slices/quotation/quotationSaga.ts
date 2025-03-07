@@ -12,6 +12,7 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import { call, fork, put, select, take } from "redux-saga/effects";
 import { QuotaitonState, quotationActions } from "./quotationSlices";
 import { QuotationRequest } from "@/models/Request/QuotationRequest";
+import { quotationProjectActions } from "../quotationProject/QuotationProjectSlices";
 
 function* fetchQuotationWorker(action: PayloadAction<string>) {
   try {
@@ -59,8 +60,15 @@ function* rejectQuotationWorker(action: PayloadAction<RejectQuotationType>) {
     const data = yield call(rejectQuotation, action.payload);
     if (data.isSuccess) {
       messageSuccess(data.message);
+      const quotaitonProjectState = yield select(
+        (state) => state.quotationProject
+      );
 
-      yield put(quotationActions.rejectAcceptQuotation(data));
+      yield put(
+        quotationProjectActions.fetchQuotationProject(
+          quotaitonProjectState.data.projectId
+        )
+      );
     } else {
       messageError(data.message);
     }
@@ -77,24 +85,15 @@ function* approveQuotationWorker(action: PayloadAction<ApproveQuotationType>) {
     if (data.isSuccess) {
       messageSuccess(data.message);
 
-      yield put(quotationActions.approveQuotation(data));
-    } else {
-      messageError(data.message);
-    }
-  } catch (error) {
-    messageError("Hệ thống đang bị lỗi");
-    console.log(error);
-  }
-}
+      const quotaitonProjectState = yield select(
+        (state) => state.quotationProject
+      );
 
-function* updateQuotationWorker(action: PayloadAction<QuotationRequest>) {
-  try {
-    const data = yield call(updateQuotation, action.payload);
-
-    if (data.isSuccess) {
-      messageSuccess("Báo giá mới đã gửi thành công");
-
-      yield put(quotationActions.updateQuotation(data));
+      yield put(
+        quotationProjectActions.fetchQuotationProject(
+          quotaitonProjectState.data.projectId
+        )
+      );
     } else {
       messageError(data.message);
     }
@@ -111,6 +110,36 @@ function* rewriteQuotationWorker(action: PayloadAction<QuotationRequest>) {
     if (data.isSuccess) {
       messageSuccess("Báo giá đã gửi thành công");
       yield put(quotationActions.rewriteQuotation(data));
+
+      const quotaitonProjectState = yield select(
+        (state) => state.quotationProject
+      );
+
+      yield put(
+        quotationProjectActions.fetchQuotationProject(
+          quotaitonProjectState.data.projectId
+        )
+      );
+    } else {
+      messageError(data.message);
+    }
+  } catch (error) {
+    messageError("Hệ thống đang bị lỗi");
+    console.log(error);
+  }
+}
+
+function* updateQuotationWorker(action: PayloadAction<QuotationRequest>) {
+  try {
+    const data = yield call(updateQuotation, action.payload);
+
+    if (data.isSuccess) {
+      messageSuccess("Báo giá đã gửi thành công");
+      yield put(quotationActions.updateQuotation(data));
+
+      const quotationState = yield select((state) => state.quotation);
+
+      yield put(quotationActions.fetchQuotation(quotationState.data.id));
     } else {
       messageError(data.message);
     }

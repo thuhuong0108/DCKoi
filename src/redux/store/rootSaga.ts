@@ -15,6 +15,8 @@ import { quotationSaga } from "../slices/quotation/quotationSaga";
 import { quotationDetailSaga } from "../slices/quotationDetail/quotationDetailSaga";
 import { designSaga } from "../slices/design/designSaga";
 import { designImageSaga } from "../slices/imageDesign/imageDesignSaga";
+import { designDetailSaga } from "../slices/designDetail/designDetailSaga";
+import { customerDesignSaga } from "../slices/customerDesign/customerDesignSaga";
 import { constructionSaga } from "../slices/construction/constructionSaga";
 import { contractSaga } from "../slices/contract/contractSaga";
 
@@ -35,6 +37,8 @@ export default function* rootSaga() {
     quotationDetailSaga(),
     designSaga(),
     designImageSaga(),
+    designDetailSaga(),
+    customerDesignSaga(),
     constructionSaga(),
     contractSaga(),
   ]);

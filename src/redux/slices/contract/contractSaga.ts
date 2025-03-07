@@ -1,6 +1,6 @@
 import { messageError, messageSuccess } from "@/components";
 import { PayloadAction } from "@reduxjs/toolkit";
-import { call, fork, put, select, take } from "redux-saga/effects";
+import { call, fork, put, take } from "redux-saga/effects";
 import {
   acceptContract,
   createContract,
@@ -8,7 +8,7 @@ import {
   rejectContract,
   verifyContract,
 } from "@/api/contract";
-import { contractActions, ContractState } from "./contractSlices";
+import { contractActions } from "./contractSlices";
 import { ContractRequest } from "@/models/Request/ContractRequest";
 import { VerifyContractType } from "@/models";
 

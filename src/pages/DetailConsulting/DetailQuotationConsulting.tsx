@@ -85,7 +85,6 @@ const DetailQuotationConsulting = ({
 
     dispatch(quotationActions.approveQuotation(requestUpdating));
     setOpenDetailQuotation(false);
-    dispatch(projectDetailActions.reloadProjectDetail(project.id));
   };
   const handleAprrove = () => {
     const acceptData = {
@@ -95,7 +94,6 @@ const DetailQuotationConsulting = ({
     };
     dispatch(quotationActions.approveQuotation(acceptData));
     setOpenDetailQuotation(false);
-    dispatch(projectDetailActions.reloadProjectDetail(project.id));
   };
 
   return (
