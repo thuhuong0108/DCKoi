@@ -1,23 +1,18 @@
 import { Title } from "@/components";
+import { TemplateConstructionItemType } from "@/models";
 import {
   selectTemplateConstructionDetail,
   templateConstructionDetailActions,
 } from "@/redux/slices/templateConstructionDetail/templateConstructionDetailSlices";
 import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
-import { Tree } from "antd";
-import React, { useEffect } from "react";
-
-const transformData = (data) => {
-  return data.map((item) => ({
-    key: item.id,
-    title: item.name,
-    children: item.child
-      ? transformData(item.child).map((child) => ({ ...child, disabled: true }))
-      : [],
-  }));
-};
+import { Table } from "antd";
+import { useEffect } from "react";
+import { columns } from "./type";
+import type { TableColumnsType, TableProps } from "antd";
 
 const PlanConstruction = ({ id }) => {
+  type TableRowSelection<T extends object = object> =
+    TableProps<T>["rowSelection"];
   const dispatch = useAppDispatch();
   const template = useAppSelector(selectTemplateConstructionDetail);
 
@@ -27,19 +22,24 @@ const PlanConstruction = ({ id }) => {
     );
   }, [id]);
 
-  const treeData = transformData(template.templateContructionItems);
+  const flattenData = (items: TemplateConstructionItemType[]) => {
+    return items.map((item) => ({
+      ...item,
+      key: item.id,
+      children: item.child ? flattenData(item.child) : undefined,
+    }));
+  };
+
   return (
     <div className="flex flex-col">
       <Title name={template.name} />
       <p className="text-gray-500 text-sm my-3">{template.description}</p>
 
-      <Tree
-        className="draggable-tree"
-        defaultExpandAll
-        draggable
-        blockNode
-        checkable
-        treeData={treeData}
+      <Table<TemplateConstructionItemType>
+        columns={columns}
+        // rowSelection={{ ...rowSelection, checkStrictly }}
+        dataSource={flattenData(template.templateContructionItems)}
+        pagination={false}
       />
     </div>
   );
