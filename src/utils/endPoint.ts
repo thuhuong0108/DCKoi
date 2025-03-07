@@ -89,6 +89,18 @@ const endPoint = {
     acceptDesign: (id: string) => `/designs/${id}/accept`,
     requestEditDesign: (id: string) => `/designs/${id}/request-edit`,
   },
+
+  construction: {
+    createConstruction: "/constructions",
+  },
+
+  contract: {
+    createContract: "contracts",
+    getContract: (id: string) => `contracts/${id}`,
+    rejectContract: (id: string) => `contracts/${id}/reject`,
+    acceptContract: (id: string) => `contracts/${id}/accept`,
+    verifyContract: (id: string) => `contracts/${id}/verify`,
+  },
 };
 
 export { baseURL, endPoint, socketURL };

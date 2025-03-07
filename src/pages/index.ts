@@ -2,8 +2,8 @@ import Home from "./Home";
 import Login from "./Login";
 import Register from "./Register";
 import Contact from "./Contact/Contact";
-// import ProjectsPage from "./Projects";
-import ConsultingPage from "./Projects";
+import ProjectsPage from "./Projects/ProjectsPage";
+import ConsultingPage from "./Consulting";
 import DetailConsulting from "./DetailConsulting";
 import CustomerProjectDesign from "./CustomerProjectDesign";
 import CustomerDesign from "./CustomerDesign";
@@ -23,7 +23,7 @@ export {
   CustomerProjectDesign,
   CustomerDesign,
   CustomerDesignDetail,
-  // ProjectsPage,
+  ProjectsPage,
 
   //error
   AuthorizePage,

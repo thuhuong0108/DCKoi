@@ -25,6 +25,13 @@ import {
   FieldQuotationDetailType,
 } from "./QuotationType";
 
+import {
+  ContractType,
+  PaymentBatchType,
+  VerifyContractType,
+} from "./ContractType";
+
+import { ConstructionType, ConstructionItem } from "./ConstructionType";
 export type {
   DesignType,
   DesignRequest,
@@ -46,5 +53,10 @@ export type {
   ProjectRequest,
   ProjectType,
   AssginStaff,
-  ProjectDesignType
+  ProjectDesignType,
+  ContractType,
+  PaymentBatchType,
+  VerifyContractType,
+  ConstructionType,
+  ConstructionItem,
 };

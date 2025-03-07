@@ -236,7 +236,7 @@ const RewriteQuotation = () => {
       dispatch(quotationActions.updateQuotation(data));
     }
 
-    navigate(`/consultant/${quotation.projectId}`);
+    navigate(-1);
   };
 
   const handleAddServicesToItem = (item: ServiceType) => {

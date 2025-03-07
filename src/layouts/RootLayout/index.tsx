@@ -18,9 +18,9 @@ interface MenuItemProps {
   icon?: React.ReactNode;
   end?: boolean;
 }
-const RootLayout = ({ Pages }: LayoutProps) => {
+const RootLayout = ({ Pages }) => {
   const role = useAppSelector((state) => state.auth.role);
-  console.log(role);
+
   const pageName = Pages.name;
   if (pageName === "Login" || pageName === "Register") {
     return <Pages />;
@@ -33,6 +33,7 @@ const RootLayout = ({ Pages }: LayoutProps) => {
       return <LayoutConsultant Page={Pages} />;
     case RoleUser.MANAGER:
       return <LayoutManager Page={Pages} />;
+
     case RoleUser.DESIGNER:
       return <LayoutDesigner Page={Pages} />;
     default:

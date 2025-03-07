@@ -23,6 +23,7 @@ import {
   CustomerDesign,
   CustomerDesignDetail,
   CustomerProjectDesign,
+  ProjectsPage,
 } from "@/pages";
 import { LayoutAdmin, LayoutCustomer, MainLayout } from "@/layouts";
 import {
@@ -38,9 +39,12 @@ import {
   ConstructionTemplate,
   ConstructionTemplateConfig,
   Design,
+  ManagementProjects,
+  AdminContract,
 } from "@/pages/AdminPage";
 import RootLayout from "@/layouts/RootLayout";
 import PrivateRouterAdmin from "./PrivateRouterAdmin";
+import ContractPage from "@/pages/ContractPage";
 
 const Routers = () => {
   const location = useLocation();
@@ -51,17 +55,23 @@ const Routers = () => {
     { path: "/register", element: <Register /> },
     // customer
     {
-      path: "/space-management",
+      path: "/space-management/consultations",
       element: <LayoutCustomer Page={ConsultingPage} />,
     },
     {
-      path: "/space-management/detail-consulting/:id",
+      path: "/space-management/consultations/:id/detail-consulting",
       element: <LayoutCustomer Page={DetailConsulting} />,
     },
+    {
+      path: "/space-management/projects",
+      element: <LayoutCustomer Page={ProjectsPage} />,
+    },
+
     {
       path: "/design",
       element: <LayoutCustomer Page={CustomerProjectDesign} />,
     },
+
     {
       path: "/design/:id",
       element: <LayoutCustomer Page={CustomerDesign} />,
@@ -69,6 +79,10 @@ const Routers = () => {
     {
       path: "/design/:id/detail",
       element: <LayoutCustomer Page={CustomerDesignDetail} />,
+    },
+    {
+      path: "/space-management/contract",
+      element: <LayoutCustomer Page={ContractPage} />,
     },
     // admin
     {
@@ -90,11 +104,11 @@ const Routers = () => {
     },
     {
       path: "/admin/consultation/:id",
-      element: (
-        <PrivateRouterAdmin
-          Pages={() => <LayoutAdmin Page={DetailConsultation} />}
-        />
-      ),
+      element: <RootLayout Pages={DetailConsultation} />,
+    },
+    {
+      path: "/admin/consultation/:id/contract/:quotationId",
+      element: <RootLayout Pages={AdminContract} />,
     },
     {
       path: "/admin/equipments",
@@ -177,6 +191,10 @@ const Routers = () => {
     {
       path: "/admin/design",
       element: <RootLayout Pages={Design} />,
+    },
+    {
+      path: "/admin/projects",
+      element: <RootLayout Pages={ManagementProjects} />,
     },
 
     // consultant

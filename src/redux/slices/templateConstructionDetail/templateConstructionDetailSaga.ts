@@ -2,8 +2,6 @@ import { messageError, messageSuccess } from "@/components";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { call, fork, put, select, take } from "redux-saga/effects";
 
-import { TemplateConstructionDetailState } from "./templateConstructionDetailSlices";
-
 import { getTemlateConstruction } from "@/api/templateConstruction";
 import { templateConstructionDetailActions } from "./templateConstructionDetailSlices";
 
