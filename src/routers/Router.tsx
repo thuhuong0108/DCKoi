@@ -20,6 +20,7 @@ import {
   DesignProjectDetail,
   DesignProject,
   RewriteQuotation,
+  ManagerConstruction,
 } from "@/pages";
 import { LayoutAdmin, LayoutCustomer, MainLayout } from "@/layouts";
 import {
@@ -190,6 +191,10 @@ const Routers = () => {
     {
       path: "/manager/design",
       element: <RootLayout Pages={ManagerDesign} />,
+    },
+    {
+      path: "/manager/construction",
+      element: <RootLayout Pages={ManagerConstruction} />,
     },
 
     // designer
