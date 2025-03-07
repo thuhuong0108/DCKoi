@@ -21,8 +21,10 @@ export interface ProjectType {
   standOut: boolean;
   note: string;
   status: ProjectStatus;
-  createdDate: string;
-  updatedDate: string;
+  createdAt?: string;
+  updatedAt?: string;
+  createdDate?: string;
+  updatedDate?: string;
   imageUrl?: string;
   name?: string;
 }
@@ -38,8 +40,10 @@ export interface ProjectDetailType {
   standOut: boolean;
   note: string;
   status: ProjectStatus;
-  createdDate: string;
-  updatedDate: string;
+  createdAt?: string;
+  updatedAt?: string;
+  createdDate?: string;
+  updatedDate?: string;
   staff: Staff[];
   package: PackageType;
 }

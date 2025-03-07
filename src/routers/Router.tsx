@@ -40,6 +40,7 @@ import {
 } from "@/pages/AdminPage";
 import RootLayout from "@/layouts/RootLayout";
 import PrivateRouterAdmin from "./PrivateRouterAdmin";
+import ContractPage from "@/pages/ContractPage";
 
 const Routers = () => {
   const location = useLocation();
@@ -54,8 +55,12 @@ const Routers = () => {
       element: <LayoutCustomer Page={ConsultingPage} />,
     },
     {
-      path: "/space-management/detail-consulting/:id",
+      path: "/space-management/:id/detail-consulting",
       element: <LayoutCustomer Page={DetailConsulting} />,
+    },
+    {
+      path: "/space-management/contract",
+      element: <LayoutCustomer Page={ContractPage} />,
     },
     // admin
     {

@@ -18,7 +18,6 @@ const initialState: ProjectDetailState = {
     email: "",
     area: 0,
     depth: 0,
-    packageName: "",
     standOut: false,
     note: "",
     status: ProjectStatus.CONSTRUCTING,
@@ -48,6 +47,10 @@ export const projectDetailSlice = createSlice({
     },
     fetchProjectDetailFaild(state) {
       state.loading = false;
+    },
+
+    reloadProjectDetail(state, action: PayloadAction<string>) {
+      state.loading = true;
     },
   },
 });
