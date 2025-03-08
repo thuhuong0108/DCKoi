@@ -10,6 +10,8 @@ import DraggableContainer from "./DraggableContainer";
 import DraggableChildItem from "./DraggableChildItem";
 import { Add } from "@mui/icons-material";
 import { ItemTypes } from "./type";
+import { useDrop } from "react-dnd";
+import DraggableItem from "./DraggableItem";
 
 interface DraggableParentItemProps {
     item: TemplateConstructionItemType;
@@ -17,20 +19,25 @@ interface DraggableParentItemProps {
     idTemplate: string;
     index: number;
     moveItem: (dragIndex: number, hoverIndex: number, type: string, parentId?: string) => void;
+    moveChildToParent: (childId: string, sourceParentId: string, targetParentId: string) => void;
     className?: string;
     childClassName?: string;
     onChildrenChange?: (parentId: string, children: TemplateConstructionItemType[]) => void;
+    menuItems?: { label: string; action: () => void }[];
+    menuClassName?: string;
 }
-
 const DraggableParentItem = ({
     item,
     parentId,
     idTemplate,
     index,
     moveItem,
+    moveChildToParent,
     className,
     childClassName,
     onChildrenChange,
+    menuItems,
+    menuClassName
 }: DraggableParentItemProps) => {
     const dispatch = useAppDispatch();
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -44,8 +51,21 @@ const DraggableParentItem = ({
         },
         [item.id, onChildrenChange]
     );
+    
+    // Reference to enable dropping children into the parent
+    const [, drop] = useDrop({
+        accept: ItemTypes.CHILD,
+        drop: (droppedItem: { id: string, parentId: string }) => {
+            // If the child is from a different parent, move it here
+            if (droppedItem.parentId && droppedItem.parentId !== item.id) {
+                moveChildToParent(droppedItem.id, droppedItem.parentId, item.id);
+                return { parentId: item.id };
+            }
+        },
+    });
 
     const renderModal = () => {
+        // Modal implementation as before
         const { regHandleSubmit, formik, regField } = useForm({
             values: {
                 name: "",
@@ -114,7 +134,10 @@ const DraggableParentItem = ({
     const defaultChildClassName = "bg-white p-4 rounded-lg w-full h-full my-1 border hover:border-black";
 
     return (
-        <div className={className || defaultClassName}>
+        <div 
+            className={className || defaultClassName}
+            ref={drop} // Apply drop ref to the parent container
+        >
             <div className="text-lg font-bold text-center">{item.name}</div>
             <div className="border-b-4 border-sky-600 my-2"></div>
 
@@ -125,13 +148,29 @@ const DraggableParentItem = ({
                         onItemsChange={handleChildItemsChange}
                         className="flex flex-col space-y-1"
                         itemClassName={childClassName || defaultChildClassName}
-                        renderItem={(childItem) => <DraggableChildItem item={childItem} />}
+                        renderItem={(childItem, childIndex) =>
+                            <DraggableItem
+                                key={childItem.id}
+                                item={childItem}
+                                index={childIndex}
+                                moveItem={moveItem}
+                                type={ItemTypes.CHILD}
+                                parentId={item.id}
+                                renderContent={(item) => (
+                                    <DraggableChildItem
+                                        item={item}
+                                        menuItems={menuItems}
+                                        menuClassName={menuClassName}
+                                    />
+                                )}
+                            />
+                        }
                         type={ItemTypes.CHILD}
                         parentId={item.id}
                     />
                 )}
 
-                <div className="bg-white mt-1 rounded-lg shadow-md w-full h-full">
+                <div className="bg-white mt-3 rounded-lg shadow-md w-full h-full">
                     <Button
                         size="large"
                         fullWidth

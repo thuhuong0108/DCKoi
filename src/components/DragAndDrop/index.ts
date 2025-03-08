@@ -1,3 +1,4 @@
+import ContextMenu from "./ContextMenu";
 import DragDropTemplateConstructor from "./DragDropTemplateConstructor";
 import DraggableChildItem from "./DraggableChildItem";
 import DraggableContainer from "./DraggableContainer";
@@ -9,5 +10,6 @@ export default {
     DraggableChildItem,
     DraggableContainer,
     DraggableItem,
-    DraggableParentItem
+    DraggableParentItem,
+    ContextMenu
 }

@@ -13,6 +13,8 @@ interface DragDropTemplateConstructorProps {
     containerClassName?: string;
     parentItemClassName?: string;
     childItemClassName?: string;
+    menuItems?: { label: string; action: () => void }[];
+    menuClassName?: string;
 }
 
 const DragDropTemplateConstructor = ({
@@ -22,14 +24,86 @@ const DragDropTemplateConstructor = ({
     containerClassName,
     parentItemClassName,
     childItemClassName,
+    menuItems,
+    menuClassName,
 }: DragDropTemplateConstructorProps) => {
-    // Function to handle moving parent items
-    const moveParentItem = useCallback(
-        (dragIndex: number, hoverIndex: number) => {
+
+    /// Enhanced function to handle moving both parent and child items
+    const moveItem = useCallback(
+        (dragIndex: number, hoverIndex: number, type: string, parentId?: string) => {
+            if (type === ItemTypes.PARENT) {
+                // Handle parent item movement (same as before)
+                const newItems = [...items];
+                const draggedItem = newItems[dragIndex];
+                newItems.splice(dragIndex, 1);
+                newItems.splice(hoverIndex, 0, draggedItem);
+                onItemsChange(newItems);
+            } else if (type === ItemTypes.CHILD) {
+                // Handle child item movement
+                const newItems = [...items];
+
+                // Find source and target parent items
+                const sourceParentIndex = newItems.findIndex(p => p.id === parentId);
+                if (sourceParentIndex === -1) return;
+
+                // Get the source parent
+                const sourceParent = newItems[sourceParentIndex];
+
+                // Get the dragged child
+                const draggedChild = sourceParent.child[dragIndex];
+
+                // Create new source parent with the child removed
+                const newSourceChildren = [...sourceParent.child];
+                newSourceChildren.splice(dragIndex, 1);
+
+                // Update the source parent
+                newItems[sourceParentIndex] = {
+                    ...sourceParent,
+                    child: newSourceChildren
+                };
+
+                // If target parent is the same as source
+                if (parentId === parentId) {
+                    // Insert the child at the hover index
+                    newItems[sourceParentIndex].child.splice(hoverIndex, 0, draggedChild);
+                }
+
+                onItemsChange(newItems);
+            }
+        },
+        [items, onItemsChange]
+    );
+
+    // Function to handle moving a child to a different parent
+    const moveChildToParent = useCallback(
+        (childId: string, sourceParentId: string, targetParentId: string) => {
             const newItems = [...items];
-            const draggedItem = newItems[dragIndex];
-            newItems.splice(dragIndex, 1);
-            newItems.splice(hoverIndex, 0, draggedItem);
+
+            // Find source and target parent items
+            const sourceParentIndex = newItems.findIndex(p => p.id === sourceParentId);
+            const targetParentIndex = newItems.findIndex(p => p.id === targetParentId);
+
+            if (sourceParentIndex === -1 || targetParentIndex === -1) return;
+
+            // Find the child to move
+            const childIndex = newItems[sourceParentIndex].child.findIndex(c => c.id === childId);
+            if (childIndex === -1) return;
+
+            // Get the child
+            const childToMove = newItems[sourceParentIndex].child[childIndex];
+
+            // Remove from source
+            newItems[sourceParentIndex] = {
+                ...newItems[sourceParentIndex],
+                child: newItems[sourceParentIndex].child.filter(c => c.id !== childId)
+            };
+
+            // Add to target
+            newItems[targetParentIndex] = {
+                ...newItems[targetParentIndex],
+                child: [...newItems[targetParentIndex].child, childToMove]
+            };
+
             onItemsChange(newItems);
         },
         [items, onItemsChange]
@@ -57,9 +131,8 @@ const DragDropTemplateConstructor = ({
                         key={item.id}
                         item={item}
                         index={index}
-                        moveItem={moveParentItem}
+                        moveItem={moveItem}
                         type={ItemTypes.PARENT}
-                        className={parentItemClassName || ""}
                         parentId="root"
                         renderContent={(item) => (
                             <DraggableParentItem
@@ -67,10 +140,13 @@ const DragDropTemplateConstructor = ({
                                 parentId="root"
                                 idTemplate={idTemplate}
                                 index={index}
-                                moveItem={moveParentItem}
+                                moveItem={moveItem}
+                                moveChildToParent={moveChildToParent}
                                 className={parentItemClassName}
                                 childClassName={childItemClassName}
                                 onChildrenChange={handleChildrenChange}
+                                menuItems={menuItems}
+                                menuClassName={menuClassName}
                             />
                         )}
                     />

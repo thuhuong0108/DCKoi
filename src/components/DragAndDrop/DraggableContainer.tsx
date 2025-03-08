@@ -3,14 +3,14 @@ import React, { useCallback } from 'react';
 import DraggableItem from './DraggableItem';
 import { TemplateConstructionItemType } from '@/models';
 
-interface ContainerProps {
+interface DraggableContainerProps {
     items: TemplateConstructionItemType[];
     onItemsChange: (items: TemplateConstructionItemType[]) => void;
     className?: string;
     itemClassName?: string;
-    renderItem: (item: TemplateConstructionItemType) => React.ReactNode;
+    renderItem: (item: TemplateConstructionItemType, index: number) => React.ReactNode;
     type: string;
-    parentId?: string;
+    parentId: string;
 }
 
 const DraggableContainer = ({
@@ -20,35 +20,26 @@ const DraggableContainer = ({
     itemClassName,
     renderItem,
     type,
-    parentId,
-}: ContainerProps) => {
+    parentId
+}: DraggableContainerProps) => {
+    // Function to move items within this container
     const moveItem = useCallback(
-        (dragIndex: number, hoverIndex: number, itemType: string, dragParentId?: string) => {
-            // Only move items within the same container
-            if (dragParentId !== parentId) return;
-
+        (dragIndex: number, hoverIndex: number) => {
             const draggedItem = items[dragIndex];
             const newItems = [...items];
             newItems.splice(dragIndex, 1);
             newItems.splice(hoverIndex, 0, draggedItem);
             onItemsChange(newItems);
         },
-        [items, onItemsChange, parentId]
+        [items, onItemsChange]
     );
 
     return (
-        <div className={className}>
+        <div className={className || "flex flex-col space-y-2"}>
             {items.map((item, index) => (
-                <DraggableItem
-                    key={item.id}
-                    item={item}
-                    index={index}
-                    moveItem={moveItem}
-                    type={type}
-                    className={itemClassName}
-                    renderContent={renderItem}
-                    parentId={parentId}
-                />
+                <div key={item.id} className={itemClassName}>
+                    {renderItem(item, index)}
+                </div>
             ))}
         </div>
     );
