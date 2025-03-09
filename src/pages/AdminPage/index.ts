@@ -13,6 +13,9 @@ import PackageCreate from "./PackageCreate";
 import PackageDetail from "./PackageDetail";
 import ConstructionTemplate from "./ConstructionTemplate";
 import ConstructionTemplateConfig from "./ConstructionTemplateConfig";
+import Design from "./Design";
+import AdminContract from "./Contracts";
+import ManagementProjects from "./Projects/ManagementProjects";
 export {
   ConsultationPage,
   DetailConsultation,
@@ -28,4 +31,7 @@ export {
   PackageDetail,
   ConstructionTemplate,
   ConstructionTemplateConfig,
+  Design,
+  ManagementProjects,
+  AdminContract,
 };

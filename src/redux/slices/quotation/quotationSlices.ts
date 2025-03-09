@@ -1,20 +1,33 @@
-import { QuotationType } from "@/models";
-import { ApiResultWithAData } from "@/models/Common";
+import {
+  ApproveQuotationType,
+  QuotationType,
+  RejectQuotationType,
+} from "@/models";
+import {
+  ApiResult,
+  ApiResultWithAData,
+  Filter,
+  Pagination,
+} from "@/models/Common";
+import { QuotationStatus } from "@/models/enums/Status";
+import { QuotationRequest } from "@/models/Request/QuotationRequest";
+
 import { RootState } from "@/redux/store/store";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface QuotaitonState {
   loading: boolean;
-  quotation: ApiResultWithAData<QuotationType>;
+  quotation: Pagination<QuotationType>;
 }
 
 const initialState: QuotaitonState = {
   loading: false,
   quotation: {
-    isSuccess: false,
-    statusCode: 0,
-    message: "",
-    data: {} as QuotationType,
+    pageNumber: 1,
+    pageSize: 10,
+    totalPages: 0,
+    totalRecords: 0,
+    data: [],
   },
 };
 
@@ -22,22 +35,42 @@ export const quotationSlice = createSlice({
   name: "quotation",
   initialState: initialState,
   reducers: {
-    fetchQuotation(state, action: PayloadAction<string>) {
+    fetchQuotation(state, action: PayloadAction<Filter>) {
       state.loading = true;
     },
     fetchQuotationSuccess(
       state,
-      action: PayloadAction<ApiResultWithAData<QuotationType>>
+      action: PayloadAction<Pagination<QuotationType>>
     ) {
       state.quotation = action.payload;
       state.loading = false;
     },
-    fetchQuotationFaild(state) {
+    fetchQuotationFailed(state) {
       state.loading = false;
     },
 
-    createQuotation(state, action: PayloadAction<QuotationType>) {
+    //create
+    createQuotation(state, action: PayloadAction<QuotationRequest>) {
       console.log("create quotation: ", action.payload);
+    },
+
+    //approve
+    approveQuotation(state, action: PayloadAction<ApproveQuotationType>) {
+      console.log("approve quotation: ", action.payload);
+    },
+
+    //edit
+    updateQuotation(state, action: PayloadAction<QuotationRequest>) {
+      console.log("edit quotation: ", action.payload);
+    },
+
+    //rewrite
+    rewriteQuotation(state, action: PayloadAction<QuotationRequest>) {
+      console.log("rewrite quotation: ", action.payload);
+    },
+
+    rejectAcceptQuotation(state, action: PayloadAction<RejectQuotationType>) {
+      console.log("reject-accept quotation", action.payload);
     },
   },
 });

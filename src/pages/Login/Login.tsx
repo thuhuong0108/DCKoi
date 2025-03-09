@@ -1,6 +1,6 @@
 import ImgLogo from "@/assets/images/logo.png";
 import useForm from "@/hooks/useForm";
-import { RoleUser } from "@/models/enums/roleUser";
+import { RoleUser } from "@/models/enums/RoleUser";
 import {
   authActions,
   LoginPayload,
@@ -50,6 +50,9 @@ const Login = () => {
           break;
         case RoleUser.DESIGNER:
           navigate("/designer");
+          break;
+        case RoleUser.MANAGER:
+          navigate("/manager");
           break;
       }
     }

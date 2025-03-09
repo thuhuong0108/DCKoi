@@ -1,17 +1,8 @@
 import { Sidebar, Menu, MenuItem, Logo } from "@/components/Sidebar";
 import { selectCurrentUser, selectRole } from "@/redux/slices/auth/authSlices";
 import { useAppSelector } from "@/redux/store/hook";
-import {
-  AttachMoneySharp,
-  BuildSharp,
-  CardGiftcardSharp,
-  DashboardSharp,
-  FolderSharp,
-  PeopleSharp,
-  PersonSharp,
-  SupportAgentSharp,
-} from "@mui/icons-material";
-import BubbleChartIcon from "@mui/icons-material/BubbleChart";
+import { ProfileOutlined } from "@ant-design/icons";
+import { SupportAgentSharp } from "@mui/icons-material";
 
 interface IndexProps {
   Page: () => ReactElement;

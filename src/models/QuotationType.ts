@@ -19,7 +19,7 @@ export interface ServiceQuotationType {
   description: string;
   price: number;
   unit: string;
-  type: string;
+  type?: string;
   quantity: number;
   note: string;
   category: string;
@@ -37,7 +37,7 @@ export interface EquipmentQuotationType {
 
 export interface ApproveQuotationType {
   id?: string;
-  isAcpprove: boolean;
+  isApprove: boolean;
   reason: string;
 }
 
@@ -57,4 +57,5 @@ export interface FieldQuotationDetailType {
   quantity: number;
   note: string;
   category: string;
+  isService?: boolean;
 }

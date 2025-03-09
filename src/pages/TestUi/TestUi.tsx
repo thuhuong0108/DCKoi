@@ -1,82 +1,74 @@
-import React from "react";
-import useForm from "@/hooks/useForm";
-import { validateDemo } from "@/validations/validate";
-import { Button, TextField, Typography, Box } from "@mui/material";
+import { messageInfo } from "@/components";
+import { uploadImage } from "@/utils/uploadImage";
+import { Button, Upload } from "antd";
+import type { GetProp, UploadFile, UploadProps } from "antd";
+import ImgCrop from "antd-img-crop";
+import { useState } from "react";
 
 const TestUi = () => {
-  const { loading, regField, regHandleSubmit } = useForm({
-    values: { name: "", email: "", password: "" },
-    validationSchema: validateDemo,
-    onSubmit: async (values) => {},
-  });
+  type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
+
+  const [fileList, setFileList] = useState<UploadFile<FileType>[]>([]);
+
+  const onChange: UploadProps["onChange"] = ({ fileList: newFileList }) => {
+    setFileList(newFileList);
+  };
+  const [loading, setLoading] = useState(false);
+
+  const onPreview = async (file: UploadFile) => {
+    let src = file.url as string;
+    if (!src) {
+      src = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file.originFileObj as FileType);
+        reader.onload = () => resolve(reader.result as string);
+      });
+    }
+    const image = new Image();
+    image.src = src;
+    const imgWindow = window.open(src);
+    imgWindow?.document.write(image.outerHTML);
+  };
+
+  const handleUpload = async () => {
+    // messageInfo("Upload...");
+    setLoading(true);
+
+    const urls = await Promise.all(
+      fileList.map(async (file) => {
+        const url = await uploadImage(file.originFileObj as File);
+        return url;
+      })
+    );
+    console.log(urls);
+
+    setLoading(false);
+
+    // messageInfo("Upload success");
+  };
 
   return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      alignItems="center"
-      justifyContent="center"
-      minHeight="100vh"
-      bgcolor="#f5f5f5"
-      p={2}
-    >
-      <Box
-        component="form"
-        onSubmit={regHandleSubmit}
-        sx={{
-          width: "100%",
-          maxWidth: 400,
-          bgcolor: "white",
-          padding: 4,
-          borderRadius: 2,
-          boxShadow: 3,
-        }}
-      >
-        <Typography variant="h5" component="h1" gutterBottom align="center">
-        Test Form
-        </Typography>
-        <TextField
-          fullWidth
-          label="Name"
-          margin="normal"
-          variant="outlined"
-          {...regField("name")}
-          error={Boolean(regField("name").error)}
-          helperText={regField("name").error}
-        />
-        <TextField
-          fullWidth
-          label="Email"
-          type="email"
-          margin="normal"
-          variant="outlined"
-          {...regField("email")}
-          error={Boolean(regField("email").error)}
-          helperText={regField("email").error}
-        />
-        <TextField
-          fullWidth
-          label="Password"
-          type="password"
-          margin="normal"
-          variant="outlined"
-          {...regField("password")}
-          error={Boolean(regField("password").error)}
-          helperText={regField("password").error}
-        />
-
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          fullWidth
-          sx={{ mt: 2 }}
-          disabled={loading}
+    <>
+      {" "}
+      <ImgCrop rotationSlider>
+        <Upload
+          listType="picture-card"
+          fileList={fileList}
+          onChange={onChange}
+          onPreview={onPreview}
         >
-          {loading ? "Loading..." : "Register"}
-        </Button>
-      </Box>
-    </Box>
+          {"+ Upload"}
+        </Upload>
+      </ImgCrop>
+      <Button
+        type="primary"
+        onClick={handleUpload}
+        style={{ marginTop: "16px" }}
+        loading={loading}
+      >
+        Upload
+      </Button>
+    </>
   );
 };
 

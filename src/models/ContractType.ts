@@ -1,13 +1,31 @@
+import { ContractStatus } from "./enums/Status";
+
 export interface ContractType {
-    id?: string;
-    projectId: string;
-    quotationId: string;
-    name: string;
-    contractValue: number;
-    url: string;
-    note?: string;
+  id?: string;
+  createdAt: string;
+  updateAt: string;
+  isActive: boolean;
+  name: string;
+  customerName: string;
+  contractValue: number;
+  url: string;
+  note: string;
+  quotationId: string;
+  projectId: string;
+  status: ContractStatus;
+  paymentBatches: PaymentBatchType[];
 }
 
-export interface ContractOTP {
-    otpCode: string;
+export interface PaymentBatchType {
+  id?: string;
+  createdAt: string;
+  name: string;
+  totalValue: number;
+  isPaid: boolean;
+  status: string;
+}
+
+export interface VerifyContractType {
+  id: string;
+  otpCode: string;
 }

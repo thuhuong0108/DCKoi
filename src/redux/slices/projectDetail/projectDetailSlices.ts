@@ -18,7 +18,6 @@ const initialState: ProjectDetailState = {
     email: "",
     area: 0,
     depth: 0,
-    packageName: "",
     standOut: false,
     note: "",
     status: ProjectStatus.CONSTRUCTING,

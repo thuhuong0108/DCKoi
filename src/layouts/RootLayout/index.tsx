@@ -4,11 +4,21 @@ import React, { ReactElement } from "react";
 import LayoutAdmin from "../layoutAdmin";
 import MainLayout from "../mainLayout/MainLayout";
 import LayoutConsultant from "../layoutConsultant";
+import LayoutManager from "../layoutManager";
+import LayoutDesigner from "../layoutDesigner";
 
-interface LayoutProps {
-  Pages: () => ReactElement;
+interface IndexProps {
+  Page: () => ReactElement;
 }
-const RootLayout = ({ Pages }: LayoutProps) => {
+interface MenuItemProps {
+  link?: string;
+  badge?: boolean;
+  target?: string;
+  children: React.ReactNode;
+  icon?: React.ReactNode;
+  end?: boolean;
+}
+const RootLayout = ({ Pages }) => {
   const role = useAppSelector((state) => state.auth.role);
 
   const pageName = Pages.name;
@@ -21,11 +31,14 @@ const RootLayout = ({ Pages }: LayoutProps) => {
       return <LayoutAdmin Page={Pages} />;
     case RoleUser.CONSULTANT:
       return <LayoutConsultant Page={Pages} />;
+    case RoleUser.MANAGER:
+      return <LayoutManager Page={Pages} />;
+
+    case RoleUser.DESIGNER:
+      return <LayoutDesigner Page={Pages} />;
     default:
       return <MainLayout Pages={Pages} />;
   }
-
-  // return <MainLayout Pages={Pages} />;
 };
 
 export default RootLayout;

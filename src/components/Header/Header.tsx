@@ -30,7 +30,7 @@ const Header = () => {
           />
           <button
             className="bg-blue-500 text-white px-4 py-2 rounded "
-            onClick={() => navigate("/space-management")}
+            onClick={() => navigate("/space-management/consultations")}
           >
             Không gian làm việc
           </button>

@@ -2,6 +2,7 @@ import { assignConsultant } from "@/api/project";
 
 const baseURL = "https://kpcos.vinhuser.one/api/";
 const socketURL = "http://34.81.244.146:3333";
+const cloudinaryURL = "https://api.cloudinary.com/v1_1/dulapxpnp/upload";
 const endPoint = {
   auth: {
     login: "/auth/signin",
@@ -34,6 +35,8 @@ const endPoint = {
     createStaff: "/staff",
     getPagingStaff: "/staff",
     getPagingConsutanStaff: "/staff/consultant",
+    getPagingManagerStaff: "/staff/manager",
+    getPagingDesignerStaff: "/staff/designer",
     // getStaff: (id: string) => `/staff/${id}`,
     // updateStaff: (id: string) => `/staff/${id}`,
     // deleteStaff: (id: string) => `staff/${id}`,
@@ -57,29 +60,47 @@ const endPoint = {
   project: {
     createProject: "/projects",
     getPagingProjects: "/projects/consultation",
-    // getPagingProjects: "/projects               ",
     getProject: (id: string) => `/projects/${id}`,
     assignConsultant: (id: string) => `/projects/${id}/assignconsultant`,
     getQuotation: (id: string) => `/projects/${id}/quotation`,
     requestProject: "/projects",
+    getProjectDesign: `/projects/design`,
+    getDesignOfProject: (id: string) =>
+      `/projects/${id}/design?PageNumber=1&PageSize=100`,
+    getAllDesignForSpecificProject: (id: string) => `/projects/${id}/design`,
+    getcontractOfProject: (id: string) => `project/${id}/contract`,
   },
 
   quotation: {
     createQuotation: "/quotation",
     getAllQuotation: "/quotation",
     getQuotationDetail: (id: string) => `/quotation/${id}`,
-    rejectQuotation: (id: string) => `/quotaion/${id}/reject-accept`,
-    approveQuotation: (id: string) => `/quotaion/${id}/approve-edit`,
-    editQuotation: (id: string) => `/quotaion/${id}/edit`,
-    rewriteQuotation: (id: string) => `/quotaion/${id}/rewrite`,
+    rejectQuotation: (id: string) => `/quotation/${id}/reject-accept`,
+    approveQuotation: (id: string) => `/quotation/${id}/approve-edit`,
+    editQuotation: (id: string) => `/quotation/${id}/edit`,
+    rewriteQuotation: (id: string) => `/quotation/${id}/rewrite`,
+  },
+
+  design: {
+    postDesign: "/designs",
+    getDesign: (id: string) => `/designs/${id}`,
+    putDesign: (id: string) => `/designs/${id}`,
+    rejectDesign: (id: string) => `/designs/${id}/reject`,
+    acceptDesign: (id: string) => `/designs/${id}/accept`,
+    requestEditDesign: (id: string) => `/designs/${id}/request-edit`,
+  },
+
+  construction: {
+    createConstruction: "/constructions",
   },
 
   contract: {
-    createContract: "/contracts",
-    acceptContract: (id: string) => `/contracts/${id}/accept`,
-    rejectContract: (id: string) => `/contracts/${id}/reject`,
-    verifyContract: (id: string) => `/contracts/${id}/verify`,
-  }
+    createContract: "contracts",
+    getContract: (id: string) => `contracts/${id}`,
+    rejectContract: (id: string) => `contracts/${id}/reject`,
+    acceptContract: (id: string) => `contracts/${id}/accept`,
+    verifyContract: (id: string) => `contracts/${id}/verify`,
+  },
 };
 
 export { baseURL, endPoint, socketURL };

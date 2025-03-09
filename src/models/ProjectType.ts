@@ -21,8 +21,12 @@ export interface ProjectType {
   standOut: boolean;
   note: string;
   status: ProjectStatus;
-  createdDate: string;
-  updatedDate: string;
+  createdAt?: string;
+  updatedAt?: string;
+  createdDate?: string;
+  updatedDate?: string;
+  imageUrl?: string;
+  name?: string;
 }
 
 export interface ProjectDetailType {
@@ -33,12 +37,13 @@ export interface ProjectDetailType {
   email: string;
   area: number;
   depth: number;
-  packageName: string;
   standOut: boolean;
   note: string;
   status: ProjectStatus;
-  createdDate: string;
-  updatedDate: string;
+  createdAt?: string;
+  updatedAt?: string;
+  createdDate?: string;
+  updatedDate?: string;
   staff: Staff[];
   package: PackageType;
 }
@@ -52,4 +57,24 @@ export interface QuotationProjectType {
   updatedDate: string;
   status: QuotationStatus;
   reason: string;
+}
+
+export interface ProjectDesignType {
+  id?: string;
+  version: number;
+  type: string;
+  status: string;
+  reason: string;
+  isPublic: boolean;
+  imageUrl: string;
+}
+
+export interface ContractProjectType {
+  id?: string;
+  name: string;
+  status: string;
+  customerName: string;
+  contractValue: number;
+  createdAt: string;
+  updatedAt: string;
 }
