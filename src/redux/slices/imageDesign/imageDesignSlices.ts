@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store/store";
 import { DesignDetailType, DesignRequest, DesignType } from "@/models";
 import { Filter, Pagination } from "@/models/Common";
-import { acceptDesign, rejectDesign } from "@/api/design";
+import { acceptDesign, rejectDesign, requestEditDesign } from "@/api/design";
 
 export interface ImageDesignState {
   loading: boolean;
@@ -56,6 +56,17 @@ export const imageDesignSlice = createSlice({
       action: PayloadAction<{ id: string; reason: string; idProject: string }>
     ) {
       state.loading = true;
+    },
+
+    requestEditDesign(
+      state,
+      action: PayloadAction<{ id: string; reason: string; idProject: string }>
+    ) {
+      state.loading = true;
+    },
+
+    resetImageDesign(state) {
+      state.image = initialState.image;
     },
   },
 });

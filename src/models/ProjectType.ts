@@ -60,3 +60,13 @@ export interface QuotationProjectType {
   status: QuotationStatus;
   reason: string;
 }
+
+export interface ProjectDesignType {
+  id?: string;
+  version: number;
+  type: string;
+  status: string;
+  reason: string;
+  isPublic: boolean;
+  imageUrl: string;
+}

@@ -18,7 +18,13 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import DetailPackageRequest from "./DetailPackageRequest";
 import { Position } from "@/models/enums/Position";
-import { parsePosition, parseStatusQuotation } from "@/utils/helpers";
+import {
+  formatDate,
+  isDateString,
+  parseDate,
+  parsePosition,
+  parseStatusQuotation,
+} from "@/utils/helpers";
 import DetailQuotationConsulting from "./DetailQuotationConsulting";
 import {
   quotationDetailActions,
@@ -27,6 +33,7 @@ import {
 import DetailConsultingSkeleton from "./DetailConsultingSkeleton";
 import { QuotationStatus } from "@/models/enums/Status";
 import StepStatus from "./StepStatus";
+import { templateConstructionDetailActions } from "@/redux/slices/templateConstructionDetail/templateConstructionDetailSlices";
 
 const DetailConsulting = () => {
   const dispatch = useAppDispatch();
@@ -61,6 +68,13 @@ const DetailConsulting = () => {
       messageError("Bạn chưa có quyền xem báo giá này.");
     } else {
       dispatch(quotationDetailActions.fetchQuotationDetail(quotation.id));
+      // get template of quotation
+      dispatch(
+        templateConstructionDetailActions.getTemplateConstructionDetail(
+          quotation.templateConstructionId
+        )
+      );
+
       setOpenDetailQuotation(true);
     }
   };
@@ -85,13 +99,13 @@ const DetailConsulting = () => {
           <label className="text-gray-400 font-medium w-[150px]">
             Ngày gửi yêu cầu:
           </label>
-          <label className="text-black">{item.createdAt}</label>
+          <label className="text-black">{parseDate(item.createdAt)}</label>
         </div>
         <div className="flex flex-row justify-start items-center ">
           <label className="text-gray-400 font-medium w-[150px]">
             Cập nhật mới nhất:
           </label>
-          <label className="text-black">{item.updatedAt}</label>
+          <label className="text-black">{parseDate(item.updatedAt)}</label>
         </div>
       </div>
       <Row className="flex gap-4">

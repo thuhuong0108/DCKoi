@@ -20,6 +20,13 @@ import {
   DesignProjectDetail,
   DesignProject,
   RewriteQuotation,
+  CustomerDesign,
+  CustomerDesignDetail,
+  CustomerProjectDesign,
+  ProjectsPage,
+  DesignCustomer,
+  DesignDetailCustomer,
+  DesignRequiment,
 } from "@/pages";
 import { LayoutAdmin, LayoutCustomer, MainLayout } from "@/layouts";
 import {
@@ -52,12 +59,40 @@ const Routers = () => {
     { path: "/register", element: <Register /> },
     // customer
     {
-      path: "/space-management",
+      path: "/space-management/consultations",
       element: <LayoutCustomer Page={ConsultingPage} />,
     },
     {
-      path: "/space-management/:id/detail-consulting",
+      path: "/space-management/consultations/:id/detail-consulting",
       element: <LayoutCustomer Page={DetailConsulting} />,
+    },
+    {
+      path: "/space-management/projects",
+      element: <LayoutCustomer Page={ProjectsPage} />,
+    },
+
+    {
+      path: "/space-management/designs",
+      element: <RootLayout Pages={DesignCustomer} />,
+    },
+
+    {
+      path: "/space-management/designs/:id",
+      element: <RootLayout Pages={DesignRequiment} />,
+    },
+
+    {
+      path: "/space-management/designs/:id/design",
+      element: <RootLayout Pages={DesignDetailCustomer} />,
+    },
+
+    {
+      path: "/design/:id",
+      element: <LayoutCustomer Page={CustomerDesign} />,
+    },
+    {
+      path: "/design/:id/detail",
+      element: <LayoutCustomer Page={CustomerDesignDetail} />,
     },
     {
       path: "/space-management/contract",
@@ -205,6 +240,10 @@ const Routers = () => {
     },
     {
       path: "/manager/design/:id",
+      element: <RootLayout Pages={DesignRequiment} />,
+    },
+    {
+      path: "/manager/design/:id/design",
       element: <RootLayout Pages={DesignDetailManager} />,
     },
 

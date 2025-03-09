@@ -1,7 +1,11 @@
 import { Category } from "@/models/enums/Category";
 import { DesignState } from "@/models/enums/DesignState";
 import { Position } from "@/models/enums/Position";
-import { ProjectStatus, QuotationStatus } from "@/models/enums/Status";
+import {
+  ContractStatus,
+  ProjectStatus,
+  QuotationStatus,
+} from "@/models/enums/Status";
 
 export const formatDate = (date: Date, includeTime = false): string => {
   const options: Intl.DateTimeFormatOptions = includeTime
@@ -13,8 +17,24 @@ export const formatDate = (date: Date, includeTime = false): string => {
         minute: "2-digit",
       }
     : { year: "numeric", month: "short", day: "numeric" };
-  return date.toLocaleDateString(undefined, options);
+
+  return date.toLocaleDateString("en-US", options);
 };
+export function parseDate(inputStr: string): string {
+  // Chuyển chuỗi đầu vào thành đối tượng Date
+  const date = new Date(inputStr);
+
+  // Lấy các phần của ngày tháng
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // Tháng bắt đầu từ 0, nên cộng thêm 1
+  const year = date.getFullYear();
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  const seconds = String(date.getSeconds()).padStart(2, "0");
+
+  // Trả về chuỗi theo định dạng mong muốn
+  return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+}
 export const isDateString = (str: string): boolean => {
   if (str.length < 10) return false;
   const parsedDate = Date.parse(str);
@@ -147,6 +167,19 @@ export function parseStatusDesign(status: DesignState): string {
       return "Không phê duyệt";
     case DesignState.PREVIEWING:
       return "Chờ chấp thuận";
+    default:
+      return "Trạng thái không xác định";
+  }
+}
+
+export function parseStatusContract(status: ContractStatus): string {
+  switch (status) {
+    case ContractStatus.PROCESS:
+      return "Đang xử lí";
+    case ContractStatus.ACTIVE:
+      return "Có hiệu lực";
+    case ContractStatus.CANCEL:
+      return "Hủy bỏ";
     default:
       return "Trạng thái không xác định";
   }

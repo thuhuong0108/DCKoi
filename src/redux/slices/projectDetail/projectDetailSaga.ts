@@ -20,23 +20,6 @@ function* fetchProjectDetailWorker(action: PayloadAction<string>) {
   }
 }
 
-function* reloadProjectDetailWorker(action: PayloadAction<string>) {
-  try {
-    const projectDetailState = yield select((state) => state.projectDetail);
-    const data = yield call(getProject, action.payload);
-    if (data.isSuccess) {
-      yield put(projectDetailActions.fetchProjectDetailSuccess(data));
-    } else {
-      messageError(data.message);
-      yield put(projectDetailActions.fetchProjectDetailFaild());
-    }
-  } catch (error) {
-    messageError("Tải dữ liệu dự án bị lỗi");
-    console.log("Error load project: ", error);
-    yield put(projectDetailActions.fetchProjectDetailFaild());
-  }
-}
-
 function* fetchProjectDetailWatcher() {
   while (true) {
     const action = yield take(projectDetailActions.fetchProjectDetail);
@@ -44,14 +27,6 @@ function* fetchProjectDetailWatcher() {
   }
 }
 
-function* reloadProjectDetailWatcher() {
-  while (true) {
-    const action = yield take(projectDetailActions.reloadProjectDetail);
-    yield take(projectDetailActions.reloadProjectDetail);
-    yield fork(reloadProjectDetailWorker, action);
-  }
-}
 export function* projectDetailSaga() {
   yield fork(fetchProjectDetailWatcher);
-  yield fork(reloadProjectDetailWatcher);
 }

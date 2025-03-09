@@ -10,6 +10,7 @@ import { useParams } from "react-router-dom";
 import DesignElement from "./DesignElement";
 import Images from "./Images";
 import { check3Dconfirm } from "@/api/project";
+import { imageDesignActions } from "@/redux/slices/imageDesign/imageDesignSlices";
 const Design = () => {
   const { id } = useParams<{ id: string }>();
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -69,6 +70,7 @@ const Design = () => {
 
   useEffect(() => {
     dispatch(designActions.fetchDesign(id));
+    dispatch(imageDesignActions.resetImageDesign());
   }, []);
 
   const renderModal = () => {

@@ -9,6 +9,7 @@ import {
 import { Filter } from "@/models/Common";
 import { endPoint } from "@/utils/endPoint";
 import {
+  ProjectDesignType,
   ProjectDetailType,
   ProjectType,
   QuotationProjectType,
@@ -81,6 +82,19 @@ const check3Dconfirm = async (
   const response = await http.get(endPoint.project.check3Dconfirm(id));
   return response;
 };
+const getAllDesignForSpecificProject = async (
+  id: string,
+  filter: Filter
+): Promise<ApiResultWithPagination<ProjectDesignType>> => {
+  const response = await http.get(
+    `${endPoint.project.getAllDesignForSpecificProject(id)}?PageNumber=${
+      filter.pageNumber
+    }&PageSize=${filter.pageSize}`
+  );
+
+  return response;
+};
+
 export {
   check3Dconfirm,
   getPagingProject,
@@ -90,4 +104,5 @@ export {
   requestProject,
   getProjectDesign,
   getDesignOfProject,
+  getAllDesignForSpecificProject,
 };

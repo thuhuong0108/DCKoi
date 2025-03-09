@@ -13,14 +13,19 @@ export interface ContractType {
   quotationId: string;
   projectId: string;
   status: ContractStatus;
-  paymentBatches: PaymentBatch[];
+  paymentBatches: PaymentBatchType[];
 }
 
-export interface PaymentBatch {
+export interface PaymentBatchType {
   id?: string;
   createdAt: string;
   name: string;
   totalValue: number;
   isPaid: boolean;
   status: string;
+}
+
+export interface VerifyContractType {
+  id: string;
+  otpCode: string;
 }

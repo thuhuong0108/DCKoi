@@ -69,6 +69,7 @@ const endPoint = {
     getDesignOfProject: (id: string) =>
       `/projects/${id}/design?PageNumber=1&PageSize=100`,
     check3Dconfirm: (id: string) => `/projects/${id}/design/3d-confirmed`,
+    getAllDesignForSpecificProject: (id: string) => `/projects/${id}/design`,
   },
 
   quotation: {
@@ -87,10 +88,19 @@ const endPoint = {
     putDesign: (id: string) => `/designs/${id}`,
     rejectDesign: (id: string) => `/designs/${id}/reject`,
     acceptDesign: (id: string) => `/designs/${id}/accept`,
+    requestEditDesign: (id: string) => `/designs/${id}/request-edit`,
   },
 
   construction: {
     createConstruction: "/constructions",
+  },
+
+  contract: {
+    createContract: "contracts",
+    getContract: (id: string) => `contracts/${id}`,
+    rejectContract: (id: string) => `contracts/${id}/reject`,
+    acceptContract: (id: string) => `contracts/${id}/accept`,
+    verifyContract: (id: string) => `contracts/${id}/verify`,
   },
 };
 
