@@ -24,6 +24,9 @@ import {
   CustomerDesignDetail,
   CustomerProjectDesign,
   ProjectsPage,
+  DesignCustomer,
+  DesignDetailCustomer,
+  DesignRequiment,
 } from "@/pages";
 import { LayoutAdmin, LayoutCustomer, MainLayout } from "@/layouts";
 import {
@@ -45,6 +48,7 @@ import {
 import RootLayout from "@/layouts/RootLayout";
 import PrivateRouterAdmin from "./PrivateRouterAdmin";
 import ContractPage from "@/pages/ContractPage";
+import DesignDetailManager from "@/pages/ManagerPages/DesignDetail";
 
 const Routers = () => {
   const location = useLocation();
@@ -68,8 +72,18 @@ const Routers = () => {
     },
 
     {
-      path: "/design",
-      element: <LayoutCustomer Page={CustomerProjectDesign} />,
+      path: "/space-management/designs",
+      element: <RootLayout Pages={DesignCustomer} />,
+    },
+
+    {
+      path: "/space-management/designs/:id",
+      element: <RootLayout Pages={DesignRequiment} />,
+    },
+
+    {
+      path: "/space-management/designs/:id/design",
+      element: <RootLayout Pages={DesignDetailCustomer} />,
     },
 
     {
@@ -223,6 +237,14 @@ const Routers = () => {
     {
       path: "/manager/design",
       element: <RootLayout Pages={ManagerDesign} />,
+    },
+    {
+      path: "/manager/design/:id",
+      element: <RootLayout Pages={DesignRequiment} />,
+    },
+    {
+      path: "/manager/design/:id/design",
+      element: <RootLayout Pages={DesignDetailManager} />,
     },
 
     // designer

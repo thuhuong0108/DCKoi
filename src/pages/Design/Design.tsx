@@ -13,7 +13,6 @@ const Design = () => {
     dispatch(
       projectActions.fetchDesignProject({ pageNumber: 1, pageSize: 10 })
     );
-    dispatch;
   }, []);
   if (isLoading) {
     return (

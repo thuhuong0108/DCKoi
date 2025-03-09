@@ -9,6 +9,8 @@ import { staffActions } from "@/redux/slices/staff/staffSlice";
 import { assignConsultant } from "@/api/project";
 import { messageError } from "@/components";
 import { projectActions } from "@/redux/slices/project/projectSlices";
+import { RoleUser } from "@/models/enums/RoleUser";
+import { useNavigate } from "react-router-dom";
 const DesignCard = ({
   imageUrl,
   customerName,
@@ -22,17 +24,12 @@ const DesignCard = ({
   staffs,
 }: ProjectType) => {
   const dispatch = useAppDispatch();
-  const managers = useAppSelector((state) => state.staff.staffs);
-  const loading = useAppSelector((state) => state.staff.loading);
+
+  const navigate = useNavigate();
 
   const [visible, setVisible] = useState(false);
 
-  const handleOpenManagerModal = () => {
-    dispatch(staffActions.fetchManagerStaff({ pageNumber: 1, pageSize: 10 }));
-    setVisible(true);
-  };
-
-  const handleAddManager = async (idStaff: string) => {
+  const handleAddDesigner = async (idStaff: string) => {
     const res = await assignConsultant(id, { staffId: idStaff });
     if (res.isSuccess) {
       setVisible(false);
@@ -41,47 +38,6 @@ const DesignCard = ({
       messageError(res.message);
       setVisible(false);
     }
-  };
-
-  const renderModal = () => {
-    return (
-      <Modal
-        visible={visible}
-        title="Chọn quản lí"
-        onCancel={() => setVisible(false)}
-        footer={null}
-      >
-        <div className="flex flex-row justify-between items-center">
-          {/* no. , staff code, fullName, action*/}
-          <Typography.Text strong aria-level={2}>
-            <label>STT</label>
-          </Typography.Text>
-          <div className="flex items-center gap-2 w-36">
-            <span className="text-sm font-medium">Họ và tên</span>
-          </div>
-          <label>Thao tác</label>
-        </div>
-        <div>
-          {managers.data.map((manager, index) => (
-            <div
-              key={manager.id}
-              className="flex flex-row justify-between items-center"
-            >
-              <label>{index + 1}</label>
-              <div className="flex items-center gap-2 w-36">
-                <span className="text-sm">{manager.fullName}</span>
-              </div>
-              <Button
-                type="primary"
-                onClick={() => handleAddManager(manager.id)}
-              >
-                Chọn
-              </Button>
-            </div>
-          ))}
-        </div>
-      </Modal>
-    );
   };
 
   return (
@@ -119,14 +75,10 @@ const DesignCard = ({
           type="primary"
           className="rounded-lg"
           onClick={() => {
-            if (staffs.length === 0) {
-              handleOpenManagerModal();
-            } else {
-              console.log("view detail");
-            }
+            navigate(`${id}`);
           }}
         >
-          {staffs.length > 0 ? "Xem chi tiết" : "Chọn quản lí"}
+          Xem chi tiết
         </Button>
       </div>
 
@@ -144,8 +96,6 @@ const DesignCard = ({
 
         <Typography className="text-sm">{phone}</Typography>
       </div>
-
-      {renderModal()}
     </Card>
   );
 };

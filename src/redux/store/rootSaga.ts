@@ -19,6 +19,7 @@ import { designDetailSaga } from "../slices/designDetail/designDetailSaga";
 import { customerDesignSaga } from "../slices/customerDesign/customerDesignSaga";
 import { constructionSaga } from "../slices/construction/constructionSaga";
 import { contractSaga } from "../slices/contract/contractSaga";
+import { constructionProjectSaga } from "../slices/constructionProject/constructionProjectSaga";
 
 export default function* rootSaga() {
   yield all([
@@ -41,5 +42,6 @@ export default function* rootSaga() {
     customerDesignSaga(),
     constructionSaga(),
     contractSaga(),
+    constructionProjectSaga(),
   ]);
 }

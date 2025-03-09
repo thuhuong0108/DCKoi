@@ -4,5 +4,7 @@ export interface ReusableUploaderProps {
   buttonText?: string;
   uploadText?: string;
   maxFiles?: number;
-  accept?: string;
+  accept?: ".pdf" | ".docx" | ".txt" | "image/*";
+  listType?: "text" | "picture" | "picture-card";
+  disabled?: boolean;
 }

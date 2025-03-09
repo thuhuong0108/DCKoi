@@ -11,6 +11,7 @@ export interface QuotationType {
   reason?: string;
   services: ServiceQuotationType[];
   equipments: EquipmentQuotationType[];
+  totalPrice: number;
 }
 
 export interface ServiceQuotationType {

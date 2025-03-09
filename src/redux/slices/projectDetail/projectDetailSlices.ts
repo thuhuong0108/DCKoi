@@ -32,6 +32,7 @@ const initialState: ProjectDetailState = {
       price: [],
       items: [],
     },
+    name: "",
   },
 };
 export const projectDetailSlice = createSlice({
