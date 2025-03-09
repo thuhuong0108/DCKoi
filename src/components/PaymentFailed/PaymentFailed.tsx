@@ -6,6 +6,7 @@ const PaymentFailed = ({
     time,
     paymentId,
     method,
+    projectId,
     projectName,
     service,
     customerName,
@@ -91,6 +92,14 @@ const PaymentFailed = ({
                         <div className="space-y-3">
                             <div className="flex justify-between items-center">
                                 <span className="text-gray-600">
+                                    Mã dự án:
+                                </span>
+                                <span className="font-medium text-gray-800">
+                                    {projectId}
+                                </span>
+                            </div>
+                            <div className="flex justify-between items-center">
+                                <span className="text-gray-600">
                                     Tên dự án:
                                 </span>
                                 <span className="font-medium text-gray-800">
@@ -119,7 +128,7 @@ const PaymentFailed = ({
 
                 <button
                     onClick={onBack}
-                    className="w-full mt-6 flex items-center justify-center space-x-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-3 px-4 rounded-lg transition-colors duration-200"
+                    className="w-full mt-6 flex items-center justify-center space-x-2 bg-indigo-500 hover:bg-indigo-600 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200"
                 >
                     <ArrowLeft className="w-5 h-5" />
                     <span>Quay lại trang chủ</span>

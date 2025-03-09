@@ -1,8 +1,10 @@
 import { PaymentFailed, PaymentSuccess } from "@/components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const PaymentStatus = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const status = searchParams.get("status");
 
   const data = {
     success: {
@@ -10,6 +12,7 @@ const PaymentStatus = () => {
       time: "14:30 09/03/2025",
       paymentId: "PAY123456789",
       method: "Momo",
+      projectId: "CP01234",
       projectName: "Thi công hồ cá",
       service: "Đào đất",
       customerName: "Nguyễn Văn A",
@@ -21,6 +24,7 @@ const PaymentStatus = () => {
       time: "16:45 09/03/2025",
       paymentId: "PAY987654321",
       method: "VNPay",
+      projectId: "CP012345",
       projectName: "Thi công hồ cá",
       service: "Đào đất",
       customerName: "Trần Thị B",
@@ -28,10 +32,10 @@ const PaymentStatus = () => {
       description: "abcd"
     }
   };
-  const isSuccess = true;
+  const isSuccess = status === "success";
 
   const handleBack = () => {
-    navigate("/");
+    navigate("/space-management");
   };
 
   return (
