@@ -68,6 +68,7 @@ const endPoint = {
     getProjectDesign: `/projects/design`,
     getDesignOfProject: (id: string) =>
       `/projects/${id}/design?PageNumber=1&PageSize=100`,
+    check3Dconfirm: (id: string) => `/projects/${id}/design/3d-confirmed`,
   },
 
   quotation: {
@@ -84,6 +85,8 @@ const endPoint = {
     postDesign: "/designs",
     getDesign: (id: string) => `/designs/${id}`,
     putDesign: (id: string) => `/designs/${id}`,
+    rejectDesign: (id: string) => `/designs/${id}/reject`,
+    acceptDesign: (id: string) => `/designs/${id}/accept`,
   },
 
   construction: {

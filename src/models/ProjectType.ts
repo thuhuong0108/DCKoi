@@ -7,6 +7,7 @@ export interface Staff {
   fullName: string;
   email: string;
   position: Position;
+  avatar?: string;
 }
 
 export interface ProjectType {
@@ -27,6 +28,7 @@ export interface ProjectType {
   updatedDate?: string;
   imageUrl?: string;
   name?: string;
+  staffs?: Staff[];
 }
 
 export interface ProjectDetailType {

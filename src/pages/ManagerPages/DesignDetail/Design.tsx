@@ -49,65 +49,26 @@ const Design = () => {
 
     return design2D.map((design) => <DesignElement {...design} />);
   };
-  const [hasDesign3D, setHasDesign3D] = useState(false);
 
   const items: CollapseProps["items"] = [
     {
       key: "1",
       label: "Bản vẽ 3D",
-      children: (
-        <div>
-          {!hasDesign3D && (
-            <Button
-              type="primary"
-              onClick={() => {
-                setType("3D");
-                setIsModalVisible(true);
-              }}
-            >
-              Tải lên
-            </Button>
-          )}
-          {render3Ddesign()}
-        </div>
-      ),
+      children: <div>{render3Ddesign()}</div>,
     },
     {
       key: "2",
       label: "Bản vẽ kĩ thuật",
       children: (
         <>
-          <div>
-            {hasDesign3D && (
-              <Button
-                type="primary"
-                onClick={() => {
-                  setType("2D");
-                  setIsModalVisible(true);
-                }}
-              >
-                Tải lên
-              </Button>
-            )}
-
-            {render2Ddesign()}
-          </div>
+          <div>{render2Ddesign()}</div>
         </>
       ),
     },
   ];
 
-  const fetchCheckDesign = async () => {
-    const res = await check3Dconfirm(id);
-    console.log(res);
-
-    if (res.isSuccess) {
-      setHasDesign3D(res.data.isExit3DConfirmed);
-    }
-  };
   useEffect(() => {
     dispatch(designActions.fetchDesign(id));
-    fetchCheckDesign();
   }, []);
 
   const renderModal = () => {

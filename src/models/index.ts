@@ -26,9 +26,10 @@ import {
 } from "./QuotationType";
 
 import { ContractType, PaymentBatch } from "./ContractType";
-
+import { DesignDetailType } from "./DesignDetailType";
 import { ConstructionType, ConstructionItem } from "./ConstructionType";
 export type {
+  DesignDetailType,
   DesignType,
   DesignRequest,
   PackageItemType,

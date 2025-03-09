@@ -60,8 +60,12 @@ const AdminContract = () => {
         onOk={() => setOpenPlan(false)}
         onCancel={() => setOpenPlan(false)}
         width={1000}
+        footer={null}
       >
-        <PlanConstruction id={quotation.templateConstructionId} />
+        <PlanConstruction
+          id={quotation.templateConstructionId}
+          setOpen={setOpenPlan}
+        />
       </Modal>
     </div>
   );

@@ -76,3 +76,7 @@ export const validateRequestProject = yup.object().shape({
   depth: yup.string().required(),
   packageId: yup.string().required(),
 });
+
+export const validateDeny = yup.object().shape({
+  reason: yup.string().required(),
+});

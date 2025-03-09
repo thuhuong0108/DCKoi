@@ -75,7 +75,14 @@ const getDesignOfProject = async (
   return response;
 };
 
+const check3Dconfirm = async (
+  id: string
+): Promise<ApiResultWithAData<{ isExit3DConfirmed: boolean }>> => {
+  const response = await http.get(endPoint.project.check3Dconfirm(id));
+  return response;
+};
 export {
+  check3Dconfirm,
   getPagingProject,
   getProject,
   assignConsultant,

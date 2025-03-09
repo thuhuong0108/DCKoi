@@ -22,4 +22,16 @@ const updateDesign = async (
   return response;
 };
 
-export { postDesign, getDesign, updateDesign };
+const rejectDesign = async (id: string, reason: string): Promise<ApiResult> => {
+  const response = await http.put(endPoint.design.rejectDesign(id), {
+    reason: reason,
+  });
+  return response;
+};
+
+const acceptDesign = async (id: string): Promise<ApiResult> => {
+  const response = await http.get(endPoint.design.acceptDesign(id));
+  return response;
+};
+
+export { postDesign, getDesign, updateDesign, rejectDesign, acceptDesign };

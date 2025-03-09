@@ -1,4 +1,5 @@
 import { TemplateConstructionItemType } from "@/models";
+import { convertStringtoDate } from "@/utils/helpers";
 import { Space, TableColumnsType, DatePicker, Switch } from "antd";
 import { useState } from "react";
 
@@ -21,7 +22,12 @@ export const columns: TableColumnsType<TemplateConstructionItemType> = [
     render: (text, record) => {
       return (
         <Space>
-          <DatePicker format="YYYY-MM-DD" value={record.estTime} />
+          <DatePicker
+            format="YYYY-MM-DD"
+            onChange={(date) => {
+              record.estTime = convertStringtoDate(date.toString());
+            }}
+          />
         </Space>
       );
     },

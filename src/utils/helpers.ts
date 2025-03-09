@@ -23,6 +23,29 @@ export const isDateString = (str: string): boolean => {
 export const trimText = (text: string, maxLength: number): string =>
   text.length > maxLength ? `${text.slice(0, maxLength)}...` : text;
 
+export const convertStringtoDate = (date: string): string => {
+  const months: { [key: string]: string } = {
+    Jan: "01",
+    Feb: "02",
+    Mar: "03",
+    Apr: "04",
+    May: "05",
+    Jun: "06",
+    Jul: "07",
+    Aug: "08",
+    Sep: "09",
+    Oct: "10",
+    Nov: "11",
+    Dec: "12",
+  };
+
+  const dateArr = date.split(" ");
+  const day = dateArr[1].padStart(2, "0");
+  const month = months[dateArr[2]];
+  const year = dateArr[3];
+
+  return `${year}-${month}-${day}`;
+};
 export function parsePosition(position: Position): string {
   switch (position) {
     case Position.ADMINISTRATOR:

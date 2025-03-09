@@ -41,6 +41,7 @@ import {
 import RootLayout from "@/layouts/RootLayout";
 import PrivateRouterAdmin from "./PrivateRouterAdmin";
 import ContractPage from "@/pages/ContractPage";
+import DesignDetailManager from "@/pages/ManagerPages/DesignDetail";
 
 const Routers = () => {
   const location = useLocation();
@@ -201,6 +202,10 @@ const Routers = () => {
     {
       path: "/manager/design",
       element: <RootLayout Pages={ManagerDesign} />,
+    },
+    {
+      path: "/manager/design/:id",
+      element: <RootLayout Pages={DesignDetailManager} />,
     },
 
     // designer
