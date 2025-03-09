@@ -2,7 +2,11 @@ import { messageError } from "@/components";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { call, fork, put, select, take } from "redux-saga/effects";
 import { Filter } from "@/models/Common";
-import { getPagingProject, getProjectDesign } from "@/api/project";
+import {
+  getContractOfProject,
+  getPagingProject,
+  getProjectDesign,
+} from "@/api/project";
 import { projectActions } from "./projectSlices";
 
 function* fetchProjectWorker(action: PayloadAction<Filter>) {

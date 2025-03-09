@@ -20,7 +20,7 @@ const columns: TableProps<TablePaymentBatch>["columns"] = [
     title: "Số tiền trả",
     dataIndex: "totalValue",
     key: "totalValue",
-    render: (number) => <a>{formatPrice(number)} VND</a>,
+    render: (number) => <a>{formatPrice(number)} </a>,
   },
   {
     title: "Ngày thanh toán",

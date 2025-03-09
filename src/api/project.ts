@@ -1,3 +1,12 @@
+import { Filter } from "@/models/Common";
+import {
+  ContractProjectType,
+  ProjectDesignType,
+  ProjectDetailType,
+  ProjectType,
+  QuotationProjectType,
+} from "@/models/ProjectType";
+import { endPoint } from "@/utils/endPoint";
 import http from "@/utils/http";
 import {
   AssginStaff,
@@ -10,16 +19,6 @@ import {
   ApiResultWithData,
   ApiResultWithPagination,
 } from "./../models/Common";
-import { Filter } from "@/models/Common";
-import { endPoint } from "@/utils/endPoint";
-import {
-  ProjectDesignType,
-  ProjectDetailType,
-  ProjectType,
-  QuotationProjectType,
-} from "@/models/ProjectType";
-import { ProjectStatus, QuotationStatus } from "@/models/enums/Status";
-import { Position } from "@/models/enums/Position";
 
 const getPagingProject = async (
   filter: Filter
@@ -99,6 +98,15 @@ const getAllDesignForSpecificProject = async (
   return response;
 };
 
+const getContractOfProject = async (
+  id: string
+): Promise<ApiResultWithPagination<ContractProjectType>> => {
+  const response = await http.get(
+    `${endPoint.project.getcontractOfProject(id)}`
+  );
+  return response;
+};
+
 const getProjectConstruction = async (
   id: string
 ): Promise<ApiResultWithPagination<TemplateConstructionItemType>> => {
@@ -107,10 +115,11 @@ const getProjectConstruction = async (
 };
 
 export {
+  assignConsultant,
+  getContractOfProject,
   check3Dconfirm,
   getPagingProject,
   getProject,
-  assignConsultant,
   getQuotationProject,
   requestProject,
   getProjectDesign,

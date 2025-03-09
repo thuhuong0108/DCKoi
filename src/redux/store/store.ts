@@ -31,6 +31,7 @@ import designDetailSlice from "../slices/designDetail/designDetailSlices";
 import customerDesignSlice from "../slices/customerDesign/customerDesignSlices";
 import constructionSlice from "../slices/construction/constructionSlices";
 import contractSlice from "../slices/contract/contractSlices";
+import contractProjectSlice from "../slices/contractProject/contractProjectSlices";
 import constructionProjectSlice from "../slices/constructionProject/constructionProjectSlices";
 
 const rootReducers = combineReducers({
@@ -54,6 +55,7 @@ const rootReducers = combineReducers({
   designDetail: designDetailSlice,
   construction: constructionSlice,
   contract: contractSlice,
+  contractProject: contractProjectSlice,
   constructionProject: constructionProjectSlice,
 });
 
