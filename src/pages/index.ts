@@ -9,6 +9,7 @@ import CustomerProjectDesign from "./CustomerProjectDesign";
 import CustomerDesign from "./CustomerDesign";
 import CustomerDesignDetail from "./CustomerDesignDetail";
 import AuthorizePage from "./ErrorPage";
+import PaymentStatus from "./Payment";
 
 import TestUi from "./TestUi";
 
@@ -24,6 +25,7 @@ export {
   CustomerDesign,
   CustomerDesignDetail,
   ProjectsPage,
+  PaymentStatus,
 
   //error
   AuthorizePage,
