@@ -1,4 +1,3 @@
-import { AssginStaff, ProjectRequest } from "@/models";
 import { Filter } from "@/models/Common";
 import {
   ContractProjectType,
@@ -9,6 +8,11 @@ import {
 } from "@/models/ProjectType";
 import { endPoint } from "@/utils/endPoint";
 import http from "@/utils/http";
+import {
+  AssginStaff,
+  ProjectRequest,
+  TemplateConstructionItemType,
+} from "@/models";
 import {
   ApiResult,
   ApiResultWithAData,
@@ -75,6 +79,12 @@ const getDesignOfProject = async (
   return response;
 };
 
+const check3Dconfirm = async (
+  id: string
+): Promise<ApiResultWithAData<{ isExit3DConfirmed: boolean }>> => {
+  const response = await http.get(endPoint.project.check3Dconfirm(id));
+  return response;
+};
 const getAllDesignForSpecificProject = async (
   id: string,
   filter: Filter
@@ -97,14 +107,23 @@ const getContractOfProject = async (
   return response;
 };
 
+const getProjectConstruction = async (
+  id: string
+): Promise<ApiResultWithPagination<TemplateConstructionItemType>> => {
+  const response = await http.get(`${endPoint.project.getConstruction(id)}`);
+  return response;
+};
+
 export {
   assignConsultant,
-  getAllDesignForSpecificProject,
   getContractOfProject,
-  getDesignOfProject,
+  check3Dconfirm,
   getPagingProject,
   getProject,
-  getProjectDesign,
   getQuotationProject,
   requestProject,
+  getProjectDesign,
+  getDesignOfProject,
+  getAllDesignForSpecificProject,
+  getProjectConstruction,
 };

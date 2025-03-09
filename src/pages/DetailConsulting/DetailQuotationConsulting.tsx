@@ -1,9 +1,12 @@
-import { FieldQuotationDetailType } from "@/models";
+import {
+  FieldQuotationDetailType,
+  TemplateConstructionItemType,
+} from "@/models";
 import { Category } from "@/models/enums/Category";
 import { useEffect, useState } from "react";
-import { QuotationItem } from "./type";
+import { columns, QuotationItem } from "./type";
 import TableQuotation from "./TableQuotation";
-import { Col, Input, Row } from "antd";
+import { Col, Input, Row, Table } from "antd";
 import {
   BorderlessTableOutlined,
   CloseCircleOutlined,
@@ -18,10 +21,11 @@ import {
 import { formatPrice } from "@/utils/helpers";
 import Button from "@/components/ui/Button";
 import { NotiResult, Title } from "@/components";
-import { useAppDispatch } from "@/redux/store/hook";
+import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
 import { quotationActions } from "@/redux/slices/quotation/quotationSlices";
 import { projectDetailActions } from "@/redux/slices/projectDetail/projectDetailSlices";
 import { QuotationStatus } from "@/models/enums/Status";
+import { selectTemplateConstructionDetail } from "@/redux/slices/templateConstructionDetail/templateConstructionDetailSlices";
 
 const DetailQuotationConsulting = ({
   quotation,
@@ -34,7 +38,22 @@ const DetailQuotationConsulting = ({
   const [itemWork, setItemWork] = useState<QuotationItem[]>([]);
   const [totalPriceQuotation, setTotalPrice] = useState<number>(0);
   const [reason, setReason] = useState("");
-
+  const template = useAppSelector(selectTemplateConstructionDetail);
+  const [tableData, setTableData] = useState<TemplateConstructionItemType[]>(
+    []
+  );
+  useEffect(() => {
+    if (template.templateContructionItems) {
+      setTableData(flattenData(template.templateContructionItems));
+    }
+  }, [template.templateContructionItems]);
+  const flattenData = (items: TemplateConstructionItemType[]) => {
+    return items.map((item) => ({
+      ...item,
+      key: item.id,
+      children: item.child ? flattenData(item.child) : undefined,
+    }));
+  };
   useEffect(() => {
     const categoryCollection: string[] = Object.values(Category);
 
@@ -216,6 +235,13 @@ const DetailQuotationConsulting = ({
           totalPrice={item.totalPrice}
         />
       ))}
+
+      <Title name="Quy trình thi công" />
+      <Table<TemplateConstructionItemType>
+        columns={columns}
+        dataSource={tableData}
+        pagination={false}
+      />
     </div>
   );
 };

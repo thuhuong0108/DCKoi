@@ -33,6 +33,7 @@ import {
 import DetailConsultingSkeleton from "./DetailConsultingSkeleton";
 import { QuotationStatus } from "@/models/enums/Status";
 import StepStatus from "./StepStatus";
+import { templateConstructionDetailActions } from "@/redux/slices/templateConstructionDetail/templateConstructionDetailSlices";
 
 const DetailConsulting = () => {
   const dispatch = useAppDispatch();
@@ -67,6 +68,13 @@ const DetailConsulting = () => {
       messageError("Bạn chưa có quyền xem báo giá này.");
     } else {
       dispatch(quotationDetailActions.fetchQuotationDetail(quotation.id));
+      // get template of quotation
+      dispatch(
+        templateConstructionDetailActions.getTemplateConstructionDetail(
+          quotation.templateConstructionId
+        )
+      );
+
       setOpenDetailQuotation(true);
     }
   };

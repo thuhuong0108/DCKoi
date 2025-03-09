@@ -32,6 +32,7 @@ import {
   FieldQuotationDetailType,
 } from "./QuotationType";
 
+import { DesignDetailType } from "./DesignDetailType";
 import {
   ContractType,
   PaymentBatchType,
@@ -40,6 +41,7 @@ import {
 
 import { ConstructionType, ConstructionItem } from "./ConstructionType";
 export type {
+  DesignDetailType,
   DesignType,
   DesignRequest,
   PackageItemType,
