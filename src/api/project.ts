@@ -1,5 +1,9 @@
 import http from "@/utils/http";
-import { AssginStaff, ProjectRequest } from "@/models";
+import {
+  AssginStaff,
+  ProjectRequest,
+  TemplateConstructionItemType,
+} from "@/models";
 import {
   ApiResult,
   ApiResultWithAData,
@@ -95,6 +99,13 @@ const getAllDesignForSpecificProject = async (
   return response;
 };
 
+const getProjectConstruction = async (
+  id: string
+): Promise<ApiResultWithPagination<TemplateConstructionItemType>> => {
+  const response = await http.get(`${endPoint.project.getConstruction(id)}`);
+  return response;
+};
+
 export {
   check3Dconfirm,
   getPagingProject,
@@ -105,4 +116,5 @@ export {
   getProjectDesign,
   getDesignOfProject,
   getAllDesignForSpecificProject,
+  getProjectConstruction,
 };

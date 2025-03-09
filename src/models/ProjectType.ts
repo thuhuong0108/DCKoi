@@ -33,6 +33,7 @@ export interface ProjectType {
 
 export interface ProjectDetailType {
   id: string;
+  name: string;
   customerName: string;
   address: string;
   phone: string;

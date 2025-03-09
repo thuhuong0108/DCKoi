@@ -85,7 +85,7 @@ const PlanConstruction = ({ id, setOpen }) => {
 
         return {
           templateItemId: item.id,
-          estimateAt: item.esTime,
+          estimateAt: item.estTime,
           isPayment: item.isPayment,
           childs: item.children
             ? item.children.map((child, childIndex) => {
@@ -137,6 +137,8 @@ const PlanConstruction = ({ id, setOpen }) => {
       setOpen(false);
       return;
     }
+
+    console.log("data", data);
 
     const res = await createConstruction(data);
     if (res.isSuccess) {

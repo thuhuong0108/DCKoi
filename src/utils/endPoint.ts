@@ -1,3 +1,4 @@
+import { getConstruction } from "@/api/construction";
 import { assignConsultant } from "@/api/project";
 
 const baseURL = "https://kpcos.vinhuser.one/api/";
@@ -70,6 +71,8 @@ const endPoint = {
       `/projects/${id}/design?PageNumber=1&PageSize=100`,
     check3Dconfirm: (id: string) => `/projects/${id}/design/3d-confirmed`,
     getAllDesignForSpecificProject: (id: string) => `/projects/${id}/design`,
+    getConstruction: (id: string) =>
+      `/projects/${id}/construction?PageNumber=1&PageSize=100&SortColumn=estimateAt`,
   },
 
   quotation: {
