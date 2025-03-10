@@ -15,16 +15,19 @@ const TableQuotation = (props: QuotationItem) => {
 
   const columns: TableColumnsType<FieldQuotationDetailType> = [
     {
+      key: "1",
       title: "Danh mục công việc",
       dataIndex: "name",
       width: "25%",
     },
     {
+      key: "2",
       title: "Mô tả",
       dataIndex: "description",
       width: "20%",
     },
     {
+      key: "3",
       title: "Giá",
       dataIndex: "price",
       width: "10%",
@@ -33,11 +36,13 @@ const TableQuotation = (props: QuotationItem) => {
       },
     },
     {
+      key: "4",
       title: "Số lượng",
       dataIndex: "quantity",
       width: "10%",
     },
     {
+      key: "5",
       title: "Tổng tiền",
       dataIndex: "total",
       width: "15%",
@@ -46,12 +51,14 @@ const TableQuotation = (props: QuotationItem) => {
       },
     },
     {
+      key: "6",
       title: "Đơn vị",
       dataIndex: "unit",
       width: "10%",
     },
 
     {
+      key: "7",
       title: "Chú thích",
       dataIndex: "note",
       width: "15%",
@@ -85,7 +92,7 @@ const TableQuotation = (props: QuotationItem) => {
         </Col>
         <Col span={6}>
           <label className="text-base font-semibold">
-            {formatPrice(props.totalPrice)} VND
+            {formatPrice(props.totalPrice)}
           </label>
         </Col>
       </Row>

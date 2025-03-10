@@ -1,5 +1,5 @@
 import { Loading, Title, Uploader } from "@/components";
-import { DesignRequest } from "@/models";
+import { DesignDetailType, DesignRequest } from "@/models";
 import { ImageDesignResponse } from "@/models/Response/ImageDesignResponse";
 import { designActions } from "@/redux/slices/design/designSlices";
 import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import DesignElement from "./DesignElement";
 import Images from "./Images";
+import { check3Dconfirm } from "@/api/project";
 const Design = () => {
   const { id } = useParams<{ id: string }>();
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -26,7 +27,7 @@ const Design = () => {
 
   const designs = useAppSelector((state) => state.design.design);
   const loading = useAppSelector((state) => state.design.loading);
-  const images: ImageDesignResponse[] = useAppSelector(
+  const design: DesignDetailType = useAppSelector(
     (state) => state.designImage.image
   );
 
@@ -48,6 +49,7 @@ const Design = () => {
 
     return design2D.map((design) => <DesignElement {...design} />);
   };
+  const [hasDesign3D, setHasDesign3D] = useState(false);
 
   const items: CollapseProps["items"] = [
     {
@@ -55,15 +57,17 @@ const Design = () => {
       label: "Bản vẽ 3D",
       children: (
         <div>
-          <Button
-            type="primary"
-            onClick={() => {
-              setType("3D");
-              setIsModalVisible(true);
-            }}
-          >
-            Tải lên
-          </Button>
+          {!hasDesign3D && (
+            <Button
+              type="primary"
+              onClick={() => {
+                setType("3D");
+                setIsModalVisible(true);
+              }}
+            >
+              Tải lên
+            </Button>
+          )}
           {render3Ddesign()}
         </div>
       ),
@@ -74,15 +78,17 @@ const Design = () => {
       children: (
         <>
           <div>
-            <Button
-              type="primary"
-              onClick={() => {
-                setType("2D");
-                setIsModalVisible(true);
-              }}
-            >
-              Tải lên
-            </Button>
+            {hasDesign3D && (
+              <Button
+                type="primary"
+                onClick={() => {
+                  setType("2D");
+                  setIsModalVisible(true);
+                }}
+              >
+                Tải lên
+              </Button>
+            )}
 
             {render2Ddesign()}
           </div>
@@ -90,8 +96,18 @@ const Design = () => {
       ),
     },
   ];
+
+  const fetchCheckDesign = async () => {
+    const res = await check3Dconfirm(id);
+    console.log(res);
+
+    if (res.isSuccess) {
+      setHasDesign3D(res.data.isExit3DConfirmed);
+    }
+  };
   useEffect(() => {
     dispatch(designActions.fetchDesign(id));
+    fetchCheckDesign();
   }, []);
 
   const renderModal = () => {
@@ -116,7 +132,7 @@ const Design = () => {
       <Title name="Thiết kế" />
       <div className="flex flex-row justify-between w-full ">
         <div className="w-1/2 ">
-          <Images images={images} />
+          <Images design={design} />
         </div>
 
         <div className="w-1/2 ">

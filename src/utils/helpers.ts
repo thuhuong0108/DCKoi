@@ -35,6 +35,21 @@ export function parseDate(inputStr: string): string {
   // Trả về chuỗi theo định dạng mong muốn
   return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
 }
+
+export const dateDDMMYYY = (inputStr: string): string => {
+  const date = new Date(inputStr);
+
+  if (isNaN(date.getTime())) {
+    return "Ngày không hợp lệ";
+  }
+
+  const day = date.getDate().toString().padStart(2, "0");
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const year = date.getFullYear();
+
+  return `${day}/${month}/${year}`;
+};
+
 export const isDateString = (str: string): boolean => {
   if (str.length < 10) return false;
   const parsedDate = Date.parse(str);
@@ -43,6 +58,29 @@ export const isDateString = (str: string): boolean => {
 export const trimText = (text: string, maxLength: number): string =>
   text.length > maxLength ? `${text.slice(0, maxLength)}...` : text;
 
+export const convertStringtoDate = (date: string): string => {
+  const months: { [key: string]: string } = {
+    Jan: "01",
+    Feb: "02",
+    Mar: "03",
+    Apr: "04",
+    May: "05",
+    Jun: "06",
+    Jul: "07",
+    Aug: "08",
+    Sep: "09",
+    Oct: "10",
+    Nov: "11",
+    Dec: "12",
+  };
+
+  const dateArr = date.split(" ");
+  const day = dateArr[1].padStart(2, "0");
+  const month = months[dateArr[2]];
+  const year = dateArr[3];
+
+  return `${year}-${month}-${day}`;
+};
 export function parsePosition(position: Position): string {
   switch (position) {
     case Position.ADMINISTRATOR:
@@ -99,9 +137,11 @@ export function parseStatusQuotation(status: QuotationStatus): string {
 }
 
 export const formatPrice = (amount: number): string => {
-  return new Intl.NumberFormat("en-US", {
-    maximumFractionDigits: 0,
-  }).format(amount);
+  return (
+    new Intl.NumberFormat("en-US", {
+      maximumFractionDigits: 0,
+    }).format(amount) + " VND"
+  );
 };
 
 export const formatDateVietNamese = (date: string) => {
@@ -151,11 +191,11 @@ export function parseStatusDesign(status: DesignState): string {
 
 export function parseStatusContract(status: ContractStatus): string {
   switch (status) {
-    case ContractStatus.PROCESS:
+    case ContractStatus.PROCESSING:
       return "Đang xử lí";
-    case ContractStatus.ACTIVE:
+    case ContractStatus.ACTIVED:
       return "Có hiệu lực";
-    case ContractStatus.CANCEL:
+    case ContractStatus.CANCELLED:
       return "Hủy bỏ";
     default:
       return "Trạng thái không xác định";

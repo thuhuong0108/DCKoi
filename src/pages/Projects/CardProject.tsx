@@ -1,32 +1,11 @@
-import React from "react";
-
 import { Card } from "antd";
-import { useNavigate } from "react-router-dom";
 
-const project = {
-  id: "6e843e92-e55f-414c-a2e7-d52afe8251ce",
-  customerName: "customer",
-  name: "customer project",
-  email: "guest1@example.com",
-  note: "note",
-  packageName: "Ngow Ngow",
-  address: "671 street, Tan Phu, Phường 06, Quận 11, Thành phố Hồ Chí Minh",
-  phone: "0123456789",
-  area: 100,
-  depth: 100,
-  status: "CONSTRUCTING",
-  createdAt: "2025-02-26T07:38:41.180115Z",
-  updatedAt: "2025-03-06T04:39:58.280472Z",
-  staffs: [],
-};
-
-const CardProject = () => {
-  // const CardProject = ({project}) => {
-  const navigate = useNavigate();
+const CardProject = ({ project, setOpenDetail }) => {
   return (
-    <div className="w-[280px]" onClick={() => navigate(`${project.id}`)}>
+    <div className="w-[295px]" onClick={() => setOpenDetail(true)}>
       <Card
         hoverable
+        className="h-full"
         cover={
           <img
             alt="example"

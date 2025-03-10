@@ -18,6 +18,7 @@ export interface ApiResultWithPagination<T> extends ApiResultWithData<T> {
   totalRecords: number;
 }
 export interface Filter {
+  id?: string;
   pageNumber: number;
   pageSize: number;
 }

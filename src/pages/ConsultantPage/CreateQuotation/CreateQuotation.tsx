@@ -29,20 +29,28 @@ import {
   EquipmentType,
   FieldQuotationDetailType,
   ServiceType,
+  TemplateConstructionItemType,
   TemplateConstructionType,
 } from "@/models";
 import { Category } from "@/models/enums/Category";
-import { QuotationItem } from "./type";
+import { columns, QuotationItem } from "./type";
 
 import { Space, Table } from "antd";
 import TableQuotation from "./TableQuotation";
-import { templateConstructionActions } from "@/redux/slices/templateConstruction/templateContrutionSlices";
+import {
+  selectTemplateConstruction,
+  templateConstructionActions,
+} from "@/redux/slices/templateConstruction/templateContrutionSlices";
 import {
   QuotationEquipmentRequest,
   QuotationRequest,
   QuotationServiceRequest,
 } from "@/models/Request/QuotationRequest";
 import { quotationActions } from "@/redux/slices/quotation/quotationSlices";
+import {
+  selectTemplateConstructionDetail,
+  templateConstructionDetailActions,
+} from "@/redux/slices/templateConstructionDetail/templateConstructionDetailSlices";
 
 const CreateQuotation = () => {
   const { Column } = Table;
@@ -59,11 +67,16 @@ const CreateQuotation = () => {
   }, [dispatch, id]);
 
   const [itemWork, setItemWork] = useState<QuotationItem[]>([]);
-  const templates = useAppSelector(
-    (state) => state.templateConstruction.templateConstructions
-  );
+  const templates = useAppSelector(selectTemplateConstruction);
+
   const [selectedTemplate, setSelectedTemplate] =
     useState<TemplateConstructionType | null>(null);
+
+  const template = useAppSelector(selectTemplateConstructionDetail);
+
+  const [tableData, setTableData] = useState<
+    TemplateConstructionItemType[] | null
+  >(null);
 
   useEffect(() => {
     const categoryCollection: string[] = Object.values(Category);
@@ -115,6 +128,25 @@ const CreateQuotation = () => {
   const handlePickTemplate = (template: TemplateConstructionType) => {
     setSelectedTemplate(template);
     setOpenTemplate(false);
+    dispatch(
+      templateConstructionDetailActions.getTemplateConstructionDetail(
+        template.id
+      )
+    );
+  };
+
+  useEffect(() => {
+    if (template.templateContructionItems) {
+      setTableData(flattenData(template.templateContructionItems));
+    }
+  }, [template.templateContructionItems]);
+
+  const flattenData = (items: TemplateConstructionItemType[]) => {
+    return items.map((item) => ({
+      ...item,
+      key: item.id,
+      children: item.child ? flattenData(item.child) : undefined,
+    }));
   };
 
   const removeItem = (itemToRemove: FieldQuotationDetailType) => {
@@ -178,6 +210,7 @@ const CreateQuotation = () => {
       services: services,
       equipments: equipments,
     };
+
     dispatch(quotationActions.createQuotation(data));
     navigate(`/consultant/${id}`);
   };
@@ -220,6 +253,18 @@ const CreateQuotation = () => {
   const [openEquipments, setOpenEquipments] = useState(false);
   const [openTemplate, setOpenTemplate] = useState(false);
 
+  const handleUpdateItem = (updatedItem: FieldQuotationDetailType) => {
+    const updatedItemWork = itemWork.map((work) => {
+      return {
+        ...work,
+        items: work.items.map((item) =>
+          item.id === updatedItem.id ? updatedItem : item
+        ),
+      };
+    });
+    setItemWork(updatedItemWork);
+  };
+
   return (
     <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 w-full h-full">
       <Title name="Thông tin báo giá chi tiết thi công" />
@@ -229,7 +274,7 @@ const CreateQuotation = () => {
           <div className="flex flex-row justify-start items-center gap-4 text-lg">
             <BorderlessTableOutlined />
             <label className="text-blue-800 font-semibold">Công trình: </label>
-            <span className="text-gray-500"> #Tên dự án</span>
+            <span className="text-gray-500"> {project.name}</span>
           </div>
           <div className="flex flex-row justify-start items-center gap-4 text-lg">
             <InboxOutlined />
@@ -286,6 +331,7 @@ const CreateQuotation = () => {
             name={item.name}
             items={item.items}
             totalPrice={item.totalPrice}
+            onUpdateItem={handleUpdateItem}
           />
           <div className="my-2">
             <Button
@@ -365,15 +411,6 @@ const CreateQuotation = () => {
       </h1>
 
       <div>
-        {" "}
-        <div className="flex flex-row justify-between items-center">
-          <label className="text-blue-800 font-semibold">
-            Tên quy trình: {selectedTemplate?.name}
-          </label>
-        </div>
-      </div>
-
-      <div>
         <Button
           title="Chọn quy trình thi công"
           onClick={() => {
@@ -388,7 +425,25 @@ const CreateQuotation = () => {
         />
       </div>
 
+      <div>
+        <div className="flex flex-row justify-between items-center my-4">
+          <label className="text-blue-800 font-semibold">
+            Mẫu quy trình: {selectedTemplate?.name}
+          </label>
+        </div>
+      </div>
+      {tableData && tableData.length > 0 ? (
+        <Table<TemplateConstructionItemType>
+          columns={columns}
+          dataSource={tableData}
+          pagination={false}
+        />
+      ) : (
+        <></>
+      )}
+
       <Modal
+        width={1000}
         footer={null}
         onCancel={() => setOpenTemplate(false)}
         title="Chọn quy trình thi công"
@@ -411,7 +466,7 @@ const CreateQuotation = () => {
         </Table>
       </Modal>
 
-      <div className="flex justify-end">
+      <div className="flex justify-end mt-4">
         <Button title="Lưu báo giá" onClick={handleSaveQuotation} />
       </div>
     </div>

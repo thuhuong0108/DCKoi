@@ -1,6 +1,9 @@
 import { messageError, TableComponent, Title } from "@/components";
 import Button from "@/components/ui/Button";
-import { QuotationProjectType } from "@/models/ProjectType";
+import {
+  ContractProjectType,
+  QuotationProjectType,
+} from "@/models/ProjectType";
 // import Card from "@/components/ui/Card";
 import {
   projectDetailActions,
@@ -9,29 +12,39 @@ import {
 import {
   quotationProjectActions,
   selectedQuotationProject,
-} from "@/redux/slices/quotationProject/QuotationProjectSlices";
+} from "@/redux/slices/quotationProject/quotationProjectSlices";
 import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
 
-import { EyeOutlined } from "@ant-design/icons";
-import { Card, Col, Descriptions, Input, Modal, Row } from "antd";
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import DetailPackageRequest from "./DetailPackageRequest";
 import { Position } from "@/models/enums/Position";
+import { ContractStatus, QuotationStatus } from "@/models/enums/Status";
 import {
-  formatDate,
-  isDateString,
-  parseDate,
-  parsePosition,
-  parseStatusQuotation,
-} from "@/utils/helpers";
-import DetailQuotationConsulting from "./DetailQuotationConsulting";
+  contractActions,
+  selectedContract,
+} from "@/redux/slices/contract/contractSlices";
+import {
+  contractProjectActions,
+  selectedContractProject,
+} from "@/redux/slices/contractProject/contractProjectSlices";
 import {
   quotationDetailActions,
   selectedQuotationDetail,
 } from "@/redux/slices/quotationDetail/quotationDetailSlices";
+import { templateConstructionDetailActions } from "@/redux/slices/templateConstructionDetail/templateConstructionDetailSlices";
+import {
+  formatPrice,
+  parseDate,
+  parsePosition,
+  parseStatusContract,
+  parseStatusQuotation,
+} from "@/utils/helpers";
+import { EyeOutlined } from "@ant-design/icons";
+import { Card, Col, Descriptions, Input, Modal, Row } from "antd";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import ContractDetail from "./ContractDetail";
 import DetailConsultingSkeleton from "./DetailConsultingSkeleton";
-import { QuotationStatus } from "@/models/enums/Status";
+import DetailPackageRequest from "./DetailPackageRequest";
+import DetailQuotationConsulting from "./DetailQuotationConsulting";
 import StepStatus from "./StepStatus";
 
 const DetailConsulting = () => {
@@ -42,23 +55,35 @@ const DetailConsulting = () => {
   const item = useAppSelector(selectedProjectDetail);
 
   const quotations = useAppSelector(selectedQuotationProject);
-
+  const contracts = useAppSelector(selectedContractProject);
   const quotation = useAppSelector(selectedQuotationDetail);
-
-  useEffect(() => {
-    dispatch(projectDetailActions.fetchProjectDetail(id));
-    if (item && item.id) {
-      dispatch(quotationProjectActions.fetchQuotationProject(item.id));
-    }
-  }, [dispatch, id, item?.id]);
+  const contractDetail = useAppSelector(selectedContract);
 
   useEffect(() => {
     dispatch(projectDetailActions.fetchProjectDetail(id));
   }, []);
 
-  const [openDetailPackage, setOpenDetailPackage] = useState(false);
+  useEffect(() => {
+    dispatch(
+      contractProjectActions.fetchContractProject({
+        filter: { pageNumber: 1, pageSize: 10 },
+        id: id,
+      })
+    );
+  }, [id]);
 
+  useEffect(() => {
+    dispatch(
+      quotationProjectActions.fetchQuotationProject({
+        Filter: { pageNumber: 1, pageSize: 10 },
+        id: id,
+      })
+    );
+  }, [id]);
+
+  const [openDetailPackage, setOpenDetailPackage] = useState(false);
   const [openDetailQuotation, setOpenDetailQuotation] = useState(false);
+  const [openDetailContract, setOpenDetailContract] = useState(false);
 
   const packageDetail = item.package;
 
@@ -67,15 +92,41 @@ const DetailConsulting = () => {
       messageError("Bạn chưa có quyền xem báo giá này.");
     } else {
       dispatch(quotationDetailActions.fetchQuotationDetail(quotation.id));
+      // get template of quotation
+      dispatch(
+        templateConstructionDetailActions.getTemplateConstructionDetail(
+          quotation.templateConstructionId
+        )
+      );
+
       setOpenDetailQuotation(true);
     }
   };
 
+  const handleDetailContract = (contract: ContractProjectType) => {
+    setOpenDetailContract(true);
+    dispatch(contractActions.fetchContract(contract.id));
+  };
   const parseStatus = (status: QuotationStatus, prop: string) => {
     if (prop === "status") {
       return parseStatusQuotation(status);
     }
     return;
+  };
+
+  const parseValues = (
+    value: ContractStatus | string | number,
+    prop: string
+  ) => {
+    if (prop === "contractValue") {
+      return formatPrice(value as number);
+    }
+    if (prop === "createdAt") {
+      return parseDate(value as string);
+    }
+    if (prop === "status") {
+      return parseStatusContract(value as ContractStatus);
+    }
   };
 
   if (isLoading) {
@@ -219,7 +270,46 @@ const DetailConsulting = () => {
           className="bg-gray-100 border border-gray-300 rounded-md text-base p-2"
         />
       </Row>
-
+      {contracts.data ? (
+        <TableComponent<ContractProjectType>
+          columns={[
+            "Tên hợp đồng",
+            "khách hàng",
+            "Giá trị hợp đồng",
+            "Ngày tạo",
+            "Trạng thái",
+          ]}
+          data={contracts.data}
+          props={[
+            "name",
+            "customerName",
+            "contractValue",
+            "createdAt",
+            "status",
+          ]}
+          formatValue={parseValues}
+          actions={true}
+          actionTexts={["Chi tết"]}
+          actionFunctions={[handleDetailContract]}
+          enablePagination={true}
+          page={contracts.pageNumber}
+          setPage={(page) => {
+            dispatch(
+              contractProjectActions.fetchContractProject({
+                filter: {
+                  pageNumber: page,
+                  pageSize: 10,
+                },
+                id: id,
+              })
+            );
+          }}
+          itemsPerPage={contracts.pageSize}
+          totalPages={contracts.totalPages}
+        />
+      ) : (
+        <></>
+      )}
       <Row>
         <h1 className="text-base font-semibold text-black my-4">
           Báo giá thiết kế thi công
@@ -238,8 +328,8 @@ const DetailConsulting = () => {
         setPage={(page) => {
           dispatch(
             quotationProjectActions.fetchQuotationProject({
-              pageNumber: page,
-              pageSize: 10,
+              id: id,
+              Filter: { pageNumber: page, pageSize: 10 },
             })
           );
         }}
@@ -275,6 +365,23 @@ const DetailConsulting = () => {
           quotation={quotation}
           project={item}
           setOpenDetailQuotation={setOpenDetailQuotation}
+          isDetail={false}
+        />
+      </Modal>
+
+      <Modal
+        title={`Thông tin chi tiêt hợp đồng`}
+        open={openDetailContract}
+        width={1500}
+        onCancel={() => setOpenDetailContract(false)}
+        onClose={() => setOpenDetailContract(false)}
+        onOk={() => setOpenDetailContract(false)}
+        footer={false}
+      >
+        <ContractDetail
+          contractDetail={contractDetail}
+          project={item}
+          setOpenDetailContract={setOpenDetailContract}
         />
       </Modal>
     </div>

@@ -14,6 +14,8 @@ import {
   selectedQuotationDetail,
 } from "@/redux/slices/quotationDetail/quotationDetailSlices";
 import InformationContract from "./InformationContract";
+import Plan from "./Plan";
+import useForm from "@/hooks/useForm";
 
 const AdminContract = () => {
   const [openPlan, setOpenPlan] = useState(false);
@@ -37,6 +39,8 @@ const AdminContract = () => {
       <Title name="Hợp đồng" />
 
       <h1 className="text-xl font-semibold text-blue-800 my-4">Kế hoạch</h1>
+
+      <Plan />
       <div>
         <Button title="Tạo kế hoạch" onClick={() => setOpenPlan(true)} />
       </div>
@@ -60,8 +64,12 @@ const AdminContract = () => {
         onOk={() => setOpenPlan(false)}
         onCancel={() => setOpenPlan(false)}
         width={1000}
+        footer={null}
       >
-        <PlanConstruction id={quotation.templateConstructionId} />
+        <PlanConstruction
+          id={quotation.templateConstructionId}
+          setOpen={setOpenPlan}
+        />
       </Modal>
     </div>
   );

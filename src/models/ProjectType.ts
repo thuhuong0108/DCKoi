@@ -7,6 +7,7 @@ export interface Staff {
   fullName: string;
   email: string;
   position: Position;
+  avatar?: string;
 }
 
 export interface ProjectType {
@@ -27,10 +28,12 @@ export interface ProjectType {
   updatedDate?: string;
   imageUrl?: string;
   name?: string;
+  staffs?: Staff[];
 }
 
 export interface ProjectDetailType {
   id: string;
+  name: string;
   customerName: string;
   address: string;
   phone: string;
@@ -67,4 +70,14 @@ export interface ProjectDesignType {
   reason: string;
   isPublic: boolean;
   imageUrl: string;
+}
+
+export interface ContractProjectType {
+  id?: string;
+  name: string;
+  status: string;
+  customerName: string;
+  contractValue: number;
+  createdAt: string;
+  updatedAt: string;
 }

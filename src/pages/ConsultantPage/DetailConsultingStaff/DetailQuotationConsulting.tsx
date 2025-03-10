@@ -1,40 +1,80 @@
-import { FieldQuotationDetailType } from "@/models";
+import { Button } from "@/components";
+import {
+  FieldQuotationDetailType,
+  TemplateConstructionItemType,
+} from "@/models";
 import { Category } from "@/models/enums/Category";
-import { useEffect, useState } from "react";
-import { QuotationItem } from "./type";
-import TableQuotation from "@/pages/DetailConsulting/TableQuotation";
-import { Button, Title, NotiResult } from "@/components";
-import { Col, Result, Row } from "antd";
+import { QuotationStatus } from "@/models/enums/Status";
+import {
+  selectTemplateConstructionDetail,
+  templateConstructionDetailActions,
+} from "@/redux/slices/templateConstructionDetail/templateConstructionDetailSlices";
+import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
+import { formatPrice } from "@/utils/helpers";
 import {
   BorderlessTableOutlined,
-  CloseCircleOutlined,
   EnvironmentOutlined,
   InboxOutlined,
   MailOutlined,
   PhoneOutlined,
   PoundCircleOutlined,
-  SmileOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { formatPrice } from "@/utils/helpers";
-import { QuotationStatus } from "@/models/enums/Status";
+import { Col, Divider, Result, Row, Table } from "antd";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import TableQuotation from "./TableQuotation";
+import { columns, QuotationItem } from "./type";
 
 const DetailQuotationConsulting = ({ quotation, project }) => {
+  const dispatch = useAppDispatch();
+  console.log("quotationdetail", quotation);
   const services = quotation.services;
   const equipments = quotation.equipments;
+
   const [itemWork, setItemWork] = useState<QuotationItem[]>([]);
   const [totalPriceQuotation, setTotalPrice] = useState<number>(0);
 
   const navigate = useNavigate();
+  const template = useAppSelector(selectTemplateConstructionDetail);
+  const [tableData, setTableData] = useState<TemplateConstructionItemType[]>(
+    []
+  );
+
+  useEffect(() => {
+    if (quotation?.templateConstructionId) {
+      dispatch(
+        templateConstructionDetailActions.getTemplateConstructionDetail(
+          quotation.templateConstructionId
+        )
+      );
+    }
+  }, [quotation?.templateConstructionId]);
+
+  useEffect(() => {
+    if (template.templateContructionItems) {
+      setTableData(flattenData(template.templateContructionItems));
+    }
+  }, [template.templateContructionItems]);
+
+  const flattenData = (items: TemplateConstructionItemType[]) => {
+    return items.map((item) => ({
+      ...item,
+      key: item.id,
+      children: item.child ? flattenData(item.child) : undefined,
+    }));
+  };
+
   useEffect(() => {
     const categoryCollection: string[] = Object.values(Category);
 
     // Build itemWork from services and equipments
     const itemWork = categoryCollection.map((category) => {
-      const servicesInCategory = services.filter(
-        (service) => service.category === category
-      );
+      const servicesInCategory = services
+        .filter((service) => service.category === category)
+        .map((service) => ({
+          ...service,
+        }));
 
       const equipmentsInCategory = equipments
         .filter((equipment) => equipment.category === category)
@@ -48,7 +88,7 @@ const DetailQuotationConsulting = ({ quotation, project }) => {
         ...equipmentsInCategory,
       ];
 
-      let totalPrice = fieldQuotationDetailType.reduce(
+      const totalPrice = fieldQuotationDetailType.reduce(
         (sum, item) => sum + item.price * item.quantity,
         0
       );
@@ -107,15 +147,13 @@ const DetailQuotationConsulting = ({ quotation, project }) => {
       ) : (
         <></>
       )}
-
-      <Title name="Thông tin báo giá chi tiết" />
-      <label>Phiên bản: {quotation.version}</label>
+      s<label>Phiên bản: {quotation.version}</label>
       <Row className="flex flex-row items-start w-full gap-x-20 mt-4">
         <Col>
           <div className="flex flex-row justify-start items-center gap-4 text-lg">
             <BorderlessTableOutlined className="text-blue-600" />
             <label className="text-blue-600 font-semibold">Công trình: </label>
-            <span className="text-gray-500"> #Tên dự án</span>
+            <span className="text-gray-500">{project.name}</span>
           </div>
           <div className="flex flex-row justify-start items-center gap-4 text-lg">
             <InboxOutlined className="text-blue-600" />
@@ -131,7 +169,7 @@ const DetailQuotationConsulting = ({ quotation, project }) => {
             </label>
             <span className="text-gray-500">
               {" "}
-              {formatPrice(totalPriceQuotation)} VND
+              {formatPrice(totalPriceQuotation)}
             </span>
           </div>
         </Col>
@@ -171,7 +209,7 @@ const DetailQuotationConsulting = ({ quotation, project }) => {
           </div>
         </Col>
       </Row>
-
+      <Divider orientation="left">Báo giá các hạng mục thi công</Divider>
       {itemWork.map((item, index) => (
         <TableQuotation
           key={index}
@@ -180,6 +218,12 @@ const DetailQuotationConsulting = ({ quotation, project }) => {
           totalPrice={item.totalPrice}
         />
       ))}
+      <Divider orientation="left">Kế hoạch thi công</Divider>
+      <Table<TemplateConstructionItemType>
+        columns={columns}
+        dataSource={tableData}
+        pagination={false}
+      />
     </div>
   );
 };

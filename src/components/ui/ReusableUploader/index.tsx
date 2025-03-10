@@ -1,5 +1,5 @@
 import { messageInfo } from "@/components";
-import { uploadImage } from "@/utils/uploadImage";
+import { uploadFilePDF, uploadImage } from "@/utils/uploadImage";
 import { Button, Upload } from "antd";
 import type { GetProp, UploadFile, UploadProps } from "antd";
 import ImgCrop from "antd-img-crop";
@@ -13,6 +13,8 @@ const ReusableUploader: React.FC<ReusableUploaderProps> = ({
   uploadText = "+ Upload",
   maxFiles = 5,
   accept = "image/*",
+  listType = "picture-card",
+  disabled = false,
 }) => {
   type FileType = Parameters<GetProp<UploadProps, "beforeUpload">>[0];
 
@@ -28,28 +30,39 @@ const ReusableUploader: React.FC<ReusableUploaderProps> = ({
   };
 
   const onPreview = async (file: UploadFile) => {
-    let src = file.url as string;
-    if (!src) {
-      src = await new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file.originFileObj as FileType);
-        reader.onload = () => resolve(reader.result as string);
-      });
+    if (file.type?.startsWith("image/")) {
+      let src = file.url as string;
+      if (!src) {
+        src = await new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(file.originFileObj as FileType);
+          reader.onload = () => resolve(reader.result as string);
+        });
+      }
+      const image = new Image();
+      image.src = src;
+      const imgWindow = window.open(src);
+      imgWindow?.document.write(image.outerHTML);
+    } else if (file.type === "application/pdf") {
+      const pdfUrl =
+        file.url || URL.createObjectURL(file.originFileObj as File);
+      window.open(pdfUrl);
+    } else {
     }
-    const image = new Image();
-    image.src = src;
-    const imgWindow = window.open(src);
-    imgWindow?.document.write(image.outerHTML);
   };
-
   const handleUpload = async () => {
     setLoading(true);
 
     try {
       const urls = await Promise.all(
         fileList.map(async (file) => {
-          const url = await uploadImage(file.originFileObj as File);
-          return url;
+          if (accept === "image/*") {
+            const url = await uploadImage(file.originFileObj as File);
+            return url;
+          } else if (accept === ".pdf") {
+            const url = await uploadFilePDF(file.originFileObj);
+            return url;
+          }
         })
       );
 
@@ -71,23 +84,22 @@ const ReusableUploader: React.FC<ReusableUploaderProps> = ({
 
   return (
     <>
-      <ImgCrop rotationSlider>
-        <Upload
-          listType="picture-card"
-          fileList={fileList}
-          onChange={onChange}
-          onPreview={onPreview}
-          accept={accept}
-        >
-          {fileList.length >= maxFiles ? null : uploadText}
-        </Upload>
-      </ImgCrop>
+      <Upload
+        listType={listType}
+        fileList={fileList}
+        onChange={onChange}
+        onPreview={onPreview}
+        accept={accept}
+      >
+        {fileList.length >= maxFiles ? null : uploadText}
+      </Upload>
+
       <Button
         type="primary"
         onClick={handleUpload}
         style={{ marginTop: "16px" }}
         loading={loading}
-        disabled={fileList.length === 0}
+        disabled={fileList.length === 0 || disabled}
       >
         {buttonText}
       </Button>

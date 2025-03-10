@@ -162,7 +162,7 @@ const PackageCreate = () => {
                       InputProps={{
                         readOnly: !tier.editable,
                         endAdornment: (
-                          <InputAdornment position="end">vnd/1m3</InputAdornment>
+                          <InputAdornment position="end">/1m3</InputAdornment>
                         ),
                       }}
                     />
@@ -207,7 +207,12 @@ const PackageCreate = () => {
               </Grid>
             ))}
           </Grid>
-          <Button className="border-none text-lg font-bold" onClick={() => setIsModalOpen(true)}>Thêm hạng mục</Button>
+          <Button
+            className="border-none text-lg font-bold"
+            onClick={() => setIsModalOpen(true)}
+          >
+            Thêm hạng mục
+          </Button>
         </CardContent>
 
         <CardContent>

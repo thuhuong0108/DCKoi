@@ -9,7 +9,7 @@ import {
 import {
   quotationProjectActions,
   selectedQuotationProject,
-} from "@/redux/slices/quotationProject/QuotationProjectSlices";
+} from "@/redux/slices/quotationProject/quotationProjectSlices";
 import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
 
 import { EyeOutlined } from "@ant-design/icons";
@@ -24,7 +24,7 @@ import {
 import DetailPackageRequest from "./DetailPackageRequest";
 import DetailConsultingSkeleton from "./DetailConsultingSkeleton";
 import { QuotationStatus } from "@/models/enums/Status";
-import { parseStatusQuotation } from "@/utils/helpers";
+import { parseDate, parseStatusQuotation } from "@/utils/helpers";
 import StepStatus from "./StepStatus";
 
 const DetailConsultingStaff = () => {
@@ -41,10 +41,16 @@ const DetailConsultingStaff = () => {
 
   useEffect(() => {
     dispatch(projectDetailActions.fetchProjectDetail(id));
-    if (item && item.id) {
-      dispatch(quotationProjectActions.fetchQuotationProject(item.id));
-    }
-  }, [dispatch, id, item?.id]);
+  }, [id]);
+
+  useEffect(() => {
+    dispatch(
+      quotationProjectActions.fetchQuotationProject({
+        Filter: { pageNumber: 1, pageSize: 10 },
+        id: id,
+      })
+    );
+  }, [id]);
 
   useEffect(() => {
     dispatch(projectDetailActions.fetchProjectDetail(id));
@@ -83,13 +89,13 @@ const DetailConsultingStaff = () => {
           <label className="text-gray-400 font-medium w-[150px]">
             Ngày gửi yêu cầu:
           </label>
-          <label className="text-black">{item.createdAt}</label>
+          <label className="text-black">{parseDate(item.createdAt)}</label>
         </div>
         <div className="flex flex-row justify-start items-center ">
           <label className="text-gray-400 font-medium w-[150px]">
             Cập nhật mới nhất:
           </label>
-          <label className="text-black">{item.updatedAt}</label>
+          <label className="text-black">{parseDate(item.updatedAt)}</label>
         </div>
       </div>
       <Row className="flex gap-4">
@@ -202,8 +208,8 @@ const DetailConsultingStaff = () => {
         setPage={(page) => {
           dispatch(
             quotationProjectActions.fetchQuotationProject({
-              pageNumber: page,
-              pageSize: 10,
+              Filter: { pageNumber: page, pageSize: 10 },
+              id: id,
             })
           );
         }}

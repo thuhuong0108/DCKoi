@@ -11,6 +11,9 @@ import CustomerDesignDetail from "./CustomerDesignDetail";
 import AuthorizePage from "./ErrorPage";
 import PaymentStatus from "./Payment";
 
+import DesignCustomer from "./Design";
+import DesignDetailCustomer from "./DesignDetail";
+import DesignRequiment from "./DesignRequirement";
 import TestUi from "./TestUi";
 
 export {
@@ -18,6 +21,8 @@ export {
   Home,
   Login,
   Register,
+  DesignRequiment,
+  DesignCustomer,
   Contact,
   ConsultingPage,
   DetailConsulting,
@@ -26,6 +31,7 @@ export {
   CustomerDesignDetail,
   ProjectsPage,
   PaymentStatus,
+  DesignDetailCustomer,
 
   //error
   AuthorizePage,

@@ -1,21 +1,24 @@
+import { Filter } from "@/models/Common";
+import {
+  ContractProjectType,
+  ProjectDesignType,
+  ProjectDetailType,
+  ProjectType,
+  QuotationProjectType,
+} from "@/models/ProjectType";
+import { endPoint } from "@/utils/endPoint";
 import http from "@/utils/http";
-import { AssginStaff, ProjectRequest } from "@/models";
+import {
+  AssginStaff,
+  ProjectRequest,
+  TemplateConstructionItemType,
+} from "@/models";
 import {
   ApiResult,
   ApiResultWithAData,
   ApiResultWithData,
   ApiResultWithPagination,
 } from "./../models/Common";
-import { Filter } from "@/models/Common";
-import { endPoint } from "@/utils/endPoint";
-import {
-  ProjectDesignType,
-  ProjectDetailType,
-  ProjectType,
-  QuotationProjectType,
-} from "@/models/ProjectType";
-import { ProjectStatus, QuotationStatus } from "@/models/enums/Status";
-import { Position } from "@/models/enums/Position";
 
 const getPagingProject = async (
   filter: Filter
@@ -47,10 +50,14 @@ const assignConsultant = async (
 };
 
 const getQuotationProject = async (
-  projectId: string
-): Promise<ApiResultWithData<QuotationProjectType>> => {
-  const response = await http.get(endPoint.project.getQuotation(projectId));
-
+  Filter: Filter,
+  id: string
+): Promise<ApiResultWithPagination<QuotationProjectType>> => {
+  const response = await http.get(
+    `${endPoint.project.getQuotation(id)}?PageNumber=${
+      Filter.pageNumber
+    }&PageSize=${Filter.pageSize}`
+  );
   return response;
 };
 
@@ -76,24 +83,54 @@ const getDesignOfProject = async (
   return response;
 };
 
-const getAllDesignForSpecificProject = async(
+const check3Dconfirm = async (
+  id: string
+): Promise<ApiResultWithAData<{ isExit3DConfirmed: boolean }>> => {
+  const response = await http.get(endPoint.project.check3Dconfirm(id));
+  return response;
+};
+const getAllDesignForSpecificProject = async (
   id: string,
   filter: Filter
 ): Promise<ApiResultWithPagination<ProjectDesignType>> => {
   const response = await http.get(
-    `${endPoint.project.getAllDesignForSpecificProject(id)}?PageNumber=${filter.pageNumber}&PageSize=${filter.pageSize}`
+    `${endPoint.project.getAllDesignForSpecificProject(id)}?PageNumber=${
+      filter.pageNumber
+    }&PageSize=${filter.pageSize}`
   );
 
   return response;
-}
+};
+
+const getContractOfProject = async (
+  filter: Filter,
+  id: string
+): Promise<ApiResultWithPagination<ContractProjectType>> => {
+  const response = await http.get(
+    `${endPoint.project.getcontractOfProject(id)}?PageNumber=${
+      filter.pageNumber
+    }&PageSize=${filter.pageSize}`
+  );
+  return response;
+};
+
+const getProjectConstruction = async (
+  id: string
+): Promise<ApiResultWithPagination<TemplateConstructionItemType>> => {
+  const response = await http.get(`${endPoint.project.getConstruction(id)}`);
+  return response;
+};
 
 export {
+  assignConsultant,
+  getContractOfProject,
+  check3Dconfirm,
   getPagingProject,
   getProject,
-  assignConsultant,
   getQuotationProject,
   requestProject,
   getProjectDesign,
   getDesignOfProject,
   getAllDesignForSpecificProject,
+  getProjectConstruction,
 };

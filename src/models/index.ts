@@ -5,7 +5,14 @@ import { ServiceType } from "./ServiceType";
 import { UserType } from "./User";
 import { StaffType } from "./StaffType";
 import { ProjectRequest } from "./Request/ProjectRequest";
-import { ProjectType, ProjectDesignType } from "./ProjectType";
+import {
+  ProjectType,
+  ProjectDesignType,
+  ContractProjectType,
+  QuotationProjectType,
+  ProjectDetailType,
+} from "./ProjectType";
+
 import { AssginStaff } from "./Request/AssginStaff";
 import { DesignRequest } from "./Request/DesignRequest";
 import { DesignType } from "./DesignType";
@@ -25,6 +32,7 @@ import {
   FieldQuotationDetailType,
 } from "./QuotationType";
 
+import { DesignDetailType } from "./DesignDetailType";
 import {
   ContractType,
   PaymentBatchType,
@@ -33,6 +41,7 @@ import {
 
 import { ConstructionType, ConstructionItem } from "./ConstructionType";
 export type {
+  DesignDetailType,
   DesignType,
   DesignRequest,
   PackageItemType,
@@ -59,4 +68,7 @@ export type {
   VerifyContractType,
   ConstructionType,
   ConstructionItem,
+  ContractProjectType,
+  QuotationProjectType,
+  ProjectDetailType,
 };
