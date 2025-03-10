@@ -143,7 +143,7 @@ const Contact = () => {
 
           <div className="flex flex-row justify-between">
             <Title name="TOTAL PRICE" />
-            <Title name="200.000.000VND" />
+            <Title name="200.000.000" />
           </div>
 
           <div className="flex justify-end my-5">

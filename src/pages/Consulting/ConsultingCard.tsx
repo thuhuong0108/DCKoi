@@ -1,33 +1,28 @@
 import { Avatar, Badge } from "antd";
-import { AliwangwangOutlined, UserOutlined } from "@ant-design/icons";
+import {
+  AliwangwangOutlined,
+  EyeOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import ArticleIcon from "@mui/icons-material/Article";
 import { useNavigate } from "react-router-dom";
 import { ProjectType } from "@/models/ProjectType";
-import { Button, Card, IconAnimation } from "@/components";
+import { Card, IconAnimation } from "@/components";
 import { parseStatusProject } from "@/utils/helpers";
 import { ProjectStatus } from "@/models/enums/Status";
 
 const ConsultingCard = ({ item }: { item: ProjectType }) => {
   const navigate = useNavigate();
 
-  const handleDetail = () => {
-    navigate(`/space-management/detail-consulting/${item.id}`);
-    console.log("handleDetail item: ", item);
-  };
-
-  const handleViewQuote = () => {
-    console.log("quote item: ", item);
-  };
   return (
-    <div>
+    <div onClick={() => navigate(`${item.id}/detail-consulting`)}>
       <Card
         className="shadow-innerTop p-4 w-[360px] m-2 relative"
         padding="sm"
-        bordered={true}
-        inner={true}
-        hoverable={true}
+        bordered
+        hoverable
       >
         <Card.Header className="custom-header flex flex-row justify-between items-center">
           <div>
@@ -76,21 +71,6 @@ const ConsultingCard = ({ item }: { item: ProjectType }) => {
             <label className="text-black">{item.packageName}</label>
           </div>
         </Card.Body>
-        <Card.Footer className="custom-footer flex flex-row justify-between">
-          <Button
-            info
-            onClick={handleDetail}
-            title="Chi tiết"
-            className="w-[165px]"
-          />
-          <Button
-            danger
-            onClick={handleViewQuote}
-            title="Xem báo giá"
-            disabled
-            className="w-[165px]"
-          />
-        </Card.Footer>
       </Card>
     </div>
   );

@@ -10,6 +10,10 @@ export interface TemplateConstructionItemType {
   description: string;
   isActive: boolean;
   child: TemplateConstructionItemType[];
+  childs: TemplateConstructionItemType[];
+  estTime?: string;
+  isPayment?: boolean;
+  estimateAt?: string;
 }
 export interface TemplateConstructionTypeDetail
   extends TemplateConstructionType {

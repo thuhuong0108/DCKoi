@@ -9,6 +9,8 @@ import { staffActions } from "@/redux/slices/staff/staffSlice";
 import { assignConsultant } from "@/api/project";
 import { messageError } from "@/components";
 import { projectActions } from "@/redux/slices/project/projectSlices";
+import { RoleUser } from "@/models/enums/RoleUser";
+import { useNavigate } from "react-router-dom";
 const DesignCard = ({
   imageUrl,
   customerName,
@@ -19,10 +21,16 @@ const DesignCard = ({
   phone,
   standOut,
   id,
+  staffs,
 }: ProjectType) => {
   const dispatch = useAppDispatch();
   const managers = useAppSelector((state) => state.staff.staffs);
   const loading = useAppSelector((state) => state.staff.loading);
+
+  const navigate = useNavigate();
+  const hasDesigner = staffs?.some(
+    (staff) => staff.position === RoleUser.DESIGNER.toString()
+  );
 
   const [visible, setVisible] = useState(false);
 
@@ -118,14 +126,14 @@ const DesignCard = ({
           type="primary"
           className="rounded-lg"
           onClick={() => {
-            if (standOut) {
+            if (!hasDesigner) {
               handleOpenDesignerModal();
             } else {
-              console.log("view detail");
+              navigate(`/manager/design/${id}`);
             }
           }}
         >
-          {standOut ? "Thêm nhân viên" : "Xem chi tiết"}
+          {hasDesigner ? "Xem chi tiết" : "Chọn thiết kế"}
         </Button>
       </div>
 

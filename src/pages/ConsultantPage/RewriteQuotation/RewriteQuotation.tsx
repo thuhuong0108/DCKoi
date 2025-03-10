@@ -236,7 +236,7 @@ const RewriteQuotation = () => {
       dispatch(quotationActions.updateQuotation(data));
     }
 
-    navigate(`/consultant/${quotation.projectId}`);
+    navigate(-1);
   };
 
   const handleAddServicesToItem = (item: ServiceType) => {
@@ -312,7 +312,7 @@ const RewriteQuotation = () => {
               Tổng giá trị hợp đồng:
             </label>
             <span className="text-gray-500">
-              {formatPrice(totalPriceQuotation)} VND
+              {formatPrice(totalPriceQuotation)}
             </span>
           </div>
         </Col>

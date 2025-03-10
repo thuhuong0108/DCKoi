@@ -1,4 +1,4 @@
-import { call, fork, put, take } from "redux-saga/effects";
+import { call, fork, put, select, take } from "redux-saga/effects";
 import { messageError } from "@/components";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { projectDetailActions } from "./projectDetailSlices";
@@ -15,6 +15,7 @@ function* fetchProjectDetailWorker(action: PayloadAction<string>) {
     }
   } catch (error) {
     messageError("Hệ thống đang bị lỗi");
+    console.log("Error load project: ", error);
     yield put(projectDetailActions.fetchProjectDetailFaild());
   }
 }
@@ -25,6 +26,7 @@ function* fetchProjectDetailWatcher() {
     yield fork(fetchProjectDetailWorker, action);
   }
 }
+
 export function* projectDetailSaga() {
   yield fork(fetchProjectDetailWatcher);
 }

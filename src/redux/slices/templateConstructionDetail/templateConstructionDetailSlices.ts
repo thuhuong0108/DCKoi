@@ -17,7 +17,7 @@ const initialState: TemplateConstructionDetailState = {
     isActive: false,
     templateContructionItems: [],
   },
-};
+}; 
 
 export const templateConstructionDetailSlice = createSlice({
   name: "templateConstructionDetail",

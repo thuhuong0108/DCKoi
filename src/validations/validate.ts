@@ -76,3 +76,12 @@ export const validateRequestProject = yup.object().shape({
   depth: yup.string().required(),
   packageId: yup.string().required(),
 });
+
+export const validateDeny = yup.object().shape({
+  reason: yup.string().required(),
+});
+export const validateContract = yup.object().shape({
+  name: yup.string().required(),
+  customerName: yup.string().required(),
+  url: yup.string().required(),
+});

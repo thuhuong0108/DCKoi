@@ -5,6 +5,7 @@ import {
   BuildSharp,
   SupportAgentSharp,
   FolderSharp,
+  DesignServices,
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 
@@ -13,6 +14,7 @@ import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import PaidIcon from "@mui/icons-material/Paid";
 import CreditScoreIcon from "@mui/icons-material/CreditScore";
+import FolderIcon from "@mui/icons-material/Folder";
 
 interface IndexProps {
   Page: () => ReactElement;
@@ -29,15 +31,27 @@ interface MenuItemProps {
 const LayoutCustomer: React.FC<IndexProps> = ({ Page }) => {
   const homeMenu: MenuItemProps[] = [
     {
-      link: "/",
+      link: "/space-management",
       children: "Trang chủ",
       icon: <HomeIcon />,
       end: true,
     },
     {
-      link: "/space-management",
+      link: "/space-management/consultations",
       children: "Tư vấn ",
       icon: <SupportAgentSharp />,
+      badge: true,
+    },
+    {
+      link: "/space-management/designs",
+      children: "Thiết kế",
+      icon: <DesignServices />,
+      badge: true,
+    },
+    {
+      link: "/space-management/projects",
+      children: "Dự án",
+      icon: <FolderIcon />,
       badge: true,
     },
     {

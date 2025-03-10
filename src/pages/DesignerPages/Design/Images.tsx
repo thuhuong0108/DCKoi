@@ -1,19 +1,24 @@
+import { DesignDetailType } from "@/models";
 import { ImageDesignResponse } from "@/models/Response/ImageDesignResponse";
 import { ImageList, ImageListItem } from "@mui/material";
 import { Typography } from "antd";
 
 import React, { useState } from "react";
 
-const Images = ({ images }: { images: ImageDesignResponse[] }) => {
+const Images = ({ design }: { design: DesignDetailType }) => {
   const [currentImage, setCurrentImage] = useState(0);
 
   return (
     <div className="flex flex-col items-center full ">
-      {images.length === 0 ? (
+      <Typography.Title level={4}>
+        Thiết kế {design.type} phiên bản {design.version}
+      </Typography.Title>
+
+      {design.designImages.length === 0 ? (
         <div className="h-96 flex items-center justify-center w-[600px]"></div>
       ) : (
         <img
-          src={images[currentImage].imageUrl}
+          src={design.designImages[currentImage].imageUrl}
           alt="Product Image"
           style={{
             width: "600px",
@@ -26,7 +31,7 @@ const Images = ({ images }: { images: ImageDesignResponse[] }) => {
       )}
 
       <div style={{ overflowX: "auto", whiteSpace: "nowrap" }}>
-        {images.map((image, index) => (
+        {design.designImages.map((image, index) => (
           <img
             key={index}
             onClick={() => setCurrentImage(index)}
