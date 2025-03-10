@@ -23,6 +23,7 @@ import {
   PackageCreate,
   PackageDetail,
   ProjectsPage,
+  PaymentStatus,
   Register,
   RewriteQuotation,
   TestUi,
@@ -99,6 +100,10 @@ const Routers = () => {
     {
       path: "/space-management/projects/:id/contract",
       element: <LayoutCustomer Page={ContractPage} />,
+    },
+    {
+      path: "/payment/response",
+      element: <LayoutCustomer Page={PaymentStatus} />,
     },
     // admin
     {
