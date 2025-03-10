@@ -103,7 +103,7 @@ const DraggableItem = ({
         <div
             ref={ref}
             className={`${className} ${isDragging ? 'opacity-50' : 'opacity-100'}`}
-            style={{ cursor: 'move' }}
+            style={{ cursor: 'pointer' }}
         >
             {renderContent(item)}
         </div>

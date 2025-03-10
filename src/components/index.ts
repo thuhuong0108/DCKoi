@@ -13,6 +13,8 @@ import PackgeCard from "./PackageCard";
 import ServiceCard from "./ServiceCard";
 import EstimatedPrice from "./EstimatedPrice";
 import NotiResult from "./NotiResult";
+import TaskDetailModal from "./TaskDetailModal";
+import ManagerSkeleton from "./ManagerSkeleton";
 export * from "./Sidebar";
 export * from "./ui";
 export * from "./DragAndDrop";
@@ -34,4 +36,6 @@ export {
   ServiceCard,
   EstimatedPrice,
   NotiResult,
+  TaskDetailModal,
+  ManagerSkeleton,
 };

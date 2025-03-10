@@ -13,8 +13,9 @@ interface DragDropTemplateConstructorProps {
     containerClassName?: string;
     parentItemClassName?: string;
     childItemClassName?: string;
-    menuItems?: { label: string; action: () => void }[];
+    menuItems?: { label: string; icon?: React.ReactNode; action: () => void }[];
     menuClassName?: string;
+    onTaskUpdate?: (task: TemplateConstructionItemType) => void;
 }
 
 const DragDropTemplateConstructor = ({
@@ -26,13 +27,14 @@ const DragDropTemplateConstructor = ({
     childItemClassName,
     menuItems,
     menuClassName,
+    onTaskUpdate
 }: DragDropTemplateConstructorProps) => {
 
     /// Enhanced function to handle moving both parent and child items
     const moveItem = useCallback(
         (dragIndex: number, hoverIndex: number, type: string, parentId?: string) => {
             if (type === ItemTypes.PARENT) {
-                // Handle parent item movement (same as before)
+                // Handle parent item movement
                 const newItems = [...items];
                 const draggedItem = newItems[dragIndex];
                 newItems.splice(dragIndex, 1);
@@ -63,7 +65,7 @@ const DragDropTemplateConstructor = ({
                 };
 
                 // If target parent is the same as source
-                if (parentId === parentId) {
+                if (parentId) {
                     // Insert the child at the hover index
                     newItems[sourceParentIndex].child.splice(hoverIndex, 0, draggedChild);
                 }
@@ -123,6 +125,16 @@ const DragDropTemplateConstructor = ({
         [items, onItemsChange]
     );
 
+    // Function to handle task updates
+    const handleTaskUpdate = useCallback(
+        (updatedTask: TemplateConstructionItemType) => {
+            if (onTaskUpdate) {
+                onTaskUpdate(updatedTask);
+            }
+        },
+        [onTaskUpdate]
+    );
+
     return (
         <DndProvider backend={HTML5Backend}>
             <div className={containerClassName || "flex flex-wrap gap-4 p-4"}>
@@ -147,6 +159,7 @@ const DragDropTemplateConstructor = ({
                                 onChildrenChange={handleChildrenChange}
                                 menuItems={menuItems}
                                 menuClassName={menuClassName}
+                                onTaskUpdate={handleTaskUpdate}
                             />
                         )}
                     />
