@@ -6,7 +6,7 @@ import { Category } from "@/models/enums/Category";
 import { useEffect, useState } from "react";
 import { columns, QuotationItem } from "./type";
 import TableQuotation from "./TableQuotation";
-import { Col, Input, Row, Table } from "antd";
+import { Col, Divider, Input, Row, Table } from "antd";
 import {
   BorderlessTableOutlined,
   CloseCircleOutlined,
@@ -26,11 +26,13 @@ import { quotationActions } from "@/redux/slices/quotation/quotationSlices";
 import { projectDetailActions } from "@/redux/slices/projectDetail/projectDetailSlices";
 import { QuotationStatus } from "@/models/enums/Status";
 import { selectTemplateConstructionDetail } from "@/redux/slices/templateConstructionDetail/templateConstructionDetailSlices";
+import { useParams } from "react-router-dom";
 
 const DetailQuotationConsulting = ({
   quotation,
   project,
   setOpenDetailQuotation,
+  isDetail,
 }) => {
   const dispatch = useAppDispatch();
   const services = quotation.services;
@@ -42,6 +44,7 @@ const DetailQuotationConsulting = ({
   const [tableData, setTableData] = useState<TemplateConstructionItemType[]>(
     []
   );
+  const { id } = useParams();
   useEffect(() => {
     if (template.templateContructionItems) {
       setTableData(flattenData(template.templateContructionItems));
@@ -111,66 +114,67 @@ const DetailQuotationConsulting = ({
       isApprove: true,
       reason: reason,
     };
+
     dispatch(quotationActions.approveQuotation(acceptData));
     setOpenDetailQuotation(false);
   };
 
   return (
     <div>
-      {quotation.status == QuotationStatus.PREVIEW ? (
-        <>
-          <Row className="flex flex-row gap-4 my-4 justify-end">
-            <div>
+      {!isDetail &&
+        (quotation.status == QuotationStatus.PREVIEW ? (
+          <>
+            <Row className="flex flex-row gap-4 my-4 justify-end">
+              <div>
+                <Button
+                  block
+                  title="Yêu cầu cập nhật bản khác"
+                  onClick={handleEdit}
+                />
+              </div>
               <Button
-                block
-                title="Yêu cầu cập nhật bản khác"
-                onClick={handleEdit}
+                success
+                title="Đồng ý bản báo giá"
+                onClick={handleAprrove}
               />
-            </div>
-            <Button
-              success
-              title="Đồng ý bản báo giá"
-              onClick={handleAprrove}
+            </Row>
+
+            <Input.TextArea
+              rows={4}
+              placeholder="Lí do"
+              value={reason}
+              onChange={(e) => setReason(e.target.value)}
+              className="mb-3"
             />
-          </Row>
+          </>
+        ) : quotation.status == QuotationStatus.APPROVED ? (
+          <>
+            <NotiResult
+              status="success"
+              icon={<SmileOutlined className="text-blue-600" />}
+              title="Hợp đồng đang được soạn. Vui lòng quay lại sau!"
+              sutitle={quotation.reason}
+            />
+          </>
+        ) : (
+          <>
+            <NotiResult
+              status="error"
+              icon={<CloseCircleOutlined className="text-blue-600" />}
+              title="Báo giá bị từ chối!"
+              sutitle={quotation.reason}
+            />
+            <label aria-disabled>{quotation.reason}</label>
+          </>
+        ))}
 
-          <Input.TextArea
-            rows={4}
-            placeholder="Lí do"
-            value={reason}
-            onChange={(e) => setReason(e.target.value)}
-            className="mb-3"
-          />
-        </>
-      ) : quotation.status == QuotationStatus.APPROVED ? (
-        <>
-          <NotiResult
-            status="success"
-            icon={<SmileOutlined className="text-blue-600" />}
-            title="Hợp đồng đang được soạn. Vui lòng quay lại sau!"
-            sutitle={quotation.reason}
-          />
-        </>
-      ) : (
-        <>
-          <NotiResult
-            status="error"
-            icon={<CloseCircleOutlined className="text-blue-600" />}
-            title="Báo giá bị từ chối!"
-            sutitle={quotation.reason}
-          />
-          <label aria-disabled>{quotation.reason}</label>
-        </>
-      )}
-
-      <Title name="Thông tin báo giá chi tiết" />
       <label>Phiên bản: {quotation.version}</label>
       <Row className="flex flex-row items-start w-full gap-x-20 mt-4">
         <Col>
           <div className="flex flex-row justify-start items-center gap-4 text-lg">
             <BorderlessTableOutlined className="text-blue-600" />
             <label className="text-blue-600 font-semibold">Công trình: </label>
-            <span className="text-gray-500"> #Tên dự án</span>
+            <span className="text-gray-500">{project.name}</span>
           </div>
           <div className="flex flex-row justify-start items-center gap-4 text-lg">
             <InboxOutlined className="text-blue-600" />
@@ -226,7 +230,7 @@ const DetailQuotationConsulting = ({
           </div>
         </Col>
       </Row>
-
+      <Divider orientation="left">Báo giá các hạng mục</Divider>
       {itemWork.map((item, index) => (
         <TableQuotation
           key={index}
@@ -235,8 +239,8 @@ const DetailQuotationConsulting = ({
           totalPrice={item.totalPrice}
         />
       ))}
+      <Divider orientation="left">Quy trình thi công</Divider>
 
-      <Title name="Quy trình thi công" />
       <Table<TemplateConstructionItemType>
         columns={columns}
         dataSource={tableData}

@@ -23,7 +23,10 @@ export const quotationProjectSlice = createSlice({
   name: "quotaionProject",
   initialState: initialState,
   reducers: {
-    fetchQuotationProject(state, action: PayloadAction<Filter>) {
+    fetchQuotationProject(
+      state,
+      action: PayloadAction<{ Filter: Filter; id: string }>
+    ) {
       state.loading = true;
     },
     fetchQuotationProjectSuccess(

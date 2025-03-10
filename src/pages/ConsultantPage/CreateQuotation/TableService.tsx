@@ -7,7 +7,6 @@ const TableServices = ({ services }) => {
   const [number, setNumber] = useState(0);
   const handleAdd = (service: ServiceType) => {
     setNumber(number + 1);
-    console.log("service 123: ", service);
   };
   return (
     <div>

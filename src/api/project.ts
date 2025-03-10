@@ -50,10 +50,14 @@ const assignConsultant = async (
 };
 
 const getQuotationProject = async (
-  projectId: string
-): Promise<ApiResultWithData<QuotationProjectType>> => {
-  const response = await http.get(endPoint.project.getQuotation(projectId));
-
+  Filter: Filter,
+  id: string
+): Promise<ApiResultWithPagination<QuotationProjectType>> => {
+  const response = await http.get(
+    `${endPoint.project.getQuotation(id)}?PageNumber=${
+      Filter.pageNumber
+    }&PageSize=${Filter.pageSize}`
+  );
   return response;
 };
 
@@ -99,10 +103,13 @@ const getAllDesignForSpecificProject = async (
 };
 
 const getContractOfProject = async (
+  filter: Filter,
   id: string
 ): Promise<ApiResultWithPagination<ContractProjectType>> => {
   const response = await http.get(
-    `${endPoint.project.getcontractOfProject(id)}`
+    `${endPoint.project.getcontractOfProject(id)}?PageNumber=${
+      filter.pageNumber
+    }&PageSize=${filter.pageSize}`
   );
   return response;
 };

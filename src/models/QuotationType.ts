@@ -49,7 +49,7 @@ export interface RejectQuotationType {
 }
 
 export interface FieldQuotationDetailType {
-  id: string;
+  id?: string;
   name: string;
   description: string;
   price: number;
