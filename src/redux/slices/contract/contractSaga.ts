@@ -16,7 +16,7 @@ function* fetchContractWorker(action: PayloadAction<string>) {
   try {
     const data = yield call(getContract, action.payload);
     if (data.isSuccess) {
-      yield put(contractActions.fetchContractSuccess(data));
+      yield put(contractActions.fetchContractSuccess(data.data));
     } else {
       yield put(contractActions.fetchContractFailed());
     }
@@ -59,13 +59,12 @@ function* rejectContractWorker(action: PayloadAction<string>) {
 }
 
 function* acceptContractWorker(action: PayloadAction<string>) {
-  console.log(action.payload);
   try {
     const data = yield call(acceptContract, action.payload);
     if (data.isSuccess) {
       messageSuccess(data.message);
 
-      yield put(contractActions.acceptContract(data));
+      // yield put(contractActions.acceptContract(data));
     } else {
       messageError(data.message);
     }
@@ -81,8 +80,6 @@ function* verifyContractWorker(action: PayloadAction<VerifyContractType>) {
 
     if (data.isSuccess) {
       messageSuccess("Hợp đồng đã có hiệu lực");
-
-      yield put(contractActions.verifyContract(data));
     } else {
       messageError(data.message);
     }

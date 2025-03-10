@@ -1,10 +1,11 @@
 import { PlusSquareOutlined } from "@ant-design/icons";
-import { Col, Row, Table, Typography } from "antd";
+import { Col, Collapse, Row, Table, Typography } from "antd";
 import type { TableColumnsType } from "antd";
 import { FieldQuotationDetailType } from "@/models";
 import { useState } from "react";
 import { Funtion, QuotationItem } from "./type";
 import { TextField } from "@mui/material";
+import { parseCategory } from "@/utils/helpers";
 
 const TableQuotation = (
   props: QuotationItem &
@@ -125,24 +126,22 @@ const TableQuotation = (
 
   return (
     <div className="pt-5">
-      <Row>
-        <Col className="flex items-center" onClick={toggleTable}>
-          <PlusSquareOutlined
-            style={{ marginRight: "8px", fontSize: "20px" }}
-          />
-          <label className="text-lg">{props.name}</label>
-        </Col>
-      </Row>
-      <Row className="px-5 pt-2">
-        {visible && (
-          <Table<FieldQuotationDetailType>
-            className="w-full"
-            columns={columns}
-            dataSource={props.items}
-            pagination={false}
-          />
-        )}
-      </Row>
+      <Collapse
+        items={[
+          {
+            key: "index",
+            label: `${parseCategory(props.name)}`,
+            children: (
+              <Table<FieldQuotationDetailType>
+                className="w-full"
+                columns={columns}
+                dataSource={props.items}
+                pagination={false}
+              />
+            ),
+          },
+        ]}
+      />
     </div>
   );
 };

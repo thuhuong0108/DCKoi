@@ -1,4 +1,4 @@
-import { messageError, messageSuccess, Title } from "@/components";
+import { Title } from "@/components";
 import {
   equipmentActions,
   selectEquipment,
@@ -17,14 +17,10 @@ import {
   PoundCircleOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Col, Input, Modal, Row } from "antd";
-import React, { useEffect, useState } from "react";
+import { Col, Modal, Row } from "antd";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import {
-  projectDetailActions,
-  selectedProjectDetail,
-} from "@/redux/slices/projectDetail/projectDetailSlices";
 import Button from "@/components/ui/Button";
 import {
   EquipmentType,
@@ -33,24 +29,27 @@ import {
   TemplateConstructionType,
 } from "@/models";
 import { Category } from "@/models/enums/Category";
+import {
+  projectDetailActions,
+  selectedProjectDetail,
+} from "@/redux/slices/projectDetail/projectDetailSlices";
 import { QuotationItem } from "./type";
 
-import { Space, Table } from "antd";
-import TableQuotation from "./TableQuotation";
-import { templateConstructionActions } from "@/redux/slices/templateConstruction/templateContrutionSlices";
+import { QuotationStatus } from "@/models/enums/Status";
 import {
   QuotationEquipmentRequest,
   QuotationRequest,
   QuotationServiceRequest,
 } from "@/models/Request/QuotationRequest";
+import { quotationActions } from "@/redux/slices/quotation/quotationSlices";
 import {
   quotationDetailActions,
   selectedQuotationDetail,
 } from "@/redux/slices/quotationDetail/quotationDetailSlices";
+import { templateConstructionActions } from "@/redux/slices/templateConstruction/templateContrutionSlices";
 import { formatPrice } from "@/utils/helpers";
-import { rewriteQuotation, updateQuotation } from "@/api/quotation";
-import { quotationActions } from "@/redux/slices/quotation/quotationSlices";
-import { QuotationStatus } from "@/models/enums/Status";
+import { Space, Table } from "antd";
+import TableQuotation from "./TableQuotation";
 
 const RewriteQuotation = () => {
   const { Column } = Table;
@@ -271,7 +270,7 @@ const RewriteQuotation = () => {
     dispatch(serviceActions.fetchService({ pageNumber: 1, pageSize: 10 }));
     setOpenServices(true);
   };
-  const [category, setCategory] = useState(Category.CONTINGENCY);
+  const [category, setCategory] = useState(Category.PRELIMINARIES);
 
   const [openServices, setOpenServices] = useState(false);
   const [openEquipments, setOpenEquipments] = useState(false);
@@ -297,7 +296,7 @@ const RewriteQuotation = () => {
           <div className="flex flex-row justify-start items-center gap-4 text-lg">
             <BorderlessTableOutlined />
             <label className="text-black font-semibold">Công trình: </label>
-            <span className="text-gray-500"> #Tên dự án</span>
+            <span className="text-gray-500">{project.name}</span>
           </div>
           <div className="flex flex-row justify-start items-center gap-4 text-lg">
             <InboxOutlined />

@@ -7,12 +7,10 @@ const TableEquipments = ({ equipments }) => {
   const [number, setNumber] = useState(0);
   const handleAdd = (equipment: EquipmentType) => {
     setNumber(number + 1);
-    console.log("equipment 123: ", equipment);
   };
 
   const handleDetele = (equipment: EquipmentType) => {
     setNumber(number + 1);
-    console.log("equipment 123: ", equipment);
   };
   return (
     <div>

@@ -1,12 +1,9 @@
-import { Button, Modal, Typography } from "antd";
-import React, { useState } from "react";
-import { DesignRequest, DesignType } from "@/models";
-import { parseStatusDesign } from "@/utils/helpers"; // Import hàm chuyển đổi trạng thái
+import { DesignType } from "@/models";
 import { DesignState } from "@/models/enums/DesignState";
-import { useAppDispatch } from "@/redux/store/hook";
-import { designActions } from "@/redux/slices/design/designSlices";
 import { imageDesignActions } from "@/redux/slices/imageDesign/imageDesignSlices";
-import { Uploader } from "@/components";
+import { useAppDispatch } from "@/redux/store/hook";
+import { parseStatusDesign } from "@/utils/helpers"; // Import hàm chuyển đổi trạng thái
+import { Button, Typography } from "antd";
 import { useParams } from "react-router-dom";
 
 const statusColors: Record<DesignState, string> = {

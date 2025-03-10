@@ -3,10 +3,17 @@ import { messageError, messageSuccess } from "@/components";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { contractProjectActions } from "./contractProjectSlices";
 import { getContractOfProject } from "@/api/project";
+import { Filter } from "@/models/Common";
 
-function* fetchContractProjectWorker(action: PayloadAction<string>) {
+function* fetchContractProjectWorker(
+  action: PayloadAction<{ filter: Filter; id: string }>
+) {
   try {
-    const data = yield call(getContractOfProject, action.payload);
+    const data = yield call(
+      getContractOfProject,
+      action.payload.filter,
+      action.payload.id
+    );
     if (data.isSuccess) {
       yield put(contractProjectActions.fetchContractProjectSuccess(data));
     } else {
