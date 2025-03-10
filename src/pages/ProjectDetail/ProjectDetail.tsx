@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import Staff from "./Staff";
 import Design from "./Design";
 import Constructions from "./Constructions";
+import { Divider } from "antd";
 
 const ProjectDetail = () => {
   const dispatch = useAppDispatch();
@@ -26,7 +27,8 @@ const ProjectDetail = () => {
   }, []);
   return (
     <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 h-full w-full">
-      <Title name="1. Chi tiết dự án" />
+      {/* <Title  name="1. Chi tiết dự án" /> */}
+      <Divider orientation="left">1. Chi tiết dự án</Divider>
       {project.loading ? (
         <Loading />
       ) : (
