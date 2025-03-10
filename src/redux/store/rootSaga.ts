@@ -19,6 +19,7 @@ import { designDetailSaga } from "../slices/designDetail/designDetailSaga";
 import { customerDesignSaga } from "../slices/customerDesign/customerDesignSaga";
 import { constructionSaga } from "../slices/construction/constructionSaga";
 import { contractSaga } from "../slices/contract/contractSaga";
+import { contractProjectSaga } from "../slices/contractProject/contractProjectSaga";
 import { constructionProjectSaga } from "../slices/constructionProject/constructionProjectSaga";
 import { projectBoardSaga } from "../slices/projectBoard/projectBoardSaga";
 import { projectStateDetailSaga } from "../slices/projectStateDetail/projectStateDetailSaga";
@@ -44,6 +45,7 @@ export default function* rootSaga() {
     customerDesignSaga(),
     constructionSaga(),
     contractSaga(),
+    contractProjectSaga(),
     constructionProjectSaga(),
     projectBoardSaga(),
     projectStateDetailSaga(),

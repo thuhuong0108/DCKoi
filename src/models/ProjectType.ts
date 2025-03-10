@@ -71,3 +71,13 @@ export interface ProjectDesignType {
   isPublic: boolean;
   imageUrl: string;
 }
+
+export interface ContractProjectType {
+  id?: string;
+  name: string;
+  status: string;
+  customerName: string;
+  contractValue: number;
+  createdAt: string;
+  updatedAt: string;
+}

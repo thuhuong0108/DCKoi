@@ -35,6 +35,7 @@ export function parseDate(inputStr: string): string {
   // Trả về chuỗi theo định dạng mong muốn
   return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
 }
+
 export const isDateString = (str: string): boolean => {
   if (str.length < 10) return false;
   const parsedDate = Date.parse(str);
@@ -122,9 +123,11 @@ export function parseStatusQuotation(status: QuotationStatus): string {
 }
 
 export const formatPrice = (amount: number): string => {
-  return new Intl.NumberFormat("en-US", {
-    maximumFractionDigits: 0,
-  }).format(amount);
+  return (
+    new Intl.NumberFormat("en-US", {
+      maximumFractionDigits: 0,
+    }).format(amount) + " VND"
+  );
 };
 
 export const formatDateVietNamese = (date: string) => {

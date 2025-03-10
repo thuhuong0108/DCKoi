@@ -36,6 +36,7 @@ export const projectSlice = createSlice({
     reloadProject(state) {
       state.loading = true;
     },
+
     fetchDesignProject(state, action: PayloadAction<Filter>) {
       state.loading = true;
     },
@@ -49,13 +50,24 @@ export const projectSlice = createSlice({
     fetchDesignProjectFaild(state) {
       state.loading = false;
     },
+
     reloadDesignProject(state) {
       state.loading = true;
     },
 
-    // createProject(state, action: PayloadAction<ProjectType>) {
-    //   console.log("create Project: ", action.payload);
-    // },
+    fetchContractProject(state, action: PayloadAction<Filter>) {
+      state.loading = true;
+    },
+    fetchContractProjectSuccess(
+      state,
+      action: PayloadAction<Pagination<ProjectType>>
+    ) {
+      state.projects = action.payload;
+      state.loading = false;
+    },
+    fetchContractProjectFaild(state) {
+      state.loading = false;
+    },
   },
 });
 

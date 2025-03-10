@@ -77,6 +77,10 @@ const Routers = () => {
       element: <LayoutCustomer Page={ProjectDetail} />,
     },
 
+    // {
+    //   path: "/design",
+    //   element: <LayoutCustomer Page={CustomerProjectDesign} />,
+    // },
     {
       path: "/space-management/designs",
       element: <RootLayout Pages={DesignCustomer} />,
@@ -93,15 +97,15 @@ const Routers = () => {
     },
 
     {
-      path: "/design/:id",
+      path: "/space-management/projects/:id/design",
       element: <LayoutCustomer Page={CustomerDesign} />,
     },
+    // {
+    //   path: "/design/:id/detail",
+    //   element: <LayoutCustomer Page={CustomerDesignDetail} />,
+    // },
     {
-      path: "/design/:id/detail",
-      element: <LayoutCustomer Page={CustomerDesignDetail} />,
-    },
-    {
-      path: "/space-management/contract",
+      path: "/space-management/projects/:id/contract",
       element: <LayoutCustomer Page={ContractPage} />,
     },
     // admin

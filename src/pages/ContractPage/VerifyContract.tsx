@@ -6,16 +6,24 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-const VerifyContract = ({ id, setOpen }) => {
+const VerifyContract = ({ id, setOpenVerify }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [otpCode, setOtpCode] = useState("");
+  const [isOtpResent, setIsOtpResent] = useState(false);
+
+  const resendOtp = () => {
+    setIsOtpResent(true);
+    ////
+  };
+
   const handleVerify = () => {
     const data: VerifyContractType = { id, otpCode };
     dispatch(contractActions.verifyContract(data));
-    setOpen(false);
+    setOpenVerify(false);
     navigate("/space-management/construction");
   };
+
   return (
     <div className="flex flex-col justify-between h-[200px]">
       <label>Mã OTP đã được gửi qua gmail của bạn</label>
@@ -25,7 +33,7 @@ const VerifyContract = ({ id, setOpen }) => {
         value={otpCode}
         onChange={(e) => setOtpCode(e.target.value)}
       />
-      <CountdownTime />
+      <CountdownTime onTimeout={resendOtp} />
       <Button primary title="Xác nhận" onClick={handleVerify} />
     </div>
   );

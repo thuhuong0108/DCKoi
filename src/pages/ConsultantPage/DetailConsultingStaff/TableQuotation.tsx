@@ -73,7 +73,7 @@ const CategoryField = (props: QuotationItem) => {
         </Col>
         <Col span={6}>
           <label className="text-base font-semibold">
-            {formatPrice(props.totalPrice)} VND
+            {formatPrice(props.totalPrice)}
           </label>
         </Col>
       </Row>
