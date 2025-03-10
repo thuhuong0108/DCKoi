@@ -106,6 +106,24 @@ const getProjectConstruction = async (
   return response;
 };
 
+const getProjects = async (
+  filter: Filter
+): Promise<ApiResultWithData<ProjectType>> => {
+  const response = await http.get(
+    `${endPoint.project.getProjects}?PageNumber=${filter.pageNumber}&PageSize=${filter.pageSize}`
+  );
+  return response;
+};
+
+const getDesignApproval = async (
+  id: string
+): Promise<ApiResultWithPagination<ProjectType>> => {
+  const response = await http.get(
+    `${endPoint.project.getDesignOfProject(id)}&Status=CONFIRMED`
+  );
+  return response;
+};
+
 export {
   check3Dconfirm,
   getPagingProject,
@@ -117,4 +135,6 @@ export {
   getDesignOfProject,
   getAllDesignForSpecificProject,
   getProjectConstruction,
+  getProjects,
+  getDesignApproval,
 };

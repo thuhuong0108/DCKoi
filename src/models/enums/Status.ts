@@ -21,3 +21,9 @@ export enum ContractStatus {
   ACTIVE = "ACTIVE",
   CANCEL = "CANCEL",
 }
+
+export enum ItemConstructionStatus {
+  OPENING = "OPENING",
+  PROCESSING = "PROCESSING",
+  DONE = "DONE",
+}

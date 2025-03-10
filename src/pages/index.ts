@@ -13,6 +13,7 @@ import DesignCustomer from "./Design";
 import DesignDetailCustomer from "./DesignDetail";
 import DesignRequiment from "./DesignRequirement";
 import TestUi from "./TestUi";
+import ProjectDetail from "./ProjectDetail";
 
 export {
   // customer
@@ -29,6 +30,7 @@ export {
   CustomerDesignDetail,
   ProjectsPage,
   DesignDetailCustomer,
+  ProjectDetail,
 
   //error
   AuthorizePage,

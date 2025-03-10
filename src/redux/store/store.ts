@@ -32,6 +32,8 @@ import customerDesignSlice from "../slices/customerDesign/customerDesignSlices";
 import constructionSlice from "../slices/construction/constructionSlices";
 import contractSlice from "../slices/contract/contractSlices";
 import constructionProjectSlice from "../slices/constructionProject/constructionProjectSlices";
+import projectBoardSlice from "../slices/projectBoard/projectBoardSlices";
+import projectStateDetailSlice from "../slices/projectStateDetail/projectStateDetailSlices";
 
 const rootReducers = combineReducers({
   router: connectRouter(history),
@@ -55,6 +57,8 @@ const rootReducers = combineReducers({
   construction: constructionSlice,
   contract: contractSlice,
   constructionProject: constructionProjectSlice,
+  projectBoard: projectBoardSlice,
+  projectStateDetail: projectStateDetailSlice,
 });
 
 const persistConfig = {
