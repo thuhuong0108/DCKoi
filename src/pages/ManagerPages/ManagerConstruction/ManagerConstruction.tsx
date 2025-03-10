@@ -1,6 +1,5 @@
-import { ManagerSkeleton, Title } from "@/components"
+import { ManagerSkeleton, Title } from "@/components";
 import DragDropTemplateConstructor from "@/components/DragAndDrop/DragDropTemplateConstructor";
-import { TemplateConstructionItemType } from "@/models";
 import { ContentCopy, East, OpenInNew } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 
