@@ -1,13 +1,13 @@
 import { Loading, Title } from "@/components";
-import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
-import React, { useEffect } from "react";
-import InformationProject from "./InformationProject";
 import { projectStateDetailActions } from "@/redux/slices/projectStateDetail/projectStateDetailSlices";
-import { useParams } from "react-router-dom";
-import Staff from "./Staff";
-import Design from "./Design";
-import Constructions from "./Constructions";
+import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
 import { Divider } from "antd";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import Constructions from "./Constructions";
+import Design from "./Design";
+import InformationProject from "./InformationProject";
+import Staff from "./Staff";
 
 const ProjectDetail = () => {
   const dispatch = useAppDispatch();
@@ -16,9 +16,8 @@ const ProjectDetail = () => {
   const construction = useAppSelector(
     (state) => state.projectStateDetail.construction
   );
-  const { id } = useParams();
 
-  console.log(construction);
+  const { id } = useParams();
 
   useEffect(() => {
     dispatch(projectStateDetailActions.fetchProjectDetail(id));
@@ -27,7 +26,7 @@ const ProjectDetail = () => {
   }, []);
   return (
     <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 h-full w-full">
-      {/* <Title  name="1. Chi tiết dự án" /> */}
+      <Title name="Thông tin dự án" />
       <Divider orientation="left">1. Chi tiết dự án</Divider>
       {project.loading ? (
         <Loading />
@@ -35,15 +34,13 @@ const ProjectDetail = () => {
         <InformationProject {...project.detail} />
       )}
 
-      <Title name="2. Nhân viên" />
+      <Divider orientation="left">2. Nhân viên tham gia</Divider>
       {project.loading ? <Loading /> : <Staff staff={project.detail.staff} />}
 
-      <Title name="3. Thiết kế" />
-
+      <Divider orientation="left">3. Bản vẽ thiết kể</Divider>
       {design.loading ? <Loading /> : <Design designs={design.designs} />}
 
-      <Title name="4. Thi công" />
-
+      <Divider orientation="left">4. Tiến trình thi công</Divider>
       {construction.loading ? (
         <Loading />
       ) : (
