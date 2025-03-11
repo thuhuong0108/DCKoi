@@ -14,6 +14,8 @@ import {
   DesignProject,
   DesignProjectDetail,
   DesignRequiment,
+  ManagerProjectDetail,
+  ProjectDetail,
   DetailConsulting,
   DetailConsultingStaff,
   Home,
@@ -68,6 +70,10 @@ const Routers = () => {
     {
       path: "/space-management/projects",
       element: <LayoutCustomer Page={ProjectsPage} />,
+    },
+    {
+      path: "/space-management/projects/:id",
+      element: <LayoutCustomer Page={ProjectDetail} />,
     },
 
     // {
@@ -242,9 +248,14 @@ const Routers = () => {
       element: <RootLayout Pages={ManagerProject} />,
     },
     {
+      path: "/manager/:id",
+      element: <RootLayout Pages={ManagerProjectDetail} />,
+    },
+    {
       path: "/manager/design",
       element: <RootLayout Pages={ManagerDesign} />,
     },
+
     {
       path: "/manager/design/:id",
       element: <RootLayout Pages={DesignRequiment} />,

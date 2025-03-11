@@ -1,67 +1,64 @@
 import { Title } from "@/components";
-import { ProjectStatus } from "@/models/enums/Status";
-import {
-  projectActions,
-  selectedProject,
-} from "@/redux/slices/project/projectSlices";
-import { useAppSelector } from "@/redux/store/hook";
-import { Modal, Row } from "antd";
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { Pagination, Row } from "antd";
+import React, { useEffect } from "react";
 import CardProject from "./CardProject";
-import ModalProject from "./ModalProject";
+import { useDispatch } from "react-redux";
+import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
+import { selectedProject } from "@/redux/slices/project/projectSlices";
+import ProjectSkeleton from "./ProjectSkeleton";
+import { projectBoardActions } from "@/redux/slices/projectBoard/projectBoardSlices";
+import ProjectCard from "./ProjectCard";
 
 const ProjectsPage = () => {
-  const dispatch = useDispatch();
-  const project = useAppSelector(selectedProject);
-
-  const [projectActive, setProjectActive] = useState([]);
-  const [openDetail, setOpenDetail] = useState(false);
+  const dispatch = useAppDispatch();
+  const items = useAppSelector((state) => state.projectBoard.projects);
+  const loading = useAppSelector((state) => state.projectBoard.loading);
+  console.log(items);
 
   useEffect(() => {
     dispatch(
-      projectActions.fetchProject({
-        pageNumber: 1,
-        pageSize: 10,
-      })
+      projectBoardActions.fetchProjectBoard({ pageNumber: 1, pageSize: 6 })
     );
-  }, [dispatch]);
+  }, []);
 
-  useEffect(() => {
-    if (project?.data) {
-      const filteredProjects = project.data.filter(
-        (projectItem) => projectItem.status === ProjectStatus.DESIGNING
-      );
-      setProjectActive(filteredProjects);
-    }
-  }, [project]);
+  if (loading) {
+    return (
+      <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 h-full">
+        <Title name="Dự án" />
+        <div className="grid grid-cols-3 gap-4">
+          {[1, 2, 3].map((item) => (
+            <ProjectSkeleton key={item} />
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 w-full h-full">
-      <Title name="Danh sách dự án thi công" />
-
-      <Row className="gap-5 my-4">
-        {projectActive.map((projectActive) => (
-          <CardProject
-            project={projectActive}
-            key={projectActive.id}
-            setOpenDetail={selectedProject}
-          />
+    <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 h-full">
+      <Title name="Dự án" />
+      <div className="grid grid-cols-3 gap-4">
+        {items.data.map((item) => (
+          <ProjectCard key={item.id} {...item} />
         ))}
-      </Row>
+      </div>
 
-      <Modal
-        title="Thông tin dự án"
-        open={openDetail}
-        width={1000}
-        onClose={() => setOpenDetail(false)}
-        onCancel={() => setOpenDetail(false)}
-        onOk={() => setOpenDetail(false)}
-        closable={true}
-        footer={false}
-      >
-        <ModalProject project={project} />
-      </Modal>
+      {/* pagination */}
+      <div className="flex justify-end mt-5">
+        <Pagination
+          current={items.pageNumber}
+          pageSize={items.pageSize}
+          total={items.totalRecords}
+          onChange={(page) =>
+            dispatch(
+              projectBoardActions.fetchProjectBoard({
+                pageNumber: page,
+                pageSize: items.pageSize,
+              })
+            )
+          }
+        />
+      </div>
     </div>
   );
 };
