@@ -17,7 +17,12 @@ const ConsultingCard = ({ item }: { item: ProjectType }) => {
   const navigate = useNavigate();
 
   return (
-    <div onClick={() => navigate(`${item.id}/detail-consulting`)}>
+    <div
+      onClick={() => navigate(`${item.id}/detail-consulting`)}
+      style={{
+        cursor: "pointer",
+      }}
+    >
       <Card
         className="shadow-innerTop p-4 w-[360px] m-2 relative"
         padding="sm"

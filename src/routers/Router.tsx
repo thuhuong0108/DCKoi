@@ -14,6 +14,7 @@ import {
   DesignProject,
   DesignProjectDetail,
   DesignRequiment,
+  ManagerConstruction,
   ManagerProjectDetail,
   ProjectDetail,
   DetailConsulting,
@@ -263,6 +264,10 @@ const Routers = () => {
     {
       path: "/manager/design/:id/design",
       element: <RootLayout Pages={DesignDetailManager} />,
+    },
+    {
+      path: "/manager/construction",
+      element: <RootLayout Pages={ManagerConstruction} />,
     },
 
     // designer
