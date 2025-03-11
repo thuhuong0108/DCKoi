@@ -49,22 +49,9 @@ export const quotationSlice = createSlice({
       state.loading = false;
     },
 
-    // fetchQuotationDetail(
-    //       state,
-    //   action: PayloadAction<ApiResultWithAData<QuotationType>>
-    // ) {
-    //   state.quotation = action.payload;
-    //   state.loading = false;
-    // },
-
     //create
     createQuotation(state, action: PayloadAction<QuotationRequest>) {
       console.log("create quotation: ", action.payload);
-    },
-
-    //reject
-    rejectQuotation(state, action: PayloadAction<RejectQuotationType>) {
-      console.log("reject quotation: ", action.payload);
     },
 
     //approve
@@ -73,7 +60,7 @@ export const quotationSlice = createSlice({
     },
 
     //edit
-    editQuotation(state, action: PayloadAction<QuotationRequest>) {
+    updateQuotation(state, action: PayloadAction<QuotationRequest>) {
       console.log("edit quotation: ", action.payload);
     },
 
@@ -81,6 +68,7 @@ export const quotationSlice = createSlice({
     rewriteQuotation(state, action: PayloadAction<QuotationRequest>) {
       console.log("rewrite quotation: ", action.payload);
     },
+
     rejectAcceptQuotation(state, action: PayloadAction<RejectQuotationType>) {
       console.log("reject-accept quotation", action.payload);
     },

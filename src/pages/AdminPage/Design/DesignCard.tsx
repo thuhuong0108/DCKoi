@@ -19,6 +19,7 @@ const DesignCard = ({
   phone,
   standOut,
   id,
+  staffs,
 }: ProjectType) => {
   const dispatch = useAppDispatch();
   const managers = useAppSelector((state) => state.staff.staffs);
@@ -118,14 +119,14 @@ const DesignCard = ({
           type="primary"
           className="rounded-lg"
           onClick={() => {
-            if (standOut) {
+            if (staffs.length === 0) {
               handleOpenManagerModal();
             } else {
               console.log("view detail");
             }
           }}
         >
-          {standOut ? "Thêm quản lí" : "Xem chi tiết"}
+          {staffs.length > 0 ? "Xem chi tiết" : "Chọn quản lí"}
         </Button>
       </div>
 

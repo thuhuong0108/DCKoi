@@ -8,6 +8,9 @@ import ScrollbarContainer from "./Scrollbar";
 import SwitchContainer from "./Switch";
 import TimelineContainer from "./Timeline";
 import IconAnimation from "./IconAnimation";
+import ReusableUploader from "./ReusableUploader";
+import SuccessAnimation from "./SuccessAnimation";
+import FailedAnimation from "./FailedAnimation";
 
 export const Button = ButtonControl;
 export const Avatar = AvatarContainer;
@@ -17,6 +20,7 @@ export const Modal = ModalComp;
 export const Scrollbar = ScrollbarContainer;
 export const Switch = SwitchContainer;
 export const Timeline = TimelineContainer;
+export const Uploader = ReusableUploader;
 
 export {
   messageInfo,
@@ -30,4 +34,4 @@ export * from "./Confirmbox";
 export * from "./Table";
 export * from "./Timeline/type";
 
-export { IconAnimation };
+export { IconAnimation, SuccessAnimation, FailedAnimation };

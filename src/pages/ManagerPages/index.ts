@@ -1,3 +1,4 @@
 import ManagerProject from "./ManagerProject";
 import ManagerDesign from "./Design";
-export { ManagerProject, ManagerDesign };
+import ManagerProjectDetail from "./ProjectDetail";
+export { ManagerProject, ManagerDesign, ManagerProjectDetail };

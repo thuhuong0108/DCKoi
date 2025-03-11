@@ -1,8 +1,12 @@
-import { messageError, messageSuccess } from "@/components";
+import { messageError } from "@/components";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { call, fork, put, select, take } from "redux-saga/effects";
 import { Filter } from "@/models/Common";
-import { getPagingProject, getProject, getProjectDesign } from "@/api/project";
+import {
+  getContractOfProject,
+  getPagingProject,
+  getProjectDesign,
+} from "@/api/project";
 import { projectActions } from "./projectSlices";
 
 function* fetchProjectWorker(action: PayloadAction<Filter>) {
@@ -20,48 +24,6 @@ function* fetchProjectWorker(action: PayloadAction<Filter>) {
     yield put(projectActions.fetchProjectFaild());
   }
 }
-
-// function* getProjectWorker(action: PayloadAction<string>) {
-//     try {
-//       const data = yield call(getProject, action.payload);
-//       if (data.isSuccess) {
-//         yield put(projectActions.fetchProjectSuccess(data));
-//       } else {
-//         messageError(data.message);
-//         yield put(projectActions.fetchProjectFaild());
-//       }
-//     } catch (error) {
-//       messageError("Lấy dữ liệu dự án bị lỗi");
-//       console.log("Error load project: ",error);
-//       yield put(projectActions.fetchProjectFaild());
-//     }
-//   }
-
-// create
-// function* createProjectWorker(action: PayloadAction<ProjectType>) {
-//   try {
-//     const data = yield call(createProject, action.payload);
-
-//     if (data.isSuccess) {
-//       messageSuccess(data.message);
-//       const projectState: ProjectState = yield select(
-//         (state) => state.project
-//       );
-
-//       yield put(
-//         projectActions.fetchProject({
-//           pageNumber: projectState.projects.pageNumber,
-//           pageSize: projectState.projects.pageSize,
-//         })
-//       );
-//     } else {
-//       messageError(data.message);
-//     }
-//   } catch (error) {
-//     messageError("Hệ thống đang bị lỗi");
-//     console.log("Error create project:",error);
-//   }
-// }
 
 function* reloadProjectWorker() {
   try {

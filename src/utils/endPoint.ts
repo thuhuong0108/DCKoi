@@ -1,7 +1,9 @@
+import { getConstruction } from "@/api/construction";
 import { assignConsultant } from "@/api/project";
 
 const baseURL = "https://kpcos.vinhuser.one/api/";
 const socketURL = "http://34.81.244.146:3333";
+const cloudinaryURL = "https://api.cloudinary.com/v1_1/dulapxpnp/upload";
 const endPoint = {
   auth: {
     login: "/auth/signin",
@@ -59,12 +61,19 @@ const endPoint = {
   project: {
     createProject: "/projects",
     getPagingProjects: "/projects/consultation",
-    // getPagingProjects: "/projects               ",
     getProject: (id: string) => `/projects/${id}`,
     assignConsultant: (id: string) => `/projects/${id}/assignconsultant`,
     getQuotation: (id: string) => `/projects/${id}/quotation`,
     requestProject: "/projects",
     getProjectDesign: `/projects/design`,
+    getDesignOfProject: (id: string) =>
+      `/projects/${id}/design?PageNumber=1&PageSize=100`,
+    getcontractOfProject: (id: string) => `projects/${id}/contract`,
+    check3Dconfirm: (id: string) => `/projects/${id}/design/3d-confirmed`,
+    getAllDesignForSpecificProject: (id: string) => `/projects/${id}/design`,
+    getConstruction: (id: string) =>
+      `/projects/${id}/construction?PageNumber=1&PageSize=100&SortColumn=estimateAt&SortDir=Asc`,
+    getProjects: "/projects",
   },
 
   quotation: {
@@ -75,6 +84,27 @@ const endPoint = {
     approveQuotation: (id: string) => `/quotation/${id}/approve-edit`,
     editQuotation: (id: string) => `/quotation/${id}/edit`,
     rewriteQuotation: (id: string) => `/quotation/${id}/rewrite`,
+  },
+
+  design: {
+    postDesign: "/designs",
+    getDesign: (id: string) => `/designs/${id}`,
+    putDesign: (id: string) => `/designs/${id}`,
+    rejectDesign: (id: string) => `/designs/${id}/reject`,
+    acceptDesign: (id: string) => `/designs/${id}/accept`,
+    requestEditDesign: (id: string) => `/designs/${id}/request-edit`,
+  },
+
+  construction: {
+    createConstruction: "/constructions",
+  },
+
+  contract: {
+    createContract: "contracts",
+    getContract: (id: string) => `contracts/${id}`,
+    rejectContract: (id: string) => `contracts/${id}/reject`,
+    acceptContract: (id: string) => `contracts/${id}/accept`,
+    verifyContract: (id: string) => `contracts/${id}/verify`,
   },
 };
 

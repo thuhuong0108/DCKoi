@@ -6,6 +6,7 @@ import MainLayout from "../mainLayout/MainLayout";
 import LayoutConsultant from "../layoutConsultant";
 import LayoutManager from "../layoutManager";
 import LayoutDesigner from "../layoutDesigner";
+import LayoutCustomer from "../layoutCustomer";
 
 interface IndexProps {
   Page: () => ReactElement;
@@ -18,7 +19,7 @@ interface MenuItemProps {
   icon?: React.ReactNode;
   end?: boolean;
 }
-const RootLayout = ({ Pages }: LayoutProps) => {
+const RootLayout = ({ Pages }) => {
   const role = useAppSelector((state) => state.auth.role);
 
   const pageName = Pages.name;
@@ -33,9 +34,10 @@ const RootLayout = ({ Pages }: LayoutProps) => {
       return <LayoutConsultant Page={Pages} />;
     case RoleUser.MANAGER:
       return <LayoutManager Page={Pages} />;
-
     case RoleUser.DESIGNER:
       return <LayoutDesigner Page={Pages} />;
+    case RoleUser.CUSTOMER:
+      return <LayoutCustomer Page={Pages} />;
     default:
       return <MainLayout Pages={Pages} />;
   }

@@ -11,6 +11,7 @@ export interface QuotationType {
   reason?: string;
   services: ServiceQuotationType[];
   equipments: EquipmentQuotationType[];
+  totalPrice: number;
 }
 
 export interface ServiceQuotationType {
@@ -19,7 +20,7 @@ export interface ServiceQuotationType {
   description: string;
   price: number;
   unit: string;
-  type: string;
+  type?: string;
   quantity: number;
   note: string;
   category: string;
@@ -48,7 +49,7 @@ export interface RejectQuotationType {
 }
 
 export interface FieldQuotationDetailType {
-  id: string;
+  id?: string;
   name: string;
   description: string;
   price: number;

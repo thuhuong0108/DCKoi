@@ -1,11 +1,11 @@
+import { trimText } from "@/utils/helpers";
+import { Pagination } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import ActionDropdown from "./ActionDropdown";
 import NoContentComponent from "./NoContentComponent";
 import TableSkeleton from "./TableSkeleton";
-import ActionDropdown from "./ActionDropdown";
-import { Link } from "react-router-dom";
 import { TableProps } from "./types";
-import { formatDate, isDateString, trimText } from "@/utils/helpers";
-import { Pagination } from "@mui/material";
 function TableComponent<T>({
   columns,
   data,

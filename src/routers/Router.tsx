@@ -1,39 +1,54 @@
-import { useLocation, useRoutes } from "react-router-dom";
+import { LayoutAdmin, LayoutCustomer, MainLayout } from "@/layouts";
+import RootLayout from "@/layouts/RootLayout";
 import {
   ConsultationPage,
-  Contact,
-  Home,
-  Login,
-  Register,
-  TestUi,
-  PackageCreate,
-  PackageDetail,
+  ConsultationStaffPage,
   // ProjectsPage,
   ConsultingPage,
-  DetailConsulting,
-  ManagerProject,
-  ManagerDesign,
-  DesignDashboard,
-  ConsultationStaffPage,
-  DetailConsultingStaff,
+  Contact,
   CreateQuotation,
+  CustomerDesign,
+  DesignCustomer,
+  DesignDashboard,
+  DesignDetailCustomer,
+  DesignProject,
+  DesignProjectDetail,
+  DesignRequiment,
+  ManagerProjectDetail,
+  ProjectDetail,
+  DetailConsulting,
+  DetailConsultingStaff,
+  Home,
+  Login,
+  ManagerDesign,
+  ManagerProject,
+  PackageCreate,
+  PackageDetail,
+  ProjectsPage,
+  PaymentStatus,
+  Register,
+  RewriteQuotation,
+  TestUi,
 } from "@/pages";
-import { LayoutAdmin, LayoutCustomer, MainLayout } from "@/layouts";
 import {
-  ManagementTransaction,
-  ManagementUser,
-  DetailConsultation,
-  PackagePage,
-  PackageItem,
-  ManagementPackage,
-  EquipmentPage,
-  ServicePage,
-  StaffPage,
+  AdminContract,
   ConstructionTemplate,
   ConstructionTemplateConfig,
   Design,
+  DetailConsultation,
+  EquipmentPage,
+  ManagementPackage,
+  ManagementProjects,
+  ManagementTransaction,
+  ManagementUser,
+  PackageItem,
+  PackagePage,
+  ServicePage,
+  StaffPage,
 } from "@/pages/AdminPage";
-import RootLayout from "@/layouts/RootLayout";
+import ContractPage from "@/pages/ContractPage";
+import DesignDetailManager from "@/pages/ManagerPages/DesignDetail";
+import { useLocation, useRoutes } from "react-router-dom";
 import PrivateRouterAdmin from "./PrivateRouterAdmin";
 
 const Routers = () => {
@@ -45,12 +60,56 @@ const Routers = () => {
     { path: "/register", element: <Register /> },
     // customer
     {
-      path: "/space-management",
+      path: "/space-management/consultations",
       element: <LayoutCustomer Page={ConsultingPage} />,
     },
     {
-      path: "/space-management/detail-consulting/:id",
+      path: "/space-management/consultations/:id/detail-consulting",
       element: <LayoutCustomer Page={DetailConsulting} />,
+    },
+    {
+      path: "/space-management/projects",
+      element: <LayoutCustomer Page={ProjectsPage} />,
+    },
+    {
+      path: "/space-management/projects/:id",
+      element: <LayoutCustomer Page={ProjectDetail} />,
+    },
+
+    // {
+    //   path: "/design",
+    //   element: <LayoutCustomer Page={CustomerProjectDesign} />,
+    // },
+    {
+      path: "/space-management/designs",
+      element: <RootLayout Pages={DesignCustomer} />,
+    },
+
+    {
+      path: "/space-management/designs/:id",
+      element: <RootLayout Pages={DesignRequiment} />,
+    },
+
+    {
+      path: "/space-management/designs/:id/design",
+      element: <RootLayout Pages={DesignDetailCustomer} />,
+    },
+
+    {
+      path: "/space-management/projects/:id/design",
+      element: <LayoutCustomer Page={CustomerDesign} />,
+    },
+    // {
+    //   path: "/design/:id/detail",
+    //   element: <LayoutCustomer Page={CustomerDesignDetail} />,
+    // },
+    {
+      path: "/space-management/projects/:id/contract",
+      element: <LayoutCustomer Page={ContractPage} />,
+    },
+    {
+      path: "/payment/response",
+      element: <LayoutCustomer Page={PaymentStatus} />,
     },
     // admin
     {
@@ -61,14 +120,7 @@ const Routers = () => {
         />
       ),
     },
-    {
-      path: "/admin/consultation/:id",
-      element: (
-        <PrivateRouterAdmin
-          Pages={() => <LayoutAdmin Page={DetailConsultation} />}
-        />
-      ),
-    },
+
     {
       path: "/admin/consultation",
       element: (
@@ -76,6 +128,14 @@ const Routers = () => {
           Pages={() => <LayoutAdmin Page={ConsultationPage} />}
         />
       ),
+    },
+    {
+      path: "/admin/consultation/:id",
+      element: <RootLayout Pages={DetailConsultation} />,
+    },
+    {
+      path: "/admin/consultation/:id/contract/:quotationId",
+      element: <RootLayout Pages={AdminContract} />,
     },
     {
       path: "/admin/equipments",
@@ -159,6 +219,10 @@ const Routers = () => {
       path: "/admin/design",
       element: <RootLayout Pages={Design} />,
     },
+    {
+      path: "/admin/projects",
+      element: <RootLayout Pages={ManagementProjects} />,
+    },
 
     // consultant
     {
@@ -169,10 +233,13 @@ const Routers = () => {
       path: "/consultant/:id",
       element: <RootLayout Pages={DetailConsultingStaff} />,
     },
-
     {
       path: "/consultant/:id/new-quotation",
       element: <RootLayout Pages={CreateQuotation} />,
+    },
+    {
+      path: "/consultant/:id/rewrite-quotation",
+      element: <RootLayout Pages={RewriteQuotation} />,
     },
 
     // manager
@@ -181,8 +248,21 @@ const Routers = () => {
       element: <RootLayout Pages={ManagerProject} />,
     },
     {
+      path: "/manager/:id",
+      element: <RootLayout Pages={ManagerProjectDetail} />,
+    },
+    {
       path: "/manager/design",
       element: <RootLayout Pages={ManagerDesign} />,
+    },
+
+    {
+      path: "/manager/design/:id",
+      element: <RootLayout Pages={DesignRequiment} />,
+    },
+    {
+      path: "/manager/design/:id/design",
+      element: <RootLayout Pages={DesignDetailManager} />,
     },
 
     // designer
@@ -190,9 +270,17 @@ const Routers = () => {
       path: "/designer",
       element: <RootLayout Pages={DesignDashboard} />,
     },
+    {
+      path: "/designer/:id",
+      element: <RootLayout Pages={DesignProjectDetail} />,
+    },
+    {
+      path: "/designer/:id/design",
+      element: <RootLayout Pages={DesignProject} />,
+    },
+
     { path: "*", element: <div>404</div> },
   ]);
-  console.log("Current Route:", location.pathname);
   return <div>{element}</div>;
 };
 

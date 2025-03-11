@@ -1,4 +1,4 @@
-import { Pagination } from "@/models/Common";
+import { Filter, Pagination } from "@/models/Common";
 import { QuotationProjectType } from "@/models/ProjectType";
 import { RootState } from "@/redux/store/store";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
@@ -23,7 +23,10 @@ export const quotationProjectSlice = createSlice({
   name: "quotaionProject",
   initialState: initialState,
   reducers: {
-    fetchQuotationProject(state, action: PayloadAction<string>) {
+    fetchQuotationProject(
+      state,
+      action: PayloadAction<{ Filter: Filter; id: string }>
+    ) {
       state.loading = true;
     },
     fetchQuotationProjectSuccess(

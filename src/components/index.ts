@@ -12,6 +12,11 @@ import Consultationcard from "./ConsultationCard";
 import PackgeCard from "./PackageCard";
 import ServiceCard from "./ServiceCard";
 import EstimatedPrice from "./EstimatedPrice";
+import NotiResult from "./NotiResult";
+import ImageGallery from "./ImageGallery";
+import CountdownTime from "./CountDown";
+import PaymentSuccess from "./PaymentSuccess";
+import PaymentFailed from "./PaymentFailed";
 export * from "./Sidebar";
 export * from "./ui";
 
@@ -31,4 +36,9 @@ export {
   PackgeCard,
   ServiceCard,
   EstimatedPrice,
+  NotiResult,
+  CountdownTime,
+  ImageGallery,
+  PaymentSuccess,
+  PaymentFailed,
 };
