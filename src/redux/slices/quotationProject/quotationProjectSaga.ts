@@ -1,9 +1,10 @@
 import { call, fork, put, take } from "redux-saga/effects";
 import { messageError, messageSuccess } from "@/components";
 import { PayloadAction } from "@reduxjs/toolkit";
-import { getQuotationProject } from "@/api/project";
+import { getQuotationActiveProject, getQuotationProject } from "@/api/project";
 import { quotationProjectActions } from "./quotationProjectSlices";
 import { Filter } from "@/models/Common";
+import { quotationDetailActions } from "../quotationDetail/quotationDetailSlices";
 
 function* fetchQuotaionProjectWorker(
   action: PayloadAction<{ Filter: Filter; id: string }>
@@ -27,6 +28,26 @@ function* fetchQuotaionProjectWorker(
   }
 }
 
+function* fetchQuotaionActiveProjectWorker(action: PayloadAction<string>) {
+  try {
+    const data = yield call(getQuotationActiveProject, action.payload);
+
+    if (data.isSuccess) {
+      yield put(
+        quotationProjectActions.fetchQuotationActiveProjectSuccess(data)
+      );
+      yield put(quotationDetailActions.fetchQuotationDetail(data.data[0].id));
+    } else {
+      messageSuccess(data.message);
+      yield put(quotationProjectActions.fetchQuotationActiveProjectFaild());
+    }
+  } catch (error) {
+    messageError("Hệ thống đang bị lỗi");
+    yield put(quotationProjectActions.fetchQuotationActiveProjectFaild());
+    console.log(error);
+  }
+}
+
 function* fetchQuotaionProjectWatcher() {
   while (true) {
     const action = yield take(quotationProjectActions.fetchQuotationProject);
@@ -34,6 +55,16 @@ function* fetchQuotaionProjectWatcher() {
   }
 }
 
+function* fetchQuotaionActiveProjectWatcher() {
+  while (true) {
+    const action = yield take(
+      quotationProjectActions.fetchQuotationActiveProject
+    );
+    yield fork(fetchQuotaionActiveProjectWorker, action);
+  }
+}
+
 export function* quotationProjectSaga() {
   yield fork(fetchQuotaionProjectWatcher);
+  yield fork(fetchQuotaionActiveProjectWatcher);
 }

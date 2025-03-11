@@ -1,12 +1,15 @@
+import { NotiResult } from "@/components";
+import Button from "@/components/ui/Button";
 import {
   FieldQuotationDetailType,
   TemplateConstructionItemType,
 } from "@/models";
 import { Category } from "@/models/enums/Category";
-import { useEffect, useState } from "react";
-import { columns, QuotationItem } from "./type";
-import TableQuotation from "./TableQuotation";
-import { Col, Divider, Input, Row, Table } from "antd";
+import { QuotationStatus } from "@/models/enums/Status";
+import { quotationActions } from "@/redux/slices/quotation/quotationSlices";
+import { selectTemplateConstructionDetail } from "@/redux/slices/templateConstructionDetail/templateConstructionDetailSlices";
+import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
+import { formatPrice } from "@/utils/helpers";
 import {
   BorderlessTableOutlined,
   CloseCircleOutlined,
@@ -18,15 +21,11 @@ import {
   SmileOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { formatPrice } from "@/utils/helpers";
-import Button from "@/components/ui/Button";
-import { NotiResult, Title } from "@/components";
-import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
-import { quotationActions } from "@/redux/slices/quotation/quotationSlices";
-import { projectDetailActions } from "@/redux/slices/projectDetail/projectDetailSlices";
-import { QuotationStatus } from "@/models/enums/Status";
-import { selectTemplateConstructionDetail } from "@/redux/slices/templateConstructionDetail/templateConstructionDetailSlices";
+import { Col, Divider, Input, Row, Table } from "antd";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import TableQuotation from "./TableQuotation";
+import { columns, QuotationItem } from "./type";
 
 const DetailQuotationConsulting = ({
   quotation,

@@ -1,4 +1,5 @@
 import { Filter, Pagination } from "@/models/Common";
+import { QuotationStatus } from "@/models/enums/Status";
 import { QuotationProjectType } from "@/models/ProjectType";
 import { RootState } from "@/redux/store/store";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
@@ -37,6 +38,20 @@ export const quotationProjectSlice = createSlice({
       state.loading = false;
     },
     fetchQuotationProjectFaild(state) {
+      state.loading = false;
+    },
+
+    fetchQuotationActiveProject(state, action: PayloadAction<string>) {
+      state.loading = true;
+    },
+    fetchQuotationActiveProjectSuccess(
+      state,
+      action: PayloadAction<Pagination<QuotationProjectType>>
+    ) {
+      state.quotationProject = action.payload;
+      state.loading = false;
+    },
+    fetchQuotationActiveProjectFaild(state) {
       state.loading = false;
     },
   },

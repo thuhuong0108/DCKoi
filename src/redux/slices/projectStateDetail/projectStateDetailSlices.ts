@@ -1,13 +1,7 @@
-import {
-  DesignType,
-  ProjectType,
-  TemplateConstructionItemType,
-} from "@/models";
-import { Filter, Pagination } from "@/models/Common";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "./../../store/store";
+import { DesignType, TemplateConstructionItemType } from "@/models";
 import { ProjectStatus } from "@/models/enums/Status";
 import { ProjectDetailType } from "@/models/ProjectType";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface ProjectStateDetail {
   project: {

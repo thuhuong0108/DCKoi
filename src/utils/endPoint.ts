@@ -64,6 +64,8 @@ const endPoint = {
     getProject: (id: string) => `/projects/${id}`,
     assignConsultant: (id: string) => `/projects/${id}/assignconsultant`,
     getQuotation: (id: string) => `/projects/${id}/quotation`,
+    getQuotationActive: (id: string) =>
+      `/projects/${id}/quotation?Status=CONFIRMED`,
     requestProject: "/projects",
     getProjectDesign: `/projects/design`,
     getDesignOfProject: (id: string) =>

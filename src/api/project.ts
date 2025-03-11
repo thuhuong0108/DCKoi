@@ -19,6 +19,7 @@ import {
   ApiResultWithData,
   ApiResultWithPagination,
 } from "./../models/Common";
+import { QuotationStatus } from "@/models/enums/Status";
 
 const getPagingProject = async (
   filter: Filter
@@ -61,6 +62,16 @@ const getQuotationProject = async (
   return response;
 };
 
+const getQuotationActiveProject = async (
+  id: string
+): Promise<ApiResultWithPagination<QuotationProjectType>> => {
+  console.log("id:ssss", id);
+
+  const response = await http.get(`${endPoint.project.getQuotationActive(id)}`);
+
+  return response;
+};
+
 const requestProject = async (request: ProjectRequest): Promise<ApiResult> => {
   const response = await http.post(endPoint.project.requestProject, request);
   return response;
@@ -89,6 +100,7 @@ const check3Dconfirm = async (
   const response = await http.get(endPoint.project.check3Dconfirm(id));
   return response;
 };
+
 const getAllDesignForSpecificProject = async (
   id: string,
   filter: Filter
@@ -146,6 +158,7 @@ export {
   getPagingProject,
   getProject,
   getQuotationProject,
+  getQuotationActiveProject,
   requestProject,
   getProjectDesign,
   getDesignOfProject,
