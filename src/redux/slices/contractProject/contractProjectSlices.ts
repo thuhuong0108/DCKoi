@@ -22,7 +22,10 @@ export const contractProjectSlice = createSlice({
   name: "project",
   initialState: initialState,
   reducers: {
-    fetchContractProject(state, action: PayloadAction<string>) {
+    fetchContractProject(
+      state,
+      action: PayloadAction<{ filter: Filter; id: string }>
+    ) {
       state.loading = true;
     },
     fetchContractProjectSuccess(

@@ -17,9 +17,9 @@ export enum QuotationStatus {
 }
 
 export enum ContractStatus {
-  PROCESS = "PROCESS",
-  ACTIVE = "ACTIVE",
-  CANCEL = "CANCEL",
+  PROCESSING = "PROCESSING",
+  ACTIVED = "ACTIVE",
+  CANCELLED = "CANCELLED",
 }
 
 export enum ItemConstructionStatus {

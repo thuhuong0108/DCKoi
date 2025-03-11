@@ -68,7 +68,7 @@ const endPoint = {
     getProjectDesign: `/projects/design`,
     getDesignOfProject: (id: string) =>
       `/projects/${id}/design?PageNumber=1&PageSize=100`,
-    getcontractOfProject: (id: string) => `project/${id}/contract`,
+    getcontractOfProject: (id: string) => `projects/${id}/contract`,
     check3Dconfirm: (id: string) => `/projects/${id}/design/3d-confirmed`,
     getAllDesignForSpecificProject: (id: string) => `/projects/${id}/design`,
     getConstruction: (id: string) =>

@@ -1,47 +1,63 @@
+import { Col, Collapse, Divider, Row, Table, TableColumnsType } from "antd";
+import React from "react";
+import { QuotationItem } from "./type";
 import { FieldQuotationDetailType } from "@/models";
 import { formatPrice, parseCategory } from "@/utils/helpers";
-import type { TableColumnsType } from "antd";
-import { Col, Collapse, Row, Table } from "antd";
-import { QuotationItem } from "./type";
 
-const TableQuotation = (props: QuotationItem) => {
+const CollapseQuotation = (props: QuotationItem) => {
   const columns: TableColumnsType<FieldQuotationDetailType> = [
     {
+      key: "1",
       title: "Danh mục công việc",
       dataIndex: "name",
       width: "25%",
     },
     {
+      key: "2",
       title: "Mô tả",
       dataIndex: "description",
       width: "20%",
     },
     {
+      key: "3",
       title: "Giá",
       dataIndex: "price",
       width: "10%",
+      render: (text, record) => {
+        return <>{formatPrice(record.price)}</>;
+      },
     },
     {
+      key: "4",
       title: "Số lượng",
       dataIndex: "quantity",
       width: "10%",
     },
     {
+      key: "5",
+      title: "Tổng tiền",
+      dataIndex: "total",
+      width: "15%",
+      render: (text, record) => {
+        return <>{formatPrice(record.price * record.quantity)}</>;
+      },
+    },
+    {
+      key: "6",
       title: "Đơn vị",
       dataIndex: "unit",
       width: "10%",
     },
+
     {
-      title: "Note",
+      key: "7",
+      title: "Chú thích",
       dataIndex: "note",
-      width: "25%",
+      width: "15%",
     },
   ];
-
-  console.log(props.items);
-
   return (
-    <div className="pt-5">
+    <div>
       <Collapse
         items={[
           {
@@ -73,4 +89,4 @@ const TableQuotation = (props: QuotationItem) => {
   );
 };
 
-export default TableQuotation;
+export default CollapseQuotation;

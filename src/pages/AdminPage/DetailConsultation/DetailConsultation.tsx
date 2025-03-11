@@ -1,7 +1,9 @@
 import { TableComponent, Title } from "@/components";
 import Button from "@/components/ui/Button";
-import { QuotationProjectType } from "@/models/ProjectType";
-// import Card from "@/components/ui/Card";
+import {
+  ContractProjectType,
+  QuotationProjectType,
+} from "@/models/ProjectType";
 import {
   projectDetailActions,
   selectedProjectDetail,
@@ -13,11 +15,13 @@ import {
 import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
 
 import { Position } from "@/models/enums/Position";
-import { QuotationStatus } from "@/models/enums/Status";
+import { ContractStatus, QuotationStatus } from "@/models/enums/Status";
 import { quotationDetailActions } from "@/redux/slices/quotationDetail/quotationDetailSlices";
 import {
+  formatPrice,
   parseDate,
   parsePosition,
+  parseStatusContract,
   parseStatusQuotation,
 } from "@/utils/helpers";
 import { EyeOutlined } from "@ant-design/icons";
@@ -27,6 +31,15 @@ import { useParams } from "react-router-dom";
 import DetailPackageRequest from "./DetailPackageRequest";
 import DetailQuotationConsulting from "./DetailQuotationConsulting";
 import StepStatus from "./StepStatus";
+import {
+  contractProjectActions,
+  selectedContractProject,
+} from "@/redux/slices/contractProject/contractProjectSlices";
+import {
+  contractActions,
+  selectedContract,
+} from "@/redux/slices/contract/contractSlices";
+import ContractDetail from "./ContractDetail";
 
 const DetailConsultation = () => {
   const dispatch = useAppDispatch();
@@ -35,29 +48,42 @@ const DetailConsultation = () => {
   const isLoading = useAppSelector((state) => state.projectDetail.loading);
 
   const item = useAppSelector(selectedProjectDetail);
-
+  const contracts = useAppSelector(selectedContractProject);
   const quotations = useAppSelector(selectedQuotationProject);
 
   useEffect(() => {
     dispatch(projectDetailActions.fetchProjectDetail(id));
-    if (item && item.id) {
-      dispatch(quotationProjectActions.fetchQuotationProject(item.id));
-    }
-  }, [id, item?.id]);
+  }, [id]);
 
   useEffect(() => {
-    dispatch(projectDetailActions.fetchProjectDetail(id));
-  }, []);
+    dispatch(
+      quotationProjectActions.fetchQuotationProject({
+        Filter: { pageNumber: 1, pageSize: 10 },
+        id: id,
+      })
+    );
+  }, [id]);
+
+  useEffect(() => {
+    dispatch(
+      contractProjectActions.fetchContractProject({
+        filter: { pageNumber: 1, pageSize: 10 },
+        id: id,
+      })
+    );
+  }, [id]);
 
   const [openDetailPackage, setOpenDetailPackage] = useState(false);
-
   const [openDetailQuotation, setOpenDetailQuotation] = useState(false);
+  const [openDetailContract, setOpenDetailContract] = useState(false);
 
   const packageDetail = item.package;
 
   const quotationDetail = useAppSelector(
     (state) => state.quotationDetail.quotationDetail
   );
+
+  const contractDetail = useAppSelector(selectedContract);
 
   const handleDetailQuotation = (quotation: QuotationProjectType) => {
     dispatch(quotationDetailActions.fetchQuotationDetail(quotation.id));
@@ -69,6 +95,26 @@ const DetailConsultation = () => {
       return parseStatusQuotation(status);
     }
     return;
+  };
+
+  const parseValues = (
+    value: ContractStatus | string | number,
+    prop: string
+  ) => {
+    if (prop === "contractValue") {
+      return formatPrice(value as number);
+    }
+    if (prop === "createdAt") {
+      return parseDate(value as string);
+    }
+    if (prop === "status") {
+      return parseStatusContract(value as ContractStatus);
+    }
+  };
+
+  const handleDetail = (contract: ContractProjectType) => {
+    setOpenDetailContract(true);
+    dispatch(contractActions.fetchContract(contract.id));
   };
 
   return (
@@ -212,9 +258,56 @@ const DetailConsultation = () => {
 
       <Row>
         <h1 className="text-base font-semibold text-black my-4">
+          Danh sách hợp đồng
+        </h1>
+      </Row>
+      {contracts.data ? (
+        <TableComponent<ContractProjectType>
+          columns={[
+            "Tên hợp đồng",
+            "khách hàng",
+            "Giá trị hợp đồng",
+            "Ngày tạo",
+            "Trạng thái",
+          ]}
+          data={contracts.data}
+          props={[
+            "name",
+            "customerName",
+            "contractValue",
+            "createdAt",
+            "status",
+          ]}
+          formatValue={parseValues}
+          actions={true}
+          actionTexts={["Chi tết"]}
+          actionFunctions={[handleDetail]}
+          enablePagination={true}
+          page={contracts.pageNumber}
+          setPage={(page) => {
+            dispatch(
+              contractProjectActions.fetchContractProject({
+                filter: {
+                  pageNumber: page,
+                  pageSize: 10,
+                },
+                id: id,
+              })
+            );
+          }}
+          itemsPerPage={contracts.pageSize}
+          totalPages={contracts.totalPages}
+        />
+      ) : (
+        <></>
+      )}
+
+      <Row>
+        <h1 className="text-base font-semibold text-black my-4">
           Báo giá thiết kế thi công
         </h1>
       </Row>
+
       <TableComponent<QuotationProjectType>
         columns={["Phiên bản", "Ngày gửi", "Trạng thái", "Chú thích"]}
         data={quotations.data}
@@ -227,7 +320,12 @@ const DetailConsultation = () => {
         enablePagination={true}
         page={quotations.pageNumber}
         setPage={(page) => {
-          dispatch(quotationProjectActions.fetchQuotationProject());
+          dispatch(
+            quotationProjectActions.fetchQuotationProject({
+              Filter: { pageNumber: page, pageSize: 10 },
+              id: id,
+            })
+          );
         }}
         itemsPerPage={quotations.pageSize}
         totalPages={quotations.totalPages}
@@ -260,7 +358,20 @@ const DetailConsultation = () => {
           quotation={quotationDetail}
           project={item}
           setOpenDetailQuotation={setOpenDetailQuotation}
+          isDetail={false}
         />
+      </Modal>
+
+      <Modal
+        title={`Thông tin chi tiêt hợp đồng`}
+        open={openDetailContract}
+        width={1500}
+        onCancel={() => setOpenDetailContract(false)}
+        onClose={() => setOpenDetailContract(false)}
+        onOk={() => setOpenDetailContract(false)}
+        footer={false}
+      >
+        <ContractDetail contractDetail={contractDetail} project={item} />
       </Modal>
     </div>
   );
