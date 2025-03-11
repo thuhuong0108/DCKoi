@@ -14,6 +14,7 @@ export interface TemplateConstructionItemType {
   estTime?: string;
   isPayment?: boolean;
   estimateAt?: string;
+  status?: string;
 }
 export interface TemplateConstructionTypeDetail
   extends TemplateConstructionType {

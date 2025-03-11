@@ -2,11 +2,10 @@ import { Card } from "antd";
 
 const CardProject = ({ project, setOpenDetail }) => {
   return (
-    <div className="w-[295px]">
+    <div className="w-[295px]" onClick={() => setOpenDetail(true)}>
       <Card
         hoverable
         className="h-full"
-        onClick={() => setOpenDetail(true)}
         cover={
           <img
             alt="example"

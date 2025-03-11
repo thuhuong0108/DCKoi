@@ -50,10 +50,14 @@ const assignConsultant = async (
 };
 
 const getQuotationProject = async (
-  projectId: string
-): Promise<ApiResultWithData<QuotationProjectType>> => {
-  const response = await http.get(endPoint.project.getQuotation(projectId));
-
+  Filter: Filter,
+  id: string
+): Promise<ApiResultWithPagination<QuotationProjectType>> => {
+  const response = await http.get(
+    `${endPoint.project.getQuotation(id)}?PageNumber=${
+      Filter.pageNumber
+    }&PageSize=${Filter.pageSize}`
+  );
   return response;
 };
 
@@ -99,10 +103,13 @@ const getAllDesignForSpecificProject = async (
 };
 
 const getContractOfProject = async (
+  filter: Filter,
   id: string
 ): Promise<ApiResultWithPagination<ContractProjectType>> => {
   const response = await http.get(
-    `${endPoint.project.getcontractOfProject(id)}`
+    `${endPoint.project.getcontractOfProject(id)}?PageNumber=${
+      filter.pageNumber
+    }&PageSize=${filter.pageSize}`
   );
   return response;
 };
@@ -111,6 +118,24 @@ const getProjectConstruction = async (
   id: string
 ): Promise<ApiResultWithPagination<TemplateConstructionItemType>> => {
   const response = await http.get(`${endPoint.project.getConstruction(id)}`);
+  return response;
+};
+
+const getProjects = async (
+  filter: Filter
+): Promise<ApiResultWithData<ProjectType>> => {
+  const response = await http.get(
+    `${endPoint.project.getProjects}?PageNumber=${filter.pageNumber}&PageSize=${filter.pageSize}`
+  );
+  return response;
+};
+
+const getDesignApproval = async (
+  id: string
+): Promise<ApiResultWithPagination<ProjectType>> => {
+  const response = await http.get(
+    `${endPoint.project.getDesignOfProject(id)}&Status=CONFIRMED`
+  );
   return response;
 };
 
@@ -126,4 +151,6 @@ export {
   getDesignOfProject,
   getAllDesignForSpecificProject,
   getProjectConstruction,
+  getProjects,
+  getDesignApproval,
 };

@@ -1,18 +1,22 @@
-import { PlusSquareOutlined } from "@ant-design/icons";
-import { Col, Row, Table, Typography } from "antd";
-import type { TableColumnsType } from "antd";
 import { FieldQuotationDetailType } from "@/models";
-import { useState } from "react";
-import { Funtion, QuotationItem } from "./type";
+import { parseCategory } from "@/utils/helpers";
 import { TextField } from "@mui/material";
+import type { TableColumnsType } from "antd";
+import { Collapse, Table, Typography } from "antd";
+import { Funtion, QuotationItem } from "./type";
 
-const TableQuotation = (props: QuotationItem & Funtion) => {
-  const [visible, setVisible] = useState(false);
-
-  const toggleTable = () => {
-    setVisible(!visible);
+const TableQuotation = (
+  props: QuotationItem &
+    Funtion & { onUpdateItem: (item: FieldQuotationDetailType) => void }
+) => {
+  const handleChange = (
+    record: FieldQuotationDetailType,
+    field: keyof FieldQuotationDetailType,
+    value: any
+  ) => {
+    const updatedItem = { ...record, [field]: value };
+    props.onUpdateItem(updatedItem);
   };
-
   const columns: TableColumnsType<FieldQuotationDetailType> = [
     {
       title: "Danh mục công việc",
@@ -39,7 +43,7 @@ const TableQuotation = (props: QuotationItem & Funtion) => {
                 inputProps={{ min: 0 }}
                 value={text}
                 onChange={(e) => {
-                  record.price = Number(e.target.value);
+                  handleChange(record, "price", Number(e.target.value));
                 }}
               />
             )}
@@ -58,7 +62,7 @@ const TableQuotation = (props: QuotationItem & Funtion) => {
             inputProps={{ min: 0 }}
             value={text}
             onChange={(e) => {
-              record.quantity = Number(e.target.value);
+              handleChange(record, "quantity", Number(e.target.value));
             }}
           />
         );
@@ -89,7 +93,7 @@ const TableQuotation = (props: QuotationItem & Funtion) => {
           <TextField
             value={text}
             onChange={(e) => {
-              record.note = e.target.value;
+              handleChange(record, "note", e.target.value);
             }}
           />
         );
@@ -114,24 +118,22 @@ const TableQuotation = (props: QuotationItem & Funtion) => {
 
   return (
     <div className="pt-5">
-      <Row>
-        <Col className="flex items-center" onClick={toggleTable}>
-          <PlusSquareOutlined
-            style={{ marginRight: "8px", fontSize: "20px" }}
-          />
-          <label className="text-lg">{props.name}</label>
-        </Col>
-      </Row>
-      <Row className="px-5 pt-2">
-        {visible && (
-          <Table<FieldQuotationDetailType>
-            className="w-full"
-            columns={columns}
-            dataSource={props.items}
-            pagination={false}
-          />
-        )}
-      </Row>
+      <Collapse
+        items={[
+          {
+            key: "index",
+            label: `${parseCategory(props.name)}`,
+            children: (
+              <Table<FieldQuotationDetailType>
+                className="w-full"
+                columns={columns}
+                dataSource={props.items}
+                pagination={false}
+              />
+            ),
+          },
+        ]}
+      />
     </div>
   );
 };

@@ -8,11 +8,14 @@ import {
 } from "@/api/quotation";
 import { messageError, messageSuccess } from "@/components";
 import { ApproveQuotationType, RejectQuotationType } from "@/models";
+import { QuotationRequest } from "@/models/Request/QuotationRequest";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { call, fork, put, select, take } from "redux-saga/effects";
-import { QuotaitonState, quotationActions } from "./quotationSlices";
-import { QuotationRequest } from "@/models/Request/QuotationRequest";
-import { quotationProjectActions } from "../quotationProject/QuotationProjectSlices";
+import {
+  QuotaitonProjectState,
+  quotationProjectActions,
+} from "../quotationProject/quotationProjectSlices";
+import { quotationActions } from "./quotationSlices";
 
 function* fetchQuotationWorker(action: PayloadAction<string>) {
   try {
@@ -35,16 +38,6 @@ function* createQuotationWorker(action: PayloadAction<QuotationRequest>) {
     const data = yield call(createQuotation, action.payload);
     if (data.isSuccess) {
       messageSuccess("Báo giá được gửi thành công");
-      const quotationState: QuotaitonState = yield select(
-        (state) => state.quotation
-      );
-
-      yield put(
-        quotationActions.fetchQuotation({
-          pageNumber: quotationState.quotation.pageNumber,
-          pageSize: quotationState.quotation.pageSize,
-        })
-      );
     } else {
       messageError(data.message);
     }
@@ -55,19 +48,25 @@ function* createQuotationWorker(action: PayloadAction<QuotationRequest>) {
   }
 }
 
-function* rejectQuotationWorker(action: PayloadAction<RejectQuotationType>) {
+function* rejectAcceptQuotationWorker(
+  action: PayloadAction<RejectQuotationType>
+) {
   try {
     const data = yield call(rejectQuotation, action.payload);
     if (data.isSuccess) {
       messageSuccess(data.message);
-      const quotaitonProjectState = yield select(
+      const quotaitonProjectState: QuotaitonProjectState = yield select(
         (state) => state.quotationProject
       );
 
       yield put(
-        quotationProjectActions.fetchQuotationProject(
-          quotaitonProjectState.data.projectId
-        )
+        quotationProjectActions.fetchQuotationProject({
+          Filter: {
+            pageNumber: quotaitonProjectState.quotationProject.pageNumber,
+            pageSize: quotaitonProjectState.quotationProject.pageSize,
+          },
+          id: quotaitonProjectState.quotationProject.data[0].projectId,
+        })
       );
     } else {
       messageError(data.message);
@@ -78,21 +77,27 @@ function* rejectQuotationWorker(action: PayloadAction<RejectQuotationType>) {
   }
 }
 
-function* approveQuotationWorker(action: PayloadAction<ApproveQuotationType>) {
+function* approveEditQuotationWorker(
+  action: PayloadAction<ApproveQuotationType>
+) {
   console.log(action.payload);
   try {
     const data = yield call(approveQuotation, action.payload);
     if (data.isSuccess) {
       messageSuccess(data.message);
 
-      const quotaitonProjectState = yield select(
+      const quotaitonProjectState: QuotaitonProjectState = yield select(
         (state) => state.quotationProject
       );
 
       yield put(
-        quotationProjectActions.fetchQuotationProject(
-          quotaitonProjectState.data.projectId
-        )
+        quotationProjectActions.fetchQuotationProject({
+          Filter: {
+            pageNumber: quotaitonProjectState.quotationProject.pageNumber,
+            pageSize: quotaitonProjectState.quotationProject.pageSize,
+          },
+          id: quotaitonProjectState.quotationProject.data[0].projectId,
+        })
       );
     } else {
       messageError(data.message);
@@ -111,14 +116,18 @@ function* rewriteQuotationWorker(action: PayloadAction<QuotationRequest>) {
       messageSuccess("Báo giá đã gửi thành công");
       yield put(quotationActions.rewriteQuotation(data));
 
-      const quotaitonProjectState = yield select(
+      const quotaitonProjectState: QuotaitonProjectState = yield select(
         (state) => state.quotationProject
       );
 
       yield put(
-        quotationProjectActions.fetchQuotationProject(
-          quotaitonProjectState.data.projectId
-        )
+        quotationProjectActions.fetchQuotationProject({
+          Filter: {
+            pageNumber: quotaitonProjectState.quotationProject.pageNumber,
+            pageSize: quotaitonProjectState.quotationProject.pageSize,
+          },
+          id: quotaitonProjectState.quotationProject.data[0].projectId,
+        })
       );
     } else {
       messageError(data.message);
@@ -137,9 +146,19 @@ function* updateQuotationWorker(action: PayloadAction<QuotationRequest>) {
       messageSuccess("Báo giá đã gửi thành công");
       yield put(quotationActions.updateQuotation(data));
 
-      const quotationState = yield select((state) => state.quotation);
+      const quotaitonProjectState: QuotaitonProjectState = yield select(
+        (state) => state.quotationProject
+      );
 
-      yield put(quotationActions.fetchQuotation(quotationState.data.id));
+      yield put(
+        quotationProjectActions.fetchQuotationProject({
+          Filter: {
+            pageNumber: quotaitonProjectState.quotationProject.pageNumber,
+            pageSize: quotaitonProjectState.quotationProject.pageSize,
+          },
+          id: quotaitonProjectState.quotationProject.data[0].projectId,
+        })
+      );
     } else {
       messageError(data.message);
     }
@@ -166,14 +185,14 @@ function* createQuotationWatcher() {
 function* rejectAcceptQuotationWatcher() {
   while (true) {
     const action = yield take(quotationActions.rejectAcceptQuotation);
-    yield fork(rejectQuotationWorker, action);
+    yield fork(rejectAcceptQuotationWorker, action);
   }
 }
 
-function* approveQuotationWatcher() {
+function* approveEditQuotationWatcher() {
   while (true) {
     const action = yield take(quotationActions.approveQuotation);
-    yield fork(approveQuotationWorker, action);
+    yield fork(approveEditQuotationWorker, action);
   }
 }
 
@@ -195,7 +214,7 @@ export function* quotationSaga() {
   yield fork(fetchQuotationWatcher);
   yield fork(createQuotationWatcher);
   yield fork(rejectAcceptQuotationWatcher);
-  yield fork(approveQuotationWatcher);
+  yield fork(approveEditQuotationWatcher);
   yield fork(updateQuotationWatcher);
   yield fork(rewriteQuotationWatcher);
 }

@@ -1,18 +1,10 @@
-import { PlusSquareOutlined } from "@ant-design/icons";
-import { Col, Row, Table } from "antd";
-import type { TableColumnsType } from "antd";
 import { FieldQuotationDetailType } from "@/models";
-import { useState } from "react";
+import { formatPrice, parseCategory } from "@/utils/helpers";
+import type { TableColumnsType } from "antd";
+import { Col, Collapse, Row, Table } from "antd";
 import { QuotationItem } from "./type";
-import { formatPrice } from "@/utils/helpers";
 
-const CategoryField = (props: QuotationItem) => {
-  const [visible, setVisible] = useState(false);
-
-  const toggleTable = () => {
-    setVisible(!visible);
-  };
-
+const TableQuotation = (props: QuotationItem) => {
   const columns: TableColumnsType<FieldQuotationDetailType> = [
     {
       title: "Danh mục công việc",
@@ -46,26 +38,26 @@ const CategoryField = (props: QuotationItem) => {
     },
   ];
 
+  console.log(props.items);
+
   return (
     <div className="pt-5">
-      <Row>
-        <Col className="flex items-center" onClick={toggleTable}>
-          <PlusSquareOutlined
-            style={{ marginRight: "8px", fontSize: "20px" }}
-          />
-          <label className="text-base">{props.name}</label>
-        </Col>
-      </Row>
-      <Row className="px-5 pt-2">
-        {visible && (
-          <Table<FieldQuotationDetailType>
-            className="w-full"
-            columns={columns}
-            dataSource={props.items}
-            pagination={false}
-          />
-        )}
-      </Row>
+      <Collapse
+        items={[
+          {
+            key: "index",
+            label: `${parseCategory(props.name)}`,
+            children: (
+              <Table<FieldQuotationDetailType>
+                className="w-full"
+                columns={columns}
+                dataSource={props.items}
+                pagination={false}
+              />
+            ),
+          },
+        ]}
+      />
 
       <Row className="p-2 my-2 flex justify-end bg-gray-50">
         <Col span={18}>
@@ -81,4 +73,4 @@ const CategoryField = (props: QuotationItem) => {
   );
 };
 
-export default CategoryField;
+export default TableQuotation;

@@ -26,7 +26,12 @@ const ContractPage = () => {
   const contract = useAppSelector(selectedContract);
 
   useEffect(() => {
-    dispatch(contractProjectActions.fetchContractProject(id));
+    dispatch(
+      contractProjectActions.fetchContractProject({
+        filter: { pageNumber: 1, pageSize: 10 },
+        id: id,
+      })
+    );
   }, [id]);
 
   const handleDetail = (contract: ContractProjectType) => {
@@ -96,7 +101,12 @@ const ContractPage = () => {
         enablePagination={true}
         page={contracts.pageNumber}
         setPage={(page) => {
-          dispatch(contractProjectActions.fetchContractProject(id));
+          dispatch(
+            contractProjectActions.fetchContractProject({
+              filter: { pageNumber: page, pageSize: 10 },
+              id: id,
+            })
+          );
         }}
         itemsPerPage={contracts.pageSize}
         totalPages={contracts.totalPages}

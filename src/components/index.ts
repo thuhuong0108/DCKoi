@@ -17,6 +17,8 @@ import TaskDetailModal from "./TaskDetailModal";
 import ManagerSkeleton from "./ManagerSkeleton";
 import ImageGallery from "./ImageGallery";
 import CountdownTime from "./CountDown";
+import PaymentSuccess from "./PaymentSuccess";
+import PaymentFailed from "./PaymentFailed";
 export * from "./Sidebar";
 export * from "./ui";
 export * from "./DragAndDrop";
@@ -42,4 +44,6 @@ export {
   ManagerSkeleton,
   CountdownTime,
   ImageGallery,
+  PaymentSuccess,
+  PaymentFailed,
 };

@@ -1,5 +1,12 @@
 import { Title } from "@/components";
-import { projectDetailActions } from "@/redux/slices/projectDetail/projectDetailSlices";
+import {
+  projectDetailActions,
+  selectedProjectDetail,
+} from "@/redux/slices/projectDetail/projectDetailSlices";
+import {
+  quotationDetailActions,
+  selectedQuotationDetail,
+} from "@/redux/slices/quotationDetail/quotationDetailSlices";
 import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
 import {
   EnvironmentOutlined,
@@ -7,27 +14,25 @@ import {
   PhoneOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { TextareaAutosize, TextField } from "@mui/material";
-import { Card, Typography } from "antd";
-import React, { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import type { CollapseProps } from "antd";
-import { Collapse } from "antd";
-import { FloatButton } from "antd";
 import { DesignServicesOutlined } from "@mui/icons-material";
+import { TextField } from "@mui/material";
+import { Card, Col, Divider, FloatButton, Row, Typography } from "antd";
+import { useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 const DesignProjectDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const project = useAppSelector((state) => state.projectDetail.projectDefault);
-  const quotation = useAppSelector(
-    (state) => state.quotationDetail.quotationDetail
-  );
+  const project = useAppSelector(selectedProjectDetail);
+  const quotation = useAppSelector(selectedQuotationDetail);
   useEffect(() => {
     dispatch(projectDetailActions.fetchProjectDetail(id));
   }, [dispatch, id]);
-  console.log(project);
+
+  useEffect(() => {
+    dispatch(quotationDetailActions.fetchQuotationDetail());
+  }, [dispatch, id]);
 
   const customerInfor = [
     {
@@ -53,63 +58,69 @@ const DesignProjectDetail = () => {
   ];
 
   return (
-    <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 h-full space-y-4">
-      <Title name={`Dự án thi công`} />
+    <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 h-full w-full space-y-4">
+      <Title name={`Thiết kế`} />
+      <Row className="gap-4">
+        <Col span={8}>
+          <Divider orientation="left">Dự án thi công</Divider>
 
-      <div className="flex flex-row w-full space-x-4 items-center justify-between">
-        <Card title="Thông tin khách hàng" className="w-full">
-          <div className="flex flex-col space-y-4">
-            <div className="flex flex-col space-y-4">
-              {customerInfor.map((item, index) => (
-                <div key={index} className="flex flex-row space-x-4">
-                  {item.icon}
-                  <Typography.Text strong>{item.title}:</Typography.Text>
-                  <Typography.Text>{item.content}</Typography.Text>
+          <div className="flex flex-row w-full space-x-4 items-center justify-between">
+            <Card title="Thông tin khách hàng" className="w-full">
+              <div className="flex flex-col space-y-4">
+                <div className="flex flex-col space-y-4">
+                  {customerInfor.map((item, index) => (
+                    <div key={index} className="flex flex-row space-x-4">
+                      {item.icon}
+                      <Typography.Text strong>{item.title}:</Typography.Text>
+                      <Typography.Text>{item.content}</Typography.Text>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
+            </Card>
+          </div>
+
+          <Divider orientation="left">Yêu cầu</Divider>
+          <div>
+            <div className="flex flex-row w-full space-x-4 items-center justify-between">
+              <TextField
+                className="w-full"
+                label="Diện tích"
+                value={project?.area}
+                disabled
+                InputProps={{
+                  endAdornment: <span>m²</span>,
+                }}
+              />
+
+              <TextField
+                className="w-full"
+                label="Độ sâu"
+                value={project?.depth}
+                disabled
+                InputProps={{
+                  endAdornment: <span>m</span>,
+                }}
+              />
+            </div>
+
+            <div>
+              <TextField
+                style={{ width: "100%", marginTop: "16px" }}
+                className="w-full"
+                label="Chú thích"
+                value={project?.note}
+                disabled
+              />
             </div>
           </div>
-        </Card>
-      </div>
+        </Col>
+        <Col span={12}>
+          {/* Thông tin báo giá */}
+          <Divider orientation="left">Báo giá các hạng mục thi công </Divider>
+        </Col>
+      </Row>
 
-      <Title name={`Yêu cầu`} />
-      <div>
-        <div className="flex flex-row w-full space-x-4 items-center justify-between">
-          <TextField
-            className="w-full"
-            label="Diện tích"
-            value={project?.area}
-            disabled
-            InputProps={{
-              endAdornment: <span>m²</span>,
-            }}
-          />
-
-          <TextField
-            className="w-full"
-            label="Độ sâu"
-            value={project?.depth}
-            disabled
-            InputProps={{
-              endAdornment: <span>m</span>,
-            }}
-          />
-        </div>
-
-        <div>
-          <TextField
-            style={{ width: "100%", marginTop: "16px" }}
-            className="w-full"
-            label="Chú thích"
-            value={project?.note}
-            disabled
-          />
-        </div>
-      </div>
-
-      {/* Thông tin báo giá */}
-
-      {/*  */}
       <FloatButton
         icon={<DesignServicesOutlined />}
         onClick={() => {

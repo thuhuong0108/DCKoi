@@ -36,6 +36,20 @@ export function parseDate(inputStr: string): string {
   return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
 }
 
+export const dateDDMMYYY = (inputStr: string): string => {
+  const date = new Date(inputStr);
+
+  if (isNaN(date.getTime())) {
+    return "Ngày không hợp lệ";
+  }
+
+  const day = date.getDate().toString().padStart(2, "0");
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const year = date.getFullYear();
+
+  return `${day}/${month}/${year}`;
+};
+
 export const isDateString = (str: string): boolean => {
   if (str.length < 10) return false;
   const parsedDate = Date.parse(str);
@@ -177,11 +191,11 @@ export function parseStatusDesign(status: DesignState): string {
 
 export function parseStatusContract(status: ContractStatus): string {
   switch (status) {
-    case ContractStatus.PROCESS:
+    case ContractStatus.PROCESSING:
       return "Đang xử lí";
-    case ContractStatus.ACTIVE:
+    case ContractStatus.ACTIVED:
       return "Có hiệu lực";
-    case ContractStatus.CANCEL:
+    case ContractStatus.CANCELLED:
       return "Hủy bỏ";
     default:
       return "Trạng thái không xác định";

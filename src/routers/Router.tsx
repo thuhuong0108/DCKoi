@@ -1,55 +1,56 @@
-import { useLocation, useRoutes } from "react-router-dom";
+import { LayoutAdmin, LayoutCustomer, MainLayout } from "@/layouts";
+import RootLayout from "@/layouts/RootLayout";
 import {
   ConsultationPage,
-  Contact,
-  Home,
-  Login,
-  Register,
-  TestUi,
-  PackageCreate,
-  PackageDetail,
+  ConsultationStaffPage,
   // ProjectsPage,
   ConsultingPage,
-  DetailConsulting,
-  ManagerProject,
-  ManagerDesign,
-  DesignDashboard,
-  ConsultationStaffPage,
-  DetailConsultingStaff,
+  Contact,
   CreateQuotation,
-  DesignProjectDetail,
-  DesignProject,
-  RewriteQuotation,
   CustomerDesign,
-  CustomerDesignDetail,
-  CustomerProjectDesign,
-  ProjectsPage,
   DesignCustomer,
+  DesignDashboard,
   DesignDetailCustomer,
+  DesignProject,
+  DesignProjectDetail,
   DesignRequiment,
   ManagerConstruction,
+  ManagerProjectDetail,
+  ProjectDetail,
+  DetailConsulting,
+  DetailConsultingStaff,
+  Home,
+  Login,
+  ManagerDesign,
+  ManagerProject,
+  PackageCreate,
+  PackageDetail,
+  ProjectsPage,
+  PaymentStatus,
+  Register,
+  RewriteQuotation,
+  TestUi,
 } from "@/pages";
-import { LayoutAdmin, LayoutCustomer, MainLayout } from "@/layouts";
 import {
-  ManagementTransaction,
-  ManagementUser,
-  DetailConsultation,
-  PackagePage,
-  PackageItem,
-  ManagementPackage,
-  EquipmentPage,
-  ServicePage,
-  StaffPage,
+  AdminContract,
   ConstructionTemplate,
   ConstructionTemplateConfig,
   Design,
+  DetailConsultation,
+  EquipmentPage,
+  ManagementPackage,
   ManagementProjects,
-  AdminContract,
+  ManagementTransaction,
+  ManagementUser,
+  PackageItem,
+  PackagePage,
+  ServicePage,
+  StaffPage,
 } from "@/pages/AdminPage";
-import RootLayout from "@/layouts/RootLayout";
-import PrivateRouterAdmin from "./PrivateRouterAdmin";
 import ContractPage from "@/pages/ContractPage";
 import DesignDetailManager from "@/pages/ManagerPages/DesignDetail";
+import { useLocation, useRoutes } from "react-router-dom";
+import PrivateRouterAdmin from "./PrivateRouterAdmin";
 
 const Routers = () => {
   const location = useLocation();
@@ -70,6 +71,10 @@ const Routers = () => {
     {
       path: "/space-management/projects",
       element: <LayoutCustomer Page={ProjectsPage} />,
+    },
+    {
+      path: "/space-management/projects/:id",
+      element: <LayoutCustomer Page={ProjectDetail} />,
     },
 
     // {
@@ -102,6 +107,10 @@ const Routers = () => {
     {
       path: "/space-management/projects/:id/contract",
       element: <LayoutCustomer Page={ContractPage} />,
+    },
+    {
+      path: "/payment/response",
+      element: <LayoutCustomer Page={PaymentStatus} />,
     },
     // admin
     {
@@ -240,9 +249,14 @@ const Routers = () => {
       element: <RootLayout Pages={ManagerProject} />,
     },
     {
+      path: "/manager/:id",
+      element: <RootLayout Pages={ManagerProjectDetail} />,
+    },
+    {
       path: "/manager/design",
       element: <RootLayout Pages={ManagerDesign} />,
     },
+
     {
       path: "/manager/design/:id",
       element: <RootLayout Pages={DesignRequiment} />,
