@@ -1,3 +1,13 @@
+import { Button } from "@/components";
+import Card from "@/components/ui/Card";
+import {
+  contractActions,
+  selectedContract,
+} from "@/redux/slices/contract/contractSlices";
+import {
+  projectDetailActions,
+  selectedProjectDetail,
+} from "@/redux/slices/projectDetail/projectDetailSlices";
 import {
   quotationDetailActions,
   selectedQuotationDetail,
@@ -7,23 +17,11 @@ import {
   templateConstructionDetailActions,
 } from "@/redux/slices/templateConstructionDetail/templateConstructionDetailSlices";
 import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
-import React, { useEffect, useState } from "react";
-import TableStage from "./TableStage";
-import TablePayment from "./TablePayment";
-import { ContractProjectType } from "@/models";
-import {
-  contractActions,
-  selectedContract,
-} from "@/redux/slices/contract/contractSlices";
-import { Col, Descriptions, Row, Modal } from "antd";
-import Card from "@/components/ui/Card";
-import {
-  projectDetailActions,
-  selectedProjectDetail,
-} from "@/redux/slices/projectDetail/projectDetailSlices";
-import { EyeOutlined } from "@ant-design/icons";
-import { Button } from "@/components";
 import { parseDate, parseStatusContract } from "@/utils/helpers";
+import { Col, Descriptions, Modal, Row } from "antd";
+import { useEffect, useState } from "react";
+import TablePayment from "./TablePayment";
+import TableStage from "./TableStage";
 import VerifyContract from "./VerifyContract";
 
 const ContractDetail = ({ id, setOpenDetail }) => {

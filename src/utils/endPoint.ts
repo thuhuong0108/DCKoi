@@ -1,6 +1,3 @@
-import { getConstruction } from "@/api/construction";
-import { assignConsultant } from "@/api/project";
-
 const baseURL = "https://kpcos.vinhuser.one/api/";
 const socketURL = "http://34.81.244.146:3333";
 const cloudinaryURL = "https://api.cloudinary.com/v1_1/dulapxpnp/upload";
@@ -71,6 +68,8 @@ const endPoint = {
     getDesignOfProject: (id: string) =>
       `/projects/${id}/design?PageNumber=1&PageSize=100`,
     getcontractOfProject: (id: string) => `projects/${id}/contract`,
+    getContractActive: (id: string) =>
+      `/projects/${id}/contract??PageNumber=1&PageSize=100`,
     check3Dconfirm: (id: string) => `/projects/${id}/design/3d-confirmed`,
     getAllDesignForSpecificProject: (id: string) => `/projects/${id}/design`,
     getConstruction: (id: string) =>
@@ -107,6 +106,11 @@ const endPoint = {
     rejectContract: (id: string) => `contracts/${id}/reject`,
     acceptContract: (id: string) => `contracts/${id}/accept`,
     verifyContract: (id: string) => `contracts/${id}/verify`,
+  },
+
+  payment: {
+    createPayment: "/payments",
+    paymentCallback: "/payments/vnpay-callback",
   },
 };
 
