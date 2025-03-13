@@ -1,13 +1,10 @@
 import { Title } from "@/components";
-import { Pagination, Row } from "antd";
-import React, { useEffect } from "react";
-import CardProject from "./CardProject";
-import { useDispatch } from "react-redux";
-import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
-import { selectedProject } from "@/redux/slices/project/projectSlices";
-import ProjectSkeleton from "./ProjectSkeleton";
 import { projectBoardActions } from "@/redux/slices/projectBoard/projectBoardSlices";
+import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
+import { Pagination, Row } from "antd";
+import { useEffect } from "react";
 import ProjectCard from "./ProjectCard";
+import ProjectSkeleton from "./ProjectSkeleton";
 
 const ProjectsPage = () => {
   const dispatch = useAppDispatch();
@@ -17,7 +14,7 @@ const ProjectsPage = () => {
 
   useEffect(() => {
     dispatch(
-      projectBoardActions.fetchProjectBoard({ pageNumber: 1, pageSize: 6 })
+      projectBoardActions.fetchProjectBoard({ pageNumber: 1, pageSize: 10 })
     );
   }, []);
 
@@ -25,23 +22,23 @@ const ProjectsPage = () => {
     return (
       <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 h-full">
         <Title name="Dự án" />
-        <div className="grid grid-cols-3 gap-4">
+        <Row className="gap-4 mt-4">
           {[1, 2, 3].map((item) => (
             <ProjectSkeleton key={item} />
           ))}
-        </div>
+        </Row>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 h-full">
+    <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 w-full h-full">
       <Title name="Dự án" />
-      <div className="grid grid-cols-3 gap-4">
+      <Row className="gap-4 mt-4">
         {items.data.map((item) => (
           <ProjectCard key={item.id} {...item} />
         ))}
-      </div>
+      </Row>
 
       {/* pagination */}
       <div className="flex justify-end mt-5">

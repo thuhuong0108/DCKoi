@@ -10,12 +10,12 @@ import CustomerDesign from "./CustomerDesign";
 import CustomerDesignDetail from "./CustomerDesignDetail";
 import AuthorizePage from "./ErrorPage";
 import PaymentStatus from "./Payment";
-
 import DesignCustomer from "./Design";
 import DesignDetailCustomer from "./DesignDetail";
 import DesignRequiment from "./DesignRequirement";
 import TestUi from "./TestUi";
 import ProjectDetail from "./ProjectDetail";
+import Transaction from "./Transaction";
 
 export {
   // customer
@@ -34,6 +34,7 @@ export {
   PaymentStatus,
   DesignDetailCustomer,
   ProjectDetail,
+  Transaction,
 
   //error
   AuthorizePage,
