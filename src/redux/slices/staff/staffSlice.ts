@@ -77,6 +77,22 @@ export const staffSlice = createSlice({
     fetchDesignerStaffFaild(state) {
       state.loading = false;
     },
+    fetchConstructorStaff(state, action: PayloadAction<Filter>) {
+      state.loading = true;
+    },
+    fetchConstructorStaffSuccess(
+      state,
+      action: PayloadAction<Pagination<StaffType>>
+    ) {
+      state.staffs = action.payload;
+      state.loading = false;
+    },
+    fetchConstructorStaffFaild(state) {
+      state.loading = false;
+    },
+    fetchConstructorProject(state, action: PayloadAction<string>) {
+      state.loading = true;
+    },
   },
 });
 

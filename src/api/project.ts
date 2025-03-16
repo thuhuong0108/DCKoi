@@ -11,6 +11,7 @@ import http from "@/utils/http";
 import {
   AssginStaff,
   ProjectRequest,
+  StaffType,
   TemplateConstructionItemType,
 } from "@/models";
 import {
@@ -139,7 +140,26 @@ const getDesignApproval = async (
   return response;
 };
 
+const getConstructorProject = async (
+  id: string
+): Promise<ApiResultWithPagination<StaffType>> => {
+  const response = await http.get(endPoint.project.getConstructor(id));
+  return response;
+};
+
+const getConstuctorTask = async (
+  id: string,
+  filter: Filter
+): Promise<ApiResultWithPagination<StaffType>> => {
+  const response = await http.get(
+    `${endPoint.project.getConstuctorTask(id)}?PageNumber=${
+      filter.pageNumber
+    }&PageSize=${filter.pageSize}&SortColumn=deadlineAt&SortDir=Asc`
+  );
+  return response;
+};
 export {
+  getConstuctorTask,
   assignConsultant,
   getContractOfProject,
   check3Dconfirm,
@@ -153,4 +173,5 @@ export {
   getProjectConstruction,
   getProjects,
   getDesignApproval,
+  getConstructorProject,
 };

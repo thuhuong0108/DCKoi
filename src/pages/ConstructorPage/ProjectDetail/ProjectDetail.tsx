@@ -1,13 +1,13 @@
-import { Loading, Title } from "@/components";
-import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
-import React, { useEffect } from "react";
-import InformationProject from "./InformationProject";
+import { Loading } from "@/components";
 import { projectStateDetailActions } from "@/redux/slices/projectStateDetail/projectStateDetailSlices";
+import { taskConstructorActions } from "@/redux/slices/taskConstructor/taskConstructorSlices";
+import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
+import { Divider } from "antd";
+import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Staff from "./Staff";
 import Design from "./Design";
-import Constructions from "./Constructions";
-import { Button, Divider } from "antd";
+import InformationProject from "./InformationProject";
+import Tasks from "./Tasks";
 
 const ProjectDetail = () => {
   const dispatch = useAppDispatch();
@@ -23,6 +23,12 @@ const ProjectDetail = () => {
     dispatch(projectStateDetailActions.fetchProjectDetail(id));
     dispatch(projectStateDetailActions.fetchDesigns(id));
     dispatch(projectStateDetailActions.fetchConstructions(id));
+    dispatch(
+      taskConstructorActions.fetchTasks({
+        id,
+        filter: { pageNumber: 1, pageSize: 5 },
+      })
+    );
   }, []);
   return (
     <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 h-full w-full">
@@ -34,31 +40,12 @@ const ProjectDetail = () => {
         <InformationProject {...project.detail} />
       )}
 
-      <Divider orientation="left">2. Nhân sự</Divider>
-      {project.loading ? <Loading /> : <Staff staff={project.detail.staff} />}
-
-      <Divider orientation="left">3. Thiết kế</Divider>
+      <Divider orientation="left">2. Thiết kế</Divider>
 
       {design.loading ? <Loading /> : <Design designs={design.designs} />}
 
-      <Divider orientation="left">4. Thi công</Divider>
-
-      {construction.loading ? (
-        <Loading />
-      ) : (
-        <>
-          <Constructions constructionItem={construction.constructions} />
-          <div className="flex justify-end">
-            <Button
-              type="primary"
-              className="mt-5"
-              onClick={() => navigate("construction")}
-            >
-              Chi tiết
-            </Button>
-          </div>
-        </>
-      )}
+      <Divider orientation="left">3. Thi công</Divider>
+      <Tasks />
     </div>
   );
 };

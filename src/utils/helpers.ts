@@ -3,9 +3,11 @@ import { DesignState } from "@/models/enums/DesignState";
 import { Position } from "@/models/enums/Position";
 import {
   ContractStatus,
+  ItemConstructionStatus,
   ProjectStatus,
   QuotationStatus,
 } from "@/models/enums/Status";
+import { TaskStage } from "@/models/enums/TaskStage";
 
 export const formatDate = (date: Date, includeTime = false): string => {
   const options: Intl.DateTimeFormatOptions = includeTime
@@ -16,23 +18,22 @@ export const formatDate = (date: Date, includeTime = false): string => {
         hour: "2-digit",
         minute: "2-digit",
       }
-    : { year: "numeric", month: "short", day: "numeric" };
+    : { year: "numeric", month: "long", day: "numeric" };
 
-  return date.toLocaleDateString("en-US", options);
+  // return date.toLocaleDateString("vn-VN", options);
+  // return not include time
+  return date.toLocaleDateString("vi-VN", options);
 };
 export function parseDate(inputStr: string): string {
-  // Chuyển chuỗi đầu vào thành đối tượng Date
   const date = new Date(inputStr);
 
-  // Lấy các phần của ngày tháng
   const day = String(date.getDate()).padStart(2, "0");
-  const month = String(date.getMonth() + 1).padStart(2, "0"); // Tháng bắt đầu từ 0, nên cộng thêm 1
+  const month = String(date.getMonth() + 1).padStart(2, "0");
   const year = date.getFullYear();
   const hours = String(date.getHours()).padStart(2, "0");
   const minutes = String(date.getMinutes()).padStart(2, "0");
   const seconds = String(date.getSeconds()).padStart(2, "0");
 
-  // Trả về chuỗi theo định dạng mong muốn
   return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
 }
 
@@ -197,6 +198,36 @@ export function parseStatusContract(status: ContractStatus): string {
       return "Có hiệu lực";
     case ContractStatus.CANCELLED:
       return "Hủy bỏ";
+    default:
+      return "Trạng thái không xác định";
+  }
+}
+
+export function parseStatusConstruction(
+  status: ItemConstructionStatus
+): string {
+  switch (status) {
+    case ItemConstructionStatus.OPENING:
+      return "Chờ";
+    case ItemConstructionStatus.PROCESSING:
+      return "Đang thi công";
+    case ItemConstructionStatus.DONE:
+      return "Hoàn thành";
+    default:
+      return "Trạng thái không xác định";
+  }
+}
+
+export function parseTaskStatus(status: TaskStage): string {
+  switch (status) {
+    case TaskStage.OPEN:
+      return "Chờ";
+    case TaskStage.PROCESSING:
+      return "Đang thực hiện";
+    case TaskStage.DONE:
+      return "Hoàn thành";
+    case TaskStage.PREVIEWING:
+      return "Chờ xác nhận";
     default:
       return "Trạng thái không xác định";
   }

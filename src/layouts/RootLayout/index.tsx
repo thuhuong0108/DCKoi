@@ -7,6 +7,7 @@ import LayoutConsultant from "../layoutConsultant";
 import LayoutManager from "../layoutManager";
 import LayoutDesigner from "../layoutDesigner";
 import LayoutCustomer from "../layoutCustomer";
+import LayoutConstructor from "../layoutConstructor";
 
 interface IndexProps {
   Page: () => ReactElement;
@@ -38,6 +39,8 @@ const RootLayout = ({ Pages }) => {
       return <LayoutDesigner Page={Pages} />;
     case RoleUser.CUSTOMER:
       return <LayoutCustomer Page={Pages} />;
+    case RoleUser.CONSTRUCTOR:
+      return <LayoutConstructor Page={Pages} />;
     default:
       return <MainLayout Pages={Pages} />;
   }

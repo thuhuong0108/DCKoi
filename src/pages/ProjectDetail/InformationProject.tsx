@@ -10,7 +10,7 @@ import React from "react";
 
 const InformationProject = (project: ProjectDetailType) => {
   return (
-    <div className="flex flex-row justify-between items-stretch mb-5 mt-8 mx-10 h-full ">
+    <div className="flex flex-row justify-between items-stretch mb-5 h-full ">
       <Card title={`Dự án: ${project.name}`} className="mt-5 w-full">
         <div className="flex flex-col space-y-4">
           <div className="flex items-center">

@@ -1,6 +1,7 @@
 import {
   createStaff,
   getAllStaff,
+  getConstructionStaff,
   getConsultantStaff,
   getDesignerStaff,
   getManagerStaff,
@@ -11,6 +12,7 @@ import { call, fork, put, select, take } from "redux-saga/effects";
 import { staffActions, StaffState } from "./staffSlice";
 import { messageError, messageSuccess } from "@/components";
 import { StaffType } from "@/models";
+import { getConstructorProject } from "@/api/project";
 
 function* fetchStaffWorker(action: PayloadAction<Filter>) {
   try {
@@ -95,6 +97,40 @@ function* fetchDesignerStaffWorker(action: PayloadAction<Filter>) {
   }
 }
 
+function* fetchConstructorStaffWorker(action: PayloadAction<Filter>) {
+  try {
+    const data = yield call(getConstructionStaff, action.payload);
+    if (data.isSuccess) {
+      yield put(staffActions.fetchConstructorStaffSuccess(data));
+    } else {
+      messageError(data.message);
+      yield put(staffActions.fetchStaffFaild);
+    }
+  } catch (error) {
+    messageError("Hệ thống đang bị lỗi");
+    yield put(staffActions.fetchStaffFaild);
+    console.log(error);
+  }
+}
+
+function* fetchConstructorProjectWorker(action: PayloadAction<string>) {
+  try {
+    console.log("fetchConstructorProjectWorker", action.payload);
+
+    const data = yield call(getConstructorProject, action.payload);
+    if (data.isSuccess) {
+      yield put(staffActions.fetchConstructorStaffSuccess(data));
+    } else {
+      messageError(data.message);
+      yield put(staffActions.fetchStaffFaild);
+    }
+  } catch (error) {
+    messageError("Hệ thống đang bị lỗi");
+    yield put(staffActions.fetchStaffFaild);
+    console.log(error);
+  }
+}
+
 function* fetchManagerStaffWatcher() {
   while (true) {
     const action = yield take(staffActions.fetchManagerStaff);
@@ -130,10 +166,26 @@ function* createStaffWatcher() {
   }
 }
 
+function* fetchConstructorStaffWatcher() {
+  while (true) {
+    const action = yield take(staffActions.fetchConstructorStaff);
+    yield fork(fetchConstructorStaffWorker, action);
+  }
+}
+
+function* fetchConstructorProjectWatcher() {
+  while (true) {
+    const action = yield take(staffActions.fetchConstructorProject);
+    yield fork(fetchConstructorProjectWorker, action);
+  }
+}
+
 export function* staffSaga() {
   yield fork(fetchStaffWatcher);
   yield fork(createStaffWatcher);
   yield fork(fetchConsutantStaffWatcher);
   yield fork(fetchManagerStaffWatcher);
   yield fork(fetchDesignerStaffWatcher);
+  yield fork(fetchConstructorStaffWatcher);
+  yield fork(fetchConstructorProjectWatcher);
 }

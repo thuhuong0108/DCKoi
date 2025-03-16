@@ -1,8 +1,9 @@
 import http from "@/utils/http";
-import { ApiResult, ApiResultWithAData } from "@/models/Common";
+import { ApiResult, ApiResultWithAData, Filter } from "@/models/Common";
 import { ConstructionRequest } from "./../models/Request/ConstructionRequest";
 import { endPoint } from "@/utils/endPoint";
-import { ConstructionType } from "@/models";
+import { ConstructionType, TemplateConstructionItemType } from "@/models";
+import { TaskRequest } from "@/models/Request/TaskRequest";
 
 const createConstruction = async (
   construct: ConstructionRequest
@@ -62,4 +63,64 @@ const getConstruction = async (
   return response;
 };
 
-export { createConstruction, getConstruction };
+const createTask = async (
+  id: string,
+  task: TaskRequest
+): Promise<ApiResult> => {
+  const tasks: TaskRequest[] = [task];
+
+  const response = await http.post(
+    endPoint.construction.createTaskwithIdItem(id),
+    tasks
+  );
+
+  return response;
+};
+
+const getTaskByItem = async (
+  id: string,
+  filter: Filter
+): Promise<ApiResult> => {
+  const response = await http.get(
+    `${endPoint.construction.getTaskbyIdItem(id)}&PageNumber=${
+      filter.pageNumber
+    }&PageSize=${filter.pageSize}&SortColumn=deadlineAt&SortDir=Asc`
+  );
+
+  return response;
+};
+const getItembyIdItem = async (
+  id: string
+): Promise<ApiResultWithAData<TemplateConstructionItemType>> => {
+  const response = await http.get(endPoint.construction.getItembyIdItem(id));
+  return response;
+};
+
+const assignTaskConstructor = async (data: TaskRequest): Promise<ApiResult> => {
+  const response = await http.put(
+    endPoint.construction.assignStaff(data.id),
+    data
+  );
+  return response;
+};
+const getTaskById = async (
+  id: string
+): Promise<ApiResultWithAData<TaskRequest>> => {
+  const response = await http.get(endPoint.construction.getTaskById(id));
+  return response;
+};
+
+const confirmTask = async (id: string): Promise<ApiResult> => {
+  const response = await http.put(endPoint.construction.confirmTask(id));
+  return response;
+};
+export {
+  assignTaskConstructor,
+  createConstruction,
+  getConstruction,
+  createTask,
+  getTaskByItem,
+  getItembyIdItem,
+  getTaskById,
+  confirmTask,
+};

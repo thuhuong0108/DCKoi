@@ -100,3 +100,8 @@ export const validateContract = yup.object().shape({
   customerName: yup.string().required("Yêu cầu nhập tên khách hàng"),
   url: yup.string().required("Yêu cầu hợp đồng"),
 });
+
+export const validateConstruction = yup.object().shape({
+  name: yup.string().required("Yêu cầu nhập tên công việc"),
+  deadlineAt: yup.date().required("Yêu cầu nhập ngày hết hạn"),
+});

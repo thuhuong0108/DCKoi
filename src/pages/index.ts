@@ -46,3 +46,4 @@ export * from "./AdminPage";
 export * from "./ManagerPages";
 export * from "./DesignerPages";
 export * from "./ConsultantPage";
+export * from "./ConstructorPage";
