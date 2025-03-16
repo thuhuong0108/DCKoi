@@ -45,10 +45,20 @@ const getDesignerStaff = async (
   );
   return response;
 };
+
+const getConstructionStaff = async (
+  filter: Filter
+): Promise<ApiResultWithPagination<StaffType>> => {
+  const response = await http.get(
+    `${endPoint.staff.getPagingConstructionStaff}?PageNumber=${filter.pageNumber}&PageSize=${filter.pageSize}`
+  );
+  return response;
+};
 export {
   getAllStaff,
   createStaff,
   getConsultantStaff,
   getManagerStaff,
   getDesignerStaff,
+  getConstructionStaff,
 };

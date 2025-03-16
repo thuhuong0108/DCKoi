@@ -1,8 +1,3 @@
-import {
-  AssginStaff,
-  ProjectRequest,
-  TemplateConstructionItemType,
-} from "@/models";
 import { Filter } from "@/models/Common";
 import {
   ContractProjectType,
@@ -13,6 +8,12 @@ import {
 } from "@/models/ProjectType";
 import { endPoint } from "@/utils/endPoint";
 import http from "@/utils/http";
+import {
+  AssginStaff,
+  ProjectRequest,
+  StaffType,
+  TemplateConstructionItemType,
+} from "@/models";
 import {
   ApiResult,
   ApiResultWithAData,
@@ -156,20 +157,40 @@ const getDesignApproval = async (
   return response;
 };
 
+const getConstructorProject = async (
+  id: string
+): Promise<ApiResultWithPagination<StaffType>> => {
+  const response = await http.get(endPoint.project.getConstructor(id));
+  return response;
+};
+
+const getConstuctorTask = async (
+  id: string,
+  filter: Filter
+): Promise<ApiResultWithPagination<StaffType>> => {
+  const response = await http.get(
+    `${endPoint.project.getConstuctorTask(id)}?PageNumber=${
+      filter.pageNumber
+    }&PageSize=${filter.pageSize}&SortColumn=deadlineAt&SortDir=Asc`
+  );
+  return response;
+};
 export {
+  getConstuctorTask,
   assignConsultant,
   check3Dconfirm,
-  getAllDesignForSpecificProject,
   getContractActiveProject,
   getContractOfProject,
-  getDesignApproval,
-  getDesignOfProject,
   getPagingProject,
   getProject,
-  getProjectConstruction,
-  getProjectDesign,
-  getProjects,
   getQuotationActiveProject,
   getQuotationProject,
   requestProject,
+  getProjectDesign,
+  getDesignOfProject,
+  getAllDesignForSpecificProject,
+  getProjectConstruction,
+  getProjects,
+  getDesignApproval,
+  getConstructorProject,
 };

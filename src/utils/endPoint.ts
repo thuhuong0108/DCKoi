@@ -35,6 +35,7 @@ const endPoint = {
     getPagingConsutanStaff: "/staff/consultant",
     getPagingManagerStaff: "/staff/manager",
     getPagingDesignerStaff: "/staff/designer",
+    getPagingConstructionStaff: "/staff/constructor",
     // getStaff: (id: string) => `/staff/${id}`,
     // updateStaff: (id: string) => `/staff/${id}`,
     // deleteStaff: (id: string) => `staff/${id}`,
@@ -75,6 +76,9 @@ const endPoint = {
     getConstruction: (id: string) =>
       `/projects/${id}/construction?PageNumber=1&PageSize=100&SortColumn=estimateAt&SortDir=Asc`,
     getProjects: "/projects",
+    getConstructor: (id: string) =>
+      `/projects/${id}/staff?Position=CONSTRUCTOR`,
+    getConstuctorTask: (id: string) => `/projects/${id}/construction-task`,
   },
 
   quotation: {
@@ -98,6 +102,13 @@ const endPoint = {
 
   construction: {
     createConstruction: "/constructions",
+    getItembyIdItem: (id: string) => `/constructions/item/${id}`,
+    getTaskbyIdItem: (id: string) =>
+      `/constructions/task?ConstructionItemId=${id}`,
+    createTaskwithIdItem: (id: string) => `/constructions/task/${id}`,
+    getTaskById: (id: string) => `/constructions/task/${id}`,
+    assignStaff: (id: string) => `/constructions/task/${id}`,
+    confirmTask: (id: string) => `/constructions/task/${id}/confirm`,
   },
 
   contract: {

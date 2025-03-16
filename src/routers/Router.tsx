@@ -30,6 +30,9 @@ import {
   Register,
   RewriteQuotation,
   TestUi,
+  ManagerProjectConstruction,
+  DashBoardConstructor,
+  ProjectDetailConstructor,
   Transaction,
 } from "@/pages";
 import {
@@ -258,6 +261,10 @@ const Routers = () => {
       element: <RootLayout Pages={ManagerProjectDetail} />,
     },
     {
+      path: "/manager/:id/construction",
+      element: <RootLayout Pages={ManagerProjectConstruction} />,
+    },
+    {
       path: "/manager/design",
       element: <RootLayout Pages={ManagerDesign} />,
     },
@@ -289,6 +296,19 @@ const Routers = () => {
       element: <RootLayout Pages={DesignProject} />,
     },
 
+    // constructor
+    {
+      path: "/constructor",
+      element: <RootLayout Pages={DashBoardConstructor} />,
+    },
+    {
+      path: "/constructor/projects",
+      element: <RootLayout Pages={ManagerProject} />,
+    },
+    {
+      path: "/constructor/projects/:id",
+      element: <RootLayout Pages={ProjectDetailConstructor} />,
+    },
     { path: "*", element: <div>404</div> },
   ]);
   return <div>{element}</div>;

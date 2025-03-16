@@ -12,6 +12,7 @@ export interface TemplateConstructionItemType {
   child: TemplateConstructionItemType[];
   childs: TemplateConstructionItemType[];
   estTime?: string;
+  actualAt?: string;
   isPayment?: boolean;
   estimateAt?: string;
   status?: string;
