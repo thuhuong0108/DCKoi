@@ -61,18 +61,6 @@ const ContractPage = () => {
       <Alert
         className="my-4"
         banner
-        // action={
-        //   <Space direction="vertical">
-        //     <Button
-        //       size="middle"
-        //       type="primary"
-        //       className="w-[100px]"
-        //       onClick={handleVerify}
-        //     >
-        //       Xác nhận
-        //     </Button>
-        //   </Space>
-        // }
         message={
           <Marquee pauseOnHover gradient={false}>
             Vui lòng xem xét kĩ trước khi xác nhận hợp đồng

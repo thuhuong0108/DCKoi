@@ -4,6 +4,7 @@ import { Position } from "@/models/enums/Position";
 import {
   ContractStatus,
   ItemConstructionStatus,
+  PaymentPhase,
   ProjectStatus,
   QuotationStatus,
 } from "@/models/enums/Status";
@@ -194,7 +195,7 @@ export function parseStatusContract(status: ContractStatus): string {
   switch (status) {
     case ContractStatus.PROCESSING:
       return "Đang xử lí";
-    case ContractStatus.ACTIVED:
+    case ContractStatus.ACTIVE:
       return "Có hiệu lực";
     case ContractStatus.CANCELLED:
       return "Hủy bỏ";
@@ -228,6 +229,21 @@ export function parseTaskStatus(status: TaskStage): string {
       return "Hoàn thành";
     case TaskStage.PREVIEWING:
       return "Chờ xác nhận";
+    default:
+      return "Trạng thái không xác định";
+  }
+}
+
+export function parsePaymentPhase(phase: PaymentPhase): string {
+  switch (phase) {
+    case PaymentPhase.DEPOSIT:
+      return "Đặt cọc";
+    case PaymentPhase.ACCEPTANCE:
+      return "Chấn nhận";
+    case PaymentPhase.CONSTRUCTING:
+      return "Đang thi công";
+    case PaymentPhase.PRE_CONSTRUCTING:
+      return "Trước thi công";
     default:
       return "Trạng thái không xác định";
   }

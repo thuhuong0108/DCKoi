@@ -1,18 +1,9 @@
-import { Title, Consultationcard } from "@/components";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputAdornment from "@mui/material/InputAdornment";
-import SearchIcon from "@mui/icons-material/Search";
-import { Col, Modal, Row } from "antd";
-import {
-  FormControl,
-  MenuItem,
-  Pagination,
-  Stack,
-  TextField,
-} from "@mui/material";
-import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
-import { useEffect, useState } from "react";
+import { Consultationcard, Title } from "@/components";
 import { projectActions } from "@/redux/slices/project/projectSlices";
+import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
+import { Pagination, Stack } from "@mui/material";
+import { Col, Row } from "antd";
+import { useEffect } from "react";
 
 const ConsultationPage = () => {
   const dispatch = useAppDispatch();

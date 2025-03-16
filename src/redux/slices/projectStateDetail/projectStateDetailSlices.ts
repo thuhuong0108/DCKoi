@@ -1,13 +1,11 @@
 import {
+  ContractType,
   DesignType,
-  ProjectType,
   TemplateConstructionItemType,
 } from "@/models";
-import { Filter, Pagination } from "@/models/Common";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "./../../store/store";
 import { ProjectStatus } from "@/models/enums/Status";
 import { ProjectDetailType } from "@/models/ProjectType";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface ProjectStateDetail {
   project: {
@@ -21,6 +19,11 @@ export interface ProjectStateDetail {
   construction: {
     loading: boolean;
     constructions: TemplateConstructionItemType[];
+  };
+
+  contract: {
+    loading: boolean;
+    contracts: ContractType[];
   };
 }
 
@@ -50,6 +53,10 @@ const initialState: ProjectStateDetail = {
   construction: {
     loading: false,
     constructions: [],
+  },
+  contract: {
+    loading: false,
+    contracts: [],
   },
 };
 
@@ -89,6 +96,16 @@ export const projectStateDetailSlice = createSlice({
     },
     fetchConstructionsFailed(state) {
       state.construction.loading = false;
+    },
+    fetchContracts(state, action: PayloadAction<string>) {
+      state.contract.loading = true;
+    },
+    fetchContractsSuccess(state, action: PayloadAction<ContractType[]>) {
+      state.contract.contracts = action.payload;
+      state.contract.loading = false;
+    },
+    fetchContractsFailed(state) {
+      state.contract.loading = false;
     },
   },
 });

@@ -62,6 +62,14 @@ const getQuotationProject = async (
   return response;
 };
 
+const getQuotationActiveProject = async (
+  id: string
+): Promise<ApiResultWithPagination<QuotationProjectType>> => {
+  const response = await http.get(`${endPoint.project.getQuotationActive(id)}`);
+
+  return response;
+};
+
 const requestProject = async (request: ProjectRequest): Promise<ApiResult> => {
   const response = await http.post(endPoint.project.requestProject, request);
   return response;
@@ -90,6 +98,7 @@ const check3Dconfirm = async (
   const response = await http.get(endPoint.project.check3Dconfirm(id));
   return response;
 };
+
 const getAllDesignForSpecificProject = async (
   id: string,
   filter: Filter
@@ -112,6 +121,14 @@ const getContractOfProject = async (
       filter.pageNumber
     }&PageSize=${filter.pageSize}`
   );
+  return response;
+};
+
+const getContractActiveProject = async (
+  id: string
+): Promise<ApiResultWithPagination<ContractProjectType>> => {
+  const response = await http.get(`${endPoint.project.getContractActive(id)}`);
+
   return response;
 };
 
@@ -161,10 +178,12 @@ const getConstuctorTask = async (
 export {
   getConstuctorTask,
   assignConsultant,
-  getContractOfProject,
   check3Dconfirm,
+  getContractActiveProject,
+  getContractOfProject,
   getPagingProject,
   getProject,
+  getQuotationActiveProject,
   getQuotationProject,
   requestProject,
   getProjectDesign,

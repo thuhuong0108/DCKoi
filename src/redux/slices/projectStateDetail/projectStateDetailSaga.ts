@@ -1,14 +1,15 @@
-import { call, fork, put, select, take } from "redux-saga/effects";
-import { messageError } from "@/components";
-import { PayloadAction } from "@reduxjs/toolkit";
-import { projectStateDetailActions } from "./projectStateDetailSlices";
+import { getDesign } from "@/api/design";
 import {
+  getContractActiveProject,
   getDesignApproval,
   getProject,
   getProjectConstruction,
 } from "@/api/project";
-import { Filter } from "@/models/Common";
-import { getDesign } from "@/api/design";
+import { messageError } from "@/components";
+import { PayloadAction } from "@reduxjs/toolkit";
+import { call, fork, put, take } from "redux-saga/effects";
+import { projectStateDetailActions } from "./projectStateDetailSlices";
+import { contractActions } from "../contract/contractSlices";
 
 function* fetchProjectDetailWorker(action: PayloadAction<string>) {
   try {
@@ -66,6 +67,22 @@ function* fetchConstructionWorker(action: PayloadAction<string>) {
   }
 }
 
+function* fetchContractWorker(action: PayloadAction<string>) {
+  try {
+    const data = yield call(getContractActiveProject, action.payload);
+    if (data.isSuccess) {
+      yield put(projectStateDetailActions.fetchContractsSuccess(data.data));
+      yield put(contractActions.fetchContract(data.data[0].id));
+    } else {
+      messageError(data.message);
+      yield put(projectStateDetailActions.fetchContractsFailed());
+    }
+  } catch (error) {
+    yield put(projectStateDetailActions.fetchContractsFailed());
+    console.log("error", error);
+  }
+}
+
 function* fetchProjectDetailWatcher() {
   while (true) {
     const action: PayloadAction<string> = yield take(
@@ -93,8 +110,18 @@ function* fetchConstructionWatcher() {
   }
 }
 
+function* fetchContractWatcher() {
+  while (true) {
+    const action: PayloadAction<string> = yield take(
+      projectStateDetailActions.fetchContracts
+    );
+    yield fork(fetchContractWorker, action);
+  }
+}
+
 export function* projectStateDetailSaga() {
   yield fork(fetchProjectDetailWatcher);
   yield fork(fetchDesignWatcher);
   yield fork(fetchConstructionWatcher);
+  yield fork(fetchContractWatcher);
 }
