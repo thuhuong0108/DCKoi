@@ -1,4 +1,9 @@
-import { acceptDesign, getDesign, rejectDesign, requestEditDesign } from "@/api/design";
+import {
+  acceptDesign,
+  getDesign,
+  rejectDesign,
+  requestEditDesign,
+} from "@/api/design";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { call, fork, put, take } from "redux-saga/effects";
 import { designDetailActions } from "./designDetailSlices";
@@ -11,7 +16,7 @@ function* fetchDesignDetailWorker(action: PayloadAction<string>) {
     if (data.isSuccess) {
       yield put(designDetailActions.fetchDesignDetailSuccess(data.data));
     } else {
-      messageSuccess(data.message);
+      messageError(data.message);
       yield put(designDetailActions.fetchDesignDetailFailed);
     }
   } catch (error) {
@@ -26,12 +31,10 @@ function* rejectDesignWorker(action: PayloadAction<ReasonDesignType>) {
     const data = yield call(rejectDesign, action.payload);
     if (data.isSuccess) {
       messageSuccess(data.message);
-    }
-    else {
+    } else {
       messageError(data.message);
     }
-  }
-  catch (error) {
+  } catch (error) {
     messageError("Hệ thống đang bị lỗi");
     console.log(error);
   }
@@ -42,12 +45,10 @@ function* acceptDesignWorker(action: PayloadAction<string>) {
     const data = yield call(acceptDesign, action.payload);
     if (data.isSuccess) {
       messageSuccess(data.message);
-    }
-    else {
+    } else {
       messageError(data.message);
     }
-  }
-  catch (error) {
+  } catch (error) {
     messageError("Hệ thống đang bị lỗi");
     console.log(error);
   }
@@ -58,12 +59,10 @@ function* requestEditDesignWorker(action: PayloadAction<ReasonDesignType>) {
     const data = yield call(requestEditDesign, action.payload);
     if (data.isSuccess) {
       messageSuccess(data.message);
-    }
-    else {
+    } else {
       messageError(data.message);
     }
-  }
-  catch (error) {
+  } catch (error) {
     messageError("Hệ thống đang bị lỗi");
     console.log(error);
   }

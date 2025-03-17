@@ -122,6 +122,7 @@ const endPoint = {
   payment: {
     createPayment: "/payments",
     paymentCallback: "/payments/vnpay-callback",
+    getPayment: (id: string) => `payments/${id}`,
   },
 };
 

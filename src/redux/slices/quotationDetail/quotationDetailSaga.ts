@@ -10,7 +10,7 @@ function* fetchQuotaionDetailWorker(action: PayloadAction<string>) {
     if (data.isSuccess) {
       yield put(quotationDetailActions.fetchQuotationDetailSuccess(data.data));
     } else {
-      messageSuccess(data.message);
+      messageError(data.message);
       yield put(quotationDetailActions.fetchQuotationDetailFailed());
     }
   } catch (error) {

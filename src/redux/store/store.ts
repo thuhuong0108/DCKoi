@@ -22,7 +22,7 @@ import serviceSlice from "../slices/service/serviceSlice";
 import staffSlice from "../slices/staff/staffSlice";
 import projectSlice from "../slices/project/projectSlices";
 import projectDetailSlice from "../slices/projectDetail/projectDetailSlices";
-import quotationProjectSlice from "../slices/quotationProject/QuotationProjectSlices";
+import quotationProjectSlice from "../slices/quotationProject/quotationProjectSlices";
 import quotationSlice from "../slices/quotation/quotationSlices";
 import quotationDetailSlice from "../slices/quotationDetail/quotationDetailSlices";
 import designSlice from "../slices/design/designSlices";
@@ -37,6 +37,7 @@ import projectBoardSlice from "../slices/projectBoard/projectBoardSlices";
 import projectStateDetailSlice from "../slices/projectStateDetail/projectStateDetailSlices";
 import constructionItemStage from "../slices/constructionItemStage/constructionItemSlices";
 import taskConstructorSlice from "../slices/taskConstructor/taskConstructorSlices";
+import transactionsSlice from "../slices/transaction/transactionSlices";
 
 const rootReducers = combineReducers({
   router: connectRouter(history),
@@ -65,6 +66,7 @@ const rootReducers = combineReducers({
   projectStateDetail: projectStateDetailSlice,
   constructionItemStage: constructionItemStage,
   taskConstructor: taskConstructorSlice,
+  transaction: transactionsSlice,
 });
 
 const persistConfig = {

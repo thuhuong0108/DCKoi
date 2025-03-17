@@ -1,15 +1,12 @@
-import { ProjectType } from "@/models";
-import { Button, Card, Modal } from "antd";
-import React, { useState } from "react";
-import EditLocationIcon from "@mui/icons-material/EditLocation";
-import DrawIcon from "@mui/icons-material/Draw";
-import { Typography } from "antd";
-import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
-import { staffActions } from "@/redux/slices/staff/staffSlice";
 import { assignConsultant } from "@/api/project";
 import { messageError } from "@/components";
+import { ProjectType } from "@/models";
 import { projectActions } from "@/redux/slices/project/projectSlices";
-import { RoleUser } from "@/models/enums/RoleUser";
+import { useAppDispatch } from "@/redux/store/hook";
+import DrawIcon from "@mui/icons-material/Draw";
+import EditLocationIcon from "@mui/icons-material/EditLocation";
+import { Card, Divider, Typography } from "antd";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 const DesignCard = ({
   imageUrl,
@@ -42,7 +39,11 @@ const DesignCard = ({
 
   return (
     <Card
-      className="rounded-lg bg-white w-[300px] "
+      onClick={() => {
+        navigate(`${id}`);
+      }}
+      className="rounded-lg bg-white w-[350px] "
+      style={{ cursor: "pointer" }}
       cover={
         <img
           alt="example"
@@ -70,22 +71,10 @@ const DesignCard = ({
             </span>
           </div>
         </div>
-
-        <Button
-          type="primary"
-          className="rounded-lg"
-          onClick={() => {
-            navigate(`${id}`);
-          }}
-        >
-          Xem chi tiết
-        </Button>
       </div>
 
       {/* line */}
-      <div>
-        <hr className="my-2" />
-      </div>
+      <Divider />
 
       {/* customer */}
 

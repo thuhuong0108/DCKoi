@@ -1,4 +1,5 @@
 import { Title } from "@/components";
+import { FieldQuotationDetailType } from "@/models";
 import {
   projectDetailActions,
   selectedProjectDetail,
@@ -7,6 +8,10 @@ import {
   quotationDetailActions,
   selectedQuotationDetail,
 } from "@/redux/slices/quotationDetail/quotationDetailSlices";
+import {
+  quotationProjectActions,
+  selectedQuotationProject,
+} from "@/redux/slices/quotationProject/quotationProjectSlices";
 import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
 import {
   EnvironmentOutlined,
@@ -16,23 +21,83 @@ import {
 } from "@ant-design/icons";
 import { DesignServicesOutlined } from "@mui/icons-material";
 import { TextField } from "@mui/material";
-import { Card, Col, Divider, FloatButton, Row, Typography } from "antd";
-import { useEffect } from "react";
+import {
+  Card,
+  Col,
+  Descriptions,
+  Divider,
+  FloatButton,
+  Row,
+  Typography,
+} from "antd";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { QuotationItem } from "./type";
+import { Category } from "@/models/enums/Category";
+import CollapseQuotation from "./CollapseQuotation";
+import { formatPrice } from "@/utils/helpers";
 
 const DesignProjectDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const project = useAppSelector(selectedProjectDetail);
+  const quotations = useAppSelector(selectedQuotationProject);
   const quotation = useAppSelector(selectedQuotationDetail);
+  const [itemWork, setItemWork] = useState<QuotationItem[]>([]);
+  const [totalPriceQuotation, setTotalPrice] = useState<number>(0);
+
   useEffect(() => {
     dispatch(projectDetailActions.fetchProjectDetail(id));
   }, [dispatch, id]);
 
   useEffect(() => {
-    dispatch(quotationDetailActions.fetchQuotationDetail());
+    dispatch(quotationProjectActions.fetchQuotationActiveProject(id));
   }, [dispatch, id]);
+
+  const services = quotation?.services;
+  const equipments = quotation?.equipments;
+
+  useEffect(() => {
+    const categoryCollection: string[] = Object.values(Category);
+
+    // Build itemWork from services and equipments
+    const itemWork = categoryCollection.map((category) => {
+      const servicesInCategory = services.filter(
+        (service) => service.category === category
+      );
+
+      const equipmentsInCategory = equipments
+        .filter((equipment) => equipment.category === category)
+        .map((equipment) => ({
+          ...equipment,
+          unit: "Chiếc",
+        }));
+
+      const fieldQuotationDetailType: FieldQuotationDetailType[] = [
+        ...servicesInCategory,
+        ...equipmentsInCategory,
+      ];
+
+      const totalPrice = fieldQuotationDetailType.reduce(
+        (sum, item) => sum + item.price * item.quantity,
+        0
+      );
+
+      return {
+        totalPrice,
+        name: category,
+        items: fieldQuotationDetailType,
+      };
+    });
+
+    // Update total price using previous state
+    setTotalPrice((prevTotal) =>
+      itemWork.reduce((sum, item) => sum + item.totalPrice, 0)
+    );
+
+    setItemWork(itemWork);
+  }, [services, equipments]);
 
   const customerInfor = [
     {
@@ -60,7 +125,7 @@ const DesignProjectDetail = () => {
   return (
     <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 h-full w-full space-y-4">
       <Title name={`Thiết kế`} />
-      <Row className="gap-4">
+      <Row className="gap-8">
         <Col span={8}>
           <Divider orientation="left">Dự án thi công</Divider>
 
@@ -115,9 +180,23 @@ const DesignProjectDetail = () => {
             </div>
           </div>
         </Col>
-        <Col span={12}>
+        <Col span={14}>
           {/* Thông tin báo giá */}
+          <Divider orientation="left">Thông tin báo giá</Divider>
+          <Descriptions>
+            <Descriptions.Item label="Tổng giá trị dự án">
+              {formatPrice(totalPriceQuotation)}
+            </Descriptions.Item>
+          </Descriptions>
           <Divider orientation="left">Báo giá các hạng mục thi công </Divider>
+          {itemWork.map((item, index) => (
+            <CollapseQuotation
+              key={index}
+              name={item.name}
+              items={item.items}
+              totalPrice={item.totalPrice}
+            />
+          ))}
         </Col>
       </Row>
 

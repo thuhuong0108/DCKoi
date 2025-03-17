@@ -119,7 +119,7 @@ const DesignProjectDetail = () => {
   return (
     <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 w-full h-full">
       <Title name={`Dự án thi công`} />
-      <Row>
+      <Row className="gap-8">
         <Col span={8} className="mr-4">
           <Divider orientation="left">Thông tin khách hàng</Divider>
           <div className="flex flex-row w-full space-x-4 items-center justify-between">
@@ -174,7 +174,7 @@ const DesignProjectDetail = () => {
           </div>
         </Col>
 
-        <Col span={12}>
+        <Col span={14}>
           <Divider orientation="left">Thông tin báo giá</Divider>
           <Descriptions>
             <Descriptions.Item label="Tổng giá trị dự án">

@@ -92,7 +92,7 @@ const TableContract = ({ contracts }) => {
         pagination={false}
       />
 
-      <Modal
+      {/* <Modal
         title={`Thông tin chi tiêt hợp đồng`}
         open={openDetailContract}
         width={1500}
@@ -102,7 +102,7 @@ const TableContract = ({ contracts }) => {
         footer={false}
       >
         {selectedContract && <ModalContract id={selectedContract.id} />}
-      </Modal>
+      </Modal> */}
     </>
   );
 };

@@ -1,18 +1,18 @@
 import { Loading, Title } from "@/components";
+import { selectedContract } from "@/redux/slices/contract/contractSlices";
 import { projectStateDetailActions } from "@/redux/slices/projectStateDetail/projectStateDetailSlices";
 import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
 import { Divider } from "antd";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import Constructions from "./Constructions";
-import Design from "./Design";
 import InformationProject from "./InformationProject";
+import Design from "./Design";
 import Staff from "./Staff";
-import { selectedContract } from "@/redux/slices/contract/contractSlices";
-import TablePayment from "./TablePayment";
 import TableContract from "./TableContract";
+import TablePayment from "./TablePayment";
+import Constructions from "./Constructions";
 
-const ProjectDetail = () => {
+const ManagementProjectDetail = () => {
   const dispatch = useAppDispatch();
   const project = useAppSelector((state) => state.projectStateDetail.project);
   const design = useAppSelector((state) => state.projectStateDetail.design);
@@ -35,7 +35,6 @@ const ProjectDetail = () => {
     dispatch(projectStateDetailActions.fetchContracts(id));
   }, []);
 
-  console.log(construction);
   return (
     <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 h-full w-full">
       <Title name="Thông tin dự án" />
@@ -76,4 +75,4 @@ const ProjectDetail = () => {
   );
 };
 
-export default ProjectDetail;
+export default ManagementProjectDetail;

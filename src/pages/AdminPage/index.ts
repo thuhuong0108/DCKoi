@@ -16,6 +16,7 @@ import ConstructionTemplateConfig from "./ConstructionTemplateConfig";
 import Design from "./Design";
 import AdminContract from "./Contracts";
 import ManagementProjects from "./Projects/ManagementProjects";
+import ManagementProjectDetail from "./ProjectDetail";
 export {
   ConsultationPage,
   DetailConsultation,
@@ -34,4 +35,5 @@ export {
   Design,
   ManagementProjects,
   AdminContract,
+  ManagementProjectDetail,
 };
