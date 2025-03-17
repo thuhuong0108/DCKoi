@@ -43,6 +43,7 @@ import {
   DetailConsultation,
   EquipmentPage,
   ManagementPackage,
+  ManagementProjectDetail,
   ManagementProjects,
   ManagementTransaction,
   ManagementUser,
@@ -231,6 +232,10 @@ const Routers = () => {
     {
       path: "/admin/projects",
       element: <RootLayout Pages={ManagementProjects} />,
+    },
+    {
+      path: "/admin/projects/:id",
+      element: <RootLayout Pages={ManagementProjectDetail} />,
     },
 
     // consultant

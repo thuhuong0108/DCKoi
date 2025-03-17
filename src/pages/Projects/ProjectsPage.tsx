@@ -10,7 +10,6 @@ const ProjectsPage = () => {
   const dispatch = useAppDispatch();
   const items = useAppSelector((state) => state.projectBoard.projects);
   const loading = useAppSelector((state) => state.projectBoard.loading);
-  console.log(items);
 
   useEffect(() => {
     dispatch(
@@ -22,7 +21,7 @@ const ProjectsPage = () => {
     return (
       <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 h-full">
         <Title name="Dự án" />
-        <Row className="gap-4 mt-4">
+        <Row className="gap-4">
           {[1, 2, 3].map((item) => (
             <ProjectSkeleton key={item} />
           ))}

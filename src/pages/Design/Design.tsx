@@ -4,6 +4,7 @@ import DesignCard from "./DesignCard";
 import DesignSkeleton from "./DesignSkeleton";
 import { useEffect } from "react";
 import { projectActions } from "@/redux/slices/project/projectSlices";
+import { Row } from "antd";
 
 const Design = () => {
   const dispatch = useAppDispatch();
@@ -29,11 +30,11 @@ const Design = () => {
   return (
     <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 h-full">
       <Title name="Thiết kế" />
-      <div className="grid grid-cols-3 gap-4">
+      <Row className=" gap-4">
         {items.data.map((item) => (
           <DesignCard key={item.id} {...item} />
         ))}
-      </div>
+      </Row>
     </div>
   );
 };

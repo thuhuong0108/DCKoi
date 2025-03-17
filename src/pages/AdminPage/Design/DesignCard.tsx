@@ -91,7 +91,7 @@ const DesignCard = ({
 
   return (
     <Card
-      className="rounded-lg bg-white w-[300px] "
+      className="rounded-lg bg-white w-[350px] "
       cover={
         <img
           alt="example"
@@ -131,7 +131,7 @@ const DesignCard = ({
             }
           }}
         >
-          {hasManager ? "Xem chi tiết" : "Chọn quản lí"}
+          {hasManager ? "Chi tiết" : "Chọn quản lí"}
         </Button>
       </div>
 

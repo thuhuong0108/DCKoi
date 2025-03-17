@@ -23,7 +23,7 @@ function* fetchQuotationWorker(action: PayloadAction<string>) {
     if (data.isSuccess) {
       yield put(quotationActions.fetchQuotationSuccess(data));
     } else {
-      messageSuccess(data.message);
+      messageError(data.message);
       yield put(quotationActions.fetchQuotationFailed());
     }
   } catch (error) {
