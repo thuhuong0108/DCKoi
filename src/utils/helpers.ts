@@ -1,3 +1,4 @@
+import { getHolidays } from "@/api/holiday";
 import { Category } from "@/models/enums/Category";
 import { DesignState } from "@/models/enums/DesignState";
 import { Position } from "@/models/enums/Position";
@@ -9,6 +10,7 @@ import {
   QuotationStatus,
 } from "@/models/enums/Status";
 import { TaskStage } from "@/models/enums/TaskStage";
+import { HolidayType } from "@/models/HolidayType";
 
 export const formatDate = (date: Date, includeTime = false): string => {
   const options: Intl.DateTimeFormatOptions = includeTime
@@ -60,7 +62,18 @@ export const isDateString = (str: string): boolean => {
 export const trimText = (text: string, maxLength: number): string =>
   text.length > maxLength ? `${text.slice(0, maxLength)}...` : text;
 
-export const convertStringtoDate = (date: string): string => {
+export const convertIOSDatetoNormalDate = (date: string): string => {
+  const dateArr = date.split("T");
+
+  const dateArr2 = dateArr[0].split("-");
+  const day = dateArr2[2];
+  const month = dateArr2[1];
+  const year = dateArr2[0];
+
+  return `${year}-${month}-${day}`;
+};
+
+export const convertStringtoDate = (date: string, type = true): string => {
   const months: { [key: string]: string } = {
     Jan: "01",
     Feb: "02",
@@ -76,12 +89,21 @@ export const convertStringtoDate = (date: string): string => {
     Dec: "12",
   };
 
-  const dateArr = date.split(" ");
-  const day = dateArr[1].padStart(2, "0");
-  const month = months[dateArr[2]];
-  const year = dateArr[3];
+  if (type) {
+    const dateArr = date.split(" ");
+    const day = dateArr[1].padStart(2, "0");
+    const month = months[dateArr[2]];
+    const year = dateArr[3];
 
-  return `${year}-${month}-${day}`;
+    return `${year}-${month}-${day}`;
+  } else {
+    const dateArr = date.split("-");
+    const day = dateArr[3].padStart(2, "0");
+    const month = dateArr[2];
+    const year = dateArr[0];
+
+    return `${day}-${month}-${year}`;
+  }
 };
 export function parsePosition(position: Position): string {
   switch (position) {
@@ -248,3 +270,30 @@ export function parsePaymentPhase(phase: PaymentPhase): string {
       return "Trạng thái không xác định";
   }
 }
+
+export const CalculateEndDate = async (
+  start: Date,
+  duration: number,
+  volume: number,
+  factor: number = 10
+) => {
+  const holidaysReponse = await getHolidays();
+
+  const work = Math.ceil((volume / factor) * duration);
+
+  let count = 0;
+  let date = new Date(start);
+
+  while (count < work) {
+    date.setDate(date.getDate() + 1);
+    const isWeekend = date.getDay() === 0 || date.getDay() === 6; // 0 = Chủ nhật, 6 = Thứ 7
+    const isHoliday = holidaysReponse.data.some(
+      (holiday) => holiday.date === date.toISOString().split("T")[0]
+    );
+    if (!isWeekend && !isHoliday) {
+      count++;
+    }
+  }
+
+  return date;
+};

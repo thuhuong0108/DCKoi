@@ -1,3 +1,4 @@
+import { duration } from "@mui/material";
 import * as yup from "yup";
 export const validateDemo = yup.object().shape({
   name: yup.string().required().max(50),
@@ -68,6 +69,10 @@ export const validatePackage = yup.object().shape({
 export const validateTemplateConstruction = yup.object().shape({
   name: yup.string().required("Yêu cầu nhập tên mẫu"),
   description: yup.string().required("Yêu cầu nhập mô tả"),
+  duration: yup
+    .number()
+    .required("Yêu cầu nhập thời gian thực hiện")
+    .min(1, "Giá trị phải lớn hơn 0"),
 });
 
 export const validateEstimatePrice = yup.object().shape({

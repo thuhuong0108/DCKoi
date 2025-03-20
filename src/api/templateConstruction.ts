@@ -18,6 +18,15 @@ const getPagingTemlateConstruction = async (
   return response;
 };
 
+const getTemplateConstructionActive = async (
+  filter: Filter
+): Promise<ApiResultWithData<TemplateConstructionType>> => {
+  const response = await http.get(
+    `${endPoint.templateConstruction.getTemplateConstructions}?PageNumber=${filter.pageNumber}&PageSize=${filter.pageSize}&IsActive=true`
+  );
+  return response;
+};
+
 const getTemlateConstruction = async (
   id: string
 ): Promise<ApiResultWithData<TemplateConstructionTypeDetail>> => {
@@ -48,9 +57,20 @@ const createItemsTemlateConstruction = async (
   return response;
 };
 
+const activeTemplateConstructionDetail = async (
+  id: string
+): Promise<ApiResult> => {
+  const response = await http.put(
+    endPoint.templateConstruction.activeTemplateConstructionDetail(id)
+  );
+  return response;
+};
+
 export {
   getPagingTemlateConstruction,
+  activeTemplateConstructionDetail,
   getTemlateConstruction,
   createTemlateConstruction,
   createItemsTemlateConstruction,
+  getTemplateConstructionActive,
 };
