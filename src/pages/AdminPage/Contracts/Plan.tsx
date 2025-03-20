@@ -27,7 +27,6 @@ const Plan = () => {
 
   useEffect(() => {
     setTableData(flattenData(construction));
-    console.log("construction", construction);
   }, [construction]);
 
   useEffect(() => {

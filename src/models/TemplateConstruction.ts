@@ -16,6 +16,8 @@ export interface TemplateConstructionItemType {
   isPayment?: boolean;
   estimateAt?: string;
   status?: string;
+  duration: number;
+  category: string;
 }
 export interface TemplateConstructionTypeDetail
   extends TemplateConstructionType {

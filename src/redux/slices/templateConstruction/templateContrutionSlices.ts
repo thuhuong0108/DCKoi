@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store/store";
 import { Filter, Pagination } from "@/models/Common";
 import { TemplateConstructionType } from "@/models";
+import { getTemlateConstruction } from "@/api/templateConstruction";
 
 export interface TemplateConstructionState {
   loading: boolean;
@@ -40,6 +41,9 @@ export const templateConstructionSlice = createSlice({
       state,
       action: PayloadAction<TemplateConstructionType>
     ) {},
+    getTemlateConstructionActive(state, action: PayloadAction<Filter>) {
+      state.loading = true;
+    },
   },
 });
 

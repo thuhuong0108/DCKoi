@@ -3,6 +3,7 @@ import {
   TemplateConstructionItemType,
 } from "@/models";
 import { Category } from "@/models/enums/Category";
+import { parseCategory } from "@/utils/helpers";
 import { TableColumnsType } from "antd";
 
 export interface QuotationItem {
@@ -17,6 +18,14 @@ export const columns: TableColumnsType<TemplateConstructionItemType> = [
     dataIndex: "name",
     key: "name",
     width: "50%",
+    render: (text, record) => {
+      return (
+        <div>
+          {record.name}{" "}
+          {record.category && <span> :{parseCategory(record.category)}</span>}
+        </div>
+      );
+    },
   },
   {
     title: "Mô tả",
