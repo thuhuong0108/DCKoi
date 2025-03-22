@@ -1,20 +1,19 @@
-import { Sidebar, Menu, MenuItem, Logo } from "@/components/Sidebar";
+import { Logo, Menu, MenuItem, Sidebar } from "@/components/Sidebar";
 import { selectCurrentUser, selectRole } from "@/redux/slices/auth/authSlices";
 import { useAppSelector } from "@/redux/store/hook";
 import {
   BuildSharp,
-  SupportAgentSharp,
-  FolderSharp,
   DesignServices,
+  SupportAgentSharp,
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 
-import HomeIcon from "@mui/icons-material/Home";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
+import BackHandIcon from "@mui/icons-material/BackHand";
+import FolderIcon from "@mui/icons-material/Folder";
+import HomeIcon from "@mui/icons-material/Home";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import PaidIcon from "@mui/icons-material/Paid";
-import CreditScoreIcon from "@mui/icons-material/CreditScore";
-import FolderIcon from "@mui/icons-material/Folder";
 
 interface IndexProps {
   Page: () => ReactElement;
@@ -52,6 +51,12 @@ const LayoutCustomer: React.FC<IndexProps> = ({ Page }) => {
       link: "/space-management/projects",
       children: "Dự án",
       icon: <FolderIcon />,
+      badge: true,
+    },
+    {
+      link: "/space-management/project-issues",
+      children: "Vấn đề thi công",
+      icon: <BackHandIcon />,
       badge: true,
     },
     {

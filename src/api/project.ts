@@ -10,6 +10,7 @@ import { endPoint } from "@/utils/endPoint";
 import http from "@/utils/http";
 import {
   AssginStaff,
+  IssueProjectType,
   ProjectRequest,
   StaffType,
   TemplateConstructionItemType,
@@ -175,6 +176,19 @@ const getConstuctorTask = async (
   );
   return response;
 };
+
+const getIssuesProject = async (
+  id: string,
+  filter: Filter
+): Promise<ApiResultWithPagination<IssueProjectType>> => {
+  const response = await http.get(
+    `${endPoint.project.getIssuesProject(id)}?PageNumber=${
+      filter.pageNumber
+    }&PageSize=${filter.pageSize}`
+  );
+  return response;
+};
+
 export {
   getConstuctorTask,
   assignConsultant,
@@ -193,4 +207,5 @@ export {
   getProjects,
   getDesignApproval,
   getConstructorProject,
+  getIssuesProject,
 };

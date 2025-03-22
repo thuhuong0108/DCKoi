@@ -5,17 +5,15 @@ import { EyeOutlined } from "@ant-design/icons";
 import { Modal, Table, TableProps, Tag } from "antd";
 import { useState } from "react";
 import ModalContract from "./ModalContract";
-
-const TableContract = ({ contracts }) => {
+import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
+import {
+  contractActions,
+  selectedContract,
+} from "@/redux/slices/contract/contractSlices";
+const TableContract = ({ contracts, project }) => {
   const [openDetailContract, setOpenDetailContract] = useState(false);
-  const [selectedContract, setSelectedContract] =
-    useState<ContractProjectType | null>(null);
-
-  const handleCloseModal = () => {
-    setOpenDetailContract(false);
-    setSelectedContract(null);
-  };
-
+  const dispatch = useAppDispatch();
+  const contract = useAppSelector(selectedContract);
   const columns: TableProps<ContractProjectType>["columns"] = [
     {
       title: "Stt",
@@ -75,8 +73,8 @@ const TableContract = ({ contracts }) => {
         <Button
           leadingIcon={<EyeOutlined />}
           title="Xem chi tiết"
-          onClick={() => {
-            setSelectedContract(record);
+          onClick={async () => {
+            await dispatch(contractActions.fetchContract(record.id));
             setOpenDetailContract(true);
           }}
         />
@@ -92,17 +90,17 @@ const TableContract = ({ contracts }) => {
         pagination={false}
       />
 
-      {/* <Modal
+      <Modal
         title={`Thông tin chi tiêt hợp đồng`}
         open={openDetailContract}
         width={1500}
-        onCancel={handleCloseModal}
-        onClose={handleCloseModal}
-        onOk={handleCloseModal}
+        onCancel={() => setOpenDetailContract(false)}
+        onClose={() => setOpenDetailContract(false)}
+        onOk={() => setOpenDetailContract(false)}
         footer={false}
       >
-        {selectedContract && <ModalContract id={selectedContract.id} />}
-      </Modal> */}
+        {contract && <ModalContract contract={contract} project={project} />}
+      </Modal>
     </>
   );
 };

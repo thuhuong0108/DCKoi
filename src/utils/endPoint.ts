@@ -1,3 +1,5 @@
+import { getIssuesProject } from "@/api/project";
+
 const baseURL = "https://kpcos.vinhuser.one/api/";
 const socketURL = "http://34.81.244.146:3333";
 const cloudinaryURL = "https://api.cloudinary.com/v1_1/dulapxpnp/upload";
@@ -79,6 +81,7 @@ const endPoint = {
     getConstructor: (id: string) =>
       `/projects/${id}/staff?Position=CONSTRUCTOR`,
     getConstuctorTask: (id: string) => `/projects/${id}/construction-task`,
+    getIssuesProject: (id: string) => `/projects/${id}/project-issue`,
   },
 
   quotation: {
@@ -123,6 +126,12 @@ const endPoint = {
     createPayment: "/payments",
     paymentCallback: "/payments/vnpay-callback",
     getPayment: (id: string) => `payments/${id}`,
+  },
+
+  issue: {
+    createIssue: (id: string) => `project-issues/${id}`,
+    updateIssue: (id: string) => `project-issues/${id}`,
+    deleteIssue: (id: string) => `project-issues/images/${id}`,
   },
 };
 

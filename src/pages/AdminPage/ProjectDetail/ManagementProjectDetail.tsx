@@ -49,10 +49,10 @@ const ManagementProjectDetail = () => {
       {project.loading ? <Loading /> : <Staff staff={project.detail.staff} />}
 
       <Divider orientation="left">3. Hợp đồng </Divider>
-      {loading ? (
+      {contracts.loading ? (
         <Loading />
       ) : (
-        <TableContract contracts={contracts.contracts} />
+        <TableContract contracts={contracts.contracts} project={project} />
       )}
 
       <Divider orientation="left">4. Đợt thanh toán</Divider>

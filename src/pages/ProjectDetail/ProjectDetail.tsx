@@ -35,7 +35,6 @@ const ProjectDetail = () => {
     dispatch(projectStateDetailActions.fetchContracts(id));
   }, []);
 
-  console.log(construction);
   return (
     <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 h-full w-full">
       <Title name="Thông tin dự án" />
@@ -50,10 +49,10 @@ const ProjectDetail = () => {
       {project.loading ? <Loading /> : <Staff staff={project.detail.staff} />}
 
       <Divider orientation="left">3. Hợp đồng </Divider>
-      {loading ? (
+      {contracts.loading ? (
         <Loading />
       ) : (
-        <TableContract contracts={contracts.contracts} />
+        <TableContract contracts={contracts.contracts} project={project} />
       )}
 
       <Divider orientation="left">4. Đợt thanh toán</Divider>

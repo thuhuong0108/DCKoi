@@ -1,6 +1,11 @@
+import {
+  FieldQuotationDetailType,
+  TemplateConstructionItemType,
+} from "@/models";
+import { Category } from "@/models/enums/Category";
 import { Staff } from "@/models/ProjectType";
 import { parsePosition } from "@/utils/helpers";
-import { TableProps } from "antd";
+import { TableColumnsType, TableProps } from "antd";
 
 export const staffConlumns: TableProps<Staff>["columns"] = [
   {
@@ -42,3 +47,23 @@ export interface TablePaymentBatch {
   totalValue: number;
   status: string;
 }
+
+export interface QuotationItem {
+  name: Category;
+  totalPrice: number;
+  items: FieldQuotationDetailType[];
+}
+
+export const columns: TableColumnsType<TemplateConstructionItemType> = [
+  {
+    title: "Tiêu đề",
+    dataIndex: "name",
+    key: "name",
+    width: "50%",
+  },
+  {
+    title: "Mô tả",
+    dataIndex: "description",
+    key: "description",
+  },
+];

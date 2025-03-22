@@ -13,9 +13,9 @@ import { dateDDMMYYY, formatPrice, parseStatusContract } from "@/utils/helpers";
 import { EyeOutlined } from "@ant-design/icons";
 import { Col, Descriptions, Modal, Row } from "antd";
 import { useEffect, useState } from "react";
-import DetailQuotationConsulting from "./DetailQuotationConsulting";
 import TablePayment from "./TablePayment";
 import TableStage from "./TableStage";
+import DetailQuotationConsulting from "./DetailQuotationConsulting";
 
 const ModalContract = ({ contract, project }) => {
   const dispatch = useAppDispatch();
