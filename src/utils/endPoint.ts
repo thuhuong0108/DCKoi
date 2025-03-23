@@ -135,6 +135,14 @@ const endPoint = {
     deleteIssue: (id: string) => `project-issues/images/${id}`,
     confirmIssue: (id: string) => `project-issues/${id}/confirm`,
   },
+
+  issueType: {
+    createIssueType: "issuetype",
+    getAllIssueType: `issuetype`,
+    updateIssueType: (id: string) => `issuetype/${id}`,
+    deleteIssueType: (id: string) => `issuetype/${id}`,
+  },
+
   holiday: {
     getHolidays: "/holiday",
   },

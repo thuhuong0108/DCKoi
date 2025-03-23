@@ -25,13 +25,6 @@ export interface IssueStaff {
   avatar: string;
 }
 
-export interface IssueType {
-  id: string;
-  name: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
 export interface IssueConstructionItem {
   id: string;
   name: string;

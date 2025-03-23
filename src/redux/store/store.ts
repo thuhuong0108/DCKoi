@@ -39,6 +39,7 @@ import constructionItemStage from "../slices/constructionItemStage/constructionI
 import taskConstructorSlice from "../slices/taskConstructor/taskConstructorSlices";
 import transactionsSlice from "../slices/transaction/transactionSlices";
 import issuelSlice from "../slices/issue/issueSlices";
+import issueTypeSlice from "../slices/issueType/issueSlices";
 
 const rootReducers = combineReducers({
   router: connectRouter(history),
@@ -69,6 +70,7 @@ const rootReducers = combineReducers({
   taskConstructor: taskConstructorSlice,
   transaction: transactionsSlice,
   issue: issuelSlice,
+  issueType: issueTypeSlice,
 });
 
 const persistConfig = {
