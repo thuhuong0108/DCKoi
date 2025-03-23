@@ -4,7 +4,7 @@ export interface IssueRequest {
   cause: string;
   reason: string;
   solution: string;
-  issueImages: string;
+  issueImage: string;
   confirmImage: string;
   estimateAt: string;
   actualAt: string;

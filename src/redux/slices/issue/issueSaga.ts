@@ -8,7 +8,11 @@ import { messageError, messageSuccess } from "@/components";
 import { IssueProjectType } from "@/models";
 import { IssueRequest } from "@/models/Request/IssueRequest";
 import { PayloadAction } from "@reduxjs/toolkit";
-import { call, fork, take } from "redux-saga/effects";
+import { call, fork, put, select, take } from "redux-saga/effects";
+import {
+  ProjectStateDetail,
+  projectStateDetailActions,
+} from "../projectStateDetail/projectStateDetailSlices";
 import { issueActions } from "./issueSlices";
 
 // create
@@ -67,6 +71,13 @@ function* confirmIssueWorker(action: PayloadAction<string>) {
     const data = yield call(confirmIssue, action.payload);
     if (data.isSuccess) {
       messageSuccess(data.message);
+      const project: ProjectStateDetail = yield select(
+        (state) => state.project
+      );
+
+      yield put(
+        projectStateDetailActions.fetchIssues(project.project.detail.id)
+      );
     } else {
       messageError(data.message);
     }

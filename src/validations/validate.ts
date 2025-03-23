@@ -110,3 +110,11 @@ export const validateConstruction = yup.object().shape({
   name: yup.string().required("Yêu cầu nhập tên công việc"),
   deadlineAt: yup.date().required("Yêu cầu nhập ngày hết hạn"),
 });
+
+export const validateIssue = yup.object().shape({
+  name: yup.string().required("Yêu cầu nhập vẫn đề thi công"),
+  issueImages: yup.string().required("Yêu cầu nhập tên công việc"),
+  estimateAt: yup.string().required("Yêu cầu nhập tên thời gian dự kiến"),
+  issueTypeId: yup.string().required("Yêu cầu chọn loại vấn đề gặp phải"),
+  staffId: yup.string().required("Yêu cầu chọn nhân viên"),
+});

@@ -26,6 +26,7 @@ const deleteIssue = async (id: string): Promise<ApiResult> => {
 };
 
 const confirmIssue = async (id: string): Promise<ApiResult> => {
+  console.log(id);
   const response = await http.put(endPoint.issue.confirmIssue(id));
   return response;
 };
