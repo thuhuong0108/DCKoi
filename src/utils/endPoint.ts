@@ -1,8 +1,8 @@
 import { getHolidays } from "@/api/holiday";
 import { activeTemplateConstructionDetail } from "@/api/templateConstruction";
 
-// const baseURL = "https://kpcos.vinhuser.one/api/";
-const baseURL = "http://localhost:5113/api/";
+const baseURL = "https://kpcos.vinhuser.one/api/";
+// const baseURL = "http://localhost:5113/api/";
 const socketURL = "http://34.81.244.146:3333";
 const cloudinaryURL = "https://api.cloudinary.com/v1_1/dulapxpnp/upload";
 const endPoint = {
