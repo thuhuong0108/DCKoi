@@ -1,20 +1,21 @@
 import { Button } from "@/components";
 import { ContractProjectType } from "@/models";
+import {
+  contractActions,
+  selectedContract,
+} from "@/redux/slices/contract/contractSlices";
+import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
 import { dateDDMMYYY, formatPrice, parseStatusContract } from "@/utils/helpers";
 import { EyeOutlined } from "@ant-design/icons";
 import { Modal, Table, TableProps, Tag } from "antd";
 import { useState } from "react";
 import ModalContract from "./ModalContract";
 
-const TableContract = ({ contracts }) => {
+const TableContract = ({ contracts, project }) => {
+  const dispatch = useAppDispatch();
   const [openDetailContract, setOpenDetailContract] = useState(false);
-  const [selectedContract, setSelectedContract] =
-    useState<ContractProjectType | null>(null);
 
-  const handleCloseModal = () => {
-    setOpenDetailContract(false);
-    setSelectedContract(null);
-  };
+  const contract = useAppSelector(selectedContract);
 
   const columns: TableProps<ContractProjectType>["columns"] = [
     {
@@ -75,9 +76,10 @@ const TableContract = ({ contracts }) => {
         <Button
           leadingIcon={<EyeOutlined />}
           title="Xem chi tiết"
-          onClick={() => {
-            setSelectedContract(record);
+          onClick={async () => {
+            await dispatch(contractActions.fetchContract(record.id));
             setOpenDetailContract(true);
+            console.log("openDetailContract", openDetailContract);
           }}
         />
       ),
@@ -96,12 +98,12 @@ const TableContract = ({ contracts }) => {
         title={`Thông tin chi tiêt hợp đồng`}
         open={openDetailContract}
         width={1500}
-        onCancel={handleCloseModal}
-        onClose={handleCloseModal}
-        onOk={handleCloseModal}
+        onCancel={() => setOpenDetailContract(false)}
+        onClose={() => setOpenDetailContract(false)}
+        onOk={() => setOpenDetailContract(false)}
         footer={false}
       >
-        {selectedContract && <ModalContract id={selectedContract.id} />}
+        {contract && <ModalContract contract={contract} project={project} />}
       </Modal>
     </>
   );

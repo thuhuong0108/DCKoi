@@ -3,18 +3,16 @@ import {
   TemplateConstructionItemType,
 } from "@/models";
 import { Category } from "@/models/enums/Category";
-import { useEffect, useState } from "react";
-import CategoryField from "./TableQuotation";
-import { columns, QuotationItem } from "./type";
-import { Button, Col, Divider, Input, Row, Table } from "antd";
-import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
-import { selectRole } from "@/redux/slices/auth/authSlices";
 import { RoleUser } from "@/models/enums/RoleUser";
 import { QuotationStatus } from "@/models/enums/Status";
+import { selectRole } from "@/redux/slices/auth/authSlices";
 import { quotationActions } from "@/redux/slices/quotation/quotationSlices";
-import TableQuotation from "./TableQuotation";
-import { projectDetailActions } from "@/redux/slices/projectDetail/projectDetailSlices";
-import { Title } from "@/components";
+import {
+  selectTemplateConstructionDetail,
+  templateConstructionDetailActions,
+} from "@/redux/slices/templateConstructionDetail/templateConstructionDetailSlices";
+import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
+import { formatPrice } from "@/utils/helpers";
 import {
   BorderlessTableOutlined,
   EnvironmentOutlined,
@@ -24,14 +22,11 @@ import {
   PoundCircleOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { formatPrice } from "@/utils/helpers";
+import { Button, Col, Divider, Input, Row, Table } from "antd";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CollapseQuotation from "./CollapseQuotation";
-import {
-  selectTemplateConstructionDetail,
-  templateConstructionDetailActions,
-} from "@/redux/slices/templateConstructionDetail/templateConstructionDetailSlices";
-import { quotationProjectActions } from "@/redux/slices/quotationProject/quotationProjectSlices";
+import { columns, QuotationItem } from "./type";
 
 const DetailQuotationConsulting = ({
   quotation,
@@ -103,7 +98,7 @@ const DetailQuotationConsulting = ({
         ...equipmentsInCategory,
       ];
 
-      let totalPrice = fieldQuotationDetailType.reduce(
+      const totalPrice = fieldQuotationDetailType.reduce(
         (sum, item) => sum + item.price * item.quantity,
         0
       );
@@ -125,7 +120,11 @@ const DetailQuotationConsulting = ({
 
   const handleActionClick = (action) => {
     setActionType(action);
-    setShowTextArea(true);
+    if (action == "reject") {
+      setShowTextArea(true);
+    } else {
+      handleConfirmAction();
+    }
   };
 
   const handleConfirmAction = () => {
@@ -178,8 +177,7 @@ const DetailQuotationConsulting = ({
                 {showTextArea && (
                   <div className="mt-4">
                     <p className="text-lg font-semibold mb-2">
-                      Vui lòng nhập lý do{" "}
-                      {actionType === "approve" ? "chấp nhận" : "từ chối"}:
+                      Vui lòng nhập lý do:
                     </p>
                     <Input.TextArea
                       value={reason}

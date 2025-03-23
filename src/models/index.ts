@@ -41,6 +41,14 @@ import {
 
 import { TransactionType } from "./TransactionType";
 
+import {
+  IssueProjectType,
+  IssueUser,
+  IssueConstructionItem,
+  IssueImage,
+  IssueType,
+} from "./IssueProjectType";
+
 import { ConstructionType, ConstructionItem } from "./ConstructionType";
 export type {
   DesignDetailType,
@@ -74,4 +82,9 @@ export type {
   QuotationProjectType,
   ProjectDetailType,
   TransactionType,
+  IssueProjectType,
+  IssueUser,
+  IssueConstructionItem,
+  IssueImage,
+  IssueType,
 };

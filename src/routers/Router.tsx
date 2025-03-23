@@ -34,6 +34,7 @@ import {
   DashBoardConstructor,
   ProjectDetailConstructor,
   Transaction,
+  IssueProject,
 } from "@/pages";
 import {
   AdminContract,
@@ -121,6 +122,11 @@ const Routers = () => {
       path: "/space-management/transactions",
       element: <LayoutCustomer Page={Transaction} />,
     },
+    {
+      path: "/space-management/project-issues",
+      element: <LayoutCustomer Page={IssueProject} />,
+    },
+
     // admin
     {
       path: "/admin",
