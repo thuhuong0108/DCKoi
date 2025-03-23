@@ -1,2 +1,2 @@
-import IssueDetail from "./IssueDetail";
+import IssueDetail from "./IssueProject";
 export default IssueDetail;

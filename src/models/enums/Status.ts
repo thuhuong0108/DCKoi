@@ -34,3 +34,10 @@ export enum PaymentPhase {
   PRE_CONSTRUCTING = "PRE_CONSTRUCTING",
   CONSTRUCTING = "CONSTRUCTING",
 }
+
+export enum IssueStatus {
+  OPENING = "OPENING",
+  PREVIEWING = "PREVIEWING",
+  PROCESSING = "PROCESSING",
+  DONE = "DONE",
+}
