@@ -133,6 +133,7 @@ const endPoint = {
     createIssue: (id: string) => `project-issues/${id}`,
     updateIssue: (id: string) => `project-issues/${id}`,
     deleteIssue: (id: string) => `project-issues/images/${id}`,
+    confirmIssue: (id: string) => `project-issues/${id}/confirm`,
   },
   holiday: {
     getHolidays: "/holiday",

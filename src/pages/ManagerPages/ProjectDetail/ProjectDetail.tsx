@@ -16,6 +16,7 @@ const ProjectDetail = () => {
   const construction = useAppSelector(
     (state) => state.projectStateDetail.construction
   );
+  const issue = useAppSelector((state) => state.projectStateDetail.issue);
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -23,7 +24,10 @@ const ProjectDetail = () => {
     dispatch(projectStateDetailActions.fetchProjectDetail(id));
     dispatch(projectStateDetailActions.fetchDesigns(id));
     dispatch(projectStateDetailActions.fetchConstructions(id));
+    dispatch(projectStateDetailActions.fetchIssues(id));
   }, []);
+
+  console.log(issue);
   return (
     <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 h-full w-full">
       {/* <Title name="1. Chi tiết dự án" /> */}

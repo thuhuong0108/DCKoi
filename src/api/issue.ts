@@ -1,3 +1,4 @@
+import { IssueProjectType } from "@/models";
 import { ApiResult } from "@/models/Common";
 import { IssueRequest } from "@/models/Request/IssueRequest";
 import { endPoint } from "@/utils/endPoint";
@@ -14,14 +15,20 @@ const createIssue = async (
   return response;
 };
 
-const updateIssue = async (issue: IssueRequest): Promise<ApiResult> => {
+const updateIssue = async (issue: IssueProjectType): Promise<ApiResult> => {
   const response = await http.put(endPoint.issue.updateIssue(issue.id), issue);
   return response;
 };
 
-const deleteIssue = async (imageId: string): Promise<ApiResult> => {
-  const response = await http.delete(endPoint.issue.deleteIssue(imageId));
+const deleteIssue = async (id: string): Promise<ApiResult> => {
+  const response = await http.delete(endPoint.issue.deleteIssue(id));
   return response;
 };
 
-export { createIssue, updateIssue, deleteIssue };
+const confirmIssue = async (id: string): Promise<ApiResult> => {
+  console.log(id);
+  const response = await http.put(endPoint.issue.confirmIssue(id));
+  return response;
+};
+
+export { createIssue, updateIssue, deleteIssue, confirmIssue };

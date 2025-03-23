@@ -1,6 +1,7 @@
 import {
   ContractType,
   DesignType,
+  IssueProjectType,
   TemplateConstructionItemType,
 } from "@/models";
 import { Filter, Pagination } from "@/models/Common";
@@ -30,6 +31,10 @@ export interface ProjectStateDetail {
   task: {
     loading: boolean;
     tasks: Pagination<TaskType>;
+  };
+  issue: {
+    loading: boolean;
+    issues: IssueProjectType[];
   };
 }
 
@@ -73,6 +78,10 @@ const initialState: ProjectStateDetail = {
       totalPages: 0,
       totalRecords: 0,
     },
+  },
+  issue: {
+    loading: false,
+    issues: [],
   },
 };
 
@@ -132,6 +141,16 @@ export const projectStateDetailSlice = createSlice({
     },
     fetchTasksFailed(state) {
       state.task.loading = false;
+    },
+    fetchIssues(state, action: PayloadAction<string>) {
+      state.contract.loading = true;
+    },
+    fetchIssuesSuccess(state, action: PayloadAction<IssueProjectType[]>) {
+      state.issue.issues = action.payload;
+      state.issue.loading = false;
+    },
+    fetchIssuesFailed(state) {
+      state.issue.loading = false;
     },
   },
 });

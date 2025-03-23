@@ -35,6 +35,7 @@ import {
   ProjectDetailConstructor,
   Transaction,
   IssueProject,
+  CreateIssue,
 } from "@/pages";
 import {
   AdminContract,
@@ -291,6 +292,11 @@ const Routers = () => {
     {
       path: "/manager/construction",
       element: <RootLayout Pages={ManagerConstruction} />,
+    },
+
+    {
+      path: "/manager/:id/construction/add-issue",
+      element: <RootLayout Pages={CreateIssue} />,
     },
 
     // designer

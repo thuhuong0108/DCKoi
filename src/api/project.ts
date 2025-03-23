@@ -179,14 +179,9 @@ const getConstuctorTask = async (
 };
 
 const getIssuesProject = async (
-  id: string,
-  filter: Filter
+  id: string
 ): Promise<ApiResultWithPagination<IssueProjectType>> => {
-  const response = await http.get(
-    `${endPoint.project.getIssuesProject(id)}?PageNumber=${
-      filter.pageNumber
-    }&PageSize=${filter.pageSize}`
-  );
+  const response = await http.get(`${endPoint.project.getIssuesProject(id)}`);
   return response;
 };
 

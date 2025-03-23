@@ -1,16 +1,13 @@
 export interface IssueRequest {
-  id?: string;
   name: string;
   description: string;
+  cause: string;
   reason: string;
   solution: string;
-  status: string;
-  isSolved: boolean;
+  issueImage: string;
+  confirmImage: string;
+  estimateAt: string;
+  actualAt: string;
   issueTypeId: string;
-  issueImages: IssueImagesRequest[];
-}
-
-export interface IssueImagesRequest {
-  name: string;
-  imageUrl: string;
+  staffId: string;
 }

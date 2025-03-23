@@ -1,27 +1,23 @@
+import { IssueStatus } from "./enums/Status";
+
 export interface IssueProjectType {
   id: string;
   name: string;
   description: string;
+  cause: string;
   reason: string;
   solution: string;
-  status: string;
+  status: IssueStatus;
   issueType: IssueType;
   constructionItem: IssueConstructionItem;
-  issueImages: IssueImage[];
-  user: IssueUser;
+  issueImage: string;
+  confirmImage: string;
+  staff: IssueStaff;
   createdAt: string;
   updatedAt: string;
 }
 
-export interface IssueImage {
-  id: string;
-  name: string;
-  imageUrl: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface IssueUser {
+export interface IssueStaff {
   id: string;
   fullName: string;
   email: string;

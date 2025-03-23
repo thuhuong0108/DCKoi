@@ -4,6 +4,7 @@ import { DesignState } from "@/models/enums/DesignState";
 import { Position } from "@/models/enums/Position";
 import {
   ContractStatus,
+  IssueStatus,
   ItemConstructionStatus,
   PaymentPhase,
   ProjectStatus,
@@ -297,3 +298,18 @@ export const CalculateEndDate = async (
 
   return date;
 };
+
+export function parseIssueStatus(issue: IssueStatus): string {
+  switch (issue) {
+    case IssueStatus.OPENING:
+      return "Đợi nhân viên";
+    case IssueStatus.PREVIEWING:
+      return "Đang kiểm duyệt";
+    case IssueStatus.PROCESSING:
+      return "Đang khắc phục";
+    case IssueStatus.DONE:
+      return "Hoàn thành";
+    default:
+      return "Trạng thái không xác định";
+  }
+}
