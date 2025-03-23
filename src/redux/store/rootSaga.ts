@@ -27,6 +27,7 @@ import { constructionItemSaga } from "../slices/constructionItemStage/constructi
 import { taskConstructorSaga } from "../slices/taskConstructor/taskConstructorSaga";
 import { transactionSaga } from "../slices/transaction/transactionSaga";
 import { issueSaga } from "../slices/issue/issueSaga";
+import { issueTypeSaga } from "../slices/issueType/issueSaga";
 
 export default function* rootSaga() {
   yield all([
@@ -57,5 +58,6 @@ export default function* rootSaga() {
     taskConstructorSaga(),
     transactionSaga(),
     issueSaga(),
+    issueTypeSaga(),
   ]);
 }
