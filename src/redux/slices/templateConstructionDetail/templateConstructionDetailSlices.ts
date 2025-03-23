@@ -17,7 +17,7 @@ const initialState: TemplateConstructionDetailState = {
     isActive: false,
     templateContructionItems: [],
   },
-}; 
+};
 
 export const templateConstructionDetailSlice = createSlice({
   name: "templateConstructionDetail",
@@ -36,6 +36,7 @@ export const templateConstructionDetailSlice = createSlice({
     getTemplateConstructionDetailFailed(state) {
       state.loading = false;
     },
+    activeTemplateConstructionDetail(state, action: PayloadAction<string>) {},
     createTemplateConstructionDetail(
       state,
       action: PayloadAction<TemplateConstructionTypeDetail>

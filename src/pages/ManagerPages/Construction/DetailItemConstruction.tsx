@@ -334,7 +334,7 @@ const DetailItemConstruction = ({ openModal, setOpenModal }) => {
                 setIsModalVisible(true);
                 setModalShifted(true);
               }}
-              disabled={isDone}
+              // disabled={isDone}
             >
               Thêm công việc
             </Button>

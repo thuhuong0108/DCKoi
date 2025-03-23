@@ -11,6 +11,7 @@ import Staff from "./Staff";
 import { selectedContract } from "@/redux/slices/contract/contractSlices";
 import TablePayment from "./TablePayment";
 import TableContract from "./TableContract";
+import Tasks from "./Tasks";
 
 const ProjectDetail = () => {
   const dispatch = useAppDispatch();
@@ -69,7 +70,11 @@ const ProjectDetail = () => {
       {construction.loading ? (
         <Loading />
       ) : (
-        <Constructions constructionItem={construction.constructions} />
+        <>
+          {" "}
+          <Constructions constructionItem={construction.constructions} />
+          <Tasks />
+        </>
       )}
     </div>
   );

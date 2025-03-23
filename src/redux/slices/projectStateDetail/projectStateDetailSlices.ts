@@ -3,8 +3,10 @@ import {
   DesignType,
   TemplateConstructionItemType,
 } from "@/models";
+import { Filter, Pagination } from "@/models/Common";
 import { ProjectStatus } from "@/models/enums/Status";
 import { ProjectDetailType } from "@/models/ProjectType";
+import { TaskType } from "@/models/TaskType";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface ProjectStateDetail {
@@ -24,6 +26,10 @@ export interface ProjectStateDetail {
   contract: {
     loading: boolean;
     contracts: ContractType[];
+  };
+  task: {
+    loading: boolean;
+    tasks: Pagination<TaskType>;
   };
 }
 
@@ -57,6 +63,16 @@ const initialState: ProjectStateDetail = {
   contract: {
     loading: false,
     contracts: [],
+  },
+  task: {
+    loading: false,
+    tasks: {
+      data: [],
+      pageNumber: 1,
+      pageSize: 5,
+      totalPages: 0,
+      totalRecords: 0,
+    },
   },
 };
 
@@ -106,6 +122,16 @@ export const projectStateDetailSlice = createSlice({
     },
     fetchContractsFailed(state) {
       state.contract.loading = false;
+    },
+    fetchTasks(state, action: PayloadAction<{ id: string; filter: Filter }>) {
+      state.task.loading = true;
+    },
+    fetchTasksSuccess(state, action: PayloadAction<Pagination<TaskType>>) {
+      state.task.tasks = action.payload;
+      state.task.loading = false;
+    },
+    fetchTasksFailed(state) {
+      state.task.loading = false;
     },
   },
 });

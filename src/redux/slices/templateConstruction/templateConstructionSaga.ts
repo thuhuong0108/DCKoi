@@ -6,6 +6,7 @@ import {
   createTemlateConstruction,
   getPagingTemlateConstruction,
   getTemlateConstruction,
+  getTemplateConstructionActive,
 } from "@/api/templateConstruction";
 import { templateConstructionActions } from "./templateContrutionSlices";
 import { Filter } from "@/models/Common";
@@ -58,6 +59,24 @@ function* createItemWorker(action: PayloadAction<TemplateConstructionType>) {
   }
 }
 
+function* fetchItemActiveWorker(action: PayloadAction<Filter>) {
+  try {
+    const data = yield call(getTemplateConstructionActive, action.payload);
+    if (data.isSuccess) {
+      yield put(
+        templateConstructionActions.getTemplateConstructionSuccess(data)
+      );
+    } else {
+      messageError(data.message);
+      yield put(templateConstructionActions.getTemplateConstructionFailed());
+    }
+  } catch (error) {
+    messageError("Fetch package item failed");
+    console.log(error);
+    yield put(templateConstructionActions.getTemplateConstructionFailed());
+  }
+}
+
 //watcher
 
 function* fetchItemWatcher() {
@@ -78,7 +97,17 @@ function* createItemWatcher() {
   }
 }
 
+function* fetchItemActiveWatcher() {
+  while (true) {
+    const action = yield take(
+      templateConstructionActions.getTemlateConstructionActive
+    );
+    yield fork(fetchItemActiveWorker, action);
+  }
+}
+
 export function* templateConstructionSaga() {
   yield fork(fetchItemWatcher);
   yield fork(createItemWatcher);
+  yield fork(fetchItemActiveWatcher);
 }

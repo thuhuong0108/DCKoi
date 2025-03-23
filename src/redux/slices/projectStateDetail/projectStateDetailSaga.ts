@@ -4,12 +4,14 @@ import {
   getDesignApproval,
   getProject,
   getProjectConstruction,
+  getTasksDoneProject,
 } from "@/api/project";
 import { messageError } from "@/components";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { call, fork, put, take } from "redux-saga/effects";
 import { projectStateDetailActions } from "./projectStateDetailSlices";
 import { contractActions } from "../contract/contractSlices";
+import { Filter } from "@/models/Common";
 
 function* fetchProjectDetailWorker(action: PayloadAction<string>) {
   try {
@@ -83,6 +85,27 @@ function* fetchContractWorker(action: PayloadAction<string>) {
   }
 }
 
+function* fetchTaskWorker(
+  action: PayloadAction<{ id: string; filter: Filter }>
+) {
+  try {
+    const data = yield call(
+      getTasksDoneProject,
+      action.payload.id,
+      action.payload.filter
+    );
+    if (data.isSuccess) {
+      yield put(projectStateDetailActions.fetchTasksSuccess(data));
+    } else {
+      yield put(projectStateDetailActions.fetchTasksFailed());
+    }
+  } catch (error) {
+    messageError("Hệ thống đang bị lỗi");
+    console.log(error);
+    yield put(projectStateDetailActions.fetchTasksFailed());
+  }
+}
+
 function* fetchProjectDetailWatcher() {
   while (true) {
     const action: PayloadAction<string> = yield take(
@@ -119,9 +142,19 @@ function* fetchContractWatcher() {
   }
 }
 
+function* fetchTaskWatcher() {
+  while (true) {
+    const action: PayloadAction<{ id: string; filter: Filter }> = yield take(
+      projectStateDetailActions.fetchTasks
+    );
+    yield fork(fetchTaskWorker, action);
+  }
+}
+
 export function* projectStateDetailSaga() {
   yield fork(fetchProjectDetailWatcher);
   yield fork(fetchDesignWatcher);
   yield fork(fetchConstructionWatcher);
   yield fork(fetchContractWatcher);
+  yield fork(fetchTaskWatcher);
 }

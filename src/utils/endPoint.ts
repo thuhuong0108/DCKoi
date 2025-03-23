@@ -1,6 +1,5 @@
-import { getIssuesProject } from "@/api/project";
-
 const baseURL = "https://kpcos.vinhuser.one/api/";
+// const baseURL = "http://localhost:5113/api/";
 const socketURL = "http://34.81.244.146:3333";
 const cloudinaryURL = "https://api.cloudinary.com/v1_1/dulapxpnp/upload";
 const endPoint = {
@@ -55,6 +54,8 @@ const endPoint = {
     createTemplateConstruction: "/templatecontructions",
     getTemplateConstructions: "/templatecontructions",
     getTemplateConstruction: (id: string) => `/templatecontructions/${id}`,
+    activeTemplateConstructionDetail: (id: string) =>
+      `/templatecontructions/${id}/active`,
     createTemplateConstructionItem: "/templatecontructions/items",
   },
 
@@ -132,6 +133,9 @@ const endPoint = {
     createIssue: (id: string) => `project-issues/${id}`,
     updateIssue: (id: string) => `project-issues/${id}`,
     deleteIssue: (id: string) => `project-issues/images/${id}`,
+  },
+  holiday: {
+    getHolidays: "/holiday",
   },
 };
 

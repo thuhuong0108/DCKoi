@@ -21,6 +21,7 @@ import {
   ApiResultWithData,
   ApiResultWithPagination,
 } from "./../models/Common";
+import { TaskType } from "@/models/TaskType";
 
 const getPagingProject = async (
   filter: Filter
@@ -168,7 +169,7 @@ const getConstructorProject = async (
 const getConstuctorTask = async (
   id: string,
   filter: Filter
-): Promise<ApiResultWithPagination<StaffType>> => {
+): Promise<ApiResultWithPagination<TaskType>> => {
   const response = await http.get(
     `${endPoint.project.getConstuctorTask(id)}?PageNumber=${
       filter.pageNumber
@@ -189,6 +190,17 @@ const getIssuesProject = async (
   return response;
 };
 
+const getTasksDoneProject = async (
+  id: string,
+  filter: Filter
+): Promise<ApiResultWithPagination<TaskType>> => {
+  const response = await http.get(
+    `${endPoint.project.getConstuctorTask(id)}?PageNumber=${
+      filter.pageNumber
+    }&PageSize=${filter.pageSize}&Status=DONE&SortColumn=UpdatedAt&SortDir=Desc`
+  );
+  return response;
+};
 export {
   getConstuctorTask,
   assignConsultant,
@@ -208,4 +220,5 @@ export {
   getDesignApproval,
   getConstructorProject,
   getIssuesProject,
+  getTasksDoneProject,
 };
