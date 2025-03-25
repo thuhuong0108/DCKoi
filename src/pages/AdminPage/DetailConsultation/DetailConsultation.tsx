@@ -90,9 +90,15 @@ const DetailConsultation = () => {
     setOpenDetailQuotation(true);
   };
 
-  const parseStatus = (status: QuotationStatus, prop: string) => {
+  const parseStatus = (
+    value: QuotationStatus | string,
+    prop: string
+  ): string => {
     if (prop === "status") {
-      return parseStatusQuotation(status);
+      return parseStatusQuotation(value as QuotationStatus);
+    }
+    if (prop === "reason") {
+      return value !== "undefined" ? value.toString() : " ";
     }
     return;
   };

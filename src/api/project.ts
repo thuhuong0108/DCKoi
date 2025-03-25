@@ -10,7 +10,9 @@ import { endPoint } from "@/utils/endPoint";
 import http from "@/utils/http";
 import {
   AssginStaff,
+  IssueProjectType,
   ProjectRequest,
+  StaffType,
   TemplateConstructionItemType,
 } from "@/models";
 import {
@@ -19,6 +21,7 @@ import {
   ApiResultWithData,
   ApiResultWithPagination,
 } from "./../models/Common";
+import { TaskType } from "@/models/TaskType";
 
 const getPagingProject = async (
   filter: Filter
@@ -61,6 +64,14 @@ const getQuotationProject = async (
   return response;
 };
 
+const getQuotationActiveProject = async (
+  id: string
+): Promise<ApiResultWithPagination<QuotationProjectType>> => {
+  const response = await http.get(`${endPoint.project.getQuotationActive(id)}`);
+
+  return response;
+};
+
 const requestProject = async (request: ProjectRequest): Promise<ApiResult> => {
   const response = await http.post(endPoint.project.requestProject, request);
   return response;
@@ -89,6 +100,7 @@ const check3Dconfirm = async (
   const response = await http.get(endPoint.project.check3Dconfirm(id));
   return response;
 };
+
 const getAllDesignForSpecificProject = async (
   id: string,
   filter: Filter
@@ -111,6 +123,14 @@ const getContractOfProject = async (
       filter.pageNumber
     }&PageSize=${filter.pageSize}`
   );
+  return response;
+};
+
+const getContractActiveProject = async (
+  id: string
+): Promise<ApiResultWithPagination<ContractProjectType>> => {
+  const response = await http.get(`${endPoint.project.getContractActive(id)}`);
+
   return response;
 };
 
@@ -139,12 +159,52 @@ const getDesignApproval = async (
   return response;
 };
 
+const getConstructorProject = async (
+  id: string
+): Promise<ApiResultWithPagination<StaffType>> => {
+  const response = await http.get(endPoint.project.getConstructor(id));
+  return response;
+};
+
+const getConstuctorTask = async (
+  id: string,
+  filter: Filter
+): Promise<ApiResultWithPagination<TaskType>> => {
+  const response = await http.get(
+    `${endPoint.project.getConstuctorTask(id)}?PageNumber=${
+      filter.pageNumber
+    }&PageSize=${filter.pageSize}&SortColumn=deadlineAt&SortDir=Asc`
+  );
+  return response;
+};
+
+const getIssuesProject = async (
+  id: string
+): Promise<ApiResultWithPagination<IssueProjectType>> => {
+  const response = await http.get(`${endPoint.project.getIssuesProject(id)}`);
+  return response;
+};
+
+const getTasksDoneProject = async (
+  id: string,
+  filter: Filter
+): Promise<ApiResultWithPagination<TaskType>> => {
+  const response = await http.get(
+    `${endPoint.project.getConstuctorTask(id)}?PageNumber=${
+      filter.pageNumber
+    }&PageSize=${filter.pageSize}&Status=DONE&SortColumn=UpdatedAt&SortDir=Desc`
+  );
+  return response;
+};
 export {
+  getConstuctorTask,
   assignConsultant,
-  getContractOfProject,
   check3Dconfirm,
+  getContractActiveProject,
+  getContractOfProject,
   getPagingProject,
   getProject,
+  getQuotationActiveProject,
   getQuotationProject,
   requestProject,
   getProjectDesign,
@@ -153,4 +213,7 @@ export {
   getProjectConstruction,
   getProjects,
   getDesignApproval,
+  getConstructorProject,
+  getIssuesProject,
+  getTasksDoneProject,
 };

@@ -14,6 +14,7 @@ import {
   DesignProject,
   DesignProjectDetail,
   DesignRequiment,
+  ManagerConstruction,
   ManagerProjectDetail,
   ProjectDetail,
   DetailConsulting,
@@ -29,6 +30,12 @@ import {
   Register,
   RewriteQuotation,
   TestUi,
+  ManagerProjectConstruction,
+  DashBoardConstructor,
+  ProjectDetailConstructor,
+  Transaction,
+  IssueProject,
+  CreateIssue,
 } from "@/pages";
 import {
   AdminContract,
@@ -38,6 +45,7 @@ import {
   DetailConsultation,
   EquipmentPage,
   ManagementPackage,
+  ManagementProjectDetail,
   ManagementProjects,
   ManagementTransaction,
   ManagementUser,
@@ -111,6 +119,15 @@ const Routers = () => {
       path: "/payment/response",
       element: <LayoutCustomer Page={PaymentStatus} />,
     },
+    {
+      path: "/space-management/transactions",
+      element: <LayoutCustomer Page={Transaction} />,
+    },
+    {
+      path: "/space-management/project-issues",
+      element: <LayoutCustomer Page={IssueProject} />,
+    },
+
     // admin
     {
       path: "/admin",
@@ -223,6 +240,10 @@ const Routers = () => {
       path: "/admin/projects",
       element: <RootLayout Pages={ManagementProjects} />,
     },
+    {
+      path: "/admin/projects/:id",
+      element: <RootLayout Pages={ManagementProjectDetail} />,
+    },
 
     // consultant
     {
@@ -252,6 +273,10 @@ const Routers = () => {
       element: <RootLayout Pages={ManagerProjectDetail} />,
     },
     {
+      path: "/manager/:id/construction",
+      element: <RootLayout Pages={ManagerProjectConstruction} />,
+    },
+    {
       path: "/manager/design",
       element: <RootLayout Pages={ManagerDesign} />,
     },
@@ -263,6 +288,15 @@ const Routers = () => {
     {
       path: "/manager/design/:id/design",
       element: <RootLayout Pages={DesignDetailManager} />,
+    },
+    {
+      path: "/manager/construction",
+      element: <RootLayout Pages={ManagerConstruction} />,
+    },
+
+    {
+      path: "/manager/:id/construction/add-issue",
+      element: <RootLayout Pages={CreateIssue} />,
     },
 
     // designer
@@ -279,6 +313,19 @@ const Routers = () => {
       element: <RootLayout Pages={DesignProject} />,
     },
 
+    // constructor
+    {
+      path: "/constructor",
+      element: <RootLayout Pages={DashBoardConstructor} />,
+    },
+    {
+      path: "/constructor/projects",
+      element: <RootLayout Pages={ManagerProject} />,
+    },
+    {
+      path: "/constructor/projects/:id",
+      element: <RootLayout Pages={ProjectDetailConstructor} />,
+    },
     { path: "*", element: <div>404</div> },
   ]);
   return <div>{element}</div>;

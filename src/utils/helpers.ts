@@ -1,11 +1,17 @@
+import { getHolidays } from "@/api/holiday";
 import { Category } from "@/models/enums/Category";
 import { DesignState } from "@/models/enums/DesignState";
 import { Position } from "@/models/enums/Position";
 import {
   ContractStatus,
+  IssueStatus,
+  ItemConstructionStatus,
+  PaymentPhase,
   ProjectStatus,
   QuotationStatus,
 } from "@/models/enums/Status";
+import { TaskStage } from "@/models/enums/TaskStage";
+import { HolidayType } from "@/models/HolidayType";
 
 export const formatDate = (date: Date, includeTime = false): string => {
   const options: Intl.DateTimeFormatOptions = includeTime
@@ -16,23 +22,22 @@ export const formatDate = (date: Date, includeTime = false): string => {
         hour: "2-digit",
         minute: "2-digit",
       }
-    : { year: "numeric", month: "short", day: "numeric" };
+    : { year: "numeric", month: "long", day: "numeric" };
 
-  return date.toLocaleDateString("en-US", options);
+  // return date.toLocaleDateString("vn-VN", options);
+  // return not include time
+  return date.toLocaleDateString("vi-VN", options);
 };
 export function parseDate(inputStr: string): string {
-  // Chuyển chuỗi đầu vào thành đối tượng Date
   const date = new Date(inputStr);
 
-  // Lấy các phần của ngày tháng
   const day = String(date.getDate()).padStart(2, "0");
-  const month = String(date.getMonth() + 1).padStart(2, "0"); // Tháng bắt đầu từ 0, nên cộng thêm 1
+  const month = String(date.getMonth() + 1).padStart(2, "0");
   const year = date.getFullYear();
   const hours = String(date.getHours()).padStart(2, "0");
   const minutes = String(date.getMinutes()).padStart(2, "0");
   const seconds = String(date.getSeconds()).padStart(2, "0");
 
-  // Trả về chuỗi theo định dạng mong muốn
   return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
 }
 
@@ -58,7 +63,18 @@ export const isDateString = (str: string): boolean => {
 export const trimText = (text: string, maxLength: number): string =>
   text.length > maxLength ? `${text.slice(0, maxLength)}...` : text;
 
-export const convertStringtoDate = (date: string): string => {
+export const convertIOSDatetoNormalDate = (date: string): string => {
+  const dateArr = date.split("T");
+
+  const dateArr2 = dateArr[0].split("-");
+  const day = dateArr2[2];
+  const month = dateArr2[1];
+  const year = dateArr2[0];
+
+  return `${year}-${month}-${day}`;
+};
+
+export const convertStringtoDate = (date: string, type = true): string => {
   const months: { [key: string]: string } = {
     Jan: "01",
     Feb: "02",
@@ -74,12 +90,21 @@ export const convertStringtoDate = (date: string): string => {
     Dec: "12",
   };
 
-  const dateArr = date.split(" ");
-  const day = dateArr[1].padStart(2, "0");
-  const month = months[dateArr[2]];
-  const year = dateArr[3];
+  if (type) {
+    const dateArr = date.split(" ");
+    const day = dateArr[1].padStart(2, "0");
+    const month = months[dateArr[2]];
+    const year = dateArr[3];
 
-  return `${year}-${month}-${day}`;
+    return `${year}-${month}-${day}`;
+  } else {
+    const dateArr = date.split("-");
+    const day = dateArr[3].padStart(2, "0");
+    const month = dateArr[2];
+    const year = dateArr[0];
+
+    return `${day}-${month}-${year}`;
+  }
 };
 export function parsePosition(position: Position): string {
   switch (position) {
@@ -193,10 +218,97 @@ export function parseStatusContract(status: ContractStatus): string {
   switch (status) {
     case ContractStatus.PROCESSING:
       return "Đang xử lí";
-    case ContractStatus.ACTIVED:
+    case ContractStatus.ACTIVE:
       return "Có hiệu lực";
     case ContractStatus.CANCELLED:
       return "Hủy bỏ";
+    default:
+      return "Trạng thái không xác định";
+  }
+}
+
+export function parseStatusConstruction(
+  status: ItemConstructionStatus
+): string {
+  switch (status) {
+    case ItemConstructionStatus.OPENING:
+      return "Chờ";
+    case ItemConstructionStatus.PROCESSING:
+      return "Đang thi công";
+    case ItemConstructionStatus.DONE:
+      return "Hoàn thành";
+    default:
+      return "Trạng thái không xác định";
+  }
+}
+
+export function parseTaskStatus(status: TaskStage): string {
+  switch (status) {
+    case TaskStage.OPEN:
+      return "Chờ";
+    case TaskStage.PROCESSING:
+      return "Đang thực hiện";
+    case TaskStage.DONE:
+      return "Hoàn thành";
+    case TaskStage.PREVIEWING:
+      return "Chờ xác nhận";
+    default:
+      return "Trạng thái không xác định";
+  }
+}
+
+export function parsePaymentPhase(phase: PaymentPhase): string {
+  switch (phase) {
+    case PaymentPhase.DEPOSIT:
+      return "Đặt cọc";
+    case PaymentPhase.ACCEPTANCE:
+      return "Chấn nhận";
+    case PaymentPhase.CONSTRUCTING:
+      return "Đang thi công";
+    case PaymentPhase.PRE_CONSTRUCTING:
+      return "Trước thi công";
+    default:
+      return "Trạng thái không xác định";
+  }
+}
+
+export const CalculateEndDate = async (
+  start: Date,
+  duration: number,
+  volume: number,
+  factor: number = 10
+) => {
+  const holidaysReponse = await getHolidays();
+
+  const work = Math.ceil((volume / factor) * duration);
+
+  let count = 0;
+  let date = new Date(start);
+
+  while (count < work) {
+    date.setDate(date.getDate() + 1);
+    const isWeekend = date.getDay() === 0 || date.getDay() === 6; // 0 = Chủ nhật, 6 = Thứ 7
+    const isHoliday = holidaysReponse.data.some(
+      (holiday) => holiday.date === date.toISOString().split("T")[0]
+    );
+    if (!isWeekend && !isHoliday) {
+      count++;
+    }
+  }
+
+  return date;
+};
+
+export function parseIssueStatus(issue: IssueStatus): string {
+  switch (issue) {
+    case IssueStatus.OPENING:
+      return "Đợi nhân viên";
+    case IssueStatus.PREVIEWING:
+      return "Đang kiểm duyệt";
+    case IssueStatus.PROCESSING:
+      return "Đang khắc phục";
+    case IssueStatus.DONE:
+      return "Hoàn thành";
     default:
       return "Trạng thái không xác định";
   }

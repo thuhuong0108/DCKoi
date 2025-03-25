@@ -1,13 +1,14 @@
 import {
+  ContractType,
   DesignType,
-  ProjectType,
+  IssueProjectType,
   TemplateConstructionItemType,
 } from "@/models";
 import { Filter, Pagination } from "@/models/Common";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "./../../store/store";
 import { ProjectStatus } from "@/models/enums/Status";
 import { ProjectDetailType } from "@/models/ProjectType";
+import { TaskType } from "@/models/TaskType";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface ProjectStateDetail {
   project: {
@@ -21,6 +22,19 @@ export interface ProjectStateDetail {
   construction: {
     loading: boolean;
     constructions: TemplateConstructionItemType[];
+  };
+
+  contract: {
+    loading: boolean;
+    contracts: ContractType[];
+  };
+  task: {
+    loading: boolean;
+    tasks: Pagination<TaskType>;
+  };
+  issue: {
+    loading: boolean;
+    issues: IssueProjectType[];
   };
 }
 
@@ -50,6 +64,24 @@ const initialState: ProjectStateDetail = {
   construction: {
     loading: false,
     constructions: [],
+  },
+  contract: {
+    loading: false,
+    contracts: [],
+  },
+  task: {
+    loading: false,
+    tasks: {
+      data: [],
+      pageNumber: 1,
+      pageSize: 5,
+      totalPages: 0,
+      totalRecords: 0,
+    },
+  },
+  issue: {
+    loading: false,
+    issues: [],
   },
 };
 
@@ -89,6 +121,36 @@ export const projectStateDetailSlice = createSlice({
     },
     fetchConstructionsFailed(state) {
       state.construction.loading = false;
+    },
+    fetchContracts(state, action: PayloadAction<string>) {
+      state.contract.loading = true;
+    },
+    fetchContractsSuccess(state, action: PayloadAction<ContractType[]>) {
+      state.contract.contracts = action.payload;
+      state.contract.loading = false;
+    },
+    fetchContractsFailed(state) {
+      state.contract.loading = false;
+    },
+    fetchTasks(state, action: PayloadAction<{ id: string; filter: Filter }>) {
+      state.task.loading = true;
+    },
+    fetchTasksSuccess(state, action: PayloadAction<Pagination<TaskType>>) {
+      state.task.tasks = action.payload;
+      state.task.loading = false;
+    },
+    fetchTasksFailed(state) {
+      state.task.loading = false;
+    },
+    fetchIssues(state, action: PayloadAction<string>) {
+      state.contract.loading = true;
+    },
+    fetchIssuesSuccess(state, action: PayloadAction<IssueProjectType[]>) {
+      state.issue.issues = action.payload;
+      state.issue.loading = false;
+    },
+    fetchIssuesFailed(state) {
+      state.issue.loading = false;
     },
   },
 });

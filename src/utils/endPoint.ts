@@ -1,7 +1,5 @@
-import { getConstruction } from "@/api/construction";
-import { assignConsultant } from "@/api/project";
-
 const baseURL = "https://kpcos.vinhuser.one/api/";
+// const baseURL = "http://localhost:5113/api/";
 const socketURL = "http://34.81.244.146:3333";
 const cloudinaryURL = "https://api.cloudinary.com/v1_1/dulapxpnp/upload";
 const endPoint = {
@@ -38,6 +36,7 @@ const endPoint = {
     getPagingConsutanStaff: "/staff/consultant",
     getPagingManagerStaff: "/staff/manager",
     getPagingDesignerStaff: "/staff/designer",
+    getPagingConstructionStaff: "/staff/constructor",
     // getStaff: (id: string) => `/staff/${id}`,
     // updateStaff: (id: string) => `/staff/${id}`,
     // deleteStaff: (id: string) => `staff/${id}`,
@@ -55,6 +54,8 @@ const endPoint = {
     createTemplateConstruction: "/templatecontructions",
     getTemplateConstructions: "/templatecontructions",
     getTemplateConstruction: (id: string) => `/templatecontructions/${id}`,
+    activeTemplateConstructionDetail: (id: string) =>
+      `/templatecontructions/${id}/active`,
     createTemplateConstructionItem: "/templatecontructions/items",
   },
 
@@ -64,16 +65,24 @@ const endPoint = {
     getProject: (id: string) => `/projects/${id}`,
     assignConsultant: (id: string) => `/projects/${id}/assignconsultant`,
     getQuotation: (id: string) => `/projects/${id}/quotation`,
+    getQuotationActive: (id: string) =>
+      `/projects/${id}/quotation?Status=CONFIRMED`,
     requestProject: "/projects",
     getProjectDesign: `/projects/design`,
     getDesignOfProject: (id: string) =>
       `/projects/${id}/design?PageNumber=1&PageSize=100`,
     getcontractOfProject: (id: string) => `projects/${id}/contract`,
+    getContractActive: (id: string) =>
+      `/projects/${id}/contract??PageNumber=1&PageSize=100`,
     check3Dconfirm: (id: string) => `/projects/${id}/design/3d-confirmed`,
     getAllDesignForSpecificProject: (id: string) => `/projects/${id}/design`,
     getConstruction: (id: string) =>
       `/projects/${id}/construction?PageNumber=1&PageSize=100&SortColumn=estimateAt&SortDir=Asc`,
     getProjects: "/projects",
+    getConstructor: (id: string) =>
+      `/projects/${id}/staff?Position=CONSTRUCTOR`,
+    getConstuctorTask: (id: string) => `/projects/${id}/construction-task`,
+    getIssuesProject: (id: string) => `/projects/${id}/project-issue`,
   },
 
   quotation: {
@@ -97,6 +106,13 @@ const endPoint = {
 
   construction: {
     createConstruction: "/constructions",
+    getItembyIdItem: (id: string) => `/constructions/item/${id}`,
+    getTaskbyIdItem: (id: string) =>
+      `/constructions/task?ConstructionItemId=${id}`,
+    createTaskwithIdItem: (id: string) => `/constructions/task/${id}`,
+    getTaskById: (id: string) => `/constructions/task/${id}`,
+    assignStaff: (id: string) => `/constructions/task/${id}`,
+    confirmTask: (id: string) => `/constructions/task/${id}/confirm`,
   },
 
   contract: {
@@ -105,6 +121,30 @@ const endPoint = {
     rejectContract: (id: string) => `contracts/${id}/reject`,
     acceptContract: (id: string) => `contracts/${id}/accept`,
     verifyContract: (id: string) => `contracts/${id}/verify`,
+  },
+
+  payment: {
+    createPayment: "/payments",
+    paymentCallback: "/payments/vnpay-callback",
+    getPayment: (id: string) => `payments/${id}`,
+  },
+
+  issue: {
+    createIssue: (id: string) => `project-issues/${id}`,
+    updateIssue: (id: string) => `project-issues/${id}`,
+    deleteIssue: (id: string) => `project-issues/images/${id}`,
+    confirmIssue: (id: string) => `project-issues/${id}/confirm`,
+  },
+
+  issueType: {
+    createIssueType: "issuetype",
+    getAllIssueType: `issuetype`,
+    updateIssueType: (id: string) => `issuetype/${id}`,
+    deleteIssueType: (id: string) => `issuetype/${id}`,
+  },
+
+  holiday: {
+    getHolidays: "/holiday",
   },
 };
 

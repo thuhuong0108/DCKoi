@@ -6,6 +6,7 @@ import {
   AttachMoneySharp,
   BuildSharp,
   CardGiftcardSharp,
+  Construction,
   DashboardSharp,
   FolderSharp,
   PeopleSharp,
@@ -36,6 +37,11 @@ const LayoutManager: React.FC<IndexProps> = ({ Page }) => {
       link: "/manager/design",
       children: "Thiết kế",
       icon: <SupportAgentSharp />,
+    },
+    {
+      link: "/manager/construction",
+      children: "Thi công",
+      icon: <Construction />,
     },
   ];
 

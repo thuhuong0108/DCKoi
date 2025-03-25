@@ -1,5 +1,5 @@
 import { Position } from "./enums/Position";
-import { ProjectStatus, QuotationStatus } from "./enums/Status";
+import { ContractStatus, ProjectStatus, QuotationStatus } from "./enums/Status";
 import { PackageType } from "./PackageType";
 
 export interface Staff {
@@ -75,7 +75,7 @@ export interface ProjectDesignType {
 export interface ContractProjectType {
   id?: string;
   name: string;
-  status: string;
+  status: ContractStatus;
   customerName: string;
   contractValue: number;
   createdAt: string;

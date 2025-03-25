@@ -29,7 +29,7 @@ export const authSlice = createSlice({
     login(state, action: PayloadAction<LoginPayload>) {
       state.loading = true;
     },
-    loginSuccess(state, action: PayloadAction<User>) {
+    loginSuccess(state, action: PayloadAction<any>) {
       state.isAuthenticated = true;
       state.currentUser = action.payload.data.user;
       state.role = action.payload.data.role;

@@ -1,8 +1,7 @@
-import { Col, Collapse, Divider, Row, Table, TableColumnsType } from "antd";
-import React from "react";
-import { QuotationItem } from "./type";
 import { FieldQuotationDetailType } from "@/models";
 import { formatPrice, parseCategory } from "@/utils/helpers";
+import { Col, Collapse, Row, Table, TableColumnsType } from "antd";
+import { QuotationItem } from "./type";
 
 const CollapseQuotation = (props: QuotationItem) => {
   const columns: TableColumnsType<FieldQuotationDetailType> = [

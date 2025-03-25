@@ -1,3 +1,4 @@
+import { duration } from "@mui/material";
 import * as yup from "yup";
 export const validateDemo = yup.object().shape({
   name: yup.string().required().max(50),
@@ -68,6 +69,10 @@ export const validatePackage = yup.object().shape({
 export const validateTemplateConstruction = yup.object().shape({
   name: yup.string().required("Yêu cầu nhập tên mẫu"),
   description: yup.string().required("Yêu cầu nhập mô tả"),
+  duration: yup
+    .number()
+    .required("Yêu cầu nhập thời gian thực hiện")
+    .min(1, "Giá trị phải lớn hơn 0"),
 });
 
 export const validateEstimatePrice = yup.object().shape({
@@ -99,4 +104,17 @@ export const validateContract = yup.object().shape({
   name: yup.string().required("Yêu cầu nhập tên hợp đồng"),
   customerName: yup.string().required("Yêu cầu nhập tên khách hàng"),
   url: yup.string().required("Yêu cầu hợp đồng"),
+});
+
+export const validateConstruction = yup.object().shape({
+  name: yup.string().required("Yêu cầu nhập tên công việc"),
+  deadlineAt: yup.date().required("Yêu cầu nhập ngày hết hạn"),
+});
+
+export const validateIssue = yup.object().shape({
+  name: yup.string().required("Yêu cầu nhập vẫn đề thi công"),
+  issueImages: yup.string().required("Yêu cầu nhập tên công việc"),
+  estimateAt: yup.string().required("Yêu cầu nhập tên thời gian dự kiến"),
+  issueTypeId: yup.string().required("Yêu cầu chọn loại vấn đề gặp phải"),
+  staffId: yup.string().required("Yêu cầu chọn nhân viên"),
 });

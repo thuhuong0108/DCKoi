@@ -319,7 +319,7 @@ const CreateQuotation = () => {
         </Col>
       </Row>
 
-      <h1 className="text-xl font-semibold text-blue-500 my-4">
+      <h1 className="text-xl font-semibold text-black-500 my-4">
         Các hạng mục báo giá chi tiết
       </h1>
 
@@ -406,7 +406,7 @@ const CreateQuotation = () => {
 
       {/* line */}
       <div className="border-t-2 border-gray-300 my-5"></div>
-      <h1 className="text-xl font-semibold text-blue-500 my-4">
+      <h1 className="text-xl font-semibold text-black-500 my-4">
         Quy trình thi công
       </h1>
 
@@ -415,7 +415,7 @@ const CreateQuotation = () => {
           title="Chọn quy trình thi công"
           onClick={() => {
             dispatch(
-              templateConstructionActions.getTemplateConstruction({
+              templateConstructionActions.getTemlateConstructionActive({
                 pageNumber: 1,
                 pageSize: 10,
               })

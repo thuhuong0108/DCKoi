@@ -13,12 +13,15 @@ import PackgeCard from "./PackageCard";
 import ServiceCard from "./ServiceCard";
 import EstimatedPrice from "./EstimatedPrice";
 import NotiResult from "./NotiResult";
+import TaskDetailModal from "./TaskDetailModal";
+import ManagerSkeleton from "./ManagerSkeleton";
 import ImageGallery from "./ImageGallery";
 import CountdownTime from "./CountDown";
 import PaymentSuccess from "./PaymentSuccess";
 import PaymentFailed from "./PaymentFailed";
 export * from "./Sidebar";
 export * from "./ui";
+export * from "./DragAndDrop";
 
 export {
   Header,
@@ -37,6 +40,8 @@ export {
   ServiceCard,
   EstimatedPrice,
   NotiResult,
+  TaskDetailModal,
+  ManagerSkeleton,
   CountdownTime,
   ImageGallery,
   PaymentSuccess,

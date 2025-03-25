@@ -7,6 +7,8 @@ import { selectedStaff, staffActions } from "@/redux/slices/staff/staffSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
 import { StaffType } from "@/models";
 import FormStaff from "./FormStaff";
+import { Position } from "@/models/enums/Position";
+import { parsePosition } from "@/utils/helpers";
 
 const StaffPage = () => {
   const dispatch = useAppDispatch();
@@ -15,12 +17,19 @@ const StaffPage = () => {
   const items = useAppSelector(selectedStaff);
 
   useEffect(() => {
-    dispatch(staffActions.fetchStaff({ pageNumber: 1, pageSize: 10 }));
+    dispatch(staffActions.fetchStaff({ pageNumber: 1, pageSize: 18 }));
   }, []);
 
   const [selectedItem, setSelectedItem] = useState<StaffType | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [search, setSearch] = useState();
+
+  const parsePositions = (position: Position, prop: string) => {
+    if (prop === "position") {
+      return parsePosition(position);
+    }
+    return;
+  };
 
   return (
     <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 w-full h-full">
@@ -57,6 +66,7 @@ const StaffPage = () => {
         data={items.data}
         props={["fullName", "email", "phone", "position"]}
         loading={isLoading}
+        formatValue={parsePositions}
         //   actions={true}
         //   actionTexts={["Sửa", "Xóa"]}
         //   actionFunctions={[handleEdit, handleDelete]}
@@ -69,7 +79,11 @@ const StaffPage = () => {
         totalPages={items.totalPages}
       />
 
-      <FormStaff item={selectedItem} setIsModalOpen={setIsModalOpen} isModalOpen={isModalOpen} />
+      <FormStaff
+        item={selectedItem}
+        setIsModalOpen={setIsModalOpen}
+        isModalOpen={isModalOpen}
+      />
     </div>
   );
 };

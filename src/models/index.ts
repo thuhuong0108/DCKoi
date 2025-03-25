@@ -39,6 +39,16 @@ import {
   VerifyContractType,
 } from "./ContractType";
 
+import { TransactionType } from "./TransactionType";
+
+import {
+  IssueProjectType,
+  IssueStaff,
+  IssueConstructionItem,
+} from "./IssueProjectType";
+
+import { IssueType } from "./IssueType";
+
 import { ConstructionType, ConstructionItem } from "./ConstructionType";
 export type {
   DesignDetailType,
@@ -71,4 +81,9 @@ export type {
   ContractProjectType,
   QuotationProjectType,
   ProjectDetailType,
+  TransactionType,
+  IssueProjectType,
+  IssueStaff,
+  IssueConstructionItem,
+  IssueType,
 };

@@ -1,7 +1,7 @@
 import { TemplateConstructionItemType } from "@/models";
-import { convertStringtoDate } from "@/utils/helpers";
+import { convertStringtoDate, parseCategory } from "@/utils/helpers";
 import { Space, TableColumnsType, DatePicker, Switch, Typography } from "antd";
-
+import dayjs from "dayjs";
 import { useState } from "react";
 
 export const columns: TableColumnsType<TemplateConstructionItemType> = [
@@ -15,18 +15,28 @@ export const columns: TableColumnsType<TemplateConstructionItemType> = [
     dataIndex: "description",
     key: "description",
   },
+  {
+    title: "Hệ số ước tính",
+    dataIndex: "duration",
+    key: "duration",
+  },
 
   {
     title: "Thời gian dự kiến",
     dataIndex: "esTime",
     key: "estTime",
     render: (text, record) => {
+      const value =
+        record.estTime && dayjs(record.estTime, "YYYY-MM-DD").isValid()
+          ? dayjs(record.estTime, "YYYY-MM-DD")
+          : null;
       return (
         <Space>
           <DatePicker
             format="YYYY-MM-DD"
+            value={value}
             onChange={(date) => {
-              record.estTime = convertStringtoDate(date.toString());
+              record.estTime = date ? date.format("YYYY-MM-DD") : null;
             }}
           />
         </Space>
@@ -58,6 +68,14 @@ export const columnsConstruction: TableColumnsType<TemplateConstructionItemType>
       title: "Tiêu đề",
       dataIndex: "name",
       key: "name",
+      render: (text, record) => {
+        return (
+          <div>
+            {record.name}{" "}
+            {record.category && <span>: {parseCategory(record.category)}</span>}
+          </div>
+        );
+      },
     },
     {
       title: "Mô tả",

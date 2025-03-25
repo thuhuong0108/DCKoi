@@ -12,9 +12,12 @@ export interface TemplateConstructionItemType {
   child: TemplateConstructionItemType[];
   childs: TemplateConstructionItemType[];
   estTime?: string;
+  actualAt?: string;
   isPayment?: boolean;
   estimateAt?: string;
   status?: string;
+  duration: number;
+  category: string;
 }
 export interface TemplateConstructionTypeDetail
   extends TemplateConstructionType {

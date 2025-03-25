@@ -1,5 +1,5 @@
 import { FieldQuotationDetailType } from "@/models";
-import { parseCategory } from "@/utils/helpers";
+import { formatPrice, parseCategory } from "@/utils/helpers";
 import { TextField } from "@mui/material";
 import type { TableColumnsType } from "antd";
 import { Collapse, Table, Typography } from "antd";
@@ -21,22 +21,23 @@ const TableQuotation = (
     {
       title: "Danh mục công việc",
       dataIndex: "name",
-      width: "25%",
+      width: "17%",
+      render: (text) => <div className="truncate max-w-[200px]">{text}</div>,
     },
     {
       title: "Mô tả",
       dataIndex: "description",
-      width: "20%",
+      width: "15%",
     },
     {
       title: "Giá",
       dataIndex: "price",
-      width: "10%",
+      width: "17%",
       render: (text, record) => {
         return (
           <>
             {record.isService ? (
-              <Typography.Text>{record.price}</Typography.Text>
+              <Typography.Text>{formatPrice(record.price)}</Typography.Text>
             ) : (
               <TextField
                 type="number"
@@ -74,7 +75,9 @@ const TableQuotation = (
       width: "10%",
       render: (text, record) => {
         return (
-          <Typography.Text>{record.price * record.quantity}</Typography.Text>
+          <Typography.Text>
+            {formatPrice(record.price * record.quantity)}
+          </Typography.Text>
         );
       },
     },

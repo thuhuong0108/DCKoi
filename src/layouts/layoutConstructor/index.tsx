@@ -1,63 +1,76 @@
-import { Sidebar } from "@/components";
-import { HomeOutlined } from "@ant-design/icons";
-import { Layout } from "antd";
-import { ReactElement } from "react";
-import ImgLogo from "@/assets/images/logo.png";
-import UserProfile, {
-  UserProfileProps,
-} from "@/components/Header/HeaderItem/UserProfile";
+import { Sidebar, Menu, MenuItem, Logo } from "@/components/Sidebar";
+import { selectCurrentUser, selectRole } from "@/redux/slices/auth/authSlices";
+import { useAppSelector } from "@/redux/store/hook";
+import {
+  AttachMoneySharp,
+  BuildSharp,
+  CardGiftcardSharp,
+  DashboardSharp,
+  FolderSharp,
+  PeopleSharp,
+  PersonSharp,
+  SupportAgentSharp,
+  Work,
+  WorkOutline,
+} from "@mui/icons-material";
+import BubbleChartIcon from "@mui/icons-material/BubbleChart";
 
-const { Header, Footer, Content, Sider } = Layout;
 interface IndexProps {
   Page: () => ReactElement;
 }
-
-const sidebarItems = [
-  {
-    key: "1",
-    label: "Dashboard",
-    link: "/staff",
-    icon: HomeOutlined,
-  },
-  {
-    key: "2",
-    label: "Projects",
-    link: "/staff/projects",
-    icon: HomeOutlined,
-  },
-  {
-    key: "2",
-    label: "Tasks",
-    link: "/staff/tasks",
-    icon: HomeOutlined,
-  },
-];
-const user: UserProfileProps = {
-  name: "Constructor",
-  role: "Staff",
-  avatar:
-    "https://cdn.icon-icons.com/icons2/2643/PNG/512/avatar_female_woman_person_people_white_tone_icon_159360.png",
-};
-interface IndexProps {
-  Page: () => ReactElement;
+interface MenuItemProps {
+  link?: string;
+  badge?: boolean;
+  target?: string;
+  children: React.ReactNode;
+  icon?: React.ReactNode;
+  end?: boolean;
 }
+
 const LayoutConstructor: React.FC<IndexProps> = ({ Page }) => {
+  const homeMenu: MenuItemProps[] = [
+    {
+      link: "/constructor",
+      children: "Dashboard",
+      icon: <DashboardSharp />,
+      end: true,
+    },
+    {
+      link: "/constructor/projects",
+      children: "Dự án",
+      icon: <FolderSharp />,
+    },
+  ];
+
+  const currentUser = useAppSelector(selectCurrentUser);
+  const roleUser = useAppSelector(selectRole);
+
   return (
-    <Layout style={{ minHeight: "100vh" }}>
-      <Header className="flex flex-wrap items-center justify-between px-4 bg-white h-[80px]">
-        <img loading="lazy" src={ImgLogo} alt="Logo" className="w-[7%]" />
-        <UserProfile prop={user} />
-      </Header>
-      <Layout>
-        <Sider>
-          <Sidebar items={sidebarItems} />
-        </Sider>
-        <Content>
-          <Page />
-        </Content>
-      </Layout>
-      <Footer className="text-center">@DCKoi</Footer>
-    </Layout>
+    <div className="flex">
+      <Sidebar
+        width={"270px"}
+        userName={currentUser.fullName}
+        userimg={currentUser.avatar}
+        designation={roleUser}
+      >
+        <Logo ref={null}>
+          {" "}
+          <img src="/logo.png" alt="logo" />
+        </Logo>
+        <Menu subHeading="Home">
+          {homeMenu.map((item, index) => (
+            <MenuItem
+              key={index}
+              link={item.link}
+              children={item.children}
+              icon={item.icon}
+              end={item.end}
+            />
+          ))}
+        </Menu>
+      </Sidebar>
+      <Page />
+    </div>
   );
 };
 

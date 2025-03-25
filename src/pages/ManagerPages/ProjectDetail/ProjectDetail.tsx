@@ -3,11 +3,11 @@ import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
 import React, { useEffect } from "react";
 import InformationProject from "./InformationProject";
 import { projectStateDetailActions } from "@/redux/slices/projectStateDetail/projectStateDetailSlices";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Staff from "./Staff";
 import Design from "./Design";
 import Constructions from "./Constructions";
-import { Divider } from "antd";
+import { Button, Divider } from "antd";
 
 const ProjectDetail = () => {
   const dispatch = useAppDispatch();
@@ -16,15 +16,16 @@ const ProjectDetail = () => {
   const construction = useAppSelector(
     (state) => state.projectStateDetail.construction
   );
-  const { id } = useParams();
 
-  console.log(construction);
+  const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(projectStateDetailActions.fetchProjectDetail(id));
     dispatch(projectStateDetailActions.fetchDesigns(id));
     dispatch(projectStateDetailActions.fetchConstructions(id));
   }, []);
+
   return (
     <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 h-full w-full">
       {/* <Title name="1. Chi tiết dự án" /> */}
@@ -35,19 +36,30 @@ const ProjectDetail = () => {
         <InformationProject {...project.detail} />
       )}
 
-      <Title name="2. Nhân viên" />
+      <Divider orientation="left">2. Nhân sự</Divider>
       {project.loading ? <Loading /> : <Staff staff={project.detail.staff} />}
 
-      <Title name="3. Thiết kế" />
+      <Divider orientation="left">3. Thiết kế</Divider>
 
       {design.loading ? <Loading /> : <Design designs={design.designs} />}
 
-      <Title name="4. Thi công" />
+      <Divider orientation="left">4. Thi công</Divider>
 
       {construction.loading ? (
         <Loading />
       ) : (
-        <Constructions constructionItem={construction.constructions} />
+        <>
+          <Constructions constructionItem={construction.constructions} />
+          <div className="flex justify-end">
+            <Button
+              type="primary"
+              className="mt-5"
+              onClick={() => navigate("construction")}
+            >
+              Chi tiết
+            </Button>
+          </div>
+        </>
       )}
     </div>
   );

@@ -9,6 +9,7 @@ import { staffActions } from "@/redux/slices/staff/staffSlice";
 import { assignConsultant } from "@/api/project";
 import { messageError } from "@/components";
 import { projectActions } from "@/redux/slices/project/projectSlices";
+import { RoleUser } from "@/models/enums/RoleUser";
 const DesignCard = ({
   imageUrl,
   customerName,
@@ -24,6 +25,10 @@ const DesignCard = ({
   const dispatch = useAppDispatch();
   const managers = useAppSelector((state) => state.staff.staffs);
   const loading = useAppSelector((state) => state.staff.loading);
+
+  const hasManager = staffs?.some(
+    (staff) => staff.position === RoleUser.MANAGER.toString()
+  );
 
   const [visible, setVisible] = useState(false);
 
@@ -86,7 +91,7 @@ const DesignCard = ({
 
   return (
     <Card
-      className="rounded-lg bg-white w-[300px] "
+      className="rounded-lg bg-white w-[350px] "
       cover={
         <img
           alt="example"
@@ -119,14 +124,14 @@ const DesignCard = ({
           type="primary"
           className="rounded-lg"
           onClick={() => {
-            if (staffs.length === 0) {
+            if (!hasManager) {
               handleOpenManagerModal();
             } else {
               console.log("view detail");
             }
           }}
         >
-          {staffs.length > 0 ? "Xem chi tiết" : "Chọn quản lí"}
+          {hasManager ? "Chi tiết" : "Chọn quản lí"}
         </Button>
       </div>
 

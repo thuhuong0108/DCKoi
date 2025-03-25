@@ -21,6 +21,7 @@ const initialState: QuotaitonDetailState = {
     reason: "",
     services: [],
     equipments: [],
+    totalPrice: 0,
   },
 };
 

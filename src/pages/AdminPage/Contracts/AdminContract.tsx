@@ -49,14 +49,6 @@ const AdminContract = () => {
 
       <InformationContract quotation={quotation} project={project} />
 
-      <div className="w-1/2 my-4">
-        <UploadContract />
-      </div>
-
-      <div className="flex justify-end">
-        <Button title="Gửi hợp đồng" onClick={handleSend} />
-      </div>
-
       <Modal
         title="Tạo kế hoạch thi công cho dự án "
         centered
