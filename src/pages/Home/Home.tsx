@@ -10,6 +10,7 @@ import {
 import { Col, Row, Select } from "antd";
 import { useAppDispatch } from "@/redux/store/hook";
 import Packages from "./Packages";
+import PackageMaintance from "./PackageMaintance";
 
 const features = [
   {
@@ -118,47 +119,7 @@ const Home = () => {
           </div>
 
           {/* Maintain Service */}
-          <div className="">
-            <div className="text-center">
-              <h2 className="text-indigo-800 font-bold text-2xl">
-                Dịch vụ vệ sinh, bảo trì bảo dưỡng hồ cá Koi
-              </h2>
-            </div>
-
-            {/* Service Price */}
-            <div className="flex flex-col mt-6 max-w-full text-xl font-bold leading-none text-indigo-950 w-[1136px]">
-              {servicePrices.map((service, index) => (
-                <div className="flex flex-wrap gap-7 items-center w-full max-md:max-w-full">
-                  <div className="flex-1 grow shrink gap-2.5 self-stretch px-8 py-7 my-auto w-72 text-lg font-semibold leading-none text-indigo-600 border-b border-slate-200 min-h-[80px] min-w-[240px] max-md:px-5">
-                    {service.size}
-                  </div>
-                  <div className="grow shrink self-stretch py-8 my-auto w-72 border-b border-slate-200 min-h-[80px] min-w-[240px]">
-                    {service.regularPrice}
-                  </div>
-                  <div className="grow shrink self-stretch py-8 my-auto w-72 border-b border-slate-200 min-h-[80px] min-w-[240px]">
-                    {service.irregularPrice}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Service Card */}
-            <div className="flex flex-wrap gap-10 items-center mt-6 text-center max-md:max-w-full">
-              <ServiceCard
-                title="Vệ sinh, chăm sóc hồ cá Koi định kỳ"
-                image={ImgFish}
-                isRegular={true}
-                serviceFeatures={serviceFeatures}
-              />
-              <ServiceCard
-                title="Vệ sinh, chăm sóc hồ cá Koi không định kỳ"
-                image={ImgFish}
-                isRegular={false}
-                serviceFeatures={serviceFeatures}
-              />
-            </div>
-          </div>
-
+          <PackageMaintance />
           <Packages />
 
           {/* Initial estimated price */}

@@ -24,7 +24,7 @@ const initialState: ContractState = {
     note: "",
     quotationId: "",
     projectId: "",
-    status: ContractStatus.PROCESS,
+    status: ContractStatus.PROCESSING,
     paymentBatches: [],
   },
 };

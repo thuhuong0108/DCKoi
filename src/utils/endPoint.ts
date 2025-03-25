@@ -1,6 +1,3 @@
-import { getHolidays } from "@/api/holiday";
-import { activeTemplateConstructionDetail } from "@/api/templateConstruction";
-
 const baseURL = "https://kpcos.vinhuser.one/api/";
 // const baseURL = "http://localhost:5113/api/";
 const socketURL = "http://34.81.244.146:3333";
@@ -85,6 +82,8 @@ const endPoint = {
     getConstructor: (id: string) =>
       `/projects/${id}/staff?Position=CONSTRUCTOR`,
     getConstuctorTask: (id: string) => `/projects/${id}/construction-task`,
+    getIssuesProject: (id: string) => `/projects/${id}/project-issue`,
+    getDocs: (id: string) => `/projects/${id}/docs`,
   },
 
   quotation: {
@@ -130,8 +129,34 @@ const endPoint = {
     paymentCallback: "/payments/vnpay-callback",
     getPayment: (id: string) => `payments/${id}`,
   },
+
+  issue: {
+    createIssue: (id: string) => `project-issues/${id}`,
+    updateIssue: (id: string) => `project-issues/${id}`,
+    deleteIssue: (id: string) => `project-issues/images/${id}`,
+    confirmIssue: (id: string) => `project-issues/${id}/confirm`,
+  },
   holiday: {
     getHolidays: "/holiday",
+  },
+
+  issueType: {
+    getIssueTypes: "/issuetype?PageNumber=1&PageSize=100",
+  },
+
+  maintancePackage: {
+    getMaintancePackage: "/maintenance-packages",
+  },
+  maintenances: {
+    maintenances: "/maintenances",
+  },
+
+  docsType: {
+    getDocsType: "/docstype",
+  },
+  docs: {
+    getDocs: "/docs",
+    postDocs: "/docs",
   },
 };
 

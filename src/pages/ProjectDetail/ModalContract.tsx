@@ -1,12 +1,5 @@
+import { Button } from "@/components";
 import Card from "@/components/ui/Card";
-import {
-  contractActions,
-  selectedContract,
-} from "@/redux/slices/contract/contractSlices";
-import {
-  projectDetailActions,
-  selectedProjectDetail,
-} from "@/redux/slices/projectDetail/projectDetailSlices";
 import {
   quotationDetailActions,
   selectedQuotationDetail,
@@ -16,28 +9,19 @@ import {
   templateConstructionDetailActions,
 } from "@/redux/slices/templateConstructionDetail/templateConstructionDetailSlices";
 import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
-import { parseDate, parseStatusContract } from "@/utils/helpers";
-import { Col, Descriptions, Row } from "antd";
-import { useEffect } from "react";
+import { dateDDMMYYY, formatPrice, parseStatusContract } from "@/utils/helpers";
+import { EyeOutlined } from "@ant-design/icons";
+import { Col, Descriptions, Modal, Row } from "antd";
+import { useEffect, useState } from "react";
+import DetailQuotationConsulting from "./DetailQuotationConsulting";
 import TablePayment from "./TablePayment";
 import TableStage from "./TableStage";
 
-const ModalContract = ({ id }) => {
+const ModalContract = ({ contract, project }) => {
   const dispatch = useAppDispatch();
-  const contract = useAppSelector(selectedContract);
-  const project = useAppSelector(selectedProjectDetail);
+  const [openDetailQuotation, setOpenDetailQuotation] = useState(false);
   const quotation = useAppSelector(selectedQuotationDetail);
   const template = useAppSelector(selectTemplateConstructionDetail);
-
-  useEffect(() => {
-    dispatch(contractActions.fetchContract(id));
-  }, [dispatch, id]);
-
-  useEffect(() => {
-    if (contract?.projectId) {
-      dispatch(projectDetailActions.fetchProjectDetail(contract.projectId));
-    }
-  }, [dispatch, contract?.projectId]);
 
   useEffect(() => {
     if (contract?.quotationId) {
@@ -69,22 +53,22 @@ const ModalContract = ({ id }) => {
                 {
                   key: "1",
                   label: "Khách hàng",
-                  children: project.customerName,
+                  children: project.detail.customerName,
                 },
                 {
                   key: "2",
                   label: "Số điện thoại",
-                  children: project.phone,
+                  children: project.detail.phone,
                 },
                 {
                   key: "3",
                   label: "Địa chỉ mail",
-                  children: project.email,
+                  children: project.detail.email,
                 },
                 {
                   key: "4",
                   label: "Địa chỉ thi công",
-                  children: project.address,
+                  children: project.detail.address,
                 },
               ]}
             />
@@ -99,28 +83,33 @@ const ModalContract = ({ id }) => {
                 {
                   key: "1",
                   label: "Tổng giá trị hợp đồng",
-                  children: contract.contractValue,
+                  children: formatPrice(contract.contractValue),
                 },
                 {
                   key: "2",
                   label: "Ngày gửi",
-                  children: parseDate(contract.createdAt),
+                  children: dateDDMMYYY(contract.createdAt),
                 },
                 {
                   key: "3",
                   label: "Trạng thái",
                   children: parseStatusContract(contract.status),
                 },
+                {
+                  key: "3",
+                  label: "Chi tiết báo giá",
+                  children: "",
+                },
               ]}
             />
-            {/* <div className="w-1/3">
+            <div className="w-1/3">
               <Button
                 block
                 title="Xem chi tiết"
                 leadingIcon={<EyeOutlined />}
-                onClick={() => setOpenDetailPackage(true)}
+                onClick={() => setOpenDetailQuotation(true)}
               />
-            </div> */}
+            </div>
           </Card>
         </Col>
       </Row>
@@ -129,6 +118,7 @@ const ModalContract = ({ id }) => {
         width="100%"
         height="500px"
         title="PDF Viewer"
+        className="my-4"
       />
 
       <h1 className="text-base font-semibold text-black my-4">
@@ -139,6 +129,22 @@ const ModalContract = ({ id }) => {
         Các đợt thanh toán
       </h1>
       <TablePayment payments={contract.paymentBatches} />
+
+      <Modal
+        title="Báo giá Chi tiết"
+        open={openDetailQuotation}
+        width={1000}
+        onClose={() => setOpenDetailQuotation(false)}
+        onCancel={() => setOpenDetailQuotation(false)}
+        onOk={() => setOpenDetailQuotation(false)}
+        footer={false}
+      >
+        <DetailQuotationConsulting
+          project={project}
+          quotation={quotation}
+          template={template}
+        />
+      </Modal>
     </div>
   );
 };

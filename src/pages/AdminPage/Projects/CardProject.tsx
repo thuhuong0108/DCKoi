@@ -7,7 +7,7 @@ import { parseStatusProject } from "@/utils/helpers";
 const CardProject = ({ project }) => {
   const navigate = useNavigate();
   return (
-    <div className="w-[300px]" onClick={() => navigate(`${project.id}`)}>
+    <div className="w-[290px]" onClick={() => navigate(`${project.id}`)}>
       <Card
         className="h-full"
         hoverable

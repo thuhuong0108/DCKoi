@@ -2,8 +2,11 @@ import { getDesign } from "@/api/design";
 import {
   getContractActiveProject,
   getDesignApproval,
+  getIssuesConstructionItem,
+  getIssuesProject,
   getProject,
   getProjectConstruction,
+  getProjectDocs,
   getTasksDoneProject,
 } from "@/api/project";
 import { messageError } from "@/components";
@@ -106,6 +109,63 @@ function* fetchTaskWorker(
   }
 }
 
+function* fetchIssueWorker(action: PayloadAction<string>) {
+  try {
+    const data = yield call(getIssuesProject, action.payload);
+    if (data.isSuccess) {
+      yield put(projectStateDetailActions.fetchIssuesSuccess(data.data));
+    } else {
+      messageError(data.message);
+      yield put(projectStateDetailActions.fetchIssuesFailed());
+    }
+  } catch (error) {
+    yield put(projectStateDetailActions.fetchIssuesFailed());
+    console.log("error", error);
+  }
+}
+
+function* fetchIssueConstructionItemWorker(
+  action: PayloadAction<{ idProject: string; idConstructionItem: string }>
+) {
+  try {
+    const data = yield call(
+      getIssuesConstructionItem,
+      action.payload.idProject,
+      action.payload.idConstructionItem
+    );
+    if (data.isSuccess) {
+      yield put(projectStateDetailActions.fetchIssuesSuccess(data.data));
+    } else {
+      messageError(data.message);
+      yield put(projectStateDetailActions.fetchIssuesFailed());
+    }
+  } catch (error) {
+    yield put(projectStateDetailActions.fetchIssuesFailed());
+    console.log("error", error);
+  }
+}
+
+function* fetchDocsWorker(
+  action: PayloadAction<{ id: string; filter: Filter }>
+) {
+  try {
+    const data = yield call(
+      getProjectDocs,
+      action.payload.id,
+      action.payload.filter
+    );
+    if (data.isSuccess) {
+      yield put(projectStateDetailActions.fetchDocsSuccess(data));
+    } else {
+      messageError(data.message);
+      yield put(projectStateDetailActions.fetchDocsFailed());
+    }
+  } catch (error) {
+    yield put(projectStateDetailActions.fetchDocsFailed());
+    console.log("error", error);
+  }
+}
+
 function* fetchProjectDetailWatcher() {
   while (true) {
     const action: PayloadAction<string> = yield take(
@@ -151,10 +211,41 @@ function* fetchTaskWatcher() {
   }
 }
 
+function* fetchIssueWatcher() {
+  while (true) {
+    const action: PayloadAction<string> = yield take(
+      projectStateDetailActions.fetchIssues
+    );
+    yield fork(fetchIssueWorker, action);
+  }
+}
+
+function* fetchIssueConstructionItemWatcher() {
+  while (true) {
+    const action: PayloadAction<{
+      idProject: string;
+      idConstructionItem: string;
+    }> = yield take(projectStateDetailActions.fetchIssueConstructionItem);
+    yield fork(fetchIssueConstructionItemWorker, action);
+  }
+}
+
+function* fetchDocsWatcher() {
+  while (true) {
+    const action: PayloadAction<{ id: string; filter: Filter }> = yield take(
+      projectStateDetailActions.fetchDocs
+    );
+    yield fork(fetchDocsWorker, action);
+  }
+}
+
 export function* projectStateDetailSaga() {
   yield fork(fetchProjectDetailWatcher);
   yield fork(fetchDesignWatcher);
   yield fork(fetchConstructionWatcher);
   yield fork(fetchContractWatcher);
   yield fork(fetchTaskWatcher);
+  yield fork(fetchIssueWatcher);
+  yield fork(fetchIssueConstructionItemWatcher);
+  yield fork(fetchDocsWatcher);
 }

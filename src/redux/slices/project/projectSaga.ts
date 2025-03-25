@@ -5,6 +5,7 @@ import { Filter } from "@/models/Common";
 import {
   getContractOfProject,
   getPagingProject,
+  getProjectConstruction,
   getProjectDesign,
 } from "@/api/project";
 import { projectActions } from "./projectSlices";
@@ -75,6 +76,22 @@ function* reloadDesignProjectWorker() {
     messageError("Tải dữ liệu dự án bị lỗi");
     console.log("Error load project: ", error);
     yield put(projectActions.fetchDesignProjectFaild());
+  }
+}
+
+function* fetchProjectFinishWorker(action: PayloadAction<Filter>) {
+  try {
+    const data = yield call(getPagingProject, action.payload);
+    if (data.isSuccess) {
+      yield put(projectActions.fetchProjectSuccess(data));
+    } else {
+      messageError(data.message);
+      yield put(projectActions.fetchProjectFaild());
+    }
+  } catch (error) {
+    messageError("Tải dữ liệu dự án bị lỗi");
+    console.log("Error load project: ", error);
+    yield put(projectActions.fetchProjectFaild());
   }
 }
 

@@ -1,9 +1,11 @@
 import {
   ContractType,
   DesignType,
+  IssueProjectType,
   TemplateConstructionItemType,
 } from "@/models";
 import { Filter, Pagination } from "@/models/Common";
+import { DocsProjectType } from "@/models/DocsType";
 import { ProjectStatus } from "@/models/enums/Status";
 import { ProjectDetailType } from "@/models/ProjectType";
 import { TaskType } from "@/models/TaskType";
@@ -30,6 +32,14 @@ export interface ProjectStateDetail {
   task: {
     loading: boolean;
     tasks: Pagination<TaskType>;
+  };
+  issue: {
+    loading: boolean;
+    issues: IssueProjectType[];
+  };
+  docs: {
+    loading: boolean;
+    docs: Pagination<DocsProjectType>;
   };
 }
 
@@ -67,6 +77,20 @@ const initialState: ProjectStateDetail = {
   task: {
     loading: false,
     tasks: {
+      data: [],
+      pageNumber: 1,
+      pageSize: 5,
+      totalPages: 0,
+      totalRecords: 0,
+    },
+  },
+  issue: {
+    loading: false,
+    issues: [],
+  },
+  docs: {
+    loading: false,
+    docs: {
       data: [],
       pageNumber: 1,
       pageSize: 5,
@@ -132,6 +156,38 @@ export const projectStateDetailSlice = createSlice({
     },
     fetchTasksFailed(state) {
       state.task.loading = false;
+    },
+    fetchIssues(state, action: PayloadAction<string>) {
+      state.contract.loading = true;
+    },
+    fetchIssuesSuccess(state, action: PayloadAction<IssueProjectType[]>) {
+      state.issue.issues = action.payload;
+      state.issue.loading = false;
+    },
+    fetchIssuesFailed(state) {
+      state.issue.loading = false;
+    },
+    fetchIssueConstructionItem(
+      state,
+      action: PayloadAction<{
+        idProject: string;
+        idConstructionItem: string;
+      }>
+    ) {
+      state.issue.loading = true;
+    },
+    fetchDocs(state, action: PayloadAction<{ id: string; filter: Filter }>) {
+      state.docs.loading = true;
+    },
+    fetchDocsSuccess(
+      state,
+      action: PayloadAction<Pagination<DocsProjectType>>
+    ) {
+      state.docs.docs = action.payload;
+      state.docs.loading = false;
+    },
+    fetchDocsFailed(state) {
+      state.docs.loading = false;
     },
   },
 });

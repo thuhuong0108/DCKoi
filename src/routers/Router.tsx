@@ -34,6 +34,9 @@ import {
   DashBoardConstructor,
   ProjectDetailConstructor,
   Transaction,
+  IssueProject,
+  CreateIssue,
+  Maintaince,
 } from "@/pages";
 import {
   AdminContract,
@@ -114,6 +117,10 @@ const Routers = () => {
       element: <LayoutCustomer Page={ContractPage} />,
     },
     {
+      path: "/space-management/maintaince",
+      element: <LayoutCustomer Page={Maintaince} />,
+    },
+    {
       path: "/payment/response",
       element: <LayoutCustomer Page={PaymentStatus} />,
     },
@@ -121,6 +128,11 @@ const Routers = () => {
       path: "/space-management/transactions",
       element: <LayoutCustomer Page={Transaction} />,
     },
+    {
+      path: "/space-management/project-issues",
+      element: <LayoutCustomer Page={IssueProject} />,
+    },
+
     // admin
     {
       path: "/admin",
@@ -285,6 +297,11 @@ const Routers = () => {
     {
       path: "/manager/construction",
       element: <RootLayout Pages={ManagerConstruction} />,
+    },
+
+    {
+      path: "/manager/:id/construction/add-issue",
+      element: <RootLayout Pages={CreateIssue} />,
     },
 
     // designer

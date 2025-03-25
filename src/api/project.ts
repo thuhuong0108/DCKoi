@@ -10,6 +10,7 @@ import { endPoint } from "@/utils/endPoint";
 import http from "@/utils/http";
 import {
   AssginStaff,
+  IssueProjectType,
   ProjectRequest,
   StaffType,
   TemplateConstructionItemType,
@@ -177,6 +178,23 @@ const getConstuctorTask = async (
   return response;
 };
 
+const getIssuesProject = async (
+  id: string
+): Promise<ApiResultWithPagination<IssueProjectType>> => {
+  const response = await http.get(`${endPoint.project.getIssuesProject(id)}`);
+  return response;
+};
+const getIssuesConstructionItem = async (
+  idProject: string,
+  idConstructionItem: string
+): Promise<ApiResultWithPagination<IssueProjectType>> => {
+  const response = await http.get(
+    `${endPoint.project.getIssuesProject(
+      idProject
+    )}?ConstructionItemId=${idConstructionItem}&PageNumber=1&PageSize=100&SortColumn=CreatedAt&SortDir=Desc`
+  );
+  return response;
+};
 const getTasksDoneProject = async (
   id: string,
   filter: Filter
@@ -188,6 +206,40 @@ const getTasksDoneProject = async (
   );
   return response;
 };
+
+const getIssueProject = async (
+  id: string,
+  filter: Filter
+): Promise<ApiResultWithPagination<IssueProjectType>> => {
+  const response = await http.get(
+    `${endPoint.project.getIssuesProject(id)}?PageNumber=${
+      filter.pageNumber
+    }&PageSize=${filter.pageSize}`
+  );
+  return response;
+};
+
+const getProjectFinish = async (
+  filter: Filter
+): Promise<ApiResultWithPagination<ProjectType>> => {
+  const response = await http.get(
+    `${endPoint.project.getProjects}?PageNumber=${filter.pageNumber}&PageSize=${filter.pageSize}`
+  );
+  return response;
+};
+
+const getProjectDocs = async (
+  id: string,
+  filter: Filter
+): Promise<ApiResultWithAData<ProjectDetailType>> => {
+  const response = await http.get(
+    `${endPoint.project.getDocs(id)}?PageNumber=${filter.pageNumber}&PageSize=${
+      filter.pageSize
+    }&SortColumn=createdAt&SortDir=Desc`
+  );
+  return response;
+};
+
 export {
   getConstuctorTask,
   assignConsultant,
@@ -206,5 +258,10 @@ export {
   getProjects,
   getDesignApproval,
   getConstructorProject,
+  getIssuesProject,
   getTasksDoneProject,
+  getIssuesConstructionItem,
+  getIssueProject,
+  getProjectFinish,
+  getProjectDocs,
 };
