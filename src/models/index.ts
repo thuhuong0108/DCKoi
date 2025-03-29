@@ -43,11 +43,11 @@ import { TransactionType } from "./TransactionType";
 
 import {
   IssueProjectType,
-  IssueUser,
+  IssueStaff,
   IssueConstructionItem,
-  IssueImage,
-  IssueType,
 } from "./IssueProjectType";
+
+import { IssueType } from "./IssueType";
 
 import { ConstructionType, ConstructionItem } from "./ConstructionType";
 export type {
@@ -83,8 +83,7 @@ export type {
   ProjectDetailType,
   TransactionType,
   IssueProjectType,
-  IssueUser,
+  IssueStaff,
   IssueConstructionItem,
-  IssueImage,
   IssueType,
 };

@@ -1,12 +1,7 @@
 import http from "@/utils/http";
 
 import { IssueType } from "@/models";
-import {
-  ApiResult,
-  ApiResultWithPagination,
-  Filter,
-  Pagination,
-} from "@/models/Common";
+import { ApiResult, ApiResultWithPagination, Filter } from "@/models/Common";
 import { endPoint } from "@/utils/endPoint";
 
 const getAllIssueType = async (
@@ -32,22 +27,9 @@ const updateIssueType = async (issue: IssueType): Promise<ApiResult> => {
   return response;
 };
 
-const getIssueTypes = async (): Promise<Pagination<IssueType>> => {
-  const response = await http.get(
-    `${endPoint.issueType.getAllIssueType}?PageNumber=1&PageSize=100`
-  );
-  return response;
-};
-
 const deleteIssueType = async (id: string): Promise<ApiResult> => {
   const response = await http.delete(endPoint.issueType.deleteIssueType(id));
   return response;
 };
 
-export {
-  createIssueType,
-  deleteIssueType,
-  getAllIssueType,
-  updateIssueType,
-  getIssueTypes,
-};
+export { createIssueType, deleteIssueType, getAllIssueType, updateIssueType };

@@ -1,4 +1,4 @@
-import { Loading, Title } from "@/components";
+import { confirmAlert, Loading, messageError, Title } from "@/components";
 import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
 import React, { useEffect } from "react";
 import InformationProject from "./InformationProject";
@@ -9,6 +9,7 @@ import Design from "./Design";
 import Constructions from "./Constructions";
 import { Button, Divider } from "antd";
 import Docs from "./Docs";
+import { finishProject } from "@/api/project";
 
 const ProjectDetail = () => {
   const dispatch = useAppDispatch();
@@ -17,7 +18,7 @@ const ProjectDetail = () => {
   const construction = useAppSelector(
     (state) => state.projectStateDetail.construction
   );
-  const issue = useAppSelector((state) => state.projectStateDetail.issue);
+
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -25,10 +26,8 @@ const ProjectDetail = () => {
     dispatch(projectStateDetailActions.fetchProjectDetail(id));
     dispatch(projectStateDetailActions.fetchDesigns(id));
     dispatch(projectStateDetailActions.fetchConstructions(id));
-    dispatch(projectStateDetailActions.fetchIssues(id));
   }, []);
 
-  console.log(issue);
   return (
     <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 h-full w-full">
       {/* <Title name="1. Chi tiết dự án" /> */}
@@ -56,7 +55,27 @@ const ProjectDetail = () => {
       ) : (
         <>
           <Constructions constructionItem={construction.constructions} />
-          <div className="flex justify-end">
+
+          <div className="flex justify-between items-center">
+            <Button
+              type="primary"
+              onClick={() => {
+                confirmAlert({
+                  message: "Bạn có chắc chắn muốn kết thúc dự án?",
+                  title: "Kết thúc dự án",
+                  yes: async () => {
+                    const res = await finishProject(id);
+                    if (res.isSuccess) {
+                      navigate("manager");
+                    } else {
+                      messageError(res.message);
+                    }
+                  },
+                });
+              }}
+            >
+              Kết thúc dự án
+            </Button>
             <Button
               type="primary"
               className="mt-5"

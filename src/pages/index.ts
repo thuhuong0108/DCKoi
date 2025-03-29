@@ -18,6 +18,7 @@ import ProjectDetail from "./ProjectDetail";
 import Transaction from "./Transaction";
 import IssueProject from "./IssueProject";
 import Maintaince from "./Maintaince";
+import MaintainceDetail from "./MaintainceDetail";
 
 export {
   // customer
@@ -39,6 +40,7 @@ export {
   Transaction,
   IssueProject,
   Maintaince,
+  MaintainceDetail,
 
   //error
   AuthorizePage,

@@ -12,6 +12,7 @@ import { selectedContract } from "@/redux/slices/contract/contractSlices";
 import TablePayment from "./TablePayment";
 import TableContract from "./TableContract";
 import Tasks from "./Tasks";
+import Docs from "./Docs";
 
 const ProjectDetail = () => {
   const dispatch = useAppDispatch();
@@ -66,7 +67,10 @@ const ProjectDetail = () => {
       <Divider orientation="left">5. Bản vẽ thiết kể</Divider>
       {design.loading ? <Loading /> : <Design designs={design.designs} />}
 
-      <Divider orientation="left">6. Tiến trình thi công</Divider>
+      <Divider orientation="left">6. Tài liệu</Divider>
+      <Docs />
+
+      <Divider orientation="left">7. Tiến trình thi công</Divider>
       {construction.loading ? (
         <Loading />
       ) : (

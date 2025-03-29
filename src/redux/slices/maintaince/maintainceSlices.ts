@@ -1,4 +1,5 @@
 import { Filter, Pagination } from "@/models/Common";
+import { MaintainceStatus } from "@/models/enums/Status";
 import { MaintaineceType } from "@/models/MaintenancesTpe";
 import { RootState } from "@/redux/store/store";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
@@ -39,6 +40,12 @@ export const maintenancesSlice = createSlice({
     },
     fetchMaintenancesFailed(state) {
       state.maintenances.loading = false;
+    },
+    fetchMaintenancesByStatus(
+      state,
+      action: PayloadAction<{ filter: Filter; status: MaintainceStatus }>
+    ) {
+      state.maintenances.loading = true;
     },
   },
 });

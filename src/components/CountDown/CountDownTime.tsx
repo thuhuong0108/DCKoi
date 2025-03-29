@@ -3,7 +3,7 @@ import { Button, message, Statistic } from "antd";
 
 const { Countdown } = Statistic;
 
-const deadline = Date.now() + 1000 * 60 * 5; // 5 phút từ thời điểm hiện tại
+const deadline = Date.now() + 1000 * 60 * 5;
 
 const CountdownTime = ({ onTimeout }) => {
   const [isTimeUp, setIsTimeUp] = useState(false);

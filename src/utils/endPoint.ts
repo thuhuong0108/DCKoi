@@ -84,6 +84,7 @@ const endPoint = {
     getConstuctorTask: (id: string) => `/projects/${id}/construction-task`,
     getIssuesProject: (id: string) => `/projects/${id}/project-issue`,
     getDocs: (id: string) => `/projects/${id}/docs`,
+    finish: (id: string) => `/projects/${id}/finish`,
   },
 
   quotation: {
@@ -136,12 +137,16 @@ const endPoint = {
     deleteIssue: (id: string) => `project-issues/images/${id}`,
     confirmIssue: (id: string) => `project-issues/${id}/confirm`,
   },
-  holiday: {
-    getHolidays: "/holiday",
-  },
 
   issueType: {
-    getIssueTypes: "/issuetype?PageNumber=1&PageSize=100",
+    createIssueType: "issuetype",
+    getAllIssueType: `issuetype`,
+    updateIssueType: (id: string) => `issuetype/${id}`,
+    deleteIssueType: (id: string) => `issuetype/${id}`,
+  },
+
+  holiday: {
+    getHolidays: "/holiday",
   },
 
   maintancePackage: {
@@ -149,14 +154,27 @@ const endPoint = {
   },
   maintenances: {
     maintenances: "/maintenances",
+    getMaintenancesById: (id: string) => `/maintenances/${id}`,
+    updateMaintenancesTask: (id: string) => `/maintenances/tasks/${id}`,
+    getTasks: `/maintenances/task`,
+    getTask: (id: string) => `/maintenances/tasks/${id}`,
   },
 
   docsType: {
     getDocsType: "/docstype",
   },
+  feedback: {
+    createFeedback: "/feedbacks",
+    getFeedback: "/feedbacks",
+    getFeedbackById: (id: string) => `/feedbacks/${id}`,
+    updateFeedback: (id: string) => `/feedbacks/${id}`,
+    deleteFeedback: (id: string) => `/feedbacks/${id}`,
+  },
   docs: {
     getDocs: "/docs",
     postDocs: "/docs",
+    acceptDocs: (id: string) => `/docs/${id}/accept`,
+    verifyDocs: (id: string) => `/docs/${id}/verify`,
   },
 };
 

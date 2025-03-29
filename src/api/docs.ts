@@ -9,4 +9,17 @@ const postDocs = async (request: DocsRequest): Promise<ApiResult> => {
   return response;
 };
 
-export { postDocs };
+const acceptDocs = async (id: string): Promise<ApiResult> => {
+  const response = await http.put(endPoint.docs.acceptDocs(id));
+  return response;
+};
+const verifyDocs = async (id: string, otp: string): Promise<ApiResult> => {
+  const response = await http.put(endPoint.docs.verifyDocs(id), `"${otp}"`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return response;
+};
+
+export { postDocs, acceptDocs, verifyDocs };

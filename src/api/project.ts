@@ -223,7 +223,7 @@ const getProjectFinish = async (
   filter: Filter
 ): Promise<ApiResultWithPagination<ProjectType>> => {
   const response = await http.get(
-    `${endPoint.project.getProjects}?PageNumber=${filter.pageNumber}&PageSize=${filter.pageSize}`
+    `${endPoint.project.getProjects}?PageNumber=${filter.pageNumber}&PageSize=${filter.pageSize}&Status=FINISHED`
   );
   return response;
 };
@@ -237,6 +237,11 @@ const getProjectDocs = async (
       filter.pageSize
     }&SortColumn=createdAt&SortDir=Desc`
   );
+  return response;
+};
+
+const finishProject = async (id: string): Promise<ApiResult> => {
+  const response = await http.put(endPoint.project.finish(id));
   return response;
 };
 
@@ -264,4 +269,5 @@ export {
   getIssueProject,
   getProjectFinish,
   getProjectDocs,
+  finishProject,
 };

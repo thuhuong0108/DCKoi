@@ -48,6 +48,12 @@ const Docs = () => {
       },
     },
     {
+      title: "Trạng thái",
+      dataIndex: "status",
+      key: "status",
+    },
+
+    {
       title: "Hình ảnh tài liệu",
       dataIndex: "url",
       key: "url",

@@ -257,6 +257,20 @@ export function parseTaskStatus(status: TaskStage): string {
       return "Trạng thái không xác định";
   }
 }
+export function trackColorTask(status: TaskStage): string {
+  switch (status) {
+    case TaskStage.DONE:
+      return "success";
+    case TaskStage.PROCESSING:
+      return "warning";
+    case TaskStage.OPEN:
+      return "default";
+    case TaskStage.PREVIEWING:
+      return "processing";
+    default:
+      return "error";
+  }
+}
 
 export function parsePaymentPhase(phase: PaymentPhase): string {
   switch (phase) {
@@ -325,6 +339,8 @@ export function parseMaintenceStatus(issue: MaintainceStatus): string {
       return "Hoạt động";
     case MaintainceStatus.DONE:
       return "Hoàn thành";
+    case MaintainceStatus.CANCELLED:
+      return "Đã hủy";
     default:
       return "Trạng thái không xác định";
   }

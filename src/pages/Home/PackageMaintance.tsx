@@ -3,7 +3,7 @@ import { packageMaintainceActions } from "@/redux/slices/packageMaintaice/packag
 import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
 import React, { useEffect, useState } from "react";
 import ImgFish from "@/assets/images/fish.png";
-import { Modal, Typography } from "antd";
+import { Modal, Row, Typography } from "antd";
 import { PackageMaintainType } from "@/models/PackageType";
 import useForm from "@/hooks/useForm";
 import {
@@ -29,6 +29,7 @@ import {
 } from "@ant-design/icons";
 import { projectActions } from "@/redux/slices/project/projectSlices";
 import { requestMaintennance } from "@/api/maintennances";
+import ProjectCard from "./ProjectCard";
 
 const PackageMaintance = () => {
   const dispatch = useAppDispatch();
@@ -47,7 +48,9 @@ const PackageMaintance = () => {
         pageSize: 10,
       })
     );
-    // dispatch(projectActions)
+    // dispatch(
+    //   projectActions.fetchProjectFinish({ pageNumber: 1, pageSize: 10 })
+    // );
   }, []);
   const [visible, setVisible] = useState(false);
   const [selectPackage, setSelectPackage] = useState<PackageMaintainType>();
@@ -60,6 +63,8 @@ const PackageMaintance = () => {
         "estimateAt",
         dayjs(values.estimateAt).format("YYYY-MM-DD")
       );
+
+      console.log("values", values);
 
       const res = await requestMaintennance(values);
       if (res.isSuccess) {
@@ -117,9 +122,15 @@ const PackageMaintance = () => {
                 ))}
               </div>
               <button
-                onClick={() => {
+                onClick={async () => {
                   setVisible(true);
                   setSelectPackage(item);
+                  await dispatch(
+                    projectActions.fetchProjectFinish({
+                      pageNumber: 1,
+                      pageSize: 10,
+                    })
+                  );
                 }}
                 className="self-center px-14 py-2 mt-20 max-w-full text-lg font-semibold leading-loose text-white bg-indigo-600 hover:bg-indigo-800 transition-all duration-300 rounded-xl w-[264px] max-md:px-5 max-md:mt-10"
               >
@@ -133,7 +144,7 @@ const PackageMaintance = () => {
       <Modal
         title={selectPackage?.name}
         visible={visible}
-        width={1000}
+        width={2000}
         onOk={async () => {
           await formik.setFieldValue("maintenancePackageId", selectPackage?.id);
 
@@ -423,6 +434,56 @@ const PackageMaintance = () => {
                 Giá trên chưa bao gồm VAT. Áp dụng cho khu vực TP.HCM.
               </Typography.Text>
             </div>
+          </div>
+
+          <div className="w-full p-6 bg-white rounded-lg shadow-sm">
+            <Typography.Title
+              level={5}
+              className="text-gray-800 font-semibold mb-4"
+            >
+              Dự án
+            </Typography.Title>
+            <Row className="flex flex-row ">
+              {project.data.map((item, index) => (
+                <div
+                  className=""
+                  onClick={() => {
+                    formik.setFieldValue("area", item.area);
+                    formik.setFieldValue("depth", item.depth);
+                    formik.setFieldValue(
+                      "address",
+                      item.address ? item.address : ""
+                    );
+                    setTimeout(() => {
+                      let totalValue = 0;
+                      if (formik.values.type) {
+                        let duration = Number(formik.values.duration);
+                        if (formik.values.type === "UNSCHEDULED") duration = 1;
+                        const volume =
+                          Number(formik.values.area) *
+                          Number(formik.values.depth);
+                        let pricePerM3 = 0;
+                        if (volume < 10)
+                          pricePerM3 = selectPackage?.priceList[0];
+                        else if (volume >= 10 && volume < 20)
+                          pricePerM3 = selectPackage?.priceList[1];
+                        else if (volume >= 20 && volume < 50)
+                          pricePerM3 = selectPackage?.priceList[2];
+                        else if (volume >= 50 && volume < 100)
+                          pricePerM3 = selectPackage?.priceList[3];
+                        else pricePerM3 = selectPackage?.priceList[4];
+
+                        totalValue = pricePerM3 * volume * duration;
+
+                        formik.setFieldValue("totalValue", totalValue);
+                      }
+                    }, 0);
+                  }}
+                >
+                  <ProjectCard {...item} />
+                </div>
+              ))}
+            </Row>
           </div>
         </div>
       </Modal>

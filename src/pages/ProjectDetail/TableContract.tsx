@@ -79,7 +79,6 @@ const TableContract = ({ contracts, project }) => {
           onClick={async () => {
             await dispatch(contractActions.fetchContract(record.id));
             setOpenDetailContract(true);
-            console.log("openDetailContract", openDetailContract);
           }}
         />
       ),

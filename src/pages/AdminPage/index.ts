@@ -17,6 +17,8 @@ import Design from "./Design";
 import AdminContract from "./Contracts";
 import ManagementProjects from "./Projects/ManagementProjects";
 import ManagementProjectDetail from "./ProjectDetail";
+import MaintenanceAdmin from "./Maintenance";
+import MaintainceTaskAdmin from "./MaintainceTask";
 export {
   ConsultationPage,
   DetailConsultation,
@@ -36,4 +38,6 @@ export {
   ManagementProjects,
   AdminContract,
   ManagementProjectDetail,
+  MaintenanceAdmin,
+  MaintainceTaskAdmin,
 };

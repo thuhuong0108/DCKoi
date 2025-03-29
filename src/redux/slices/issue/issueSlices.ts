@@ -2,30 +2,27 @@ import { IssueProjectType } from "./../../../models/IssueProjectType";
 import { IssueRequest } from "@/models/Request/IssueRequest";
 import { RootState } from "@/redux/store/store";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { StaticRouter } from "react-router-dom";
 
 export interface IssueState {
-  issue: {
-    loading: boolean;
-    issues: IssueRequest;
-  };
+  loading: boolean;
+  issues: IssueRequest;
 }
 
 const initialState: IssueState = {
-  issue: {
-    loading: false,
-    issues: {
-      name: "",
-      description: "",
-      cause: "",
-      reason: "",
-      solution: "",
-      issueImages: "",
-      confirmImage: "",
-      estimateAt: "",
-      actualAt: "",
-      issueTypeId: "",
-      staffId: "",
-    },
+  loading: false,
+  issues: {
+    name: "",
+    description: "",
+    cause: "",
+    reason: "",
+    solution: "",
+    issueImage: "",
+    confirmImage: "",
+    estimateAt: "",
+    actualAt: "",
+    issueTypeId: "",
+    staffId: "",
   },
 };
 
@@ -50,8 +47,8 @@ export const issuelSlice = createSlice({
 });
 
 // selectors
-export const selectIssue = (state: RootState) => state.issue.issues;
-export const selectLoading = (state: RootState) => state.issue.loading;
+export const selectedIssue = (state: RootState) => state.issue.issues;
+export const selectedLoading = (state: RootState) => state.issue.loading;
 
 // actions
 export const issueActions = issuelSlice.actions;

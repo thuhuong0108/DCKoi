@@ -46,4 +46,5 @@ export enum MaintainceStatus {
   OPENING = "OPENING",
   PROCESSING = "PROCESSING",
   DONE = "DONE",
+  CANCELLED = "CANCELLED",
 }

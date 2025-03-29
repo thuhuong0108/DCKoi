@@ -150,3 +150,12 @@ export const validateDocs = yup.object().shape({
 
   docTypeId: yup.string().required("Yêu cầu chọn loại tài liệu"),
 });
+
+export const validateFeedback = yup.object().shape({
+  rating: yup
+    .number()
+    .required("Yêu cầu nhập đánh giá")
+    .min(1, "Đánh giá tối thiểu là 1 sao")
+    .max(5, "Đánh giá tối đa là 5 sao"),
+  description: yup.string().required("Yêu cầu nhập nội dung"),
+});

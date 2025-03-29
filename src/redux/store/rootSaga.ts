@@ -30,6 +30,9 @@ import { issueSaga } from "../slices/issue/issueSaga";
 import { issueConstructorSaga } from "../slices/issueConstructor/issueConstructorSaga";
 import { packageMaintainceSaga } from "../slices/packageMaintaice/packageMaintainceSaga";
 import { maintainceSaga } from "../slices/maintaince/maintainceSaga";
+import { issueTypeSaga } from "../slices/issueType/issueSaga";
+import { maintainceTaskSaga } from "../slices/maintenanceTask/maintenanceTaskSaga";
+import { maintainceConstructorSaga } from "../slices/maintainceConstructor/maintainceConstructorSaga";
 
 export default function* rootSaga() {
   yield all([
@@ -63,5 +66,8 @@ export default function* rootSaga() {
     issueConstructorSaga(),
     packageMaintainceSaga(),
     maintainceSaga(),
+    issueTypeSaga(),
+    maintainceTaskSaga(),
+    maintainceConstructorSaga(),
   ]);
 }

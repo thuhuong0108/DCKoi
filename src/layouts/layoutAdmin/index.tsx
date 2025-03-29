@@ -49,6 +49,11 @@ const LayoutAdmin: React.FC<IndexProps> = ({ Page }) => {
       icon: <AttachMoneySharp />,
     },
     { link: "/admin/projects", children: "Dự án", icon: <FolderSharp /> },
+    {
+      link: "/admin/maintenance",
+      children: "Bảo dưỡng",
+      icon: <FolderSharp />,
+    },
     { link: "/admin/staffs", children: "Nhân viên", icon: <PeopleSharp /> },
     { link: "/admin/users", children: "Tài khoản", icon: <PersonSharp /> },
     {
