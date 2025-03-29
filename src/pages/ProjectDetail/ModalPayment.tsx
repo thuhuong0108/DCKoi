@@ -3,6 +3,8 @@ import { Button, messageError } from "@/components";
 import { formatPrice } from "@/utils/helpers";
 import { Col, Divider, Flex, Radio } from "antd";
 import { PaymentRequest } from "@/models/Request/PaymentRequest";
+import { TablePaymentBatch } from "./type";
+import { MaintaineceType } from "@/models/MaintenancesTpe";
 
 const ModalPayment = ({ payment }) => {
   const handlePayment = async () => {

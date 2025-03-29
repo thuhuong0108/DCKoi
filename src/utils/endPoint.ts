@@ -83,6 +83,8 @@ const endPoint = {
       `/projects/${id}/staff?Position=CONSTRUCTOR`,
     getConstuctorTask: (id: string) => `/projects/${id}/construction-task`,
     getIssuesProject: (id: string) => `/projects/${id}/project-issue`,
+    getDocs: (id: string) => `/projects/${id}/docs`,
+    finish: (id: string) => `/projects/${id}/finish`,
   },
 
   quotation: {
@@ -145,6 +147,34 @@ const endPoint = {
 
   holiday: {
     getHolidays: "/holiday",
+  },
+
+  maintancePackage: {
+    getMaintancePackage: "/maintenance-packages",
+  },
+  maintenances: {
+    maintenances: "/maintenances",
+    getMaintenancesById: (id: string) => `/maintenances/${id}`,
+    updateMaintenancesTask: (id: string) => `/maintenances/tasks/${id}`,
+    getTasks: `/maintenances/task`,
+    getTask: (id: string) => `/maintenances/tasks/${id}`,
+  },
+
+  docsType: {
+    getDocsType: "/docstype",
+  },
+  feedback: {
+    createFeedback: "/feedbacks",
+    getFeedback: "/feedbacks",
+    getFeedbackById: (id: string) => `/feedbacks/${id}`,
+    updateFeedback: (id: string) => `/feedbacks/${id}`,
+    deleteFeedback: (id: string) => `/feedbacks/${id}`,
+  },
+  docs: {
+    getDocs: "/docs",
+    postDocs: "/docs",
+    acceptDocs: (id: string) => `/docs/${id}/accept`,
+    verifyDocs: (id: string) => `/docs/${id}/verify`,
   },
 };
 

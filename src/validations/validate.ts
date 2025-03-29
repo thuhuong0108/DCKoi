@@ -112,9 +112,50 @@ export const validateConstruction = yup.object().shape({
 });
 
 export const validateIssue = yup.object().shape({
-  name: yup.string().required("Yêu cầu nhập vẫn đề thi công"),
-  issueImages: yup.string().required("Yêu cầu nhập tên công việc"),
-  estimateAt: yup.string().required("Yêu cầu nhập tên thời gian dự kiến"),
-  issueTypeId: yup.string().required("Yêu cầu chọn loại vấn đề gặp phải"),
-  staffId: yup.string().required("Yêu cầu chọn nhân viên"),
+  name: yup.string().required("Yêu cầu nhập tên vấn đề"),
+  description: yup.string().required("Yêu cầu nhập mô tả"),
+  cause: yup.string().required("Yêu cầu nhập nguyên nhân"),
+  solution: yup.string().required("Yêu cầu nhập giải pháp"),
+  issueTypeId: yup.string().required("Yêu cầu chọn loại vấn đề"),
+  issueImage: yup.string().required("Yêu cầu upload hình ảnh"),
+  estimateAt: yup.date().required("Yêu cầu nhập ngày dự kiến"),
+});
+
+export const validateMaincetainRequest = yup.object().shape({
+  maintenancePackageId: yup.string().required("Yêu cầu chọn gói bảo dưỡng"),
+  name: yup.string().required("Yêu cầu nhập tên"),
+  area: yup
+    .number()
+    .required("Yêu cầu nhập diện tích")
+    .min(0, "Diện tích không được nhỏ hơn 0"),
+  depth: yup
+    .number()
+    .required("Yêu cầu nhập độ sâu")
+    .min(0, "Độ sâu không được nhỏ hơn 0"),
+  address: yup.string().required("Yêu cầu nhập địa chỉ"),
+  type: yup.string().required("Yêu cầu chọn loại bảo dưỡng"),
+  duration: yup
+    .number()
+    .required("Yêu cầu nhập thời gian")
+    .min(0, "Thời gian không được nhỏ hơn 0"),
+  estimateAt: yup.date().required("Yêu cầu nhập ngày dự kiến"),
+  totalValue: yup
+    .number()
+    .required("Yêu tổng giá trị")
+    .min(0, "Tổng giá trị không được nhỏ hơn 0"),
+});
+
+export const validateDocs = yup.object().shape({
+  name: yup.string().required("Yêu cầu nhập tên tài liệu"),
+
+  docTypeId: yup.string().required("Yêu cầu chọn loại tài liệu"),
+});
+
+export const validateFeedback = yup.object().shape({
+  rating: yup
+    .number()
+    .required("Yêu cầu nhập đánh giá")
+    .min(1, "Đánh giá tối thiểu là 1 sao")
+    .max(5, "Đánh giá tối đa là 5 sao"),
+  description: yup.string().required("Yêu cầu nhập nội dung"),
 });

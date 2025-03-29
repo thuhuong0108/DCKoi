@@ -19,12 +19,13 @@ const Construction = () => {
   );
 
   const project = useAppSelector((state) => state.projectStateDetail.project);
-  const issue = useAppSelector((state) => state.projectStateDetail.issue);
+  const issueProject = useAppSelector(
+    (state) => state.projectStateDetail.issue
+  );
 
   useEffect(() => {
     dispatch(projectStateDetailActions.fetchProjectDetail(id));
     dispatch(projectStateDetailActions.fetchConstructions(id));
-    dispatch(projectStateDetailActions.fetchIssues(id));
   }, []);
 
   const { id } = useParams();
@@ -41,28 +42,7 @@ const Construction = () => {
           <Staff staff={project.detail.staff} />
         </div>
       )}
-      <div className="w-[200px]">
-        <Button
-          primary
-          leadingIcon={<EyeOutlined />}
-          title="Vấn đề thi công"
-          onClick={() => setOpenIssue(true)}
-        />
-      </div>
 
-      {issue.loading ? (
-        <Loading />
-      ) : (
-        <Modal
-          title="Vấn đề thi công"
-          width={1500}
-          open={openIssue}
-          footer={false}
-          onCancel={() => setOpenIssue(false)}
-        >
-          <ModalIssue issue={issue} />
-        </Modal>
-      )}
       {construction.loading ? (
         <Skeleton />
       ) : (

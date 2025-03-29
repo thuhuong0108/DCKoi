@@ -3,20 +3,19 @@ import { ApiResult } from "@/models/Common";
 import { IssueRequest } from "@/models/Request/IssueRequest";
 import { endPoint } from "@/utils/endPoint";
 import http from "@/utils/http";
-const createIssue = async (
-  issue: IssueRequest,
-  constructionItemId: string
-): Promise<ApiResult> => {
+const createIssue = async ({
+  issue,
+  constructionItemId,
+}): Promise<ApiResult> => {
   const response = await http.post(
     endPoint.issue.createIssue(constructionItemId),
     issue
   );
-
   return response;
 };
 
-const updateIssue = async (issue: IssueProjectType): Promise<ApiResult> => {
-  const response = await http.put(endPoint.issue.updateIssue(issue.id), issue);
+const updateIssue = async ({ id, issue }): Promise<ApiResult> => {
+  const response = await http.put(endPoint.issue.updateIssue(id), issue);
   return response;
 };
 

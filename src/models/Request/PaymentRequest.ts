@@ -1,4 +1,5 @@
 export interface PaymentRequest {
-  batchPaymentId: string;
+  maintenanceRequestId?: string;
+  batchPaymentId?: string;
   returnUrl: string;
 }

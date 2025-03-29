@@ -12,3 +12,24 @@ export interface PackageType {
   price: number[];
   items: items[];
 }
+
+export interface PackageMaintanceItemType {
+  id: string;
+  name: string;
+  description: string;
+  createdAt: string;
+  updatedAt: string;
+  isActive: boolean;
+}
+
+export interface PackageMaintainType {
+  id: string;
+  name: string;
+  description: string;
+  priceList: number[];
+  maintenanceItems: PackageMaintanceItemType[];
+  status: string;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}

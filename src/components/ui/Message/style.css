@@ -4,7 +4,7 @@
 #message-wrapper {
   @apply fixed top-4 left-0 w-full text-center;
   @apply flex flex-col-reverse;
-  @apply pointer-events-none z-50;
+  @apply pointer-events-none z-[9999];
 }
 
 .message {

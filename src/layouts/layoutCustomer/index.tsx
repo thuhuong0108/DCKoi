@@ -53,11 +53,16 @@ const LayoutCustomer: React.FC<IndexProps> = ({ Page }) => {
       icon: <FolderIcon />,
       badge: true,
     },
+    // {
+    //   link: "/space-management/project-issues",
+    //   children: "Vấn đề thi công",
+    //   icon: <BackHandIcon />,
+    //   badge: true,
+    // },
     {
-      link: "/space-management/project-issues",
-      children: "Vấn đề thi công",
+      link: "/space-management/maintaince",
+      children: "Bảo dưỡng",
       icon: <BackHandIcon />,
-      badge: true,
     },
     {
       link: "/space-management/transactions",

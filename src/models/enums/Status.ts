@@ -41,3 +41,10 @@ export enum IssueStatus {
   PROCESSING = "PROCESSING",
   DONE = "DONE",
 }
+export enum MaintainceStatus {
+  REQUESTING = "REQUESTING",
+  OPENING = "OPENING",
+  PROCESSING = "PROCESSING",
+  DONE = "DONE",
+  CANCELLED = "CANCELLED",
+}

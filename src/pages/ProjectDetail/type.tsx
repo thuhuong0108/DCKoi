@@ -41,6 +41,7 @@ export const staffConlumns: TableProps<Staff>["columns"] = [
 ];
 
 export interface TablePaymentBatch {
+  id: string;
   key: string;
   createdAt: string;
   name: string;

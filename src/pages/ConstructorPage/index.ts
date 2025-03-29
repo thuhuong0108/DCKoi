@@ -1,3 +1,8 @@
 import DashBoardConstructor from "./DashBoardConstructor";
 import ProjectDetailConstructor from "./ProjectDetail";
-export { DashBoardConstructor, ProjectDetailConstructor };
+import MaintainceConstructor from "./Maintaince";
+export {
+  DashBoardConstructor,
+  ProjectDetailConstructor,
+  MaintainceConstructor,
+};

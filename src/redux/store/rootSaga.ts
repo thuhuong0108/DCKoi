@@ -27,7 +27,12 @@ import { constructionItemSaga } from "../slices/constructionItemStage/constructi
 import { taskConstructorSaga } from "../slices/taskConstructor/taskConstructorSaga";
 import { transactionSaga } from "../slices/transaction/transactionSaga";
 import { issueSaga } from "../slices/issue/issueSaga";
+import { issueConstructorSaga } from "../slices/issueConstructor/issueConstructorSaga";
+import { packageMaintainceSaga } from "../slices/packageMaintaice/packageMaintainceSaga";
+import { maintainceSaga } from "../slices/maintaince/maintainceSaga";
 import { issueTypeSaga } from "../slices/issueType/issueSaga";
+import { maintainceTaskSaga } from "../slices/maintenanceTask/maintenanceTaskSaga";
+import { maintainceConstructorSaga } from "../slices/maintainceConstructor/maintainceConstructorSaga";
 
 export default function* rootSaga() {
   yield all([
@@ -58,6 +63,11 @@ export default function* rootSaga() {
     taskConstructorSaga(),
     transactionSaga(),
     issueSaga(),
+    issueConstructorSaga(),
+    packageMaintainceSaga(),
+    maintainceSaga(),
     issueTypeSaga(),
+    maintainceTaskSaga(),
+    maintainceConstructorSaga(),
   ]);
 }

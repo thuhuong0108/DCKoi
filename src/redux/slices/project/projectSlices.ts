@@ -68,6 +68,9 @@ export const projectSlice = createSlice({
     fetchContractProjectFaild(state) {
       state.loading = false;
     },
+    fetchProjectFinish(state, action: PayloadAction<Filter>) {
+      state.loading = true;
+    },
   },
 });
 

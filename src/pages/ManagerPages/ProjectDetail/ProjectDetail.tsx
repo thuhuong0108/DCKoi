@@ -1,4 +1,4 @@
-import { Loading, Title } from "@/components";
+import { confirmAlert, Loading, messageError, Title } from "@/components";
 import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
 import React, { useEffect } from "react";
 import InformationProject from "./InformationProject";
@@ -8,6 +8,8 @@ import Staff from "./Staff";
 import Design from "./Design";
 import Constructions from "./Constructions";
 import { Button, Divider } from "antd";
+import Docs from "./Docs";
+import { finishProject } from "@/api/project";
 
 const ProjectDetail = () => {
   const dispatch = useAppDispatch();
@@ -43,14 +45,37 @@ const ProjectDetail = () => {
 
       {design.loading ? <Loading /> : <Design designs={design.designs} />}
 
-      <Divider orientation="left">4. Thi công</Divider>
+      <Divider orientation="left">4. Tài liệu</Divider>
+      <Docs />
+
+      <Divider orientation="left">5. Thi công</Divider>
 
       {construction.loading ? (
         <Loading />
       ) : (
         <>
           <Constructions constructionItem={construction.constructions} />
-          <div className="flex justify-end">
+
+          <div className="flex justify-between items-center">
+            <Button
+              type="primary"
+              onClick={() => {
+                confirmAlert({
+                  message: "Bạn có chắc chắn muốn kết thúc dự án?",
+                  title: "Kết thúc dự án",
+                  yes: async () => {
+                    const res = await finishProject(id);
+                    if (res.isSuccess) {
+                      navigate("manager");
+                    } else {
+                      messageError(res.message);
+                    }
+                  },
+                });
+              }}
+            >
+              Kết thúc dự án
+            </Button>
             <Button
               type="primary"
               className="mt-5"

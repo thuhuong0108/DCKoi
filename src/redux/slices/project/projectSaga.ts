@@ -5,9 +5,12 @@ import { Filter } from "@/models/Common";
 import {
   getContractOfProject,
   getPagingProject,
+  getProjectConstruction,
   getProjectDesign,
+  getProjectFinish,
 } from "@/api/project";
 import { projectActions } from "./projectSlices";
+import { data } from "react-router-dom";
 
 function* fetchProjectWorker(action: PayloadAction<Filter>) {
   try {
@@ -78,6 +81,22 @@ function* reloadDesignProjectWorker() {
   }
 }
 
+function* fetchProjectFinishWorker(action: PayloadAction<Filter>) {
+  try {
+    const data = yield call(getProjectFinish, action.payload);
+    if (data.isSuccess) {
+      yield put(projectActions.fetchProjectSuccess(data));
+    } else {
+      messageError(data.message);
+      yield put(projectActions.fetchProjectFaild());
+    }
+  } catch (error) {
+    messageError("Tải dữ liệu dự án bị lỗi");
+    console.log("Error load project: ", error);
+    yield put(projectActions.fetchProjectFaild());
+  }
+}
+
 function* fetchProjectWatcher() {
   while (true) {
     const action = yield take(projectActions.fetchProject);
@@ -113,10 +132,18 @@ function* fetchDesignProjectWatcher() {
 //   }
 // }
 
+function* fetchProjectFinishWatcher() {
+  while (true) {
+    const action = yield take(projectActions.fetchProjectFinish);
+    yield fork(fetchProjectFinishWorker, action);
+  }
+}
+
 export function* projectSaga() {
   yield fork(fetchProjectWatcher);
   //   yield fork(createItemWatcher);
   yield fork(reloadProjectWatcher);
   yield fork(fetchDesignProjectWatcher);
   yield fork(reloadDesignProjectWatcher);
+  yield fork(fetchProjectFinishWatcher);
 }

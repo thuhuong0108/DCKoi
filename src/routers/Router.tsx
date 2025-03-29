@@ -36,6 +36,9 @@ import {
   Transaction,
   IssueProject,
   CreateIssue,
+  Maintaince,
+  MaintainceConstructor,
+  MaintainceDetail,
 } from "@/pages";
 import {
   AdminContract,
@@ -44,6 +47,8 @@ import {
   Design,
   DetailConsultation,
   EquipmentPage,
+  MaintainceTaskAdmin,
+  MaintenanceAdmin,
   ManagementPackage,
   ManagementProjectDetail,
   ManagementProjects,
@@ -116,6 +121,14 @@ const Routers = () => {
       element: <LayoutCustomer Page={ContractPage} />,
     },
     {
+      path: "/space-management/maintaince",
+      element: <LayoutCustomer Page={Maintaince} />,
+    },
+    {
+      path: "/space-management/maintaince/:id",
+      element: <LayoutCustomer Page={MaintainceDetail} />,
+    },
+    {
       path: "/payment/response",
       element: <LayoutCustomer Page={PaymentStatus} />,
     },
@@ -166,6 +179,15 @@ const Routers = () => {
       path: "/admin/staffs",
       element: <LayoutAdmin Page={StaffPage} />,
     },
+    {
+      path: "/admin/maintenance",
+      element: <LayoutAdmin Page={MaintenanceAdmin} />,
+    },
+    {
+      path: "/admin/maintenance/:id",
+      element: <LayoutAdmin Page={MaintainceTaskAdmin} />,
+    },
+
     {
       path: "/admin/management-packages",
       element: (
@@ -325,6 +347,10 @@ const Routers = () => {
     {
       path: "/constructor/projects/:id",
       element: <RootLayout Pages={ProjectDetailConstructor} />,
+    },
+    {
+      path: "/constructor/maintainces",
+      element: <RootLayout Pages={MaintainceConstructor} />,
     },
     { path: "*", element: <div>404</div> },
   ]);

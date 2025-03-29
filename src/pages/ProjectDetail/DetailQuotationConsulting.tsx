@@ -19,7 +19,6 @@ import { columns, QuotationItem } from "./type";
 import CollapseQuotation from "./CollapseQuotation";
 
 const DetailQuotationConsulting = ({ quotation, project, template }) => {
-  console.log(project);
   const services = quotation.services;
   const equipments = quotation.equipments;
   const [itemWork, setItemWork] = useState<QuotationItem[]>([]);

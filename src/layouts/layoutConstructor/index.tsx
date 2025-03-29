@@ -40,6 +40,11 @@ const LayoutConstructor: React.FC<IndexProps> = ({ Page }) => {
       children: "Dự án",
       icon: <FolderSharp />,
     },
+    {
+      link: "/constructor/maintainces",
+      children: "Bảo dưỡng",
+      icon: <BuildSharp />,
+    },
   ];
 
   const currentUser = useAppSelector(selectCurrentUser);

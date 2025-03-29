@@ -17,6 +17,8 @@ import TestUi from "./TestUi";
 import ProjectDetail from "./ProjectDetail";
 import Transaction from "./Transaction";
 import IssueProject from "./IssueProject";
+import Maintaince from "./Maintaince";
+import MaintainceDetail from "./MaintainceDetail";
 
 export {
   // customer
@@ -37,6 +39,8 @@ export {
   ProjectDetail,
   Transaction,
   IssueProject,
+  Maintaince,
+  MaintainceDetail,
 
   //error
   AuthorizePage,

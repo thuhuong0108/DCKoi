@@ -8,6 +8,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import Design from "./Design";
 import InformationProject from "./InformationProject";
 import Tasks from "./Tasks";
+import { issueConstructorActions } from "@/redux/slices/issueConstructor/issueConstructorSlices";
+import Issue from "./Issue";
 
 const ProjectDetail = () => {
   const dispatch = useAppDispatch();
@@ -29,6 +31,12 @@ const ProjectDetail = () => {
         filter: { pageNumber: 1, pageSize: 5 },
       })
     );
+    dispatch(
+      issueConstructorActions.fetchIssues({
+        id,
+        filter: { pageNumber: 1, pageSize: 5 },
+      })
+    );
   }, []);
   return (
     <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 h-full w-full">
@@ -46,6 +54,7 @@ const ProjectDetail = () => {
 
       <Divider orientation="left">3. Thi công</Divider>
       <Tasks />
+      <Issue />
     </div>
   );
 };
