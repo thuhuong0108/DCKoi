@@ -1,4 +1,5 @@
 import { QuotationStatus } from "./enums/Status";
+import { PromotionType } from "./PromotionType";
 
 export interface QuotationType {
   id?: string;
@@ -12,6 +13,7 @@ export interface QuotationType {
   services: ServiceQuotationType[];
   equipments: EquipmentQuotationType[];
   totalPrice: number;
+  promotion?: PromotionType;
 }
 
 export interface ServiceQuotationType {

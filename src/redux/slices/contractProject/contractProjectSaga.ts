@@ -17,7 +17,7 @@ function* fetchContractProjectWorker(
     if (data.isSuccess) {
       yield put(contractProjectActions.fetchContractProjectSuccess(data));
     } else {
-      messageSuccess(data.message);
+      messageError(data.message);
       yield put(contractProjectActions.fetchContractProjectFaild());
     }
   } catch (error) {

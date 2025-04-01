@@ -105,6 +105,12 @@ const DetailQuotationConsulting = ({ quotation, project }) => {
       itemWork.reduce((sum, item) => sum + item.totalPrice, 0)
     );
 
+    if (quotation.promotion) {
+      setTotalPrice((prevTotal) =>
+        Math.floor(prevTotal - (prevTotal * quotation.promotion.discount) / 100)
+      );
+    }
+
     setItemWork(itemWork);
   }, [services, equipments]);
 
@@ -168,8 +174,13 @@ const DetailQuotationConsulting = ({ quotation, project }) => {
               Tổng giá trị hợp đồng:
             </label>
             <span className="text-gray-500">
-              {" "}
               {formatPrice(totalPriceQuotation)}
+              {quotation.promotion && (
+                <span className="text-red-500">
+                  {" "}
+                  (Đã giảm: {quotation.promotion.discount}%)
+                </span>
+              )}
             </span>
           </div>
         </Col>

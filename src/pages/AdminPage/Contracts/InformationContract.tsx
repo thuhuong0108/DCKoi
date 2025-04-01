@@ -48,7 +48,15 @@ const InformationContract = ({
     formik.setFieldValue("quotationId", quotation.id);
     formik.setFieldValue("name", project.name);
     formik.setFieldValue("customerName", project.customerName);
-    formik.setFieldValue("contractValue", quotation.totalPrice);
+    formik.setFieldValue(
+      "contractValue",
+      quotation.promotion
+        ? Math.floor(
+            quotation.totalPrice -
+              (quotation.totalPrice * quotation.promotion.discount) / 100
+          )
+        : quotation.totalPrice
+    );
   };
 
   useEffect(() => {
@@ -108,20 +116,24 @@ const InformationContract = ({
       />
 
       <Uploader
-        accept=".pdf"
-        buttonText="Upload"
+        buttonText="Gửi hợp đồng"
         listType="text"
         maxFiles={1}
-        onUploadSuccess={(urls) => formik.setFieldValue("url", urls[0])}
+        onUploadSuccess={(urls) => {
+          formik.setFieldValue("url", urls[0]);
+          setTimeout(() => {
+            formik.handleSubmit();
+          });
+        }}
       />
 
-      <div>
+      {/* <div>
         <Button
           onClick={regHandleSubmit}
           loading={loading}
           title="Gửi hợp đồng"
         />
-      </div>
+      </div> */}
     </Card>
   );
 };

@@ -57,6 +57,7 @@ import {
   ManagementProjects,
   ManagementTransaction,
   ManagementUser,
+  ManagerPromotions,
   PackageItem,
   PackagePage,
   ServicePage,
@@ -276,6 +277,10 @@ const Routers = () => {
     {
       path: "/admin/blogs",
       element: <RootLayout Pages={BlogManager} />,
+    },
+    {
+      path: "/admin/promotions",
+      element: <RootLayout Pages={ManagerPromotions} />,
     },
 
     // consultant

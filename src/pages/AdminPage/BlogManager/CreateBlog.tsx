@@ -18,7 +18,6 @@ const CreateBlog = ({ open, setOpen }) => {
         name: values.name,
         description: values.description,
       };
-      console.log(data);
 
       const res = await createBlogs(data);
       if (res.isSuccess) {

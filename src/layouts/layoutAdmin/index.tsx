@@ -9,6 +9,7 @@ import {
   FolderSharp,
   PeopleSharp,
   PersonSharp,
+  SupportAgent,
   SupportAgentSharp,
 } from "@mui/icons-material";
 import BubbleChartIcon from "@mui/icons-material/BubbleChart";
@@ -50,6 +51,11 @@ const LayoutAdmin: React.FC<IndexProps> = ({ Page }) => {
       link: "/admin/blogs",
       children: "Blogs",
       icon: <SupportAgentSharp />,
+    },
+    {
+      link: "/admin/promotions",
+      children: "Khuyến mãi",
+      icon: <SupportAgent />,
     },
 
     {

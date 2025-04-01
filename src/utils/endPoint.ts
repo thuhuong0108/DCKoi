@@ -183,6 +183,13 @@ const endPoint = {
     updateBlog: (id: string) => `/blogs/${id}`,
     deleteBlog: (id: string) => `/blogs/${id}`,
   },
+  promotions: {
+    getPromotions: "/promotions",
+    getPromotion: (id: string) => `/promotions/${id}`,
+    updatePromotion: (id: string) => `/promotions/${id}`,
+    createPromotion: "/promotions",
+    deletePromotion: (id: string) => `/promotions/${id}`,
+  },
 };
 
 export { baseURL, endPoint, socketURL };
