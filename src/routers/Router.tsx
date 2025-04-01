@@ -39,9 +39,12 @@ import {
   Maintaince,
   MaintainceConstructor,
   MaintainceDetail,
+  PageNotFound,
+  Blogs,
 } from "@/pages";
 import {
   AdminContract,
+  BlogManager,
   ConstructionTemplate,
   ConstructionTemplateConfig,
   Design,
@@ -63,6 +66,7 @@ import ContractPage from "@/pages/ContractPage";
 import DesignDetailManager from "@/pages/ManagerPages/DesignDetail";
 import { useLocation, useRoutes } from "react-router-dom";
 import PrivateRouterAdmin from "./PrivateRouterAdmin";
+import BlogsDetail from "@/pages/BlogsDetail";
 
 const Routers = () => {
   const location = useLocation();
@@ -71,6 +75,9 @@ const Routers = () => {
     { path: "/contact", element: <MainLayout Pages={Contact} /> },
     { path: "/login", element: <RootLayout Pages={Login} /> },
     { path: "/register", element: <Register /> },
+    { path: "/blogs", element: <MainLayout Pages={Blogs} /> },
+    { path: "/blogs/:id", element: <MainLayout Pages={BlogsDetail} /> },
+
     // customer
     {
       path: "/space-management/consultations",
@@ -266,6 +273,10 @@ const Routers = () => {
       path: "/admin/projects/:id",
       element: <RootLayout Pages={ManagementProjectDetail} />,
     },
+    {
+      path: "/admin/blogs",
+      element: <RootLayout Pages={BlogManager} />,
+    },
 
     // consultant
     {
@@ -352,7 +363,7 @@ const Routers = () => {
       path: "/constructor/maintainces",
       element: <RootLayout Pages={MaintainceConstructor} />,
     },
-    { path: "*", element: <div>404</div> },
+    { path: "*", element: <MainLayout Pages={PageNotFound} /> },
   ]);
   return <div>{element}</div>;
 };

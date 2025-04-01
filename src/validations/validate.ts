@@ -159,3 +159,7 @@ export const validateFeedback = yup.object().shape({
     .max(5, "Đánh giá tối đa là 5 sao"),
   description: yup.string().required("Yêu cầu nhập nội dung"),
 });
+export const validateBlog = yup.object().shape({
+  name: yup.string().required("Yêu cầu nhập tiêu đề"),
+  description: yup.string().required("Yêu cầu nhập nội dung"),
+});

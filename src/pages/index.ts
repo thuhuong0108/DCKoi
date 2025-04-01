@@ -19,6 +19,8 @@ import Transaction from "./Transaction";
 import IssueProject from "./IssueProject";
 import Maintaince from "./Maintaince";
 import MaintainceDetail from "./MaintainceDetail";
+import PageNotFound from "./404Page";
+import Blogs from "./Blogs";
 
 export {
   // customer
@@ -41,6 +43,8 @@ export {
   IssueProject,
   Maintaince,
   MaintainceDetail,
+  PageNotFound,
+  Blogs,
 
   //error
   AuthorizePage,

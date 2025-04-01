@@ -3,6 +3,9 @@ import { selectCurrentUser, selectRole } from "@/redux/slices/auth/authSlices";
 import { useAppSelector } from "@/redux/store/hook";
 import { ProfileOutlined } from "@ant-design/icons";
 import { SupportAgentSharp } from "@mui/icons-material";
+import MainLayout from "../mainLayout/MainLayout";
+import { AuthorizePage } from "@/pages";
+import { RoleUser } from "@/models/enums/RoleUser";
 
 interface IndexProps {
   Page: () => ReactElement;
@@ -26,6 +29,9 @@ const LayoutConsultant: React.FC<IndexProps> = ({ Page }) => {
 
   const currentUser = useAppSelector(selectCurrentUser);
   const roleUser = useAppSelector(selectRole);
+  if (roleUser !== RoleUser.CONSULTANT) {
+    return <MainLayout Pages={AuthorizePage} />;
+  }
   return (
     <div className="flex">
       <Sidebar
