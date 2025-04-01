@@ -22,6 +22,7 @@ const initialState: QuotaitonDetailState = {
     services: [],
     equipments: [],
     totalPrice: 0,
+    promotion: null,
   },
 };
 

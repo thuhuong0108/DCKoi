@@ -13,6 +13,9 @@ import {
   SupportAgentSharp,
 } from "@mui/icons-material";
 import BubbleChartIcon from "@mui/icons-material/BubbleChart";
+import { RoleUser } from "@/models/enums/RoleUser";
+import MainLayout from "../mainLayout/MainLayout";
+import { AuthorizePage } from "@/pages";
 interface IndexProps {
   Page: () => ReactElement;
 }
@@ -35,6 +38,9 @@ const LayoutDesigner: React.FC<IndexProps> = ({ Page }) => {
 
   const currentUser = useAppSelector(selectCurrentUser);
   const roleUser = useAppSelector(selectRole);
+  if (roleUser !== RoleUser.DESIGNER) {
+    return <MainLayout Pages={AuthorizePage} />;
+  }
 
   return (
     <div className="flex">

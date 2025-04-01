@@ -41,7 +41,7 @@ const DetailConsultingStaff = () => {
 
   useEffect(() => {
     dispatch(projectDetailActions.fetchProjectDetail(id));
-  }, [id]);
+  }, []);
 
   useEffect(() => {
     dispatch(
@@ -50,7 +50,7 @@ const DetailConsultingStaff = () => {
         id: id,
       })
     );
-  }, [id]);
+  }, []);
 
   useEffect(() => {
     dispatch(projectDetailActions.fetchProjectDetail(id));

@@ -19,6 +19,8 @@ import ManagementProjects from "./Projects/ManagementProjects";
 import ManagementProjectDetail from "./ProjectDetail";
 import MaintenanceAdmin from "./Maintenance";
 import MaintainceTaskAdmin from "./MaintainceTask";
+import BlogManager from "./BlogManager";
+import ManagerPromotions from "./ManagerPromotions";
 export {
   ConsultationPage,
   DetailConsultation,
@@ -40,4 +42,6 @@ export {
   ManagementProjectDetail,
   MaintenanceAdmin,
   MaintainceTaskAdmin,
+  BlogManager,
+  ManagerPromotions,
 };

@@ -45,6 +45,8 @@ import maintenancesSlice from "../slices/maintaince/maintainceSlices";
 import issueTypeSlice from "../slices/issueType/issueSlices";
 import maintenanceTaskSlice from "../slices/maintenanceTask/maintenanceTaskSlices";
 import maintainceConstructorSlice from "../slices/maintainceConstructor/maintainceConstructorSlices";
+import blogSlice from "../slices/blog/blogSlices";
+import promotionSlice from "../slices/promotion/promotionSlices";
 
 const rootReducers = combineReducers({
   router: connectRouter(history),
@@ -81,6 +83,8 @@ const rootReducers = combineReducers({
   issueType: issueTypeSlice,
   maintenanceTask: maintenanceTaskSlice,
   maintainceConstructor: maintainceConstructorSlice,
+  blog: blogSlice,
+  promotion: promotionSlice,
 });
 
 const persistConfig = {

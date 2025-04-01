@@ -1,4 +1,4 @@
-import { Title } from "@/components";
+import { messageError, Title } from "@/components";
 import {
   equipmentActions,
   selectEquipment,
@@ -51,6 +51,11 @@ import {
   selectTemplateConstructionDetail,
   templateConstructionDetailActions,
 } from "@/redux/slices/templateConstructionDetail/templateConstructionDetailSlices";
+import { parseCategory } from "@/utils/helpers";
+import { PromotionType } from "@/models/PromotionType";
+import { promotionActions } from "@/redux/slices/promotion/promotionSlices";
+import { set } from "date-fns";
+import { select } from "redux-saga/effects";
 
 const CreateQuotation = () => {
   const { Column } = Table;
@@ -61,10 +66,11 @@ const CreateQuotation = () => {
   const project = useAppSelector(selectedProjectDetail);
   const equipments = useAppSelector(selectEquipment);
   const services = useAppSelector(selectedService);
+  const [previewVisible, setPreviewVisible] = useState(false);
 
   useEffect(() => {
     dispatch(projectDetailActions.fetchProjectDetail(id));
-  }, [dispatch, id]);
+  }, [id]);
 
   const [itemWork, setItemWork] = useState<QuotationItem[]>([]);
   const templates = useAppSelector(selectTemplateConstruction);
@@ -91,7 +97,12 @@ const CreateQuotation = () => {
     });
 
     setItemWork(itemWork);
+    dispatch(
+      templateConstructionDetailActions.resetTemplateConstructionDetail()
+    );
   }, []);
+
+  const promotions = useAppSelector((state) => state.promotion);
 
   const handleAddEquipments = () => {
     dispatch(equipmentActions.fetchEquipment({ pageNumber: 1, pageSize: 10 }));
@@ -133,6 +144,20 @@ const CreateQuotation = () => {
         template.id
       )
     );
+  };
+  const calculateTotal = () => {
+    let total = 0;
+    total = itemWork.reduce(
+      (sum, item) =>
+        sum +
+        item.items.reduce((sum, item) => sum + item.price * item.quantity, 0),
+      0
+    );
+    if (selectedPromotion) {
+      total = total - (total * selectedPromotion.discount) / 100;
+      total = Math.floor(total);
+    }
+    return total;
   };
 
   useEffect(() => {
@@ -177,6 +202,11 @@ const CreateQuotation = () => {
   };
 
   const handleSaveQuotation = async () => {
+    if (!selectedTemplate) {
+      messageError("Vui lòng chọn mẫu quy trình thi công");
+      return;
+    }
+
     const services: QuotationServiceRequest[] = itemWork
       .map((item) => item.items)
       .flat()
@@ -209,9 +239,13 @@ const CreateQuotation = () => {
       templateConstructionId: selectedTemplate?.id || "",
       services: services,
       equipments: equipments,
+      promotionId: selectedPromotion?.id || null,
     };
 
     dispatch(quotationActions.createQuotation(data));
+    dispatch(
+      templateConstructionDetailActions.resetTemplateConstructionDetail()
+    );
     navigate(`/consultant/${id}`);
   };
 
@@ -242,6 +276,62 @@ const CreateQuotation = () => {
 
     setItemWork(itemWorkClone);
   };
+  const [visible, setVisible] = useState(false);
+  const [selectedPromotion, setSelectedPromotion] =
+    useState<PromotionType | null>(null);
+
+  const PreviewModal = ({
+    itemWork,
+    onClose,
+  }: {
+    itemWork: QuotationItem[];
+    onClose: () => void;
+  }) => {
+    return (
+      <Modal
+        title="Xem trước báo giá"
+        width={1000}
+        open={true}
+        onCancel={onClose}
+        footer={null}
+      >
+        {itemWork.map((item, index) => (
+          <div key={index} className="mb-6">
+            <h3 className="text-lg font-semibold mb-2">
+              {parseCategory(item.name)}
+            </h3>
+            <Table
+              columns={[
+                { title: "Tên", dataIndex: "name", key: "name" },
+                { title: "Đơn giá", dataIndex: "price", key: "price" },
+                { title: "Số lượng", dataIndex: "quantity", key: "quantity" },
+                {
+                  title: "Thành tiền",
+                  render: (_, record) => record.price * record.quantity,
+                  key: "total",
+                },
+              ]}
+              dataSource={item.items}
+              pagination={false}
+            />
+            <div className="text-right mt-2 font-medium">
+              Tổng cộng:{" "}
+              {item.items
+                .reduce((sum, item) => sum + item.price * item.quantity, 0)
+                .toLocaleString()}
+              VND
+            </div>
+          </div>
+        ))}
+        <div className="text-right text-xl font-bold mt-4 border-t pt-4">
+          Tổng cộng: {calculateTotal().toLocaleString()} VND
+          {selectedPromotion && (
+            <div>Giảm giá: {selectedPromotion.discount}%</div>
+          )}
+        </div>
+      </Modal>
+    );
+  };
 
   const handleAddServices = () => {
     dispatch(serviceActions.fetchService({ pageNumber: 1, pageSize: 10 }));
@@ -268,7 +358,6 @@ const CreateQuotation = () => {
   return (
     <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 w-full h-full">
       <Title name="Thông tin báo giá chi tiết thi công" />
-
       <Row className="flex flex-row items-start w-full gap-x-20 mt-4">
         <Col>
           <div className="flex flex-row justify-start items-center gap-4 text-lg">
@@ -318,11 +407,9 @@ const CreateQuotation = () => {
           </div>
         </Col>
       </Row>
-
       <h1 className="text-xl font-semibold text-black-500 my-4">
         Các hạng mục báo giá chi tiết
       </h1>
-
       {itemWork.map((item, index) => (
         <div>
           <TableQuotation
@@ -351,7 +438,6 @@ const CreateQuotation = () => {
           </div>
         </div>
       ))}
-
       <Modal
         title={`Thêm dịch vụ `}
         centered
@@ -377,7 +463,6 @@ const CreateQuotation = () => {
           />
         </Table>
       </Modal>
-
       <Modal
         title={`Thêm thiết bị `}
         centered
@@ -403,13 +488,11 @@ const CreateQuotation = () => {
           />
         </Table>
       </Modal>
-
       {/* line */}
       <div className="border-t-2 border-gray-300 my-5"></div>
       <h1 className="text-xl font-semibold text-black-500 my-4">
         Quy trình thi công
       </h1>
-
       <div>
         <Button
           title="Chọn quy trình thi công"
@@ -424,7 +507,6 @@ const CreateQuotation = () => {
           }}
         />
       </div>
-
       <div>
         <div className="flex flex-row justify-between items-center my-4">
           <label className="text-blue-800 font-semibold">
@@ -441,7 +523,76 @@ const CreateQuotation = () => {
       ) : (
         <></>
       )}
+      {/* line */}
 
+      <div className="border-t-2 border-gray-300 my-5"></div>
+
+      {/* promotions */}
+      <div>
+        <Button
+          title="Chọn khuyến mãi"
+          onClick={() => {
+            dispatch(
+              promotionActions.fetchPromotion({ pageNumber: 1, pageSize: 10 })
+            );
+            setVisible(true);
+          }}
+        />
+
+        {selectedPromotion && (
+          <div className="flex flex-row justify-between items-center my-4">
+            <label className="text-blue-800 font-semibold">
+              Khuyến mãi: {selectedPromotion.name}
+            </label>
+          </div>
+        )}
+      </div>
+
+      <Modal
+        title="Chọn khuyến mãi"
+        visible={visible}
+        onCancel={() => setVisible(false)}
+        loading={promotions.loading}
+        footer={null}
+      >
+        <Table<PromotionType> dataSource={promotions.promotions.data}>
+          <Column title="Tên khuyến mãi" dataIndex="name" key="name" />
+          <Column title="Giảm giá" dataIndex="discount" key="discount" />
+          <Column
+            title="Action"
+            key="action"
+            render={(_: any, record: PromotionType) => (
+              <Space size="middle">
+                <a
+                  onClick={() => {
+                    setSelectedPromotion(record);
+                    setVisible(false);
+                  }}
+                >
+                  Chọn
+                </a>
+              </Space>
+            )}
+          />
+        </Table>
+      </Modal>
+
+      {/* line */}
+
+      <div className="flex justify-end gap-4 mt-4">
+        <Button
+          title="Xem trước"
+          onClick={() => {
+            setPreviewVisible(true);
+          }}
+        />
+      </div>
+      {previewVisible && (
+        <PreviewModal
+          itemWork={itemWork}
+          onClose={() => setPreviewVisible(false)}
+        />
+      )}
       <Modal
         width={1000}
         footer={null}
@@ -465,7 +616,6 @@ const CreateQuotation = () => {
           />
         </Table>
       </Modal>
-
       <div className="flex justify-end mt-4">
         <Button title="Lưu báo giá" onClick={handleSaveQuotation} />
       </div>

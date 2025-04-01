@@ -14,6 +14,9 @@ import FolderIcon from "@mui/icons-material/Folder";
 import HomeIcon from "@mui/icons-material/Home";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import PaidIcon from "@mui/icons-material/Paid";
+import { RoleUser } from "@/models/enums/RoleUser";
+import MainLayout from "../mainLayout/MainLayout";
+import { AuthorizePage } from "@/pages";
 
 interface IndexProps {
   Page: () => ReactElement;
@@ -91,6 +94,9 @@ const LayoutCustomer: React.FC<IndexProps> = ({ Page }) => {
   const currentUser = useAppSelector(selectCurrentUser);
   const roleUser = useAppSelector(selectRole);
   const navigate = useNavigate();
+  if (roleUser !== RoleUser.CUSTOMER) {
+    return <MainLayout Pages={AuthorizePage} />;
+  }
   return (
     <div className="flex">
       <Sidebar

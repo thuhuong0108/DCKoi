@@ -130,7 +130,6 @@ function* rewriteQuotationWorker(action: PayloadAction<QuotationRequest>) {
         })
       );
     } else {
-      messageError(data.message);
     }
   } catch (error) {
     messageError("Hệ thống đang bị lỗi");

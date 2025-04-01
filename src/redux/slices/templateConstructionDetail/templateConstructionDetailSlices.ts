@@ -41,6 +41,16 @@ export const templateConstructionDetailSlice = createSlice({
       state,
       action: PayloadAction<TemplateConstructionTypeDetail>
     ) {},
+    resetTemplateConstructionDetail(state) {
+      state.loading = false;
+      state.item = {
+        id: "",
+        name: "",
+        description: "",
+        isActive: false,
+        templateContructionItems: [],
+      };
+    },
   },
 });
 

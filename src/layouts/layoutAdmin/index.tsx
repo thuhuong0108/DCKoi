@@ -9,9 +9,13 @@ import {
   FolderSharp,
   PeopleSharp,
   PersonSharp,
+  SupportAgent,
   SupportAgentSharp,
 } from "@mui/icons-material";
 import BubbleChartIcon from "@mui/icons-material/BubbleChart";
+import MainLayout from "../mainLayout/MainLayout";
+import { AuthorizePage } from "@/pages";
+import { RoleUser } from "@/models/enums/RoleUser";
 
 interface IndexProps {
   Page: () => ReactElement;
@@ -43,6 +47,17 @@ const LayoutAdmin: React.FC<IndexProps> = ({ Page }) => {
       children: "Thiết kế",
       icon: <SupportAgentSharp />,
     },
+    {
+      link: "/admin/blogs",
+      children: "Blogs",
+      icon: <SupportAgentSharp />,
+    },
+    {
+      link: "/admin/promotions",
+      children: "Khuyến mãi",
+      icon: <SupportAgent />,
+    },
+
     {
       link: "/admin/transactions",
       children: "Giao dịch",

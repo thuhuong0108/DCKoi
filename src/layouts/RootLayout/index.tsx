@@ -8,6 +8,7 @@ import LayoutManager from "../layoutManager";
 import LayoutDesigner from "../layoutDesigner";
 import LayoutCustomer from "../layoutCustomer";
 import LayoutConstructor from "../layoutConstructor";
+import { AuthorizePage } from "@/pages";
 
 interface IndexProps {
   Page: () => ReactElement;
@@ -22,10 +23,14 @@ interface MenuItemProps {
 }
 const RootLayout = ({ Pages }) => {
   const role = useAppSelector((state) => state.auth.role);
+  const isAuth = useAppSelector((state) => state.auth.isAuthenticated);
 
   const pageName = Pages.name;
   if (pageName === "Login" || pageName === "Register") {
     return <Pages />;
+  }
+  if (!isAuth) {
+    return <MainLayout Pages={AuthorizePage} />;
   }
 
   switch (role) {

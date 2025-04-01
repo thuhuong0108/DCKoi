@@ -21,4 +21,5 @@ export interface QuotationRequest {
   templateConstructionId: string;
   services: QuotationServiceRequest[];
   equipments: QuotationEquipmentRequest[];
+  promotionId?: string;
 }
