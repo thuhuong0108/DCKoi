@@ -23,6 +23,7 @@ export interface PaymentBatchType {
   totalValue: number;
   isPaid: boolean;
   status: string;
+  paymentAt: string;
 }
 
 export interface VerifyContractType {

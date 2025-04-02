@@ -102,8 +102,9 @@ const SelectForm = ({ visible, setVisible, result }) => {
         onCancel={() => setVisible(false)}
         onOk={() => {
           formik.setFieldValue("packageId", result.selectedPackage.id);
-
-          regHandleSubmit();
+          setTimeout(() => {
+            regHandleSubmit();
+          }, 0);
         }}
         // footer={[
         //   <Button

@@ -1,3 +1,5 @@
+import { signUpApi } from "@/api/auth";
+import { messageError, messageSuccess } from "@/components";
 import Button from "@/components/ui/Button";
 import useForm from "@/hooks/useForm";
 import { RegisterRequest } from "@/models/Request/RegisterType";
@@ -21,13 +23,13 @@ const Register: React.FC = () => {
     },
     validationSchema: validateRegister,
     onSubmit: async (values: RegisterRequest) => {
-      console.log(values);
-      // if () {
-      //   messageError("Tài khoản được tạo thành công. Vui lòng đăng nhập!");
-      // }
-      // else {
-      //   messageError("Lỗi tạo tài khoản mới. Vui lòng xem xét kĩ thông tin");
-      // }
+      const res = await signUpApi(values);
+      if (res.isSuccess) {
+        messageSuccess(res.message);
+        navigate("/login");
+      } else {
+        messageError(res.message);
+      }
     },
   });
 

@@ -75,7 +75,7 @@ const ProjectDetail = () => {
         <Loading />
       ) : (
         <>
-          {" "}
+          <Constructions constructionItem={construction.constructions} />{" "}
           <Tasks />
         </>
       )}

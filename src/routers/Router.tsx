@@ -52,6 +52,7 @@ import {
   EquipmentPage,
   MaintainceTaskAdmin,
   MaintenanceAdmin,
+  ManageCategory,
   ManagementPackage,
   ManagementProjectDetail,
   ManagementProjects,
@@ -281,6 +282,10 @@ const Routers = () => {
     {
       path: "/admin/promotions",
       element: <RootLayout Pages={ManagerPromotions} />,
+    },
+    {
+      path: "/admin/category",
+      element: <RootLayout Pages={ManageCategory} />,
     },
 
     // consultant

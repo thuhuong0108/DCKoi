@@ -79,6 +79,12 @@ const LayoutAdmin: React.FC<IndexProps> = ({ Page }) => {
     { link: "/admin/services", children: "Dịch vụ", icon: <BubbleChartIcon /> },
     { link: "/admin/equipments", children: "Thiết bị", icon: <BuildSharp /> },
     {
+      link: "/admin/category",
+      children: "Quản lý danh mục",
+      icon: <BuildSharp />,
+    },
+
+    {
       link: "/admin/template-construction",
       children: "Template Construction",
       icon: <BuildSharp />,

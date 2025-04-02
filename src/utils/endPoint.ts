@@ -5,6 +5,7 @@ const cloudinaryURL = "https://api.cloudinary.com/v1_1/dulapxpnp/upload";
 const endPoint = {
   auth: {
     login: "/auth/signin",
+    register: "/auth/signup",
   },
   packageItem: {
     createPackageItem: "/packageitems",
@@ -161,7 +162,8 @@ const endPoint = {
   },
 
   docsType: {
-    getDocsType: "/docstype",
+    getDocsType: "/docstype?PageNumber=1&PageSize=100",
+    docsType: "/docstype",
   },
   feedback: {
     createFeedback: "/feedbacks",

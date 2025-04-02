@@ -88,7 +88,7 @@ const ReportTask = ({ open, setOpen }) => {
     <Modal
       visible={open}
       loading={task.loading}
-      title={`Báo cáo công việc ${task.task.name}`}
+      title={`Báo cáo công việc: ${task.task.name}`}
       footer={null}
       onCancel={() => {
         setOpen(false);

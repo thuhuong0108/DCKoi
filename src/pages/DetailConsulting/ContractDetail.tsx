@@ -17,6 +17,9 @@ import DetailQuotationConsulting from "./DetailQuotationConsulting";
 import { contractActions } from "@/redux/slices/contract/contractSlices";
 import VerifyContract from "./VerifyContract";
 import { ContractStatus } from "@/models/enums/Status";
+import { templateConstructionDetailActions } from "@/redux/slices/templateConstructionDetail/templateConstructionDetailSlices";
+import { useParams } from "react-router-dom";
+import { getQuotation } from "@/api/quotation";
 
 const ContractDetail = ({ contractDetail, project, setOpenDetailContract }) => {
   const dispatch = useAppDispatch();
@@ -24,6 +27,7 @@ const ContractDetail = ({ contractDetail, project, setOpenDetailContract }) => {
   const [openVerify, setOpenVerify] = useState(false);
   const quotation = useAppSelector(selectedQuotationDetail);
 
+  const { id } = useParams();
   useEffect(() => {
     if (contractDetail?.quotationId) {
       dispatch(
@@ -159,7 +163,19 @@ const ContractDetail = ({ contractDetail, project, setOpenDetailContract }) => {
                 block
                 title="Xem chi tiết"
                 leadingIcon={<EyeOutlined />}
-                onClick={() => setOpenDetailQuotation(true)}
+                onClick={async () => {
+                  const res = await getQuotation(contractDetail.quotationId);
+
+                  if (res.isSuccess) {
+                    await dispatch(
+                      templateConstructionDetailActions.getTemplateConstructionDetail(
+                        res.data.templateConstructionId
+                      )
+                    );
+                  }
+
+                  setOpenDetailQuotation(true);
+                }}
               />
             </div>
           </Card>

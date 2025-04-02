@@ -1,3 +1,5 @@
+import { ApiResult } from "@/models/Common";
+import { RegisterRequest } from "@/models/Request/RegisterType";
 import { ApiResultWithData } from "@/models/Response/ApiResult";
 import { User } from "@/models/User";
 import { LoginPayload } from "@/redux/slices/auth/authSlices";
@@ -11,4 +13,9 @@ const loginApi = async (
   return response;
 };
 
-export { loginApi };
+const signUpApi = async (data: RegisterRequest): Promise<ApiResult> => {
+  const response = await http.post(endPoint.auth.register, data);
+  return response;
+};
+
+export { loginApi, signUpApi };

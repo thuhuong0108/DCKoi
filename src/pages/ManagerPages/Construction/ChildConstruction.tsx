@@ -23,13 +23,16 @@ const colorExprired = "bg-red-300 text-white";
 
 const ChildConstruction = ({
   item,
+  openChild,
+  setOpenChild,
 }: {
   item: TemplateConstructionItemType;
+  openChild: boolean;
+  setOpenChild: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const dispatch = useAppDispatch();
 
   const isExpired = new Date(item.estimateAt).getTime() < new Date().getTime();
-  const [isModalVisible, setIsModalVisible] = useState(false);
 
   return (
     <Card className="mb-2 w-[400px]" title={item.name}>
@@ -49,7 +52,7 @@ const ChildConstruction = ({
                   filter: { pageNumber: 1, pageSize: 5 },
                 })
               );
-              setIsModalVisible(true);
+              setOpenChild(true);
             }}
           />
         </Tooltip>
@@ -66,10 +69,10 @@ const ChildConstruction = ({
           {parseStatusConstruction(item.status)}
         </Tag>
       </div>
-      <DetailItemConstruction
+      {/* <DetailItemConstruction
         openModal={isModalVisible}
         setOpenModal={setIsModalVisible}
-      />
+      /> */}
     </Card>
   );
 };

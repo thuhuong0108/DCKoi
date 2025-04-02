@@ -43,6 +43,9 @@ const DetailQuotationConsulting = ({
   const [tableData, setTableData] = useState<TemplateConstructionItemType[]>(
     []
   );
+
+  console.log("template", template);
+
   const { id } = useParams();
   useEffect(() => {
     if (template.templateContructionItems) {

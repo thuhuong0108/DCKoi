@@ -35,6 +35,7 @@ import { maintainceTaskSaga } from "../slices/maintenanceTask/maintenanceTaskSag
 import { maintainceConstructorSaga } from "../slices/maintainceConstructor/maintainceConstructorSaga";
 import { blogSaga } from "../slices/blog/blogSaga";
 import promotionSaga from "../slices/promotion/promotionSaga";
+import { docsTypeSaga } from "../slices/docsType/docsTypeSaga";
 
 export default function* rootSaga() {
   yield all([
@@ -73,5 +74,6 @@ export default function* rootSaga() {
     maintainceConstructorSaga(),
     blogSaga(),
     promotionSaga(),
+    docsTypeSaga(),
   ]);
 }

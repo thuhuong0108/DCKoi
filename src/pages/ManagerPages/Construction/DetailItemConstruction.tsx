@@ -38,6 +38,7 @@ import TextArea from "antd/es/input/TextArea";
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import ReportTask from "./ReportTask";
+import { projectStateDetailActions } from "@/redux/slices/projectStateDetail/projectStateDetailSlices";
 
 const convertDateToString = (date: string) => {
   // convertDateToString to format 2025-03-13T11:00:55.250Z
@@ -196,18 +197,19 @@ const DetailItemConstruction = ({ openModal, setOpenModal }) => {
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const { formik, loading, regField, regHandleSubmit } = useForm({
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       const data: TaskRequest = {
         name: values.name,
         deadlineAt: convertDateToString(values.deadlineAt),
       };
 
-      dispatch(
+      await dispatch(
         constructionItemActions.createTask({
           id: construction.constructionItem.id,
           task: data,
         })
       );
+      await dispatch(projectStateDetailActions.fetchConstructions(id));
 
       //   formik.resetForm();
       setIsModalVisible(false);

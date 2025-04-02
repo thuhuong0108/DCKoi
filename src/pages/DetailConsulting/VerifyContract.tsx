@@ -21,7 +21,7 @@ const VerifyContract = ({ id, setOpenVerify }) => {
     const data: VerifyContractType = { id, otpCode };
     dispatch(contractActions.verifyContract(data));
     setOpenVerify(false);
-    navigate("/space-management/construction");
+    navigate("/space-management/projects");
   };
 
   return (

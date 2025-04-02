@@ -216,6 +216,9 @@ const PlanConstruction = ({ id, setOpen }) => {
     const res = await createConstruction(data);
     if (res.isSuccess) {
       messageSuccess("Lưu thành công");
+      dispatch(
+        templateConstructionDetailActions.getTemplateConstructionDetail(id)
+      );
     } else {
       messageError(res.message);
     }

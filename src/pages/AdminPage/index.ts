@@ -21,6 +21,8 @@ import MaintenanceAdmin from "./Maintenance";
 import MaintainceTaskAdmin from "./MaintainceTask";
 import BlogManager from "./BlogManager";
 import ManagerPromotions from "./ManagerPromotions";
+import ManageCategory from "./ManageCategory";
+
 export {
   ConsultationPage,
   DetailConsultation,
@@ -44,4 +46,5 @@ export {
   MaintainceTaskAdmin,
   BlogManager,
   ManagerPromotions,
+  ManageCategory,
 };
