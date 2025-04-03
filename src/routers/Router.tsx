@@ -41,6 +41,7 @@ import {
   MaintainceDetail,
   PageNotFound,
   Blogs,
+  DashBoard,
 } from "@/pages";
 import {
   AdminContract,
@@ -52,6 +53,7 @@ import {
   EquipmentPage,
   MaintainceTaskAdmin,
   MaintenanceAdmin,
+  ManageCategory,
   ManagementPackage,
   ManagementProjectDetail,
   ManagementProjects,
@@ -153,9 +155,7 @@ const Routers = () => {
     {
       path: "/admin",
       element: (
-        <PrivateRouterAdmin
-          Pages={() => <LayoutAdmin Page={ConsultationPage} />}
-        />
+        <PrivateRouterAdmin Pages={() => <LayoutAdmin Page={DashBoard} />} />
       ),
     },
 
@@ -281,6 +281,10 @@ const Routers = () => {
     {
       path: "/admin/promotions",
       element: <RootLayout Pages={ManagerPromotions} />,
+    },
+    {
+      path: "/admin/category",
+      element: <RootLayout Pages={ManageCategory} />,
     },
 
     // consultant

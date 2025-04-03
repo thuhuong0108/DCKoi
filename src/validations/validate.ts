@@ -75,6 +75,11 @@ export const validateTemplateConstruction = yup.object().shape({
     .min(1, "Giá trị phải lớn hơn 0"),
 });
 
+export const validateTemplate = yup.object().shape({
+  name: yup.string().required("Yêu cầu nhập tên mẫu"),
+  description: yup.string().required("Yêu cầu nhập mô tả"),
+});
+
 export const validateEstimatePrice = yup.object().shape({
   area: yup
     .number()

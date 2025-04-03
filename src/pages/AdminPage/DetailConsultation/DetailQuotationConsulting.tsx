@@ -130,7 +130,16 @@ const DetailQuotationConsulting = ({
     if (action == "reject") {
       setShowTextArea(true);
     } else {
-      await handleConfirmAction();
+      await dispatch(
+        quotationActions.rejectAcceptQuotation({
+          id: quotation.id,
+          isAccept: action === "approve" ? true : false,
+          reason,
+        })
+      );
+      setShowTextArea(false);
+      setReason("");
+      setOpenDetailQuotation(false);
     }
   };
 
@@ -173,7 +182,7 @@ const DetailQuotationConsulting = ({
                       Từ chối
                     </Button>
                     <Button
-                      onClick={() => handleActionClick("approve")}
+                      onClick={async () => handleActionClick("approve")}
                       color="primary"
                       variant="solid"
                     >

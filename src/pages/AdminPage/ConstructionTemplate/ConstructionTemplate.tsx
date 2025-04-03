@@ -8,7 +8,10 @@ import { Pagination, TextField } from "@mui/material";
 import TemplateCard from "./TemplateCard";
 import PlusTemplate from "./PlusTemplate";
 import useForm from "@/hooks/useForm";
-import { validateTemplateConstruction } from "@/validations/validate";
+import {
+  validateTemplate,
+  validateTemplateConstruction,
+} from "@/validations/validate";
 
 const ConstructionTemplate = () => {
   const dispatch = useAppDispatch();
@@ -34,11 +37,13 @@ const ConstructionTemplate = () => {
       name: "",
       description: "",
     },
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
+      await dispatch(
+        templateConstructionActions.createTemplateConstruction(values)
+      );
       setModalVisible(false);
-      dispatch(templateConstructionActions.createTemplateConstruction(values));
     },
-    validationSchema: validateTemplateConstruction,
+    validationSchema: validateTemplate,
   });
 
   return (
@@ -62,18 +67,18 @@ const ConstructionTemplate = () => {
       <br />
 
       <div className="flex justify-end">
-      <Pagination
-        count={items.totalPages}
-        page={items.pageNumber}
-        onChange={(event, value) => {
-          dispatch(
-            templateConstructionActions.getTemplateConstruction({
-              pageNumber: value,
-              pageSize: 10,
-            })
-          );
-        }}
-      />
+        <Pagination
+          count={items.totalPages}
+          page={items.pageNumber}
+          onChange={(event, value) => {
+            dispatch(
+              templateConstructionActions.getTemplateConstruction({
+                pageNumber: value,
+                pageSize: 10,
+              })
+            );
+          }}
+        />
       </div>
 
       <Modal
@@ -85,28 +90,33 @@ const ConstructionTemplate = () => {
         <Card className="border-none">
           <Skeleton loading={loading} active>
             <div className="space-y-4">
-            <TextField
-              required
-              fullWidth
-              label="Tên quy trình"
-              {...regField("name")}
-              error={Boolean(regField("name").error)}
-              helperText={regField("name").error}
-            />
-            <TextField
-              required
-              fullWidth
-              label="Mô tả"
-              {...regField("description")}
-              error={Boolean(regField("description").error)}
-              helperText={regField("description").error}
-            />
+              <TextField
+                required
+                fullWidth
+                label="Tên quy trình"
+                {...regField("name")}
+                error={Boolean(regField("name").error)}
+                helperText={regField("name").error}
+              />
+              <TextField
+                required
+                fullWidth
+                label="Mô tả"
+                {...regField("description")}
+                error={Boolean(regField("description").error)}
+                helperText={regField("description").error}
+              />
 
-            <div className="flex justify-end">
-            <Button size="large" onClick={regHandleSubmit} type="primary" className="px-5 font-semibold drop-shadow-xl">
-              Thêm
-            </Button>
-            </div>
+              <div className="flex justify-end">
+                <Button
+                  size="large"
+                  onClick={regHandleSubmit}
+                  type="primary"
+                  className="px-5 font-semibold drop-shadow-xl"
+                >
+                  Thêm
+                </Button>
+              </div>
             </div>
           </Skeleton>
         </Card>

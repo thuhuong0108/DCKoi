@@ -18,6 +18,7 @@ import {
   parseCategory,
 } from "@/utils/helpers";
 import { selectedProjectDetail } from "@/redux/slices/projectDetail/projectDetailSlices";
+import { constructionProjectActions } from "@/redux/slices/constructionProject/constructionProjectSlices";
 
 const PlanConstruction = ({ id, setOpen }) => {
   const dispatch = useAppDispatch();
@@ -216,6 +217,7 @@ const PlanConstruction = ({ id, setOpen }) => {
     const res = await createConstruction(data);
     if (res.isSuccess) {
       messageSuccess("Lưu thành công");
+      dispatch(constructionProjectActions.fetchConstructionProject(id));
     } else {
       messageError(res.message);
     }

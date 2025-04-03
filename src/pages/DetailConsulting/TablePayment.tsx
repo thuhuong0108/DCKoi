@@ -1,6 +1,6 @@
 import { dateDDMMYYY, formatPrice } from "@/utils/helpers";
 import { Card, Table, TableProps } from "antd";
-import { TablePaymentBatch } from "./type";
+import { TablePaymentBatch } from "../ProjectDetail/type";
 
 const columns: TableProps<TablePaymentBatch>["columns"] = [
   {
@@ -30,6 +30,8 @@ const columns: TableProps<TablePaymentBatch>["columns"] = [
 ];
 
 const TablePayment = ({ payments }) => {
+  console.log(payments);
+
   return (
     <Card hoverable>
       <Table<TablePaymentBatch>

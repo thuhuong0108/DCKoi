@@ -30,6 +30,5 @@ export const columns: TableColumnsType<TemplateConstructionItemType> = [
     title: "Mô tả",
     dataIndex: "description",
     key: "description",
-    width: "50%",
   },
 ];

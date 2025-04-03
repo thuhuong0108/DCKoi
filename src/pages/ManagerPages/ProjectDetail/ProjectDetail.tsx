@@ -66,7 +66,7 @@ const ProjectDetail = () => {
                   yes: async () => {
                     const res = await finishProject(id);
                     if (res.isSuccess) {
-                      navigate("manager");
+                      navigate("/manager");
                     } else {
                       messageError(res.message);
                     }

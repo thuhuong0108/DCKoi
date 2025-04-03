@@ -1,5 +1,5 @@
 import { TemplateConstructionItemType } from "@/models";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ChildConstruction from "./ChildConstruction";
 import {
   Button,
@@ -10,6 +10,7 @@ import {
   Input,
   Menu,
   Modal,
+  Skeleton,
 } from "antd";
 import useForm from "@/hooks/useForm";
 import type { DatePickerProps } from "antd";
@@ -21,12 +22,12 @@ import { projectStateDetailActions } from "@/redux/slices/projectStateDetail/pro
 import { useParams } from "react-router-dom";
 import { set } from "date-fns";
 import { parseCategory } from "@/utils/helpers";
+import DetailItemConstruction from "./DetailItemConstruction";
 
-const ParentConstruction = ({
-  constructionItem,
-}: {
-  constructionItem: TemplateConstructionItemType[];
-}) => {
+const ParentConstruction = () => {
+  const construction = useAppSelector(
+    (state) => state.projectStateDetail.construction
+  );
   const [isModalVisible, setIsModalVisible] = useState(false);
   const issueProject = useAppSelector(
     (state) => state.projectStateDetail.issue
@@ -37,10 +38,18 @@ const ParentConstruction = ({
   const [selectItem, setSelectItem] = useState<TemplateConstructionItemType>({
     id: "",
   });
+  useEffect(() => {
+    dispatch(projectStateDetailActions.fetchConstructions(id));
+  }, []);
 
+  // if (construction.loading) {
+  //   return <Skeleton />;
+  // }
+  const [visiableChild, setVisiableChild] = useState(false);
   return (
     <div className="flex w-full flex-row">
-      {constructionItem.map((item) => (
+      {construction.loading && <Skeleton />}
+      {construction.constructions.map((item) => (
         <Card
           title={
             <div className="flex flex-row justify-between">
@@ -83,7 +92,11 @@ const ParentConstruction = ({
           className="m-2 w-[1000px]"
         >
           {item.childs.map((child) => (
-            <ChildConstruction item={child} />
+            <ChildConstruction
+              item={child}
+              openChild={visiableChild}
+              setOpenChild={setVisiableChild}
+            />
           ))}
           {/* <Button
             type="primary"
@@ -108,6 +121,13 @@ const ParentConstruction = ({
       >
         <ModalIssue issue={issueProject} idItem={selectItem.id} />
       </Modal>
+
+      {visiableChild && (
+        <DetailItemConstruction
+          openModal={visiableChild}
+          setOpenModal={setVisiableChild}
+        />
+      )}
     </div>
   );
 };

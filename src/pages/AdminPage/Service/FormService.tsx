@@ -16,7 +16,7 @@ import React from "react";
 
 const FormService = ({ item, setIsModalOpen }) => {
   const dispatch = useAppDispatch();
-  const { loading, regField, regHandleSubmit } = useForm({
+  const { formik, loading, regField, regHandleSubmit } = useForm({
     values: item || {
       id: "",
       name: "",
@@ -40,7 +40,7 @@ const FormService = ({ item, setIsModalOpen }) => {
     <div className="flex flex-col">
       <TextField
         fullWidth
-        label="Tên thiết bị"
+        label="Tên dịch vụ"
         margin="normal"
         variant="standard"
         {...regField("name")}
@@ -50,7 +50,7 @@ const FormService = ({ item, setIsModalOpen }) => {
 
       <TextField
         fullWidth
-        label="Mô tả thiết bị"
+        label="Mô tả dịch vụ"
         margin="normal"
         variant="standard"
         {...regField("description")}
@@ -60,7 +60,7 @@ const FormService = ({ item, setIsModalOpen }) => {
 
       <TextField
         fullWidth
-        label="Giá thiết bị"
+        label="Giá dịch vụ"
         type="number"
         margin="normal"
         variant="standard"
@@ -69,15 +69,18 @@ const FormService = ({ item, setIsModalOpen }) => {
         helperText={regField("price").error}
       />
 
-      <TextField
-        fullWidth
-        label="Đơn vị"
-        margin="normal"
-        variant="standard"
-        {...regField("unit")}
-        error={Boolean(regField("unit").error)}
-        helperText={regField("unit").error}
-      />
+      {formik.values.type === "Unit" && (
+        <TextField
+          fullWidth
+          label="Đơn vị"
+          type="number"
+          margin="normal"
+          variant="standard"
+          {...regField("unit")}
+          error={Boolean(regField("unit").error)}
+          helperText={regField("unit").error}
+        />
+      )}
 
       <FormControl fullWidth margin="normal" variant="standard">
         <InputLabel>Phân loại</InputLabel>
@@ -86,6 +89,13 @@ const FormService = ({ item, setIsModalOpen }) => {
           error={Boolean(regField("type").error)}
           inputProps={{
             name: "type",
+          }}
+          onChange={(e) => {
+            formik.setFieldValue("type", e.target.value);
+            formik.setFieldValue("unit", "");
+            if (e.target.value !== "Unit") {
+              formik.setFieldValue("unit", e.target.value);
+            }
           }}
         >
           <option value="Unit">Unit</option>

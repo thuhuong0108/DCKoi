@@ -41,7 +41,8 @@ const ProjectCard = (project: ProjectType) => {
 
         <div className="flex justify-end items-center mt-4">
           {(project.status === ProjectStatus.CONSTRUCTING ||
-            project.status === ProjectStatus.FINISHED) && (
+            project.status === ProjectStatus.FINISHED ||
+            project.status === ProjectStatus.DESIGNING) && (
             <Button
               type="dashed"
               icon={<EyeOutlined />}

@@ -7,6 +7,8 @@ import ModalPayment from "./ModalPayment";
 
 const TablePayment = ({ payments }) => {
   const [openPayment, setOpenPayment] = useState(false);
+  console.log(payments);
+
   const columns: TableProps<TablePaymentBatch>["columns"] = [
     {
       title: "Đợt thanh toán",
@@ -28,9 +30,19 @@ const TablePayment = ({ payments }) => {
     },
     {
       title: "Ngày thanh toán",
-      dataIndex: "createdAt",
-      key: "createdAt",
-      render: (text) => <a>{dateDDMMYYY(text)} </a>,
+      dataIndex: "paymentEstimateAt",
+      key: "paymentEstimateAt",
+      render: (text, record) => {
+        return (
+          <a>
+            {dateDDMMYYY(
+              record.paymentEstimateAt
+                ? record.paymentEstimateAt
+                : record.createdAt || new Date()
+            )}
+          </a>
+        );
+      },
     },
 
     {

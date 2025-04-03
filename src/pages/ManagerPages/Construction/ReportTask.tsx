@@ -69,6 +69,7 @@ const ReportTask = ({ open, setOpen }) => {
   });
   const { id } = useParams();
   const finishUpdateTask = async () => {
+    //
     await dispatch(
       constructionItemActions.fetchConstructionItem(item.constructionItem.id)
     );
@@ -81,6 +82,7 @@ const ReportTask = ({ open, setOpen }) => {
         },
       })
     );
+    await dispatch(projectStateDetailActions.fetchConstructions(id));
     // await dispatch(projectStateDetailActions.fetchConstructions(id));
   };
   const dispatch = useAppDispatch();
@@ -88,7 +90,7 @@ const ReportTask = ({ open, setOpen }) => {
     <Modal
       visible={open}
       loading={task.loading}
-      title={`Báo cáo công việc ${task.task.name}`}
+      title={`Báo cáo công việc: ${task.task.name}`}
       footer={null}
       onCancel={() => {
         setOpen(false);

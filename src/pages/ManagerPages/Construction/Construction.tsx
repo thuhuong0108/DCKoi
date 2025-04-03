@@ -25,7 +25,6 @@ const Construction = () => {
 
   useEffect(() => {
     dispatch(projectStateDetailActions.fetchProjectDetail(id));
-    dispatch(projectStateDetailActions.fetchConstructions(id));
   }, []);
 
   const { id } = useParams();
@@ -43,11 +42,7 @@ const Construction = () => {
         </div>
       )}
 
-      {construction.loading ? (
-        <Skeleton />
-      ) : (
-        <ParentConstruction constructionItem={construction.constructions} />
-      )}
+      <ParentConstruction />
     </div>
   );
 };

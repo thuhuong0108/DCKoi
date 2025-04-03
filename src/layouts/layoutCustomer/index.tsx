@@ -33,7 +33,7 @@ interface MenuItemProps {
 const LayoutCustomer: React.FC<IndexProps> = ({ Page }) => {
   const homeMenu: MenuItemProps[] = [
     {
-      link: "/space-management",
+      link: "/",
       children: "Trang chủ",
       icon: <HomeIcon />,
       end: true,

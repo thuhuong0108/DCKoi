@@ -4,6 +4,7 @@ import { Button, Card } from "antd";
 import { useNavigate } from "react-router-dom";
 import { ProjectType } from "@/models";
 import { parseStatusProject } from "@/utils/helpers";
+import { ProjectStatus } from "@/models/enums/Status";
 
 const ProjectCard = (project: ProjectType) => {
   // const CardProject = ({project}) => {
@@ -36,11 +37,14 @@ const ProjectCard = (project: ProjectType) => {
           }
         />
 
-        <div className="flex justify-end items-center mt-4">
-          <Button type="primary" onClick={() => navigate(`${project.id}`)}>
-            Xem chi tiết
-          </Button>
-        </div>
+        {project.status === ProjectStatus.FINISHED ||
+          (project.status === ProjectStatus.CONSTRUCTING && (
+            <div className="flex justify-end items-center mt-4">
+              <Button type="primary" onClick={() => navigate(`${project.id}`)}>
+                Xem chi tiết
+              </Button>
+            </div>
+          ))}
       </Card>
     </div>
   );

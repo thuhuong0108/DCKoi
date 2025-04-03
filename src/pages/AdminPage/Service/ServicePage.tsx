@@ -102,8 +102,7 @@ const ServicePage = () => {
       />
 
       <Modal
-        title={selectedItem ? "Chỉnh sửa thiết bị" : "Thêm thiết bị mới"}
-        desc="Vui lòng nhập tên thiết bị"
+        title={selectedItem ? "Chỉnh sửa dịch vụ" : "Thêm dịch vụ mới"}
         size="xl"
         visible={isModalOpen}
         onVisibleChange={setIsModalOpen}
