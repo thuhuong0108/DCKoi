@@ -13,6 +13,7 @@ import {
 } from "@/models/enums/Status";
 import { TaskStage } from "@/models/enums/TaskStage";
 import { HolidayType } from "@/models/HolidayType";
+import numeral from "numeral";
 
 export const formatDate = (date: Date, includeTime = false): string => {
   const options: Intl.DateTimeFormatOptions = includeTime
@@ -344,4 +345,42 @@ export function parseMaintenceStatus(issue: MaintainceStatus): string {
     default:
       return "Trạng thái không xác định";
   }
+}
+
+// ----------------------------------------------------------------------
+
+type InputValue = string | number | null;
+
+export function fNumber(number: InputValue) {
+  return numeral(number).format();
+}
+
+export function fCurrency(number: InputValue) {
+  const format = number ? numeral(number).format("0,0.00") : "";
+
+  return result(format, ".00");
+}
+
+export function fPercent(number: InputValue) {
+  const format = number ? numeral(Number(number) / 100).format("0.0%") : "";
+
+  return result(format, ".0");
+}
+
+export function fShortenNumber(number: InputValue) {
+  const format = number ? numeral(number).format("0.00a") : "";
+
+  return result(format, ".00");
+}
+
+export function fData(number: InputValue) {
+  const format = number ? numeral(number).format("0.0 b") : "";
+
+  return result(format, ".0");
+}
+
+function result(format: string, key = ".00") {
+  const isInteger = format.includes(key);
+
+  return isInteger ? format.replace(key, "") : format;
 }

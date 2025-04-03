@@ -41,6 +41,7 @@ import {
   MaintainceDetail,
   PageNotFound,
   Blogs,
+  DashBoard,
 } from "@/pages";
 import {
   AdminContract,
@@ -154,9 +155,7 @@ const Routers = () => {
     {
       path: "/admin",
       element: (
-        <PrivateRouterAdmin
-          Pages={() => <LayoutAdmin Page={ConsultationPage} />}
-        />
+        <PrivateRouterAdmin Pages={() => <LayoutAdmin Page={DashBoard} />} />
       ),
     },
 
