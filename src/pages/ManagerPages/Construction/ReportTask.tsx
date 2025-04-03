@@ -69,6 +69,7 @@ const ReportTask = ({ open, setOpen }) => {
   });
   const { id } = useParams();
   const finishUpdateTask = async () => {
+    //
     await dispatch(
       constructionItemActions.fetchConstructionItem(item.constructionItem.id)
     );
@@ -81,6 +82,7 @@ const ReportTask = ({ open, setOpen }) => {
         },
       })
     );
+    await dispatch(projectStateDetailActions.fetchConstructions(id));
     // await dispatch(projectStateDetailActions.fetchConstructions(id));
   };
   const dispatch = useAppDispatch();

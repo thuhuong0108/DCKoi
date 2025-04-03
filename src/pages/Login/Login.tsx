@@ -59,60 +59,60 @@ const Login = () => {
   }, [isAuthenticated, currentUser, roleUser, navigate]);
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="flex flex-row justify-evenly items-center">
-        <img src={ImgLogo} alt="Logo" className="w-[30%]" />
-        <div className="flex flex-col rounded-3xl shadow-lg p-10 m-8 min-h-[500px] w-full max-w-xl bg-white">
+    <div
+      className="min-h-screen flex items-center justify-center bg-cover bg-center"
+      style={{
+        backgroundImage:
+          'url("https://i.pinimg.com/736x/70/ed/a5/70eda54dc66611bb3cdfb74e65c60103.jpg")',
+      }}
+    >
+      <div className="flex flex-col gap-4 bg-white bg-opacity-80 p-8 rounded-lg shadow-lg w-full max-w-2xl">
+        <h2 className="text-center text-2xl font-bold text-blue-700 mb-6">
+          Đăng nhập
+        </h2>
+        <div className="flex flex-col rounded-3xl p-10 m-8 min-h-[500px] w-full max-w-xl ">
           <div className="">
-            <Box
-              component="form"
-              onSubmit={regHandleSubmit}
-              sx={{
-                width: "100%",
-                bgcolor: "white",
-                padding: 4,
-                borderRadius: 2,
-                boxShadow: 3,
-              }}
+            <TextField
+              fullWidth
+              label="Email"
+              margin="normal"
+              variant="outlined"
+              {...regField("email")}
+              error={Boolean(regField("email").error)}
+              helperText={regField("email").error}
+            />
+            <TextField
+              fullWidth
+              label="Password"
+              type="password"
+              margin="normal"
+              variant="outlined"
+              {...regField("password")}
+              error={Boolean(regField("password").error)}
+              helperText={regField("password").error}
+            />
+            <Button
+              fullWidth
+              type="submit"
+              variant="contained"
+              color="primary"
+              disabled={loading}
             >
-              <Typography
-                variant="h5"
-                component="h1"
-                gutterBottom
-                align="left"
-                sx={{ fontWeight: 700 }}
-              >
-                Login
+              {isLoading ? "Loading..." : "Đăng nhập"}
+            </Button>
+
+            <div className="flex justify-between items-center mt-4">
+              <Typography variant="body2" color="textSecondary">
+                Bạn chưa có tài khoản?{" "}
+                <Button
+                  variant="text"
+                  color="primary"
+                  onClick={() => navigate("/register")}
+                >
+                  Đăng ký
+                </Button>
               </Typography>
-              <TextField
-                fullWidth
-                label="Email"
-                margin="normal"
-                variant="outlined"
-                {...regField("email")}
-                error={Boolean(regField("email").error)}
-                helperText={regField("email").error}
-              />
-              <TextField
-                fullWidth
-                label="Password"
-                type="password"
-                margin="normal"
-                variant="outlined"
-                {...regField("password")}
-                error={Boolean(regField("password").error)}
-                helperText={regField("password").error}
-              />
-              <Button
-                fullWidth
-                type="submit"
-                variant="contained"
-                color="primary"
-                disabled={loading}
-              >
-                {isLoading ? "Loading..." : "Login"}
-              </Button>
-            </Box>
+            </div>
           </div>
         </div>
       </div>

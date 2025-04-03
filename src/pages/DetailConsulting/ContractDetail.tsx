@@ -20,6 +20,8 @@ import { ContractStatus } from "@/models/enums/Status";
 import { templateConstructionDetailActions } from "@/redux/slices/templateConstructionDetail/templateConstructionDetailSlices";
 import { useParams } from "react-router-dom";
 import { getQuotation } from "@/api/quotation";
+import { acceptContract } from "@/api/contract";
+import { set } from "date-fns";
 
 const ContractDetail = ({ contractDetail, project, setOpenDetailContract }) => {
   const dispatch = useAppDispatch();
@@ -77,23 +79,36 @@ const ContractDetail = ({ contractDetail, project, setOpenDetailContract }) => {
     setItemWork(itemWork);
   }, [services, equipments]);
 
-  const handleAccept = () => {
-    dispatch(contractActions.acceptContract(contractDetail.id));
-    setOpenDetailContract(false);
-    setOpenVerify(true);
-  };
+  const handleAccept = async () => {
+    setLoading(true);
+    const res = await acceptContract(contractDetail.id);
+    if (res.isSuccess) {
+      setOpenVerify(true);
 
+      //  set dealine 5 minutes
+
+      setDeadline(new Date(Date.now() + 5 * 60000));
+    }
+    setLoading(false);
+  };
+  const [deadline, setDeadline] = useState<Date | null>(null);
   const handleReject = () => {
     dispatch(contractActions.rejectContract(contractDetail.id));
     setOpenDetailContract(false);
   };
+  const [loading, setLoading] = useState(false);
 
   return (
     <div>
       {contractDetail.status == ContractStatus.PROCESSING ? (
         <Row className="flex flex-row gap-4 justify-center my-4">
           <Button danger title="Từ chối hợp đồng" onClick={handleReject} />
-          <Button success title="Đồng ý hợp đồng" onClick={handleAccept} />
+          <Button
+            success
+            title="Đồng ý hợp đồng"
+            onClick={handleAccept}
+            loading={loading}
+          />
         </Row>
       ) : (
         <></>
@@ -220,7 +235,11 @@ const ContractDetail = ({ contractDetail, project, setOpenDetailContract }) => {
         onOk={() => setOpenVerify(false)}
         footer={false}
       >
-        <VerifyContract id={contractDetail.id} setOpenVerify={setOpenVerify} />
+        <VerifyContract
+          id={contractDetail.id}
+          setOpenVerify={setOpenVerify}
+          deadline={deadline}
+        />
       </Modal>
     </div>
   );

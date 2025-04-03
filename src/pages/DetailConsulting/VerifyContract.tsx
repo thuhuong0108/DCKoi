@@ -1,12 +1,12 @@
 import { Button, CountdownTime } from "@/components";
 import { VerifyContractType } from "@/models";
 import { contractActions } from "@/redux/slices/contract/contractSlices";
-import { Input } from "antd";
+import { Input, Statistic } from "antd";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
-const VerifyContract = ({ id, setOpenVerify }) => {
+const { Countdown } = Statistic;
+const VerifyContract = ({ id, setOpenVerify, deadline }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [otpCode, setOtpCode] = useState("");
@@ -33,7 +33,10 @@ const VerifyContract = ({ id, setOpenVerify }) => {
         value={otpCode}
         onChange={(e) => setOtpCode(e.target.value)}
       />
-      <CountdownTime onTimeout={resendOtp} />
+      <Countdown
+        value={deadline?.getTime()}
+        onFinish={() => setOpenVerify(false)}
+      />
       <Button primary title="Xác nhận" onClick={handleVerify} />
     </div>
   );
