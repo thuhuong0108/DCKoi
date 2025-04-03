@@ -93,10 +93,10 @@ const Login = () => {
             />
             <Button
               fullWidth
-              type="submit"
               variant="contained"
               color="primary"
               disabled={loading}
+              onClick={regHandleSubmit}
             >
               {isLoading ? "Loading..." : "Đăng nhập"}
             </Button>
