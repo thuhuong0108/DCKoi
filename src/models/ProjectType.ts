@@ -22,6 +22,7 @@ export interface ProjectType {
   standOut: boolean;
   note: string;
   status: ProjectStatus;
+  thumbnail: string;
   createdAt?: string;
   updatedAt?: string;
   createdDate?: string;

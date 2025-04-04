@@ -42,6 +42,7 @@ import {
   PageNotFound,
   Blogs,
   DashBoard,
+  ExampleProject,
 } from "@/pages";
 import {
   AdminContract,
@@ -80,6 +81,7 @@ const Routers = () => {
     { path: "/register", element: <Register /> },
     { path: "/blogs", element: <MainLayout Pages={Blogs} /> },
     { path: "/blogs/:id", element: <MainLayout Pages={BlogsDetail} /> },
+    { path: "/projects", element: <MainLayout Pages={ExampleProject} /> },
 
     // customer
     {

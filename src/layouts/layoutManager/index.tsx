@@ -41,11 +41,6 @@ const LayoutManager: React.FC<IndexProps> = ({ Page }) => {
       children: "Thiết kế",
       icon: <SupportAgentSharp />,
     },
-    {
-      link: "/manager/construction",
-      children: "Thi công",
-      icon: <Construction />,
-    },
   ];
 
   const currentUser = useAppSelector(selectCurrentUser);

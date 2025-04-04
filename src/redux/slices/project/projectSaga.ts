@@ -8,6 +8,7 @@ import {
   getProjectConstruction,
   getProjectDesign,
   getProjectFinish,
+  getProjectSample,
 } from "@/api/project";
 import { projectActions } from "./projectSlices";
 import { data } from "react-router-dom";
@@ -97,6 +98,22 @@ function* fetchProjectFinishWorker(action: PayloadAction<Filter>) {
   }
 }
 
+function* fetchSampleProjectWorker(action: PayloadAction<Filter>) {
+  try {
+    const data = yield call(getProjectSample, action.payload);
+    if (data.isSuccess) {
+      yield put(projectActions.fetchDesignProjectSuccess(data));
+    } else {
+      messageError(data.message);
+      yield put(projectActions.fetchDesignProjectFaild());
+    }
+  } catch (error) {
+    messageError("Tải dữ liệu dự án bị lỗi");
+    console.log("Error load project: ", error);
+    yield put(projectActions.fetchDesignProjectFaild());
+  }
+}
+
 function* fetchProjectWatcher() {
   while (true) {
     const action = yield take(projectActions.fetchProject);
@@ -139,6 +156,13 @@ function* fetchProjectFinishWatcher() {
   }
 }
 
+function* fetchSampleProjectWatcher() {
+  while (true) {
+    const action = yield take(projectActions.fetchSampleProject);
+    yield fork(fetchSampleProjectWorker, action);
+  }
+}
+
 export function* projectSaga() {
   yield fork(fetchProjectWatcher);
   //   yield fork(createItemWatcher);
@@ -146,4 +170,5 @@ export function* projectSaga() {
   yield fork(fetchDesignProjectWatcher);
   yield fork(reloadDesignProjectWatcher);
   yield fork(fetchProjectFinishWatcher);
+  yield fork(fetchSampleProjectWatcher);
 }

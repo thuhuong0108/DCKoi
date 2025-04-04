@@ -105,6 +105,7 @@ const endPoint = {
     rejectDesign: (id: string) => `/designs/${id}/reject`,
     acceptDesign: (id: string) => `/designs/${id}/accept`,
     requestEditDesign: (id: string) => `/designs/${id}/request-edit`,
+    publicDesign: (id: string) => `/designs/${id}/publish`,
   },
 
   construction: {
@@ -130,6 +131,7 @@ const endPoint = {
     createPayment: "/payments",
     paymentCallback: "/payments/vnpay-callback",
     getPayment: (id: string) => `payments/${id}`,
+    getTransactions: `payments/transaction`,
   },
 
   issue: {
@@ -191,6 +193,11 @@ const endPoint = {
     updatePromotion: (id: string) => `/promotions/${id}`,
     createPromotion: "/promotions",
     deletePromotion: (id: string) => `/promotions/${id}`,
+  },
+  statistics: {
+    user: "/statistics/user",
+    chart: "/statistics",
+    chartRevenue: "/statistics/total-transaction",
   },
 };
 

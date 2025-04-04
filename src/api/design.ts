@@ -55,6 +55,11 @@ const requestEditDesign = async (
   return response;
 };
 
+const publicDesign = async (id: string): Promise<ApiResult> => {
+  const response = await http.put(endPoint.design.publicDesign(id));
+  return response;
+};
+
 export {
   getListDesign,
   getDesign,
@@ -63,4 +68,5 @@ export {
   acceptDesign,
   rejectDesign,
   requestEditDesign,
+  publicDesign,
 };

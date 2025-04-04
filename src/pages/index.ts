@@ -21,6 +21,7 @@ import Maintaince from "./Maintaince";
 import MaintainceDetail from "./MaintainceDetail";
 import PageNotFound from "./404Page";
 import Blogs from "./Blogs";
+import ExampleProject from "./ExampleProject";
 
 export {
   // customer
@@ -45,6 +46,7 @@ export {
   MaintainceDetail,
   PageNotFound,
   Blogs,
+  ExampleProject,
 
   //error
   AuthorizePage,

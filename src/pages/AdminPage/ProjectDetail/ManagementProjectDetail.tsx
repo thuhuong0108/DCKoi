@@ -11,6 +11,7 @@ import Staff from "./Staff";
 import TableContract from "./TableContract";
 import TablePayment from "./TablePayment";
 import Constructions from "./Constructions";
+import { ProjectStatus } from "@/models/enums/Status";
 
 const ManagementProjectDetail = () => {
   const dispatch = useAppDispatch();
@@ -63,7 +64,8 @@ const ManagementProjectDetail = () => {
       )}
 
       <Divider orientation="left">5. Bản vẽ thiết kể</Divider>
-      {design.loading ? <Loading /> : <Design designs={design.designs} />}
+      {project.detail.status != ProjectStatus.DESIGNING &&
+        (design.loading ? <Loading /> : <Design designs={design.designs} />)}
 
       <Divider orientation="left">6. Tiến trình thi công</Divider>
       {construction.loading ? (

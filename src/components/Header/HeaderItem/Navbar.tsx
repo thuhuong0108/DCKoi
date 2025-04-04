@@ -7,11 +7,9 @@ interface NavItems {
 
 const navItems: NavItems[] = [
   { label: "Home", path: "/" },
-  { label: "Introduction", path: "/*" },
+
   { label: "Blogs", path: "/blogs" },
-  { label: "Services", path: "/*" },
-  { label: "Projects", path: "/*" },
-  { label: "Quote", path: "/*" },
+  { label: "Dự án đã làm", path: "/projects" },
 ];
 
 const Navbar = () => {

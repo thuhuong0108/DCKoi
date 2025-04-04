@@ -10,6 +10,7 @@ import { endPoint } from "@/utils/endPoint";
 import http from "@/utils/http";
 import {
   AssginStaff,
+  DesignType,
   IssueProjectType,
   ProjectRequest,
   StaffType,
@@ -89,7 +90,7 @@ const getProjectDesign = async (
 
 const getDesignOfProject = async (
   id: string
-): Promise<ApiResultWithPagination<ProjectType>> => {
+): Promise<ApiResultWithPagination<DesignType>> => {
   const response = await http.get(`${endPoint.project.getDesignOfProject(id)}`);
   return response;
 };
@@ -245,6 +246,22 @@ const finishProject = async (id: string): Promise<ApiResult> => {
   return response;
 };
 
+const getProjectAdmin = async (
+  filter: Filter
+): Promise<ApiResultWithData<ProjectType>> => {
+  const response = await http.get(
+    `${endPoint.project.getProjects}?PageNumber=${filter.pageNumber}&PageSize=${filter.pageSize}&Status=PROCESSING%2CDESIGNING%2CCONSTRUCTING%2CFINISHED`
+  );
+  return response;
+};
+const getProjectSample = async (
+  filter: Filter
+): Promise<ApiResultWithData<ProjectType>> => {
+  const response = await http.get(
+    `${endPoint.project.getProjects}?PageNumber=${filter.pageNumber}&PageSize=${filter.pageSize}&IsDesignPublish=true`
+  );
+  return response;
+};
 export {
   getConstuctorTask,
   assignConsultant,
@@ -270,4 +287,6 @@ export {
   getProjectFinish,
   getProjectDocs,
   finishProject,
+  getProjectAdmin,
+  getProjectSample,
 };
