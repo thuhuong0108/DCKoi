@@ -48,6 +48,7 @@ import maintainceConstructorSlice from "../slices/maintainceConstructor/maintain
 import blogSlice from "../slices/blog/blogSlices";
 import promotionSlice from "../slices/promotion/promotionSlices";
 import docsTypeSlice from "../slices/docsType/docsTypeSlices";
+import packageMaintanceItem from "../slices/packageMaintenceItem/packageMaintenceItemSlices";
 
 const rootReducers = combineReducers({
   router: connectRouter(history),
@@ -87,6 +88,7 @@ const rootReducers = combineReducers({
   blog: blogSlice,
   promotion: promotionSlice,
   docsType: docsTypeSlice,
+  packageMaintenceItem: packageMaintanceItem,
 });
 
 const persistConfig = {

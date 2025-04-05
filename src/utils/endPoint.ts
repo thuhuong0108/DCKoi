@@ -1,4 +1,4 @@
-const baseURL = "https://kpcos.vinhuser.one/api/";
+const baseURL = import.meta.env.VITE_SERVER_URL;
 // const baseURL = "http://localhost:5113/api/";
 const socketURL = "http://34.81.244.146:3333";
 const cloudinaryURL = "https://api.cloudinary.com/v1_1/dulapxpnp/upload";
@@ -111,11 +111,14 @@ const endPoint = {
   construction: {
     createConstruction: "/constructions",
     getItembyIdItem: (id: string) => `/constructions/item/${id}`,
+    createItemChild: (id: string) => `/constructions/item/${id}/lv2`,
     getTaskbyIdItem: (id: string) =>
       `/constructions/task?ConstructionItemId=${id}`,
     createTaskwithIdItem: (id: string) => `/constructions/task/${id}`,
     getTaskById: (id: string) => `/constructions/task/${id}`,
     assignStaff: (id: string) => `/constructions/task/${id}`,
+    deleteTask: (id: string) => `/constructions/task/${id}`,
+    deleteItem: (id: string) => `/constructions/item/${id}`,
     confirmTask: (id: string) => `/constructions/task/${id}/confirm`,
   },
 
@@ -154,6 +157,8 @@ const endPoint = {
 
   maintancePackage: {
     getMaintancePackage: "/maintenance-packages",
+    getItems: `/maintenance-packages/item`,
+    getPackageMaintennanceById: (id: string) => `/maintenance-packages/${id}`,
   },
   maintenances: {
     maintenances: "/maintenances",
@@ -197,7 +202,7 @@ const endPoint = {
   statistics: {
     user: "/statistics/user",
     chart: "/statistics",
-    chartRevenue: "/statistics/total-transaction",
+    chartRevenue: "/statistics/transactions-total",
   },
 };
 

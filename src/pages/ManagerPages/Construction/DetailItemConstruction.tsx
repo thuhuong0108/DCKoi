@@ -1,4 +1,4 @@
-import { assignTaskConstructor } from "@/api/construction";
+import { assignTaskConstructor, deleteTask } from "@/api/construction";
 import { Loading, messageError } from "@/components";
 import useForm from "@/hooks/useForm";
 import { ItemConstructionStatus } from "@/models/enums/Status";
@@ -137,6 +137,29 @@ const DetailItemConstruction = ({ openModal, setOpenModal }) => {
                   Chi tiết
                 </Button>
               </Menu.Item>
+              <Menu.Item>
+                <Button
+                  type="text"
+                  onClick={async () => {
+                    const res = await deleteTask(record.id);
+                    if (res.isSuccess) {
+                      dispatch(
+                        constructionItemActions.fetchTasks({
+                          id: construction.constructionItem.id,
+                          filter: {
+                            pageNumber: task.tasks.pageNumber,
+                            pageSize: 5,
+                          },
+                        })
+                      );
+                    } else {
+                      messageError(res.message);
+                    }
+                  }}
+                >
+                  Xoá
+                </Button>
+              </Menu.Item>
             </Menu>
           )}
         >
@@ -209,6 +232,7 @@ const DetailItemConstruction = ({ openModal, setOpenModal }) => {
           task: data,
         })
       );
+
       await dispatch(projectStateDetailActions.fetchConstructions(id));
 
       //   formik.resetForm();

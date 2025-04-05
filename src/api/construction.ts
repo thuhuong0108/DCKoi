@@ -114,6 +114,27 @@ const confirmTask = async (id: string): Promise<ApiResult> => {
   const response = await http.put(endPoint.construction.confirmTask(id));
   return response;
 };
+
+const createChild = async (id: string, child: any): Promise<ApiResult> => {
+  console.log(child);
+
+  const response = await http.post(
+    endPoint.construction.createItemChild(id),
+    child
+  );
+
+  return response;
+};
+
+const deleteItem = async (id: string): Promise<ApiResult> => {
+  const response = await http.delete(endPoint.construction.deleteItem(id));
+  return response;
+};
+const deleteTask = async (id: string): Promise<ApiResult> => {
+  const response = await http.delete(endPoint.construction.deleteTask(id));
+  return response;
+};
+
 export {
   assignTaskConstructor,
   createConstruction,
@@ -123,4 +144,7 @@ export {
   getItembyIdItem,
   getTaskById,
   confirmTask,
+  createChild,
+  deleteItem,
+  deleteTask,
 };

@@ -116,6 +116,10 @@ export const validateConstruction = yup.object().shape({
   deadlineAt: yup.date().required("Yêu cầu nhập ngày hết hạn"),
 });
 
+export const validateConstructionItem = yup.object().shape({
+  name: yup.string().required("Yêu cầu nhập tên công việc"),
+  estimateAt: yup.date().required("Yêu cầu nhập ngày dự kiến"),
+});
 export const validateIssue = yup.object().shape({
   name: yup.string().required("Yêu cầu nhập tên vấn đề"),
   description: yup.string().required("Yêu cầu nhập mô tả"),
@@ -167,4 +171,17 @@ export const validateFeedback = yup.object().shape({
 export const validateBlog = yup.object().shape({
   name: yup.string().required("Yêu cầu nhập tiêu đề"),
   description: yup.string().required("Yêu cầu nhập nội dung"),
+});
+
+export const validatePackageMaintance = yup.object().shape({
+  name: yup.string().required("Yêu cầu nhập tên gói bảo dưỡng"),
+  rate: yup
+    .number()
+    .required("Yêu cầu nhập tỷ lệ giá")
+    .min(0, "Tỷ lệ giá không được nhỏ hơn 0")
+    .max(10, "Tỷ lệ giá không được lớn hơn 10"),
+  price: yup
+    .number()
+    .required("Yêu cầu nhập giá")
+    .min(100000, "Giá không được nhỏ hơn 100000"),
 });

@@ -2,15 +2,22 @@ import { Sidebar, Menu, MenuItem, Logo } from "@/components/Sidebar";
 import { selectCurrentUser, selectRole } from "@/redux/slices/auth/authSlices";
 import { useAppSelector } from "@/redux/store/hook";
 import {
-  AttachMoneySharp,
-  BuildSharp,
-  CardGiftcardSharp,
-  DashboardSharp,
-  FolderSharp,
-  PeopleSharp,
-  PersonSharp,
-  SupportAgent,
-  SupportAgentSharp,
+  AttachMoney as AttachMoneyIcon,
+  Build as BuildIcon,
+  CardGiftcard as CardGiftcardIcon,
+  Dashboard as DashboardIcon,
+  Folder as FolderIcon,
+  People as PeopleIcon,
+  Person as PersonIcon,
+  SupportAgent as SupportAgentIcon,
+  Chat as ChatIcon,
+  DesignServices as DesignServicesIcon,
+  Article as ArticleIcon,
+  LocalOffer as LocalOfferIcon,
+  Construction as ConstructionIcon,
+  Category as CategoryIcon,
+  Handyman as HandymanIcon,
+  LibraryBooks as LibraryBooksIcon,
 } from "@mui/icons-material";
 import BubbleChartIcon from "@mui/icons-material/BubbleChart";
 import MainLayout from "../mainLayout/MainLayout";
@@ -34,60 +41,78 @@ const LayoutAdmin: React.FC<IndexProps> = ({ Page }) => {
     {
       link: "/admin",
       children: "Dashboard",
-      icon: <DashboardSharp />,
+      icon: <DashboardIcon />,
       end: true,
     },
     {
       link: "/admin/consultation",
       children: "Tư vấn",
-      icon: <SupportAgentSharp />,
+      icon: <ChatIcon />,
     },
     {
       link: "/admin/design",
       children: "Thiết kế",
-      icon: <SupportAgentSharp />,
+      icon: <DesignServicesIcon />,
     },
     {
       link: "/admin/blogs",
       children: "Blogs",
-      icon: <SupportAgentSharp />,
+      icon: <ArticleIcon />,
     },
     {
       link: "/admin/promotions",
       children: "Khuyến mãi",
-      icon: <SupportAgent />,
+      icon: <LocalOfferIcon />,
     },
-
     {
       link: "/admin/transactions",
       children: "Giao dịch",
-      icon: <AttachMoneySharp />,
+      icon: <AttachMoneyIcon />,
     },
-    { link: "/admin/projects", children: "Dự án", icon: <FolderSharp /> },
+    {
+      link: "/admin/projects",
+      children: "Dự án",
+      icon: <FolderIcon />,
+    },
     {
       link: "/admin/maintenance",
       children: "Bảo dưỡng",
-      icon: <FolderSharp />,
+      icon: <ConstructionIcon />,
     },
-    { link: "/admin/staffs", children: "Nhân viên", icon: <PeopleSharp /> },
-    { link: "/admin/users", children: "Tài khoản", icon: <PersonSharp /> },
+    {
+      link: "/admin/staffs",
+      children: "Nhân viên",
+      icon: <PeopleIcon />,
+    },
+    {
+      link: "/admin/users",
+      children: "Tài khoản",
+      icon: <PersonIcon />,
+    },
     {
       link: "/admin/management-packages",
       children: "Gói thi công",
-      icon: <CardGiftcardSharp />,
+      icon: <CardGiftcardIcon />,
     },
-    { link: "/admin/services", children: "Dịch vụ", icon: <BubbleChartIcon /> },
-    { link: "/admin/equipments", children: "Thiết bị", icon: <BuildSharp /> },
+    {
+      link: "/admin/services",
+      children: "Dịch vụ",
+      icon: <BubbleChartIcon />,
+    },
+    {
+      link: "/admin/equipments",
+      children: "Thiết bị",
+      icon: <HandymanIcon />,
+    },
     {
       link: "/admin/category",
       children: "Quản lý danh mục",
-      icon: <BuildSharp />,
+      icon: <CategoryIcon />,
     },
-
     {
       link: "/admin/template-construction",
       children: "Template Construction",
-      icon: <BuildSharp />,
+      icon: <LibraryBooksIcon />,
     },
   ];
 

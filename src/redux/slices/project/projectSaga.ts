@@ -89,6 +89,7 @@ function* fetchProjectFinishWorker(action: PayloadAction<Filter>) {
       yield put(projectActions.fetchProjectSuccess(data));
     } else {
       messageError(data.message);
+
       yield put(projectActions.fetchProjectFaild());
     }
   } catch (error) {
