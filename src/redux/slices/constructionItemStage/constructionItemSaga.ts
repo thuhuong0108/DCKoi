@@ -14,6 +14,10 @@ import {
 } from "@/api/construction";
 import { Filter } from "@/models/Common";
 import { TaskRequest } from "@/models/Request/TaskRequest";
+import {
+  ProjectStateDetail,
+  projectStateDetailActions,
+} from "../projectStateDetail/projectStateDetailSlices";
 
 function* fetchConstructionItemWorker(action: PayloadAction<string>) {
   try {
@@ -71,6 +75,14 @@ function* createTaskWorker(
             pageSize: constructionItemState.task.tasks.pageSize,
           },
         })
+      );
+      const projectDetailtemState: ProjectStateDetail = yield select(
+        (state) => state.projectStateDetail
+      );
+      yield put(
+        projectStateDetailActions.fetchConstructions(
+          projectDetailtemState.project.detail.id
+        )
       );
       messageSuccess(data.message);
     } else {

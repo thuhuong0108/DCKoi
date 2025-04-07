@@ -42,6 +42,7 @@ import {
   PageNotFound,
   Blogs,
   DashBoard,
+  ExampleProject,
 } from "@/pages";
 import {
   AdminContract,
@@ -61,6 +62,10 @@ import {
   ManagementUser,
   ManagerPromotions,
   PackageItem,
+  PackageMaintance,
+  PackageMaintanceCreate,
+  PackageMaintanceDetail,
+  PackageMaintanceItem,
   PackagePage,
   ServicePage,
   StaffPage,
@@ -80,6 +85,7 @@ const Routers = () => {
     { path: "/register", element: <Register /> },
     { path: "/blogs", element: <MainLayout Pages={Blogs} /> },
     { path: "/blogs/:id", element: <MainLayout Pages={BlogsDetail} /> },
+    { path: "/projects", element: <MainLayout Pages={ExampleProject} /> },
 
     // customer
     {
@@ -195,6 +201,38 @@ const Routers = () => {
       path: "/admin/maintenance/:id",
       element: <LayoutAdmin Page={MaintainceTaskAdmin} />,
     },
+    {
+      path: "/admin/management-packages/packages-maintance-items",
+      element: (
+        <PrivateRouterAdmin
+          Pages={() => <LayoutAdmin Page={PackageMaintanceItem} />}
+        />
+      ),
+    },
+    {
+      path: "/admin/management-packages/packages-maintance",
+      element: (
+        <PrivateRouterAdmin
+          Pages={() => <LayoutAdmin Page={PackageMaintance} />}
+        />
+      ),
+    },
+    {
+      path: "/admin/management-packages/packages-maintance/:id",
+      element: (
+        <PrivateRouterAdmin
+          Pages={() => <LayoutAdmin Page={PackageMaintanceDetail} />}
+        />
+      ),
+    },
+    {
+      path: "/admin/management-packages/packages-maintance/create",
+      element: (
+        <PrivateRouterAdmin
+          Pages={() => <LayoutAdmin Page={PackageMaintanceCreate} />}
+        />
+      ),
+    },
 
     {
       path: "/admin/management-packages",
@@ -235,9 +273,7 @@ const Routers = () => {
     {
       path: "/admin/transactions",
       element: (
-        <PrivateRouterAdmin
-          Pages={() => <LayoutAdmin Page={ManagementTransaction} />}
-        />
+        <PrivateRouterAdmin Pages={() => <LayoutAdmin Page={Transaction} />} />
       ),
     },
     {

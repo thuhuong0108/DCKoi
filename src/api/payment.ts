@@ -1,4 +1,8 @@
-import { ApiResultWithAData } from "@/models/Common";
+import {
+  ApiResultWithAData,
+  ApiResultWithPagination,
+  Filter,
+} from "@/models/Common";
 import { endPoint } from "@/utils/endPoint";
 import http from "@/utils/http";
 import { PaymentRequest } from "@/models/Request/PaymentRequest";
@@ -18,4 +22,13 @@ const getPayment = async (
   return response;
 };
 
-export { createPayment, getPayment };
+const getTransactions = async (
+  filter: Filter
+): Promise<ApiResultWithPagination<TransactionType>> => {
+  const response = await http.get(
+    `${endPoint.payment.getTransactions}?PageNumber=${filter.pageNumber}&PageSize=${filter.pageSize}`
+  );
+  return response;
+};
+
+export { createPayment, getPayment, getTransactions };

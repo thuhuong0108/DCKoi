@@ -14,22 +14,22 @@ import PackageMaintance from "./PackageMaintance";
 
 const features = [
   {
-    color: "bg-red-600",
-    title: "Expert Koi fish pond design consulting",
+    color: "bg-blue-600",
+    title: "Thiết kế & thi công hồ cá Koi trọn gói",
     description:
-      "Expert Koi fish pond design consulting includes selecting the appropriate location and size of the pond, an effective water filtration system, designing the landscape in harmony with nature, and ensuring an ideal living environment for the Koi fish to optimize their growth and health. Additionally, it focuses on maintaining water quality, lighting, and the drainage system to create a relaxing and aesthetically pleasing space",
+      "Dịch vụ trọn gói từ A-Z bao gồm thiết kế 3D chuyên nghiệp và thi công hồ cá Koi tiêu chuẩn Nhật Bản. Chúng tôi cam kết hồ cá đạt chuẩn về độ sâu, tỷ lệ, hệ thống lọc đa tầng và phong thủy hài hòa với không gian sống của gia đình bạn.",
   },
   {
-    color: "bg-emerald-600",
-    title: "Expert Koi fish pond design consulting",
+    color: "bg-green-600",
+    title: "Hệ thống lọc nước thông minh",
     description:
-      "Expert Koi fish pond design consulting includes selecting the appropriate location and size of the pond, an effective water filtration system, designing the landscape in harmony with nature, and ensuring an ideal living environment for the Koi fish to optimize their growth and health. Additionally, it focuses on maintaining water quality, lighting, and the drainage system to create a relaxing and aesthetically pleasing space",
+      "Lắp đặt hệ thống lọc hiện đại tích hợp 5 cấp lọc: lọc thô, lọc tinh, lọc vi sinh, lọc hóa học và tia UV diệt khuẩn. Đảm bảo nước luôn trong vắt, cân bằng pH ổn định và cung cấp đủ oxy cho cá Koi phát triển khỏe mạnh.",
   },
   {
-    color: "bg-yellow-600",
-    title: "Expert Koi fish pond design consulting",
+    color: "bg-purple-600",
+    title: "Vật liệu & cảnh quan cao cấp",
     description:
-      "Expert Koi fish pond design consulting includes selecting the appropriate location and size of the pond, an effective water filtration system, designing the landscape in harmony with nature, and ensuring an ideal living environment for the Koi fish to optimize their growth and health. Additionally, it focuses on maintaining water quality, lighting, and the drainage system to create a relaxing and aesthetically pleasing space",
+      "Sử dụng 100% vật liệu cao cấp: bê tông cốt thép chống thấm, đá tự nhiên nguyên khối, gỗ nhập khẩu chịu nước. Thiết kế cảnh quan bao gồm thác nước, cây xanh, đèn LED nghệ thuật tạo điểm nhấn sang trọng cho không gian ngoại thất.",
   },
 ];
 
@@ -77,13 +77,13 @@ const Home = () => {
         <div className="absolute top-0 bottom-0 left-0 right-0 flex items-center justify-center">
           <div className="text-center space-y-4">
             <p className="text-white font-semibold text-3xl">
-              Consulting, design, and construction of Koi fish ponds
+              Tư vấn, thiết kế, thi công hồ cá Koi
             </p>
             <p className="text-white font-light text-2xl">
-              Where koi passion turns into stunning designs
+              Nơi niềm đam mê cá koi chuyển thành những thiết kế tuyệt đẹp
             </p>
             <div>
-              <NavLinkCustom path="/contact" label="Contact now" />
+              <NavLinkCustom label="Liên hệ ngay" />
             </div>
           </div>
         </div>
@@ -103,7 +103,7 @@ const Home = () => {
                     className="object-cover w-2/3"
                   />
                   <div className="self-center mt-11 max-md:mt-10">
-                    Why choose DCKoi?
+                    Tại sao nên chọn DCKoi?
                   </div>
                 </div>
               </div>

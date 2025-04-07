@@ -59,10 +59,10 @@ const PackageMaintance = () => {
 
   const { formik, loading, regField, regHandleSubmit } = useForm({
     onSubmit: async (values) => {
-      await formik.setFieldValue(
-        "estimateAt",
-        dayjs(values.estimateAt).format("YYYY-MM-DD")
-      );
+      values = {
+        ...values,
+        estimateAt: dayjs(values.estimateAt).format("YYYY-MM-DD"),
+      };
 
       console.log("values", values);
 

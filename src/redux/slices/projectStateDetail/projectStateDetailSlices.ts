@@ -189,6 +189,17 @@ export const projectStateDetailSlice = createSlice({
     fetchDocsFailed(state) {
       state.docs.loading = false;
     },
+    publicDesignSuccess(
+      state,
+      action: PayloadAction<{ id: string; isPublic: boolean }>
+    ) {
+      const index = state.design.designs.findIndex(
+        (design) => design.id === action.payload.id
+      );
+      if (index !== -1) {
+        state.design.designs[index].isPublic = action.payload.isPublic;
+      }
+    },
   },
 });
 

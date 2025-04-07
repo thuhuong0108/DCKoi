@@ -15,6 +15,7 @@ import moment from "moment";
 import BlogsCard from "./BlogsCard";
 import { Link } from "react-router-dom";
 import { formatDate } from "@/utils/helpers";
+import Banner from "./Banner";
 
 const { Title, Text } = Typography;
 
@@ -32,18 +33,12 @@ const Blogs = () => {
     );
   };
 
-  if (loading && !blogs.data.length) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <Spin size="large" />
-      </div>
-    );
-  }
-
   return (
     <div className="h-screen flex flex-col justify-start items-start ">
+      <Banner />
       <div className="   mx-auto  ">
         <List
+          loading={loading}
           itemLayout="vertical"
           grid={{ gutter: 16, column: 3 }}
           size="large"

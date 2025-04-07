@@ -24,6 +24,11 @@ import ManagerPromotions from "./ManagerPromotions";
 import ManageCategory from "./ManageCategory";
 import DashBoard from "./Dashboard";
 
+import PackageMaintanceItem from "./PackageMaintanceItem";
+import PackageMaintance from "./PackageMaintances";
+import PackageMaintanceCreate from "./PackageMaintanceCreate";
+import PackageMaintanceDetail from "./PackageMaintainceDetail";
+
 export {
   ConsultationPage,
   DetailConsultation,
@@ -49,4 +54,8 @@ export {
   ManagerPromotions,
   ManageCategory,
   DashBoard,
+  PackageMaintanceItem,
+  PackageMaintance,
+  PackageMaintanceCreate,
+  PackageMaintanceDetail,
 };

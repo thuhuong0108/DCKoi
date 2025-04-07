@@ -1,8 +1,8 @@
 import { messageError } from "@/components";
 
 const uploadFile = async (file: File, fileType: string) => {
-  const cloudName = "dxztbchud";
-  const presetKey = "ml_default";
+  const cloudName = import.meta.env.VITE_cloudinary_name;
+  const presetKey = import.meta.env.VITE_cloudinary_key;
 
   if (!file) return null;
 

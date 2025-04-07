@@ -1,4 +1,4 @@
-import { assignTaskConstructor } from "@/api/construction";
+import { assignTaskConstructor, deleteTask } from "@/api/construction";
 import { Loading, messageError } from "@/components";
 import useForm from "@/hooks/useForm";
 import { ItemConstructionStatus } from "@/models/enums/Status";
@@ -47,6 +47,7 @@ const convertDateToString = (date: string) => {
 };
 
 const DetailItemConstruction = ({ openModal, setOpenModal }) => {
+  const { id } = useParams<{ id: string }>();
   const [selectTask, setSelectTask] = useState<TaskType | null>(null);
   const columns: TableColumnsType<TaskType> = [
     {
@@ -137,6 +138,33 @@ const DetailItemConstruction = ({ openModal, setOpenModal }) => {
                   Chi tiết
                 </Button>
               </Menu.Item>
+              <Menu.Item>
+                <Button
+                  type="text"
+                  onClick={async () => {
+                    const res = await deleteTask(record.id);
+                    if (res.isSuccess) {
+                      dispatch(
+                        constructionItemActions.fetchTasks({
+                          id: construction.constructionItem.id,
+                          filter: {
+                            pageNumber: task.tasks.pageNumber,
+                            pageSize: 5,
+                          },
+                        })
+                      );
+
+                      dispatch(
+                        projectStateDetailActions.fetchConstructions(id)
+                      );
+                    } else {
+                      messageError(res.message);
+                    }
+                  }}
+                >
+                  Xoá
+                </Button>
+              </Menu.Item>
             </Menu>
           )}
         >
@@ -174,7 +202,7 @@ const DetailItemConstruction = ({ openModal, setOpenModal }) => {
     }
     setIsAssign(false);
   };
-  const { id } = useParams<{ id: string }>();
+
   const handleOpenSelectStaff = async () => {
     setIsAssign(true);
     await dispatch(staffActions.fetchConstructorProject(id));
@@ -209,7 +237,8 @@ const DetailItemConstruction = ({ openModal, setOpenModal }) => {
           task: data,
         })
       );
-      await dispatch(projectStateDetailActions.fetchConstructions(id));
+
+      // await dispatch(projectStateDetailActions.fetchConstructions(id));
 
       //   formik.resetForm();
       setIsModalVisible(false);

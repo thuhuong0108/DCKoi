@@ -33,12 +33,6 @@ interface MenuItemProps {
 const LayoutConstructor: React.FC<IndexProps> = ({ Page }) => {
   const homeMenu: MenuItemProps[] = [
     {
-      link: "/constructor",
-      children: "Dashboard",
-      icon: <DashboardSharp />,
-      end: true,
-    },
-    {
       link: "/constructor/projects",
       children: "Dự án",
       icon: <FolderSharp />,

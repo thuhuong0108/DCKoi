@@ -31,6 +31,13 @@ export const projectSlice = createSlice({
     },
     fetchProjectFaild(state) {
       state.loading = false;
+      state.projects = {
+        pageNumber: 1,
+        pageSize: 10,
+        totalPages: 0,
+        totalRecords: 0,
+        data: [],
+      };
     },
 
     reloadProject(state) {
@@ -69,6 +76,9 @@ export const projectSlice = createSlice({
       state.loading = false;
     },
     fetchProjectFinish(state, action: PayloadAction<Filter>) {
+      state.loading = true;
+    },
+    fetchSampleProject(state, action: PayloadAction<Filter>) {
       state.loading = true;
     },
   },

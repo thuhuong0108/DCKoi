@@ -12,7 +12,10 @@ const ManagementProjects = () => {
   const loading = useAppSelector((state) => state.projectBoard.loading);
   useEffect(() => {
     dispatch(
-      projectBoardActions.fetchProjectBoard({ pageNumber: 1, pageSize: 10 })
+      projectBoardActions.fetchProjectBoardAdmin({
+        pageNumber: 1,
+        pageSize: 10,
+      })
     );
   }, []);
 

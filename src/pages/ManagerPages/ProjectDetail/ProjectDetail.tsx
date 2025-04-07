@@ -1,15 +1,16 @@
 import { confirmAlert, Loading, messageError, Title } from "@/components";
 import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import InformationProject from "./InformationProject";
 import { projectStateDetailActions } from "@/redux/slices/projectStateDetail/projectStateDetailSlices";
 import { useNavigate, useParams } from "react-router-dom";
 import Staff from "./Staff";
 import Design from "./Design";
 import Constructions from "./Constructions";
-import { Button, Divider } from "antd";
+import { Button, Divider, List, Modal } from "antd";
 import Docs from "./Docs";
 import { finishProject } from "@/api/project";
+import { packageMaintainceActions } from "@/redux/slices/packageMaintaice/packageMaintainceSlices";
 
 const ProjectDetail = () => {
   const dispatch = useAppDispatch();
@@ -21,6 +22,10 @@ const ProjectDetail = () => {
 
   const { id } = useParams();
   const navigate = useNavigate();
+  const [modalPackage, setModalPackage] = useState(false);
+  const packageMaintaiceState = useAppSelector(
+    (state) => state.packageMaintaince
+  );
 
   useEffect(() => {
     dispatch(projectStateDetailActions.fetchProjectDetail(id));
@@ -60,18 +65,26 @@ const ProjectDetail = () => {
             <Button
               type="primary"
               onClick={() => {
-                confirmAlert({
-                  message: "Bạn có chắc chắn muốn kết thúc dự án?",
-                  title: "Kết thúc dự án",
-                  yes: async () => {
-                    const res = await finishProject(id);
-                    if (res.isSuccess) {
-                      navigate("/manager");
-                    } else {
-                      messageError(res.message);
-                    }
-                  },
-                });
+                setModalPackage(true);
+
+                dispatch(
+                  packageMaintainceActions.getPackageMaintaince({
+                    pageNumber: 1,
+                    pageSize: 10,
+                  })
+                );
+                // confirmAlert({
+                //   message: "Bạn có chắc chắn muốn kết thúc dự án?",
+                //   title: "Kết thúc dự án",
+                //   yes: async () => {
+                //     const res = await finishProject(id);
+                //     if (res.isSuccess) {
+                //       navigate("/manager");
+                //     } else {
+                //       messageError(res.message);
+                //     }
+                //   },
+                // });
               }}
             >
               Kết thúc dự án
@@ -86,6 +99,42 @@ const ProjectDetail = () => {
           </div>
         </>
       )}
+
+      <Modal
+        title="Chọn gói bảo dưỡng cho khách hàng"
+        onClose={() => setModalPackage(false)}
+        loading={packageMaintaiceState.loading}
+        onCancel={() => setModalPackage(false)}
+        open={modalPackage}
+        footer={null}
+      >
+        <List
+          itemLayout="horizontal"
+          dataSource={packageMaintaiceState.packageMaintainItems.data}
+          renderItem={(item) => (
+            <List.Item
+              actions={[
+                <Button
+                  type="primary"
+                  onClick={async () => {
+                    const res = await finishProject(id, item.id);
+
+                    if (res.isSuccess) {
+                      navigate("/manager");
+                    } else {
+                      messageError(res.message);
+                    }
+                  }}
+                >
+                  Chọn
+                </Button>,
+              ]}
+            >
+              <List.Item.Meta title={item.name} />
+            </List.Item>
+          )}
+        />
+      </Modal>
     </div>
   );
 };

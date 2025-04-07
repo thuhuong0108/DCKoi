@@ -27,7 +27,7 @@ const Header = () => {
     } else if (roleUser === RoleUser.ADMINISTRATOR) {
       return "/admin";
     } else if (roleUser === RoleUser.CONSTRUCTOR) {
-      return "/constructor";
+      return "/constructor/projects";
     }
   };
 

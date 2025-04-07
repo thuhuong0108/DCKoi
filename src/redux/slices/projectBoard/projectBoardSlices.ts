@@ -23,6 +23,9 @@ export const projectBoardSlice = createSlice({
   name: "projectBoard",
   initialState: initialState,
   reducers: {
+    fetchProjectBoardAdmin(state, action: PayloadAction<Filter>) {
+      state.loading = true;
+    },
     fetchProjectBoard(state, action: PayloadAction<Filter>) {
       state.loading = true;
     },

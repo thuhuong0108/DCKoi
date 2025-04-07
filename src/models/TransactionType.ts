@@ -9,6 +9,8 @@ export interface TransactionType {
   updatedAt: string;
   paymentBatch: PaymentBatch;
   customer: Customer;
+  doc: any;
+  maintenanceRequest: any;
 }
 
 export interface Project {

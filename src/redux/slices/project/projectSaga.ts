@@ -8,6 +8,7 @@ import {
   getProjectConstruction,
   getProjectDesign,
   getProjectFinish,
+  getProjectSample,
 } from "@/api/project";
 import { projectActions } from "./projectSlices";
 import { data } from "react-router-dom";
@@ -18,7 +19,6 @@ function* fetchProjectWorker(action: PayloadAction<Filter>) {
     if (data.isSuccess) {
       yield put(projectActions.fetchProjectSuccess(data));
     } else {
-      messageError(data.message);
       yield put(projectActions.fetchProjectFaild());
     }
   } catch (error) {
@@ -38,7 +38,6 @@ function* reloadProjectWorker() {
     if (data.isSuccess) {
       yield put(projectActions.fetchProjectSuccess(data));
     } else {
-      messageError(data.message);
       yield put(projectActions.fetchProjectFaild());
     }
   } catch (error) {
@@ -55,7 +54,6 @@ function* fetchDesignProjectWorker(action: PayloadAction<Filter>) {
       yield put(projectActions.fetchDesignProjectSuccess(data));
     }
   } catch (error) {
-    messageError("Tải dữ liệu dự án bị lỗi");
     console.log("Error load project: ", error);
     yield put(projectActions.fetchDesignProjectFaild());
   }
@@ -71,7 +69,6 @@ function* reloadDesignProjectWorker() {
     if (data.isSuccess) {
       yield put(projectActions.fetchDesignProjectSuccess(data));
     } else {
-      messageError(data.message);
       yield put(projectActions.fetchDesignProjectFaild());
     }
   } catch (error) {
@@ -87,13 +84,27 @@ function* fetchProjectFinishWorker(action: PayloadAction<Filter>) {
     if (data.isSuccess) {
       yield put(projectActions.fetchProjectSuccess(data));
     } else {
-      messageError(data.message);
       yield put(projectActions.fetchProjectFaild());
     }
   } catch (error) {
     messageError("Tải dữ liệu dự án bị lỗi");
     console.log("Error load project: ", error);
     yield put(projectActions.fetchProjectFaild());
+  }
+}
+
+function* fetchSampleProjectWorker(action: PayloadAction<Filter>) {
+  try {
+    const data = yield call(getProjectSample, action.payload);
+    if (data.isSuccess) {
+      yield put(projectActions.fetchDesignProjectSuccess(data));
+    } else {
+      yield put(projectActions.fetchDesignProjectFaild());
+    }
+  } catch (error) {
+    messageError("Tải dữ liệu dự án bị lỗi");
+
+    yield put(projectActions.fetchDesignProjectFaild());
   }
 }
 
@@ -139,6 +150,13 @@ function* fetchProjectFinishWatcher() {
   }
 }
 
+function* fetchSampleProjectWatcher() {
+  while (true) {
+    const action = yield take(projectActions.fetchSampleProject);
+    yield fork(fetchSampleProjectWorker, action);
+  }
+}
+
 export function* projectSaga() {
   yield fork(fetchProjectWatcher);
   //   yield fork(createItemWatcher);
@@ -146,4 +164,5 @@ export function* projectSaga() {
   yield fork(fetchDesignProjectWatcher);
   yield fork(reloadDesignProjectWatcher);
   yield fork(fetchProjectFinishWatcher);
+  yield fork(fetchSampleProjectWatcher);
 }
