@@ -273,9 +273,7 @@ const Routers = () => {
     {
       path: "/admin/transactions",
       element: (
-        <PrivateRouterAdmin
-          Pages={() => <LayoutAdmin Page={ManagementTransaction} />}
-        />
+        <PrivateRouterAdmin Pages={() => <LayoutAdmin Page={Transaction} />} />
       ),
     },
     {

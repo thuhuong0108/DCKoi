@@ -47,6 +47,7 @@ const convertDateToString = (date: string) => {
 };
 
 const DetailItemConstruction = ({ openModal, setOpenModal }) => {
+  const { id } = useParams<{ id: string }>();
   const [selectTask, setSelectTask] = useState<TaskType | null>(null);
   const columns: TableColumnsType<TaskType> = [
     {
@@ -152,6 +153,10 @@ const DetailItemConstruction = ({ openModal, setOpenModal }) => {
                           },
                         })
                       );
+
+                      dispatch(
+                        projectStateDetailActions.fetchConstructions(id)
+                      );
                     } else {
                       messageError(res.message);
                     }
@@ -197,7 +202,7 @@ const DetailItemConstruction = ({ openModal, setOpenModal }) => {
     }
     setIsAssign(false);
   };
-  const { id } = useParams<{ id: string }>();
+
   const handleOpenSelectStaff = async () => {
     setIsAssign(true);
     await dispatch(staffActions.fetchConstructorProject(id));
@@ -233,7 +238,7 @@ const DetailItemConstruction = ({ openModal, setOpenModal }) => {
         })
       );
 
-      await dispatch(projectStateDetailActions.fetchConstructions(id));
+      // await dispatch(projectStateDetailActions.fetchConstructions(id));
 
       //   formik.resetForm();
       setIsModalVisible(false);

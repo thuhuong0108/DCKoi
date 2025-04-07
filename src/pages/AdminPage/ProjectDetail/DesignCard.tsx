@@ -37,17 +37,16 @@ const DesignCard = ({ design }: { design: DesignType }) => {
             >
               {design.isPublic ? "Công khai" : "Riêng tư"}
             </span>
-            {!design.isPublic && (
-              <Switch
-                checked={design.isPublic}
-                onChange={handleTogglePublic}
-                checkedChildren="ON"
-                unCheckedChildren="OFF"
-                style={{
-                  backgroundColor: design.isPublic ? "#52c41a" : "#ff4d4f",
-                }}
-              />
-            )}
+
+            <Switch
+              checked={design.isPublic}
+              onChange={handleTogglePublic}
+              checkedChildren="ON"
+              unCheckedChildren="OFF"
+              style={{
+                backgroundColor: design.isPublic ? "#52c41a" : "#ff4d4f",
+              }}
+            />
           </div>
         )}
       </div>

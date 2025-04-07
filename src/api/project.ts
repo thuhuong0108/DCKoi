@@ -241,8 +241,15 @@ const getProjectDocs = async (
   return response;
 };
 
-const finishProject = async (id: string): Promise<ApiResult> => {
-  const response = await http.put(endPoint.project.finish(id));
+const finishProject = async (
+  id: string,
+  idPackage: string
+): Promise<ApiResult> => {
+  const data = {
+    maintenancePackageId: idPackage,
+  };
+
+  const response = await http.put(endPoint.project.finish(id), data);
   return response;
 };
 

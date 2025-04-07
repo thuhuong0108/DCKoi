@@ -28,11 +28,29 @@ const Transaction = () => {
       title: "Loại giao dịch",
       dataIndex: "type",
       key: "type",
+      render: (text, record) => {
+        const type = record.maintenanceRequest
+          ? "Trả tiền bảo dưỡng"
+          : record.paymentBatch
+          ? "Trả tiền thi công"
+          : "Phí phát sinh";
+        return <a>{type}</a>;
+      },
     },
     {
       title: "Số tiền",
       dataIndex: "amount",
       key: "amount",
+      render: (text) => {
+        return (
+          <a>
+            {text.toLocaleString("it-IT", {
+              style: "currency",
+              currency: "VND",
+            })}
+          </a>
+        );
+      },
     },
     {
       title: "Ngày giao dịch",
