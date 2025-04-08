@@ -52,22 +52,11 @@ const RootLayout = ({ Pages }) => {
     return <MainLayout Pages={AuthorizePage} />;
   }
 
-  switch (role) {
-    case RoleUser.ADMINISTRATOR:
-      return <LayoutAdmin Page={Pages} />;
-    case RoleUser.CONSULTANT:
-      return <LayoutConsultant Page={Pages} />;
-    case RoleUser.MANAGER:
-      return <LayoutManager Page={Pages} />;
-    case RoleUser.DESIGNER:
-      return <LayoutDesigner Page={Pages} />;
-    case RoleUser.CUSTOMER:
-      return <LayoutCustomer Page={Pages} />;
-    case RoleUser.CONSTRUCTOR:
-      return <LayoutConstructor Page={Pages} />;
-    default:
-      return <MainLayout Pages={Pages} />;
+  const LayoutComponent = roleLayoutMap[role];
+  if (!LayoutComponent) {
+    return <MainLayout Pages={Pages} />;
   }
+  return <LayoutComponent Page={Pages} />;
 };
 
 export default RootLayout;
