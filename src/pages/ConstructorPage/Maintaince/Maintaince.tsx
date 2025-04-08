@@ -1,4 +1,6 @@
 import { Title, Uploader } from "@/components";
+import { MaintainceStatus, MaintainceTaskStatus } from "@/models/enums/Status";
+import { TaskStage } from "@/models/enums/TaskStage";
 import { MaintenancesTaskType } from "@/models/MaintenancesTpe";
 import { maintainceConstructorActions } from "@/redux/slices/maintainceConstructor/maintainceConstructorSlices";
 
@@ -9,6 +11,7 @@ import {
   Descriptions,
   Image,
   Modal,
+  Select,
   Space,
   Table,
   TableColumnsType,
@@ -67,6 +70,7 @@ const Maintaince = () => {
       },
     },
   ];
+  const [status, setStatus] = useState<string>(TaskStage.PROCESSING);
   const dispatch = useAppDispatch();
   const [visible, setVisible] = useState(false);
   const maintenances = useAppSelector((state) => state.maintainceConstructor);
@@ -77,14 +81,33 @@ const Maintaince = () => {
           pageNumber: 1,
           pageSize: 10,
         },
+        status: status,
       })
     );
-  }, []);
+  }, [status]);
   const detailTask = useAppSelector((state) => state.maintenanceTask);
 
   return (
     <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 w-full h-full">
       <Title name="Bảo dưỡng" />
+
+      <div>
+        <Select
+          value={status}
+          onChange={(value) => setStatus(value)}
+          className="mb-5 w-[200px]"
+        >
+          <Select.Option value={TaskStage.PROCESSING}>
+            {parseTaskStatus(TaskStage.PROCESSING)}
+          </Select.Option>
+          <Select.Option value={TaskStage.PREVIEWING}>
+            {parseTaskStatus(TaskStage.PREVIEWING)}
+          </Select.Option>
+          <Select.Option value={TaskStage.DONE}>
+            {parseTaskStatus(TaskStage.DONE)}
+          </Select.Option>
+        </Select>
+      </div>
 
       <Table<MaintenancesTaskType>
         columns={columns}

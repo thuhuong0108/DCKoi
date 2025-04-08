@@ -25,6 +25,25 @@ const RootLayout = ({ Pages }) => {
   const role = useAppSelector((state) => state.auth.role);
   const isAuth = useAppSelector((state) => state.auth.isAuthenticated);
 
+  const currentPath = window.location.pathname;
+
+  if (currentPath.includes("/admin") && role !== RoleUser.ADMINISTRATOR) {
+    return <MainLayout Pages={AuthorizePage} />;
+  }
+
+  if (currentPath.includes("/consultant") && role !== RoleUser.CONSULTANT) {
+    return <MainLayout Pages={AuthorizePage} />;
+  }
+  if (currentPath.includes("/manager") && role !== RoleUser.MANAGER) {
+    return <MainLayout Pages={AuthorizePage} />;
+  }
+  if (currentPath.includes("/designer") && role !== RoleUser.DESIGNER) {
+    return <MainLayout Pages={AuthorizePage} />;
+  }
+  if (currentPath.includes("/space-management") && role !== RoleUser.CUSTOMER) {
+    return <MainLayout Pages={AuthorizePage} />;
+  }
+
   const pageName = Pages.name;
   if (pageName === "Login" || pageName === "Register") {
     return <Pages />;

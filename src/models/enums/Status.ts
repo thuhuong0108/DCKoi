@@ -48,3 +48,10 @@ export enum MaintainceStatus {
   DONE = "DONE",
   CANCELLED = "CANCELLED",
 }
+
+export enum MaintainceTaskStatus {
+  OPENING = "OPENING",
+  PROCESSING = "PROCESSING",
+  PREVIEWING = "PREVIEWING",
+  DONE = "DONE",
+}

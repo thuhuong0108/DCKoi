@@ -9,6 +9,8 @@ interface PaymentSuccessProps {
 }
 
 const PaymentSuccess = ({ transaction, onBack }: PaymentSuccessProps) => {
+  console.log("transaction", transaction);
+
   return (
     <div className="max-w-2xl w-full mx-auto bg-white shadow-lg rounded-xl p-6">
       <div className="flex flex-col items-center justify-center space-y-4 mb-12">
@@ -62,40 +64,44 @@ const PaymentSuccess = ({ transaction, onBack }: PaymentSuccessProps) => {
               </div>
             </div>
 
-            <div className="space-y-3">
-              <div className="flex justify-between items-center">
-                <span className="text-gray-600">Mã dự án:</span>
-                <span className="font-medium text-gray-800">
-                  {transaction.paymentBatch.contract.project.id}
-                </span>
+            {transaction.paymentBatch ? (
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-600">Mã dự án:</span>
+                  <span className="font-medium text-gray-800">
+                    {transaction.paymentBatch.contract.project.id}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-600">Tên dự án:</span>
+                  <span className="font-medium text-gray-800">
+                    {transaction.paymentBatch.contract.project.name}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-600">Đợt thanh toán:</span>
+                  <span className="font-medium text-gray-800">
+                    {transaction.paymentBatch.name}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-600">
+                    Giai đoạn thi công liên quan:
+                  </span>
+                  <span className="font-medium text-gray-800">
+                    {parsePaymentPhase(transaction.paymentBatch.status)}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center pt-3 border-t border-gray-200">
+                  <span className="text-gray-800 font-semibold">Số tiền:</span>
+                  <span className="font-bold text-emerald-600">
+                    {formatPrice(transaction.amount)}
+                  </span>
+                </div>
               </div>
-              <div className="flex justify-between items-center">
-                <span className="text-gray-600">Tên dự án:</span>
-                <span className="font-medium text-gray-800">
-                  {transaction.paymentBatch.contract.project.name}
-                </span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-gray-600">Đợt thanh toán:</span>
-                <span className="font-medium text-gray-800">
-                  {transaction.paymentBatch.name}
-                </span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-gray-600">
-                  Giai đoạn thi công liên quan:
-                </span>
-                <span className="font-medium text-gray-800">
-                  {parsePaymentPhase(transaction.paymentBatch.status)}
-                </span>
-              </div>
-              <div className="flex justify-between items-center pt-3 border-t border-gray-200">
-                <span className="text-gray-800 font-semibold">Số tiền:</span>
-                <span className="font-bold text-emerald-600">
-                  {formatPrice(transaction.amount)}
-                </span>
-              </div>
-            </div>
+            ) : (
+              <div></div>
+            )}
           </div>
         </div>
 

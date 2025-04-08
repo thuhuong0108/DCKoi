@@ -200,6 +200,10 @@ const MaintainceTask = () => {
                               selectedTask?.id
                             )
                           );
+
+                          dispatch(
+                            maintainceTaskActions.fetchMaintainceTask(id)
+                          );
                         } else {
                           messageError(res.message);
                         }

@@ -6,6 +6,7 @@ import {
 } from "@/models/MaintenancesTpe";
 
 import { StaffType } from "@/models";
+import { TaskStage } from "@/models/enums/TaskStage";
 
 export interface MaintainceConstructorState {
   loading: boolean;
@@ -14,10 +15,12 @@ export interface MaintainceConstructorState {
     loading: boolean;
     detail: MaintenancesTaskType;
   };
+  status: string;
 }
 
 const initialState: MaintainceConstructorState = {
   loading: false,
+  status: TaskStage.PROCESSING,
   tasks: {
     data: [],
     pageNumber: 0,
@@ -46,8 +49,9 @@ export const maintainceConstructorSlice = createSlice({
   reducers: {
     fetchMaintainceConstructor(
       state,
-      action: PayloadAction<{ filter: Filter }>
+      action: PayloadAction<{ filter: Filter; status: string }>
     ) {
+      state.status = action.payload.status;
       state.loading = true;
     },
     fetchMaintainceConstructorSuccess(

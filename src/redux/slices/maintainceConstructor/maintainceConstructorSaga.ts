@@ -14,12 +14,13 @@ import {
 } from "@/api/maintennances";
 
 function* fetchMaintainceConstructorWorker(
-  action: PayloadAction<{ filter: Filter }>
+  action: PayloadAction<{ filter: Filter; status: string }>
 ) {
   try {
     const data = yield call(
       getTaskMaintenancesConsstructor,
-      action.payload.filter
+      action.payload.filter,
+      action.payload.status
     );
     if (data.isSuccess) {
       yield put(
@@ -73,6 +74,7 @@ function* updateMaintenancesTasklWorker(
             pageNumber: maintainceConstructorState.tasks.pageNumber,
             pageSize: maintainceConstructorState.tasks.pageSize,
           },
+          status: maintainceConstructorState.status,
         })
       );
       yield put(
