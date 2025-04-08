@@ -16,8 +16,6 @@ const BlogsCard = ({ blog }: { blog: BlogsType }) => {
         }
       >
         {/* float status render */}
-
-        <Card.Meta title={blog.name} />
       </Card>
     </div>
   );

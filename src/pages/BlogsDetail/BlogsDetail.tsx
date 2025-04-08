@@ -57,7 +57,7 @@ const BlogsDetail = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
+    <div className="max-w-4xl mx-auto p-6 min-h-screen">
       <article className="prose lg:prose-xl">
         <h1 className="text-3xl font-bold mb-4">{blog.name}</h1>
 

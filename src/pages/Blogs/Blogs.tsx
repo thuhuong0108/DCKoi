@@ -9,6 +9,7 @@ import {
   Typography,
   Divider,
   Avatar,
+  Image,
 } from "antd";
 import { CalendarOutlined, UserOutlined } from "@ant-design/icons";
 import moment from "moment";
@@ -34,37 +35,67 @@ const Blogs = () => {
   };
 
   return (
-    <div className="h-screen flex flex-col justify-start items-start ">
+    <div className=" min-h-screen flex flex-col">
       <Banner />
-      <div className="   mx-auto  ">
+      <div className="mx-autow-full px-4 py-8">
         <List
           loading={loading}
-          itemLayout="vertical"
-          grid={{ gutter: 16, column: 3 }}
+          grid={{ gutter: 24, column: 3 }}
           size="large"
           dataSource={blogs.data}
           renderItem={(blog) => (
             <List.Item key={blog.id}>
-              <List.Item.Meta
-                avatar={
-                  <Avatar src={blog.staff?.avatar} icon={<UserOutlined />} />
-                }
-                title={<Link to={`/blogs/${blog.id}`}>{blog.name}</Link>}
-                description={
-                  <div className="flex items-center space-x-4">
-                    <Text>
-                      <UserOutlined />{" "}
-                      {blog.staff?.fullName || "Unknown Author"}
-                    </Text>
-                    <Text>
-                      <CalendarOutlined />{" "}
-                      {formatDate(new Date(blog.createdAt))}
-                    </Text>
-                  </div>
-                }
-              />
-              <BlogsCard blog={blog} />
-              <Divider />
+              <Card
+                hoverable
+                style={{
+                  borderRadius: 12,
+                  boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+                }}
+                bodyStyle={{ padding: 16 }}
+              >
+                <Card.Meta
+                  avatar={
+                    <Avatar
+                      src={blog.staff?.avatar}
+                      icon={<UserOutlined />}
+                      size="large"
+                    />
+                  }
+                  title={
+                    <Link
+                      to={`/blogs/${blog.id}`}
+                      style={{ fontWeight: "bold", fontSize: 16 }}
+                    >
+                      {blog.name}
+                    </Link>
+                  }
+                  description={
+                    <div className="flex flex-col gap-2 mt-2 text-sm text-gray-600">
+                      <div className="flex items-center gap-2">
+                        <UserOutlined />
+                        <Text>{blog.staff?.fullName || "Unknown Author"}</Text>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <CalendarOutlined />
+                        <Text>{formatDate(new Date(blog.createdAt))}</Text>
+                      </div>
+                    </div>
+                  }
+                />
+                <Divider style={{ margin: "12px 0" }} />
+                <Image
+                  src={
+                    "https://product.hstatic.net/200000653273/product/ca-koi-1_4c51c03c41d14231b77d788c54e07213.jpg"
+                  }
+                  alt={blog.name}
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                    borderRadius: 12,
+                  }}
+                  preview={false}
+                />
+              </Card>
             </List.Item>
           )}
         />

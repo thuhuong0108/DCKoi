@@ -80,10 +80,11 @@ const getTask = async (
 };
 
 const getTaskMaintenancesConsstructor = async (
-  filter: Filter
+  filter: Filter,
+  status: string
 ): Promise<ApiResultWithPagination<MaintaineceType>> => {
   const response = await http.get(
-    `${endPoint.maintenances.getTasks}?PageNumber=${filter.pageNumber}&PageSize=${filter.pageSize}&IsChild=true`
+    `${endPoint.maintenances.getTasks}?PageNumber=${filter.pageNumber}&PageSize=${filter.pageSize}&IsChild=true&Status=${status}`
   );
   return response;
 };
