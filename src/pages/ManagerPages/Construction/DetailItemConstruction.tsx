@@ -110,11 +110,15 @@ const DetailItemConstruction = ({ openModal, setOpenModal }) => {
       },
     },
     {
-      title: "Ngày cập nhật",
-      dataIndex: "updatedAt",
-      key: "updatedAt",
-      render: (updatedAt) => {
-        return formatDate(new Date(updatedAt));
+      title: "Ngày thực tế",
+      dataIndex: "deadlineActualAt",
+      key: "deadlineActualAt",
+      render: (deadlineActualAt) => {
+        return deadlineActualAt ? (
+          <span>{formatDate(new Date())}</span>
+        ) : (
+          <span className="text-gray-500"></span>
+        );
       },
     },
     {
@@ -314,7 +318,15 @@ const DetailItemConstruction = ({ openModal, setOpenModal }) => {
           {" "}
           <div className="flex flex-col gap-2">
             <Typography.Text>
-              Ngày dự kiến: {construction.constructionItem.estimateAt}
+              {construction.constructionItem.actualAt
+                ? `Thời gian thực tế`
+                : "Thời gian dự kiến"}
+              :{" "}
+              {construction.constructionItem.actualAt
+                ? formatDate(new Date(construction.constructionItem.actualAt))
+                : formatDate(
+                    new Date(construction.constructionItem.estimateAt)
+                  )}
               <Tag
                 color={isDone ? "green" : isOutDate ? "red" : "blue"}
                 className="ml-2"

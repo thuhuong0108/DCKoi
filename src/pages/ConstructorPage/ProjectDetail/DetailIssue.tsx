@@ -5,7 +5,7 @@ import { IssueStatus } from "@/models/enums/Status";
 import { issueConstructorActions } from "@/redux/slices/issueConstructor/issueConstructorSlices";
 import { useAppDispatch, useAppSelector } from "@/redux/store/hook";
 import { formatDate } from "@/utils/helpers";
-import { Image, Modal, Tag, Typography } from "antd";
+import { Form, Image, Input, Modal, Tag, Typography } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import React from "react";
 import { useParams } from "react-router-dom";
@@ -61,6 +61,12 @@ const DetailIssue = ({
           <Typography.Text>
             Giải pháp: <TextArea value={issue.solution} disabled />
           </Typography.Text>
+          <Form.Item label="Thời gian dự kiến">
+            <Input value={issue?.estimateAt} disabled />
+          </Form.Item>
+          <Form.Item label="Thời gian thực tế">
+            <Input value={issue?.actualAt} disabled />
+          </Form.Item>
 
           {issue.reason && (
             <>

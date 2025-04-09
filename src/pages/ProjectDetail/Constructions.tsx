@@ -14,7 +14,9 @@ const Constructions = ({
       <Steps
         items={constructionItem.map((item, index) => ({
           title: item.name,
-          description: `Thời gian dự kiến: ${item.estimateAt}`,
+          description: `Thời gian ${item.actualAt ? "thực tế" : "dự kiến"}: ${
+            item.actualAt ? item.actualAt : item.estimateAt
+          }`,
           status:
             item.status === ItemConstructionStatus.DONE ? "finish" : "wait",
         }))}

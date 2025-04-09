@@ -13,4 +13,5 @@ export interface TaskType {
   constructionItem?: TemplateConstructionItemType;
   imageUrl?: string;
   reason?: string;
+  deadlineActualAt?: string;
 }

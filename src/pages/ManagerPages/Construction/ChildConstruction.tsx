@@ -55,7 +55,7 @@ const ChildConstruction = ({
             <Menu
               items={[
                 {
-                  label: "Xem chi tiết",
+                  label: "Xem",
                   key: "1",
                   icon: <EyeOutlined />,
                   onClick: async () => {

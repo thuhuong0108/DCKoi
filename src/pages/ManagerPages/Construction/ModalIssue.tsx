@@ -42,6 +42,8 @@ const ModalIssue = ({ issue, idItem }) => {
     (state) => state.projectStateDetail.project.detail.staff
   ).filter((item) => item.position === RoleUser.CONSTRUCTOR);
 
+  const [visibleDetail, setVisibleDetail] = useState(false);
+
   console.log(staff);
 
   const openModal = async () => {
@@ -72,35 +74,35 @@ const ModalIssue = ({ issue, idItem }) => {
       render: (record) => <label>{record.name}</label>,
     },
 
-    {
-      title: "Mô tả",
-      dataIndex: "description",
-      key: "description",
-    },
-    {
-      title: "Nguyên nhân",
-      dataIndex: "cause",
-      key: "cause",
-    },
-    {
-      title: "Giải pháp",
-      dataIndex: "solution",
-      key: "solution",
-    },
+    // {
+    //   title: "Mô tả",
+    //   dataIndex: "description",
+    //   key: "description",
+    // },
+    // {
+    //   title: "Nguyên nhân",
+    //   dataIndex: "cause",
+    //   key: "cause",
+    // },
+    // {
+    //   title: "Giải pháp",
+    //   dataIndex: "solution",
+    //   key: "solution",
+    // },
     {
       title: "Trạng thái",
       dataIndex: "status",
       key: "status",
       render: (record) => <label>{parseIssueStatus(record)}</label>,
     },
-    {
-      title: "Hình ảnh",
-      dataIndex: "issueImage",
-      key: "issueImage",
-      render: (record) => (
-        <Image width={100} src={record} alt="Hình ảnh vấn đề" />
-      ),
-    },
+    // {
+    //   title: "Hình ảnh",
+    //   dataIndex: "issueImage",
+    //   key: "issueImage",
+    //   render: (record) => (
+    //     <Image width={100} src={record} alt="Hình ảnh vấn đề" />
+    //   ),
+    // },
     {
       title: "Người chịu trách nhiệm",
       dataIndex: "staff",
@@ -119,50 +121,7 @@ const ModalIssue = ({ issue, idItem }) => {
       dataIndex: "confirm",
       key: "confirm",
       render: (_, record) => {
-        if (record.status === IssueStatus.PREVIEWING) {
-          return (
-            <Dropdown
-              overlay={() => (
-                <Menu>
-                  <Menu.Item
-                    onClick={async () => {
-                      confirmWarning({
-                        message: "Bạn có chắc chắn muốn xác nhận vấn đề?",
-                        title: "Xác nhận",
-                        yes: async () => {
-                          const res = await confirmIssue(record.id);
-                          if (res.isSuccess) {
-                            messageSuccess("Xác nhận vấn đề thành công");
-                            await dispatch(
-                              projectStateDetailActions.fetchIssueConstructionItem(
-                                {
-                                  idProject: id,
-                                  idConstructionItem: idItem,
-                                }
-                              )
-                            );
-                          }
-                        },
-                      });
-                    }}
-                  >
-                    Xác nhận
-                  </Menu.Item>
-                  <Menu.Item
-                    onClick={() => {
-                      setOpen(true);
-                      setSelectIssue(record);
-                    }}
-                  >
-                    Từ chối
-                  </Menu.Item>
-                </Menu>
-              )}
-            >
-              <ButtonAndt icon={<EllipsisOutlined />} />
-            </Dropdown>
-          );
-        } else if (record.status === IssueStatus.OPENING) {
+        if (record.status === IssueStatus.OPENING) {
           return (
             <Dropdown
               overlay={
@@ -202,8 +161,19 @@ const ModalIssue = ({ issue, idItem }) => {
               <ButtonAndt type="primary">Chọn người xử lý</ButtonAndt>
             </Dropdown>
           );
+        } else {
+          return (
+            <ButtonAndt
+              type="primary"
+              onClick={() => {
+                setSelectIssue(record);
+                setVisibleDetail(true);
+              }}
+            >
+              Xem chi tiết
+            </ButtonAndt>
+          );
         }
-        return null;
       },
     },
   ];
@@ -269,6 +239,7 @@ const ModalIssue = ({ issue, idItem }) => {
               idConstructionItem: idItem,
             })
           );
+          setVisibleDetail(false);
         } else {
           messageError(res.message);
         }
@@ -317,7 +288,7 @@ const ModalIssue = ({ issue, idItem }) => {
         pagination={false}
         rowKey="id"
       />
-      {ModalDeny()}
+
       <Modal
         visible={visible}
         onCancel={() => setVisible(false)}
@@ -388,6 +359,88 @@ const ModalIssue = ({ issue, idItem }) => {
             onUploadSuccess={(url) => onUploadSuccess(url[0])}
           />
         </Form>
+      </Modal>
+
+      <Modal
+        visible={visibleDetail}
+        onCancel={() => setVisibleDetail(false)}
+        footer={null}
+        title="Chi tiết vấn đề"
+      >
+        <Form layout="vertical">
+          <Form.Item label="Tên vấn đề">
+            <Input value={selectIssue?.name} disabled />
+          </Form.Item>
+          <Form.Item label="Mô tả">
+            <Input.TextArea value={selectIssue?.description} disabled />
+          </Form.Item>
+          <Form.Item label="Nguyên nhân">
+            <Input.TextArea value={selectIssue?.cause} disabled />
+          </Form.Item>
+          <Form.Item label="Giải pháp">
+            <Input.TextArea value={selectIssue?.solution} disabled />
+          </Form.Item>
+          <Form.Item label="Loại vấn đề">
+            <Input value={selectIssue?.issueType} disabled />
+          </Form.Item>
+
+          <Form.Item label="Thời gian dự kiến">
+            <Input value={selectIssue?.estimateAt} disabled />
+          </Form.Item>
+          <Form.Item label="Thời gian thực tế">
+            <Input value={selectIssue?.actualAt} disabled />
+          </Form.Item>
+
+          <Form.Item label="Hình ảnh xác nhận">
+            {selectIssue?.confirmImage && (
+              <Image
+                width={100}
+                src={selectIssue?.confirmImage}
+                alt="Hình ảnh xác nhận"
+              />
+            )}
+          </Form.Item>
+
+          {selectIssue?.status === IssueStatus.PREVIEWING && (
+            <div className="flex gap-2">
+              <ButtonAndt
+                type="primary"
+                onClick={async () => {
+                  confirmWarning({
+                    message: "Bạn có chắc chắn muốn xác nhận vấn đề?",
+                    title: "Xác nhận",
+                    yes: async () => {
+                      const res = await confirmIssue(selectIssue.id);
+                      if (res.isSuccess) {
+                        messageSuccess("Xác nhận vấn đề thành công");
+                        await dispatch(
+                          projectStateDetailActions.fetchIssueConstructionItem({
+                            idProject: id,
+                            idConstructionItem: idItem,
+                          })
+                        );
+                      }
+
+                      setVisibleDetail(false);
+                    },
+                  });
+                }}
+              >
+                Xác nhận
+              </ButtonAndt>
+              <ButtonAndt
+                type="primary"
+                onClick={() => {
+                  setOpen(true);
+                  // setSelectIssue(selectIssue);
+                }}
+              >
+                Từ chối
+              </ButtonAndt>
+            </div>
+          )}
+        </Form>
+        {ModalDeny()}
       </Modal>
     </div>
   );
