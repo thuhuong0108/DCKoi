@@ -73,7 +73,6 @@ const FormService = ({ item, setIsModalOpen }) => {
         <TextField
           fullWidth
           label="Đơn vị"
-          type="number"
           margin="normal"
           variant="standard"
           {...regField("unit")}
