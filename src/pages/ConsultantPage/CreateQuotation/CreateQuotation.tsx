@@ -242,7 +242,7 @@ const CreateQuotation = () => {
       promotionId: selectedPromotion?.id || null,
     };
 
-    dispatch(quotationActions.createQuotation(data));
+    await dispatch(quotationActions.createQuotation(data));
     dispatch(
       templateConstructionDetailActions.resetTemplateConstructionDetail()
     );

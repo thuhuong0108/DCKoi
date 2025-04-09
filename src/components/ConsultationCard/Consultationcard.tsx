@@ -7,7 +7,7 @@ import { UserOutlined } from "@ant-design/icons";
 import ArticleIcon from "@mui/icons-material/Article";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import { Avatar, Modal } from "antd";
+import { Avatar, List, Modal } from "antd";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, messageError, messageSuccess } from "../ui";
@@ -130,46 +130,35 @@ const Consultationcard = ({
       </Card.Footer>
 
       <Modal
-        title="Basic Modal"
+        title="Chọn nhân viên tư vấn"
         visible={isModalVisible}
         onCancel={() => setIsModalVisible(false)}
         footer={null}
         // hideCancelButton
       >
-        <div className="flex flex-row justify-between items-center">
-          {/* no. , staff code, fullName, action*/}
-          <label>STT</label>
-          <div className="flex items-center gap-2 w-36">
-            <span className="text-sm font-medium">Họ và tên</span>
-          </div>
-          <label>Thao tác</label>
-        </div>
-
-        {item.data.map((item: StaffType, index: number) => (
-          <div
-            key={index}
-            className="flex flex-row justify-between items-center"
-          >
-            {/* no. , staff code, fullName, action*/}
-            <label>{index}</label>
-
-            <div className="flex items-center gap-2 w-36">
-              <Avatar size="default" icon={<UserOutlined />} />
-              <span className="text-sm font-medium">
-                {item?.fullName || "Unknown User"}
-              </span>
-            </div>
-
-            <Button
-              title="Thêm"
-              loading={loading}
-              onClick={async () => {
-                handleAdd(item.id);
-                setIsModalVisible(false);
-              }}
-            />
-          </div>
-        ))}
+        <List
+          itemLayout="horizontal"
+          dataSource={item.data}
+          renderItem={(item) => (
+            <List.Item
+              actions={[
+                <Button
+                  onClick={async () => {
+                    handleAdd(item.id);
+                    setIsModalVisible(false);
+                  }}
+                  title="Thêm"
+                />,
+              ]}
+            >
+              <List.Item.Meta
+                avatar={<Avatar icon={<UserOutlined />} />}
+                title={item.fullName}
+                description={item.email}
+              />
+            </List.Item>
+          )}
+        />
       </Modal>
     </Card>
   );
