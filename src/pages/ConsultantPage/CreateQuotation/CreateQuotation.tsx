@@ -448,7 +448,22 @@ const CreateQuotation = () => {
         onOk={() => setOpenServices(false)}
         footer={[]}
       >
-        <Table<ServiceType> dataSource={services.data}>
+        <Table<ServiceType>
+          dataSource={services.data}
+          pagination={{
+            pageSize: 10,
+            total: services.totalRecords,
+            showTotal: (total) => `Tổng ${total} dịch vụ`,
+          }}
+          onChange={(value) => {
+            dispatch(
+              serviceActions.fetchService({
+                pageNumber: value.current,
+                pageSize: value.pageSize,
+              })
+            );
+          }}
+        >
           <Column title="Tên dịch vụ" dataIndex="name" key="name" />
           <Column title="Mô tả" dataIndex="description" key="description" />
 
@@ -473,7 +488,22 @@ const CreateQuotation = () => {
         onOk={() => setOpenEquipments(false)}
         footer={[]}
       >
-        <Table<EquipmentType> dataSource={equipments.data}>
+        <Table<EquipmentType>
+          dataSource={equipments.data}
+          pagination={{
+            pageSize: 10,
+            total: equipments.totalRecords,
+            showTotal: (total) => `Tổng ${total} thiết bị`,
+          }}
+          onChange={(value) => {
+            dispatch(
+              equipmentActions.fetchEquipment({
+                pageNumber: value.current,
+                pageSize: value.pageSize,
+              })
+            );
+          }}
+        >
           <Column title="Tên thiết bị" dataIndex="name" key="name" />
           <Column title="Mô tả" dataIndex="description" key="description" />
 
