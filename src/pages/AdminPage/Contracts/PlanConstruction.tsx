@@ -17,7 +17,10 @@ import {
   convertStringtoDate,
   parseCategory,
 } from "@/utils/helpers";
-import { selectedProjectDetail } from "@/redux/slices/projectDetail/projectDetailSlices";
+import {
+  projectDetailActions,
+  selectedProjectDetail,
+} from "@/redux/slices/projectDetail/projectDetailSlices";
 import { constructionProjectActions } from "@/redux/slices/constructionProject/constructionProjectSlices";
 
 const PlanConstruction = ({ id, setOpen }) => {
@@ -217,7 +220,7 @@ const PlanConstruction = ({ id, setOpen }) => {
     const res = await createConstruction(data);
     if (res.isSuccess) {
       messageSuccess("Lưu thành công");
-      dispatch(constructionProjectActions.fetchConstructionProject(id));
+      dispatch(constructionProjectActions.fetchConstructionProject(params.id));
     } else {
       messageError(res.message);
     }
@@ -227,8 +230,10 @@ const PlanConstruction = ({ id, setOpen }) => {
 
     setLoading(false);
   };
+  const [loadingHoliday, setLoadingHoliday] = useState(false);
 
   const handleChangeStartDate = async (date: Date | null) => {
+    setLoadingHoliday(true);
     setStartDate(date);
 
     if (date) {
@@ -280,6 +285,7 @@ const PlanConstruction = ({ id, setOpen }) => {
 
       await setTableData(updatedTableData);
     }
+    setLoadingHoliday(false);
   };
 
   return (
@@ -301,6 +307,7 @@ const PlanConstruction = ({ id, setOpen }) => {
 
       <Table<TemplateConstructionItemType>
         columns={columns}
+        loading={loadingHoliday}
         dataSource={tableData}
         pagination={false}
         footer={(data) => (

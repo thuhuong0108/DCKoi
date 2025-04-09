@@ -14,7 +14,6 @@ const ConsultationStaffPage = () => {
   }, []);
 
   const dataConsultation = item.data;
-  console.log("dataConsultation", dataConsultation);
 
   return (
     <div className="flex flex-col justify-between items-stretch mb-5 mt-8 mx-10 min-h-full w-screen">
