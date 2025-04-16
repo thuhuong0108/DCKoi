@@ -138,20 +138,17 @@ const EstimatedPrice = () => {
               type="number"
               label="Diện tích của hồ"
               value={formik.values.area}
-              disabled={true}
             />
             <label className="text-gray-500 font-bold text-xl">X</label>
             <TextField
               type="number"
               label="Độ sâu của hồ cá Koi"
               value={formik.values.depth}
-              disabled={true}
             />
             <label className="text-gray-500 font-extrabold text-3xl">=</label>
             <TextField
               type="number"
               label="Thể tích hồ"
-              disabled
               value={result.volume}
             />
           </div>
@@ -163,18 +160,12 @@ const EstimatedPrice = () => {
               type="number"
               label="Thể tích của hồ cá Koi"
               value={result.volume}
-              disabled={true}
             />
             <label className="text-gray-500 font-bold text-xl">X</label>
-            <TextField
-              label="Giá thi công"
-              value={formatPrice(result.price)}
-              disabled={true}
-            />
+            <TextField label="Giá thi công" value={formatPrice(result.price)} />
             <label className="text-gray-500 font-extrabold text-3xl">=</label>
             <TextField
               label="Chi phí dự tính"
-              disabled
               value={formatPrice(result.totalPrice)}
             />
           </div>
@@ -189,7 +180,13 @@ const EstimatedPrice = () => {
           />
         </div>
       )}
-      <SelectForm visible={visible} setVisible={setVisible} result={result} />
+      <SelectForm
+        visible={visible}
+        setVisible={setVisible}
+        result={result}
+        area={regField("area").value}
+        depth={regField("depth").value}
+      />
     </div>
   );
 };

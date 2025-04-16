@@ -508,7 +508,7 @@ const RewriteQuotation = () => {
           title="Chọn quy trình thi công"
           onClick={() => {
             dispatch(
-              templateConstructionActions.getTemplateConstruction({
+              templateConstructionActions.getTemlateConstructionActive({
                 pageNumber: 1,
                 pageSize: 10,
               })

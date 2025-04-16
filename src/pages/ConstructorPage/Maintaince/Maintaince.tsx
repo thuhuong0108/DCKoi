@@ -20,6 +20,7 @@ import {
 } from "antd";
 import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
+import Issue from "./Issue";
 
 const { Text, Link } = Typography;
 const Maintaince = () => {
@@ -120,6 +121,8 @@ const Maintaince = () => {
           total: maintenances.tasks.totalRecords,
         }}
       />
+
+      <Issue />
 
       <Modal
         visible={visible}

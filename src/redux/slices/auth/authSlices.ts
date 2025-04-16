@@ -43,6 +43,16 @@ export const authSlice = createSlice({
       state.currentUser = undefined;
       state.role = RoleUser.GUEST;
     },
+    updateAvatar(state, action: PayloadAction<string>) {
+      if (state.currentUser) {
+        state.currentUser.avatar = action.payload;
+      }
+    },
+    updateName(state, action: PayloadAction<string>) {
+      if (state.currentUser) {
+        state.currentUser.fullName = action.payload;
+      }
+    },
   },
 });
 

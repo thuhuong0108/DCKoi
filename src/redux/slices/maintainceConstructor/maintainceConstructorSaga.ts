@@ -8,6 +8,8 @@ import {
 } from "./maintainceConstructorSlices";
 import { MaintenancesTaskType } from "@/models/MaintenancesTpe";
 import {
+  getIssueMaintanceById,
+  getIssueMaintanceConstructor,
   getTask,
   getTaskMaintenancesConsstructor,
   updateMaintenancesTask,
@@ -91,6 +93,44 @@ function* updateMaintenancesTasklWorker(
   }
 }
 
+function* fetchIssueWorker(
+  action: PayloadAction<{ filter: Filter; status: string }>
+) {
+  try {
+    const data = yield call(
+      getIssueMaintanceConstructor,
+      action.payload.filter,
+      action.payload.status
+    );
+    if (data.isSuccess) {
+      yield put(maintainceConstructorActions.fetchIssueSuccess(data));
+    } else {
+      messageError(data.message);
+      yield put(maintainceConstructorActions.fetchIssueFailed());
+    }
+  } catch (error) {
+    yield put(maintainceConstructorActions.fetchIssueFailed());
+    console.log("error", error);
+  }
+}
+
+function* fetchIssueDetailWorker(action: PayloadAction<string>) {
+  try {
+    const data = yield call(getIssueMaintanceById, action.payload);
+    if (data.isSuccess) {
+      yield put(
+        maintainceConstructorActions.fetchIssueDetailSuccess(data.data)
+      );
+    } else {
+      messageError(data.message);
+      yield put(maintainceConstructorActions.fetchIssueFailed());
+    }
+  } catch (error) {
+    yield put(maintainceConstructorActions.fetchIssueFailed());
+    console.log("error", error);
+  }
+}
+
 function* fetchMaintainceConstructorDetailWatcher() {
   while (true) {
     const action = yield take(
@@ -118,8 +158,26 @@ function* updateMaintenancesTaskWatcher() {
   }
 }
 
+function* fetchIssueWatcher() {
+  while (true) {
+    const action = yield take(maintainceConstructorActions.fetchIssue.type);
+    yield fork(fetchIssueWorker, action);
+  }
+}
+
+function* fetchIssueDetailWatcher() {
+  while (true) {
+    const action = yield take(
+      maintainceConstructorActions.fetchIssueDetail.type
+    );
+    yield fork(fetchIssueDetailWorker, action);
+  }
+}
+
 export function* maintainceConstructorSaga() {
   yield fork(fetchMaintainceConstructorWatcher);
   yield fork(fetchMaintainceConstructorDetailWatcher);
   yield fork(updateMaintenancesTaskWatcher);
+  yield fork(fetchIssueWatcher);
+  yield fork(fetchIssueDetailWatcher);
 }

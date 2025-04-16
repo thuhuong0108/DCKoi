@@ -1,3 +1,4 @@
+import { IssueProjectType } from "@/models";
 import {
   ApiResult,
   ApiResultWithAData,
@@ -88,6 +89,51 @@ const getTaskMaintenancesConsstructor = async (
   );
   return response;
 };
+const getIssueMaintance = async (
+  id: string,
+  filter: Filter
+): Promise<ApiResultWithAData<IssueProjectType>> => {
+  const response = await http.get(
+    `${endPoint.maintenances.getIssue(id)}&PageNumber=${
+      filter.pageNumber
+    }&PageSize=${filter.pageSize}`
+  );
+  return response;
+};
+
+const createIssueMaintenance = async (request: any): Promise<ApiResult> => {
+  const response = await http.post(
+    `${endPoint.maintenances.createIssue}`,
+    request
+  );
+  return response;
+};
+const updateIssueMaintenance = async (
+  id: string,
+  request: any
+): Promise<ApiResult> => {
+  const response = await http.put(
+    `${endPoint.maintenances.updateIssue(id)}`,
+    request
+  );
+  return response;
+};
+const getIssueMaintanceById = async (
+  id: string
+): Promise<ApiResultWithAData<IssueProjectType>> => {
+  const response = await http.get(`${endPoint.maintenances.getIssueById(id)}`);
+  return response;
+};
+
+const getIssueMaintanceConstructor = async (
+  filter: Filter,
+  status: string
+): Promise<ApiResultWithPagination<IssueProjectType>> => {
+  const response = await http.get(
+    `${endPoint.maintenances.getIssues}?PageNumber=${filter.pageNumber}&PageSize=${filter.pageSize}&Status=${status}`
+  );
+  return response;
+};
 export {
   requestMaintennance,
   getPagingMaintenance,
@@ -98,4 +144,9 @@ export {
   getTask,
   getTaskMaintenancesConsstructor,
   comfirmMaintenancesTask,
+  getIssueMaintance,
+  createIssueMaintenance,
+  updateIssueMaintenance,
+  getIssueMaintanceById,
+  getIssueMaintanceConstructor,
 };

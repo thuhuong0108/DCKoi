@@ -22,6 +22,7 @@ import MaintainceDetail from "./MaintainceDetail";
 import PageNotFound from "./404Page";
 import Blogs from "./Blogs";
 import ExampleProject from "./ExampleProject";
+import Profile from "./Profile";
 
 export {
   // customer
@@ -47,6 +48,7 @@ export {
   PageNotFound,
   Blogs,
   ExampleProject,
+  Profile,
 
   //error
   AuthorizePage,

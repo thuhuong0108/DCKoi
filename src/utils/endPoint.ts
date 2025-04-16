@@ -166,6 +166,11 @@ const endPoint = {
     updateMaintenancesTask: (id: string) => `/maintenances/tasks/${id}`,
     getTasks: `/maintenances/task`,
     getTask: (id: string) => `/maintenances/tasks/${id}`,
+    getIssue: (id: string) => `/maintenances/issue?MaintenanceRequestId=${id}`,
+    getIssues: `/maintenances/issue`,
+    createIssue: `/maintenances/issue`,
+    updateIssue: (id: string) => `/maintenances/issue/${id}`,
+    getIssueById: (id: string) => `/maintenances/issue/${id}`,
   },
 
   docsType: {
@@ -203,6 +208,10 @@ const endPoint = {
     user: "/statistics/user",
     chart: "/statistics",
     chartRevenue: "/statistics/transactions-total",
+  },
+  users: {
+    getUsersInfo: "/users/info",
+    editUser: (id: string) => `/users/${id}`,
   },
 };
 

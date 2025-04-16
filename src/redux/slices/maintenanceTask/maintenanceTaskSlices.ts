@@ -7,7 +7,7 @@ import {
 
 import { Position } from "@/models/enums/Position";
 import { FeedbackType } from "@/models/FeedbackType";
-import { StaffType } from "@/models";
+import { IssueProjectType, StaffType } from "@/models";
 
 export interface MaintainceTaskState {
   loading: boolean;
@@ -35,6 +35,10 @@ export interface MaintainceTaskState {
     loading: boolean;
     tasks: MaintenancesTaskType[];
     staffs: StaffType[];
+  };
+  issue: {
+    loading: boolean;
+    issues: Pagination<IssueProjectType>;
   };
 }
 
@@ -70,6 +74,16 @@ const initialState: MaintainceTaskState = {
     loading: false,
     tasks: [],
     staffs: [],
+  },
+  issue: {
+    loading: false,
+    issues: {
+      data: [],
+      pageNumber: 0,
+      pageSize: 0,
+      totalPages: 0,
+      totalRecords: 0,
+    },
   },
 };
 
@@ -115,6 +129,19 @@ export const maintainceTaskSlice = createSlice({
     },
     fetchFeedbackFailed(state) {
       state.feedback.loading = false;
+    },
+    fetchIssue(state, action: PayloadAction<{ id: string; filter: Filter }>) {
+      state.issue.loading = true;
+    },
+    fetchIssueSuccess(
+      state,
+      action: PayloadAction<Pagination<IssueProjectType>>
+    ) {
+      state.issue.loading = false;
+      state.issue.issues = action.payload;
+    },
+    fetchIssueFailed(state) {
+      state.issue.loading = false;
     },
   },
 });

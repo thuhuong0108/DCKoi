@@ -43,6 +43,7 @@ import {
   Blogs,
   DashBoard,
   ExampleProject,
+  Profile,
 } from "@/pages";
 import {
   AdminContract,
@@ -143,6 +144,10 @@ const Routers = () => {
     {
       path: "/space-management/maintaince/:id",
       element: <LayoutCustomer Page={MaintainceDetail} />,
+    },
+    {
+      path: "/space-management/profile",
+      element: <LayoutCustomer Page={Profile} />,
     },
     {
       path: "/payment/response",

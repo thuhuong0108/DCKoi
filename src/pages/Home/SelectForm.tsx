@@ -1,4 +1,5 @@
 import { requestProject } from "@/api/project";
+import { getInforUser } from "@/api/user";
 import { Button, messageError, messageSuccess } from "@/components";
 import {
   Cities,
@@ -22,26 +23,21 @@ import { Modal, Typography } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import React, { useEffect, useState } from "react";
 
-const SelectForm = ({ visible, setVisible, result }) => {
+const SelectForm = ({ visible, setVisible, result, area, depth }) => {
   const renderModal = () => {
     const city = Cities.find((city) => city.name === "Hồ Chí Minh");
-    const [filteredDistricts, setFilteredDistricts] = useState<IDistricts[]>(
-      []
-    );
-    const [filteredWards, setFilteredWards] = useState<IWards[]>([]);
 
     const { loading, regField, regHandleSubmit, formik } = useForm({
       values: {
         customerName: "",
-        district: "",
-        ward: "",
+
         address: "",
         phone: "",
         area: "",
         depth: "",
         packageId: null,
         note: "",
-        city: city ? city.code : null,
+
         email: "",
         templatedesignid: null,
       },
@@ -69,11 +65,7 @@ const SelectForm = ({ visible, setVisible, result }) => {
           templatedesignid: values.templatedesignid,
         };
 
-        console.log(request);
-
         const response = await requestProject(request);
-
-        console.log(response);
 
         if (response.isSuccess) {
           messageSuccess("Gửi yêu cầu thành công");
@@ -87,14 +79,24 @@ const SelectForm = ({ visible, setVisible, result }) => {
     });
 
     useEffect(() => {
-      if (city) {
-        const districts = Districts.filter(
-          (district) => district.parent_code === city.code
-        );
-        setFilteredDistricts(districts);
-      }
-    }, [city]);
+      formik.setFieldValue("depth", depth);
+      formik.setFieldValue("area", area);
+    }, [depth, area]);
 
+    useEffect(() => {
+      const getInformation = async () => {
+        const response = await getInforUser();
+        if (response.isSuccess) {
+          formik.setFieldValue("customerName", response.data.fullName);
+          formik.setFieldValue("phone", response.data.phone);
+          formik.setFieldValue("email", response.data.email);
+          formik.setFieldValue("address", response.data.address);
+        }
+      };
+      if (visible) {
+        getInformation();
+      }
+    }, [visible]);
     return (
       <Modal
         title="Gửi yêu cầu"
@@ -159,56 +161,6 @@ const SelectForm = ({ visible, setVisible, result }) => {
             error={Boolean(regField("depth").error)}
             helperText={regField("depth").error}
           />
-          <FormControl fullWidth error={!!regField("district").error}>
-            <InputLabel id="demo-simple-select-label">Quận/ Huyện</InputLabel>
-            <Select
-              style={{ width: "100%", height: "60px" }}
-              value={regField("district").value}
-              label="Quận/Huyện"
-              onChange={(event) => {
-                formik.setFieldValue("district", event.target.value);
-                formik.setFieldValue("ward", "");
-
-                const district = Districts.find(
-                  (district) => district.name_with_type === event.target.value
-                );
-                const wards = Wards.filter(
-                  (ward) => ward.parent_code === district.code
-                );
-                setFilteredWards(wards);
-              }}
-            >
-              {filteredDistricts.map((district) => (
-                <MenuItem key={district.code} value={district.name_with_type}>
-                  {district.name_with_type}
-                </MenuItem>
-              ))}
-            </Select>
-            {regField("district").error && (
-              <FormHelperText>{regField("district").error}</FormHelperText>
-            )}
-          </FormControl>
-
-          <FormControl fullWidth error={!!regField("ward").error}>
-            <InputLabel id="demo-simple-select-label">Phường/ Xã</InputLabel>
-            <Select
-              style={{ width: "100%", height: "60px" }}
-              value={regField("ward").value}
-              label="Phường/Xã"
-              onChange={(event) => {
-                formik.setFieldValue("ward", event.target.value);
-              }}
-            >
-              {filteredWards.map((ward) => (
-                <MenuItem key={ward.code} value={ward.name_with_type}>
-                  {ward.name_with_type}
-                </MenuItem>
-              ))}
-            </Select>
-            {regField("ward").error && (
-              <FormHelperText>{regField("ward").error}</FormHelperText>
-            )}
-          </FormControl>
 
           <TextField
             required

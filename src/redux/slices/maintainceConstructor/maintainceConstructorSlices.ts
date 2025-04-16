@@ -5,7 +5,7 @@ import {
   MaintenancesTaskType,
 } from "@/models/MaintenancesTpe";
 
-import { StaffType } from "@/models";
+import { IssueProjectType, StaffType } from "@/models";
 import { TaskStage } from "@/models/enums/TaskStage";
 
 export interface MaintainceConstructorState {
@@ -16,6 +16,15 @@ export interface MaintainceConstructorState {
     detail: MaintenancesTaskType;
   };
   status: string;
+
+  issue: {
+    loading: boolean;
+    issue: Pagination<IssueProjectType>;
+    detail: {
+      loading: boolean;
+      detail: IssueProjectType;
+    };
+  };
 }
 
 const initialState: MaintainceConstructorState = {
@@ -38,6 +47,30 @@ const initialState: MaintainceConstructorState = {
         type: "",
         depth: 0,
         createdAt: "",
+      },
+    },
+  },
+  issue: {
+    loading: false,
+    issue: {
+      data: [],
+      pageNumber: 0,
+      pageSize: 0,
+      totalPages: 0,
+      totalRecords: 0,
+    },
+    detail: {
+      loading: false,
+      detail: {
+        status: TaskStage.PROCESSING,
+        maintenanceRequest: {
+          name: "",
+          address: "",
+          area: 0,
+          type: "",
+          depth: 0,
+          createdAt: "",
+        },
       },
     },
   },
@@ -88,6 +121,33 @@ export const maintainceConstructorSlice = createSlice({
     },
     updateMaintenancesTaskFailed(state) {
       state.detail.loading = false;
+    },
+    fetchIssue(
+      state,
+      action: PayloadAction<{ filter: Filter; status: string }>
+    ) {
+      state.issue.loading = true;
+    },
+    fetchIssueSuccess(
+      state,
+      action: PayloadAction<Pagination<IssueProjectType>>
+    ) {
+      state.issue.loading = false;
+      state.issue.issue = action.payload;
+    },
+    fetchIssueFailed(state) {
+      state.issue.loading = false;
+    },
+
+    fetchIssueDetail(state, action: PayloadAction<string>) {
+      state.issue.detail.loading = true;
+    },
+    fetchIssueDetailSuccess(state, action: PayloadAction<IssueProjectType>) {
+      state.issue.detail.loading = false;
+      state.issue.detail.detail = action.payload;
+    },
+    fetchIssueDetailFailed(state) {
+      state.issue.detail.loading = false;
     },
   },
 });

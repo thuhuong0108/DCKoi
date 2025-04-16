@@ -32,6 +32,7 @@ import { useParams } from "react-router-dom";
 import ModalDeny from "./ModalDeny";
 import Staff from "./Staff";
 import { FeedbackType } from "@/models/FeedbackType";
+import Issue from "./Issue";
 
 const { Text, Link } = Typography;
 
@@ -328,6 +329,8 @@ const MaintainceTask = () => {
           rowKey="id"
         />
       </Modal>
+
+      <Issue />
 
       {detail.status === TaskStage.DONE && (
         <Card title="Phản hồi" style={{ marginTop: 20 }}>
