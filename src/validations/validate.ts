@@ -1,4 +1,5 @@
 import { duration } from "@mui/material";
+import { y } from "framer-motion/dist/types.d-B50aGbjN";
 import * as yup from "yup";
 export const validateDemo = yup.object().shape({
   name: yup.string().required().max(50),
@@ -92,9 +93,7 @@ export const validateEstimatePrice = yup.object().shape({
 });
 export const validateRequestProject = yup.object().shape({
   customerName: yup.string().required("Yêu cầu nhập tên khách hàng"),
-  district: yup.string().required("Yêu cầu chọn quận"),
   email: yup.string().email().required("Yêu cầu nhập email"),
-  ward: yup.string().required("Yêu cầu chọn phường"),
   address: yup.string().required("Yêu cầu nhập địa chỉ"),
   phone: yup.number().required("Yêu cầu nhập số điện thoại"),
   area: yup.number().required("Yêu cầu nhập diện tích"),
@@ -184,4 +183,26 @@ export const validatePackageMaintance = yup.object().shape({
     .number()
     .required("Yêu cầu nhập giá")
     .min(100000, "Giá không được nhỏ hơn 100000"),
+});
+
+export const validateInfoUser = yup.object().shape({
+  fullName: yup.string().required("Yêu cầu nhập họ tên"),
+  email: yup
+    .string()
+    .email("Email không hợp lệ")
+    .required("Yêu cầu nhập email"),
+  phone: yup.string().required("Yêu cầu nhập số điện thoại"),
+  address: yup.string().required("Yêu cầu nhập địa chỉ"),
+  dob: yup.date().required("Yêu cầu nhập ngày sinh"),
+});
+
+export const validateIssueMaintaince = yup.object().shape({
+  description: yup.string().required("Yêu cầu nhập mô tả"),
+});
+export const validateFastIssue = yup.object().shape({
+  solution: yup.string().required("Yêu cầu nhập giải pháp"),
+});
+export const validateUpdateIssue = yup.object().shape({
+  solution: yup.string().required("Yêu cầu nhập giải pháp"),
+  cause: yup.string().required("Yêu cầu nhập nguyên nhân"),
 });

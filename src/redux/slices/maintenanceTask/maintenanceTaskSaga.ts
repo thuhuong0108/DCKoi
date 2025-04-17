@@ -10,6 +10,7 @@ import { MaintenancesTaskType } from "@/models/MaintenancesTpe";
 
 import {
   getChildTask,
+  getIssueMaintance,
   getMaintennanceById,
   getTask,
 } from "@/api/maintennances";
@@ -66,6 +67,36 @@ function* fetchFeedbackWorker(
   }
 }
 
+const fetchIssueWorker = function* (
+  action: PayloadAction<{ id: string; filter: Filter }>
+) {
+  try {
+    const data = yield call(
+      getIssueMaintance,
+      action.payload.id,
+      action.payload.filter
+    );
+    if (data.isSuccess) {
+      yield put(maintainceTaskActions.fetchIssueSuccess(data));
+    } else {
+      messageError(data.message);
+      yield put(maintainceTaskActions.fetchIssueFailed());
+    }
+  } catch (error) {
+    yield put(maintainceTaskActions.fetchIssueFailed());
+    console.log("error", error);
+  }
+};
+
+function* fetchIssueWatcher() {
+  while (true) {
+    const action: PayloadAction<{ id: string; filter: Filter }> = yield take(
+      maintainceTaskActions.fetchIssue.type
+    );
+    yield fork(fetchIssueWorker, action);
+  }
+}
+
 function* fetchMaintenancesTaskWatcher() {
   while (true) {
     const action = yield take(maintainceTaskActions.fetchMaintainceTask.type);
@@ -91,4 +122,5 @@ export function* maintainceTaskSaga() {
   yield fork(fetchMaintenancesTaskWatcher);
   yield fork(fetchChildTaskWatcher);
   yield fork(fetchFeedbackWatcher);
+  yield fork(fetchIssueWatcher);
 }

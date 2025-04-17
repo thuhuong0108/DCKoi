@@ -13,7 +13,7 @@ import equipmentSlice from "../slices/equipment/equipmentSlice";
 import packageSlice from "../slices/package/packageSlices";
 import templateConstructionSlice from "../slices/templateConstruction/templateContrutionSlices";
 import templateConstructionDetailSlice from "../slices/templateConstructionDetail/templateConstructionDetailSlices";
-import { connectRouter, routerMiddleware } from "connected-react-router";
+
 import { history } from "@/utils/history";
 import rootSaga from "./rootSaga";
 import storage from "redux-persist/lib/storage";
@@ -51,7 +51,6 @@ import docsTypeSlice from "../slices/docsType/docsTypeSlices";
 import packageMaintanceItem from "../slices/packageMaintenceItem/packageMaintenceItemSlices";
 
 const rootReducers = combineReducers({
-  router: connectRouter(history),
   auth: authSlice,
   packageItem: packageItemSlice,
   equipment: equipmentSlice,
@@ -102,10 +101,7 @@ const sagaMiddleware = createSagaMiddleware();
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({ serializableCheck: false }).concat(
-      sagaMiddleware,
-      routerMiddleware(history)
-    ),
+    getDefaultMiddleware({ serializableCheck: false }).concat(sagaMiddleware),
 });
 
 sagaMiddleware.run(rootSaga);

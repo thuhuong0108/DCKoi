@@ -1,4 +1,5 @@
 import { IssueStatus } from "./enums/Status";
+import { MaintaineceType } from "./MaintenancesTpe";
 
 export interface IssueProjectType {
   id: string;
@@ -15,6 +16,9 @@ export interface IssueProjectType {
   staff: IssueStaff;
   createdAt: string;
   updatedAt: string;
+  maintenanceRequest?: MaintaineceType;
+  estimateAt?: string;
+  actualAt?: string;
 }
 
 export interface IssueStaff {

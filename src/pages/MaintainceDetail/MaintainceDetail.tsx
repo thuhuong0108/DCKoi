@@ -31,6 +31,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import FeedBack from "./FeedBack";
 import { FeedbackType } from "@/models/FeedbackType";
+import Issue from "./Issue";
 
 const { Text, Link } = Typography;
 
@@ -258,6 +259,8 @@ const MaintainceTask = () => {
           rowKey="id"
         />
       </Card>
+
+      <Issue />
 
       {/* Task Detail Modal */}
       <Modal
